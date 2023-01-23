@@ -15,14 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.launch
+import store.AppStore
 
 private const val MY_ATT_PACKAGE = "com.att.myWirelessTest"
 
 fun main() = application {
-    val state = rememberWindowState(width = 200.dp, height = 200.dp)
+    val state =
+        rememberWindowState(width = 200.dp, height = 200.dp, position = WindowPosition(alignment = Alignment.Center))
+
     ApplicationTray(state)
     Window(
         title = "ADBugger",
@@ -40,6 +44,9 @@ fun App() {
     val coroutineScope = rememberCoroutineScope()
     val adb = Adb()
 
+    val model = remember { AppStore() }
+    val state = model.state
+
     LaunchedEffect(Unit) {
         coroutineScope.launch { adb.startAdbInteract() }
     }
@@ -49,12 +56,16 @@ fun App() {
             modifier = Modifier.fillMaxSize().background(Color.Black),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { coroutineScope.launch {
-                adb.openPackage(MY_ATT_PACKAGE) }
+            Button(onClick = {
+                coroutineScope.launch {
+                    adb.openPackage(MY_ATT_PACKAGE)
+                }
             }) { Text(text = "Open") }
 
-            Button(onClick = { coroutineScope.launch {
-                adb.closePackage(MY_ATT_PACKAGE) }
+            Button(onClick = {
+                coroutineScope.launch {
+                    adb.closePackage(MY_ATT_PACKAGE)
+                }
             }) { Text(text = "Close") }
 
             LoadingSpinner()
