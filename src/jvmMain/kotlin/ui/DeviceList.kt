@@ -27,6 +27,28 @@ fun DeviceListSection(
     model: AppStore,
     state: AppStore.AppState
 ) {
+    Content(state, model, coroutineScope)
+    Title()
+    if (state.isDevicesLoading) {
+        LoadingSpinner()
+    }
+}
+
+@Composable
+private fun Title() {
+    Text(
+        "Device/s selection",
+        modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+private fun Content(
+    state: AppStore.AppState,
+    model: AppStore,
+    coroutineScope: CoroutineScope
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,14 +59,6 @@ fun DeviceListSection(
     ) {
         AllOptionAndRefreshButton(state, model, coroutineScope)
         DeviceList(state) { model.onDeviceClick(it) }
-    }
-    Text(
-        "Device/s selection",
-        modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
-        textAlign = TextAlign.Center
-    )
-    if (state.isDevicesLoading) {
-        LoadingSpinner()
     }
 }
 
