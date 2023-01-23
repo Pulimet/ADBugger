@@ -70,7 +70,7 @@ private fun AllOptionAndRefreshButton(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().border(width = 1.dp, color = Color.LightGray)
     ) {
         val allDevices = Device(AppStore.ALL_DEVICES, DeviceState.UNKNOWN)
         DeviceItem(
