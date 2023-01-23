@@ -1,15 +1,14 @@
-import adb.Adb
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,10 +17,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import kotlinx.coroutines.launch
 import store.AppStore
-
-private const val MY_ATT_PACKAGE = "com.att.myWirelessTest"
+import ui.LoadingSpinner
 
 fun main() = application {
     val state =
@@ -40,15 +37,13 @@ fun main() = application {
 @Composable
 @Preview
 fun App() {
-    var textVal by remember { mutableStateOf("Hello, World!") }
     val coroutineScope = rememberCoroutineScope()
-    val adb = Adb()
 
     val model = remember { AppStore() }
     val state = model.state
 
     LaunchedEffect(Unit) {
-        coroutineScope.launch { adb.startAdbInteract() }
+        model.onLaunchedEffect(coroutineScope)
     }
 
     MaterialTheme {
@@ -56,30 +51,12 @@ fun App() {
             modifier = Modifier.fillMaxSize().background(Color.Black),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = {
-                coroutineScope.launch {
-                    adb.openPackage(MY_ATT_PACKAGE)
-                }
-            }) { Text(text = "Open") }
-
-            Button(onClick = {
-                coroutineScope.launch {
-                    adb.closePackage(MY_ATT_PACKAGE)
-                }
-            }) { Text(text = "Close") }
+            Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
+            Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
 
             LoadingSpinner()
         }
     }
 }
 
-@Composable
-fun LoadingSpinner() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(
-            modifier = Modifier
-                .align(alignment = Alignment.Center)
-                .defaultMinSize(minWidth = 32.dp, minHeight = 32.dp)
-        )
-    }
-}
+
