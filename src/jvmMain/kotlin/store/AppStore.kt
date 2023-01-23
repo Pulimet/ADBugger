@@ -4,6 +4,7 @@ import adb.Adb
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.malinskiy.adam.request.device.Device
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,12 @@ class AppStore {
     }
 
     // User Actions
+    fun onGetDevicesListClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            setState { copy(devicesList = adb.devices()) }
+        }
+    }
+
     fun onOpenClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             adb.openPackage(MY_ATT_PACKAGE)
@@ -35,11 +42,6 @@ class AppStore {
         }
     }
 
-    fun updateDevicesList(devicesList: List<String>) {
-        setState { copy(devicesList = devicesList) }
-    }
-
-
     // Private
     private fun initialState() =
         AppState(
@@ -50,9 +52,7 @@ class AppStore {
         state = state.update()
     }
 
-
-
     data class AppState(
-        val devicesList: List<String> = emptyList()
+        val devicesList: List<Device> = emptyList()
     )
 }

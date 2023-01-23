@@ -16,6 +16,8 @@ class Adb {
         StartAdbInteractor().execute()
     }
 
+    suspend fun devices() = adb.execute(request = ListDevicesRequest())
+
     suspend fun openPackage(packageName: String) {
         launchOnAllDevices(Commands.getLaunchCommandByPackageName(packageName))
     }
@@ -27,8 +29,6 @@ class Adb {
 
 
     // Private
-    private suspend fun devices() = adb.execute(request = ListDevicesRequest())
-
     private suspend fun launchOnAllDevices(command: String) {
         devices().forEach {
             launchCommand(it.serial, command)
