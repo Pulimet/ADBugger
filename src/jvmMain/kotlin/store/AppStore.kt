@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class AppStore {
 
     companion object {
+        const val ALL_DEVICES = "All"
         private const val MY_ATT_PACKAGE = "com.att.myWirelessTest"
     }
 
@@ -30,6 +31,10 @@ class AppStore {
         }
     }
 
+    fun onDeviceClick(device: Device) {
+        setState { copy(selectedDevice = device.serial) }
+    }
+
     fun onOpenClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             adb.openPackage(MY_ATT_PACKAGE)
@@ -43,16 +48,14 @@ class AppStore {
     }
 
     // Private
-    private fun initialState() =
-        AppState(
-            devicesList = emptyList()
-        )
+    private fun initialState() = AppState()
 
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
 
     data class AppState(
-        val devicesList: List<Device> = emptyList()
+        val devicesList: List<Device> = emptyList(),
+        val selectedDevice: String = ALL_DEVICES
     )
 }

@@ -4,9 +4,6 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -36,14 +33,9 @@ fun MainContent() {
             modifier = Modifier.fillMaxSize().background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { model.onGetDevicesListClick(coroutineScope) }) { Text(text = "Get Devices List") }
+            Button(onClick = { model.onGetDevicesListClick(coroutineScope) }) { Text(text = "Select Device") }
 
-            val listState = rememberLazyListState()
-            LazyColumn(state = listState) {
-                items(state.devicesList) { item ->
-                    Text("${item.serial} (${item.state.name})")
-                }
-            }
+            DeviceList(state) { model.onDeviceClick(it) }
 
             //Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
             //Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
@@ -52,3 +44,4 @@ fun MainContent() {
         }
     }
 }
+
