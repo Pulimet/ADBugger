@@ -46,7 +46,7 @@ fun DeviceListSection(
                 Modifier.fillMaxWidth(0.6f)
             )
             Button(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                 onClick = { model.onGetDevicesListClick(coroutineScope) })
             { Text(text = "Refresh") }
         }

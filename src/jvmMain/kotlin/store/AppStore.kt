@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.malinskiy.adam.request.device.Device
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AppStore {
@@ -27,7 +28,8 @@ class AppStore {
     // User Actions
     fun onGetDevicesListClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            setState { copy(isDevicesLoading = true, devicesList = emptyList()) }
+            setState { copy(selectedDevice = ALL_DEVICES, isDevicesLoading = true, devicesList = emptyList()) }
+            delay(500)
             setState { copy(isDevicesLoading = false, devicesList = adb.devices()) }
         }
     }
