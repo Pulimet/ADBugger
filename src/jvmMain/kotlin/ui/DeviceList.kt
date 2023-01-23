@@ -59,18 +59,20 @@ fun DeviceListSection(
 
 @Composable
 private fun DeviceList(state: AppStore.AppState, onClicked: (device: Device) -> Unit) {
-    val listState = rememberLazyListState()
-    LazyColumn(state = listState) {
-        items(state.devicesList, key = { device -> device.serial }) { item ->
-            DeviceItem(item, state.selectedDevice == item.serial, { onClicked(it) }, Modifier.fillMaxWidth())
+    Box(modifier = Modifier.fillMaxSize()) {
+        val listState = rememberLazyListState()
+        LazyColumn(state = listState) {
+            items(state.devicesList, key = { device -> device.serial }) { item ->
+                DeviceItem(item, state.selectedDevice == item.serial, { onClicked(it) }, Modifier.fillMaxWidth())
+            }
         }
-    }
-    VerticalScrollbar(
-        modifier = Modifier.fillMaxHeight(),
-        adapter = rememberScrollbarAdapter(
-            scrollState = listState
+        VerticalScrollbar(
+            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+            adapter = rememberScrollbarAdapter(
+                scrollState = listState
+            )
         )
-    )
+    }
 }
 
 @Composable
