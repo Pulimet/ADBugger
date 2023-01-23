@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.device.Device
 import com.malinskiy.adam.request.device.DeviceState
@@ -30,30 +31,44 @@ fun DeviceListSection(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(16.dp)
+            .padding(16.dp, 26.dp, 16.dp, 16.dp)
             .border(1.dp, Color.LightGray, RectangleShape),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            val allDevices = Device(AppStore.ALL_DEVICES, DeviceState.UNKNOWN)
-            DeviceItem(
-                allDevices,
-                state.selectedDevice == AppStore.ALL_DEVICES,
-                { model.onDeviceClick(allDevices) },
-                Modifier.fillMaxWidth(0.6f)
-            )
-            Button(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
-                onClick = { model.onGetDevicesListClick(coroutineScope) })
-            { Text(text = "Refresh") }
-        }
+        AllOptionAndRefreshButton(state, model, coroutineScope)
         DeviceList(state) { model.onDeviceClick(it) }
     }
+    Text(
+        "Device/s selection",
+        modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
     if (state.isDevicesLoading) {
         LoadingSpinner()
+    }
+}
+
+@Composable
+private fun AllOptionAndRefreshButton(
+    state: AppStore.AppState,
+    model: AppStore,
+    coroutineScope: CoroutineScope
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        val allDevices = Device(AppStore.ALL_DEVICES, DeviceState.UNKNOWN)
+        DeviceItem(
+            allDevices,
+            state.selectedDevice == AppStore.ALL_DEVICES,
+            { model.onDeviceClick(allDevices) },
+            Modifier.fillMaxWidth(0.6f)
+        )
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            onClick = { model.onGetDevicesListClick(coroutineScope) })
+        { Text(text = "Refresh") }
     }
 }
 
