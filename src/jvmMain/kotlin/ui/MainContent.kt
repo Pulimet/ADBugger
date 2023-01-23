@@ -1,19 +1,11 @@
 package ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import store.AppStore
 
 @Composable
@@ -29,19 +21,12 @@ fun MainContent() {
     }
 
     MaterialTheme {
-        Column(
-            modifier = Modifier.fillMaxSize().background(Color.White),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(onClick = { model.onGetDevicesListClick(coroutineScope) }) { Text(text = "Select Device") }
+        //Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
+        //Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
 
-            DeviceList(state) { model.onDeviceClick(it) }
-
-            //Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
-            //Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
-
-            //LoadingSpinner()
-        }
+        DeviceListSection(coroutineScope, model, state)
     }
 }
+
+
 

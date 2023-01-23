@@ -27,7 +27,8 @@ class AppStore {
     // User Actions
     fun onGetDevicesListClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            setState { copy(devicesList = adb.devices()) }
+            setState { copy(isDevicesLoading = true, devicesList = emptyList()) }
+            setState { copy(isDevicesLoading = false, devicesList = adb.devices()) }
         }
     }
 
@@ -56,6 +57,7 @@ class AppStore {
 
     data class AppState(
         val devicesList: List<Device> = emptyList(),
-        val selectedDevice: String = ALL_DEVICES
+        val selectedDevice: String = ALL_DEVICES,
+        val isDevicesLoading: Boolean = false
     )
 }

@@ -14,11 +14,8 @@ fun main() = application {
     )
 
     ApplicationTray(state)
-    Window(
-        title = "ADBugger",
-        state = state,
-        onCloseRequest = ::exitApplication
-    ) {
+
+    Window(title = "ADBugger", state = state, onCloseRequest = ::exitApplication) {
         MainContent()
     }
 }
