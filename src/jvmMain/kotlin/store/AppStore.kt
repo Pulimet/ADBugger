@@ -84,6 +84,23 @@ class AppStore {
         }
     }
 
+    fun onClearDataClick(coroutineScope: CoroutineScope) {
+        if (state.selectedPackage == NONE) return
+        coroutineScope.launch {
+            adb.clearData(state.selectedPackage, state.selectedDevice)
+        }
+    }
+
+    fun onClearAndRestartClick(coroutineScope: CoroutineScope) {
+        if (state.selectedPackage == NONE) return
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.closePackage(state.selectedPackage, state.selectedDevice)
+            adb.clearData(state.selectedPackage, state.selectedDevice)
+            delay(100)
+            adb.openPackage(state.selectedPackage, state.selectedDevice)
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 

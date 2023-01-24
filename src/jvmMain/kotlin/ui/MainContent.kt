@@ -43,6 +43,8 @@ fun MainContent() {
                 Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
                 Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
                 Button(onClick = { model.onRestartClick(coroutineScope) }) { Text(text = "Restart") }
+                Button(onClick = { model.onClearDataClick(coroutineScope) }) { Text(text = "Clear Data") }
+                Button(onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear + Restart") }
             }
         }
     }

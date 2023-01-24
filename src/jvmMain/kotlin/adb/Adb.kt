@@ -45,6 +45,15 @@ class Adb {
     }
 
 
+    suspend fun clearData(packageName: String, selectedDevice: String) {
+        val command = Commands.getClearDataCommandByPackageName(packageName)
+        if (selectedDevice == AppStore.ALL_DEVICES) {
+            launchShellCommandOnAllDevices(command)
+        } else {
+            launchShellCommand(selectedDevice, command)
+        }
+    }
+
     suspend fun killAllEmulators() {
         devices().forEach {
             execCommand(Commands.getKillEmulator(it.serial))
