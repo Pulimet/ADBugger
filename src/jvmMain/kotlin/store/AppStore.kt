@@ -75,6 +75,15 @@ class AppStore {
         }
     }
 
+    fun onRestartClick(coroutineScope: CoroutineScope) {
+        if (state.selectedPackage == NONE) return
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.closePackage(state.selectedPackage, state.selectedDevice)
+            delay(100)
+            adb.openPackage(state.selectedPackage, state.selectedDevice)
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 

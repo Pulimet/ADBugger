@@ -42,6 +42,7 @@ fun MainContent() {
             Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
                 Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
+                Button(onClick = { model.onRestartClick(coroutineScope) }) { Text(text = "Restart") }
             }
         }
     }
