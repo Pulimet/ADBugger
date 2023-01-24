@@ -69,6 +69,12 @@ class AppStore {
         }
     }
 
+    fun onKillEmulatorClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.killAllEmulators()
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 
