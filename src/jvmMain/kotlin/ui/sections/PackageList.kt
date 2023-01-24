@@ -9,24 +9,29 @@ import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.widgets.LoadingSpinner
+import ui.widgets.SearchView
 import ui.widgets.SectionTitle
 
 @Composable
 fun PackageListSection(
     coroutineScope: CoroutineScope,
     model: AppStore,
-    state: AppStore.AppState
+    state: AppStore.AppState,
+    modifier: Modifier = Modifier
 ) {
-    Box(Modifier.fillMaxWidth()) {
+    Box(modifier = modifier) {
         Content(state, model, coroutineScope)
         SectionTitle("Package selection")
         if (state.isPackagesLoading) {
@@ -79,10 +84,17 @@ private fun AllOptionAndRefreshButton(
 
 @Composable
 private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> Unit) {
+    val listState = rememberLazyListState()
+    val textState = remember { mutableStateOf(TextFieldValue("")) }
+    val query = textState.value.text
+    SearchView(state = textState, modifier = Modifier.fillMaxWidth())
+
     Box(modifier = Modifier.fillMaxSize()) {
-        val listState = rememberLazyListState()
         LazyColumn(state = listState) {
-            items(state.packageList, key = { device -> device.name }) { item ->
+            items(
+                state.packageList.filter { it.name.contains(query, ignoreCase = true) },
+                key = { device -> device.name }
+            ) { item ->
                 PackageItem(item, state.selectedPackage == item.name, { onClicked(it) }, Modifier.fillMaxWidth())
             }
         }

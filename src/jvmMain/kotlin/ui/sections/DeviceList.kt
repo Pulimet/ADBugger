@@ -26,9 +26,10 @@ import ui.widgets.SectionTitle
 fun DeviceListSection(
     coroutineScope: CoroutineScope,
     model: AppStore,
-    state: AppStore.AppState
+    state: AppStore.AppState,
+    modifier: Modifier = Modifier
 ) {
-    Box(Modifier.fillMaxWidth(0.5f)) {
+    Box(modifier = modifier) {
         Content(state, model, coroutineScope)
         SectionTitle("Device/s selection")
         if (state.isDevicesLoading) {

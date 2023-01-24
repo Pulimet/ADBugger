@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import com.malinskiy.adam.request.device.Device
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -15,7 +16,6 @@ class AppStore {
     companion object {
         const val ALL_DEVICES = "All"
         const val NONE = "None"
-        private const val MY_ATT_PACKAGE = "com.att.myWirelessTest"
     }
 
     private val adb = Adb()
@@ -29,8 +29,8 @@ class AppStore {
 
     // User Actions
     fun onGetDevicesListClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES,) }
+        coroutineScope.launch(Dispatchers.IO) {
+            setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
             delay(500)
             setState { copy(isDevicesLoading = false, devicesList = adb.devices()) }
         }
@@ -44,7 +44,7 @@ class AppStore {
         if (state.selectedDevice == ALL_DEVICES) {
             return
         }
-        coroutineScope.launch {
+        coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = NONE) }
             delay(500)
             setState { copy(isPackagesLoading = false, packageList = adb.packages(state.selectedDevice)) }
@@ -56,14 +56,16 @@ class AppStore {
     }
 
     fun onOpenClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.openPackage(MY_ATT_PACKAGE)
+        if (state.selectedPackage == NONE) return
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.openPackage(state.selectedPackage, state.selectedDevice)
         }
     }
 
     fun onCloseClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.closePackage(MY_ATT_PACKAGE)
+        if (state.selectedPackage == NONE) return
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.closePackage(state.selectedPackage, state.selectedDevice)
         }
     }
 

@@ -6,6 +6,7 @@ import com.malinskiy.adam.interactor.StartAdbInteractor
 import com.malinskiy.adam.request.device.ListDevicesRequest
 import com.malinskiy.adam.request.pkg.PmListRequest
 import com.malinskiy.adam.request.shell.v2.ShellCommandRequest
+import store.AppStore
 
 class Adb {
 
@@ -25,13 +26,22 @@ class Adb {
         serial = serial
     )
 
-    suspend fun openPackage(packageName: String) {
-        launchOnAllDevices(Commands.getLaunchCommandByPackageName(packageName))
+    suspend fun openPackage(packageName: String, selectedDevice: String) {
+        val command = Commands.getLaunchCommandByPackageName(packageName)
+        if (selectedDevice == AppStore.ALL_DEVICES) {
+            launchOnAllDevices(command)
+        } else {
+            launchCommand(selectedDevice, command)
+        }
     }
 
-
-    suspend fun closePackage(packageName: String) {
-        launchOnAllDevices(Commands.getCloseCommandByPackageName(packageName))
+    suspend fun closePackage(packageName: String, selectedDevice: String) {
+        val command = Commands.getCloseCommandByPackageName(packageName)
+        if (selectedDevice == AppStore.ALL_DEVICES) {
+            launchOnAllDevices(command)
+        } else {
+            launchCommand(selectedDevice, command)
+        }
     }
 
 
