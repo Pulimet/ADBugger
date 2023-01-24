@@ -1,4 +1,4 @@
-package ui
+package ui.sections
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -13,12 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.device.Device
 import com.malinskiy.adam.request.device.DeviceState
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
+import ui.widgets.LoadingSpinner
+import ui.widgets.SectionTitle
 
 
 @Composable
@@ -27,21 +28,15 @@ fun DeviceListSection(
     model: AppStore,
     state: AppStore.AppState
 ) {
-    Content(state, model, coroutineScope)
-    Title()
-    if (state.isDevicesLoading) {
-        LoadingSpinner()
+    Box(Modifier.fillMaxWidth(0.5f)) {
+        Content(state, model, coroutineScope)
+        SectionTitle("Device/s selection")
+        if (state.isDevicesLoading) {
+            LoadingSpinner()
+        }
     }
 }
 
-@Composable
-private fun Title() {
-    Text(
-        "Device/s selection",
-        modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
-        textAlign = TextAlign.Center
-    )
-}
 
 @Composable
 private fun Content(
@@ -77,10 +72,9 @@ private fun AllOptionAndRefreshButton(
             allDevices,
             state.selectedDevice == AppStore.ALL_DEVICES,
             { model.onDeviceClick(allDevices) },
-            Modifier.fillMaxWidth(0.6f)
         )
         Button(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            modifier = Modifier.padding(horizontal = 8.dp),
             onClick = { model.onGetDevicesListClick(coroutineScope) })
         { Text(text = "Refresh") }
     }

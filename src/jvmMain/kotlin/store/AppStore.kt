@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.malinskiy.adam.request.device.Device
+import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,6 +14,7 @@ class AppStore {
 
     companion object {
         const val ALL_DEVICES = "All"
+        const val NONE = "None"
         private const val MY_ATT_PACKAGE = "com.att.myWirelessTest"
     }
 
@@ -28,7 +30,7 @@ class AppStore {
     // User Actions
     fun onGetDevicesListClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            setState { copy(selectedDevice = ALL_DEVICES, isDevicesLoading = true, devicesList = emptyList()) }
+            setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES,) }
             delay(500)
             setState { copy(isDevicesLoading = false, devicesList = adb.devices()) }
         }
@@ -36,6 +38,21 @@ class AppStore {
 
     fun onDeviceClick(device: Device) {
         setState { copy(selectedDevice = device.serial) }
+    }
+
+    fun onGetPackageListClick(coroutineScope: CoroutineScope) {
+        if (state.selectedDevice == ALL_DEVICES) {
+            return
+        }
+        coroutineScope.launch {
+            setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = NONE) }
+            delay(500)
+            setState { copy(isPackagesLoading = false, packageList = adb.packages(state.selectedDevice)) }
+        }
+    }
+
+    fun onPackageClick(pckg: Package) {
+        setState { copy(selectedPackage = pckg.name) }
     }
 
     fun onOpenClick(coroutineScope: CoroutineScope) {
@@ -60,6 +77,9 @@ class AppStore {
     data class AppState(
         val devicesList: List<Device> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
-        val isDevicesLoading: Boolean = false
+        val packageList: List<Package> = emptyList(),
+        val selectedPackage: String = NONE,
+        val isDevicesLoading: Boolean = false,
+        val isPackagesLoading: Boolean = false,
     )
 }

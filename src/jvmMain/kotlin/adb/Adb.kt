@@ -4,6 +4,7 @@ import com.malinskiy.adam.AndroidDebugBridgeClient
 import com.malinskiy.adam.AndroidDebugBridgeClientFactory
 import com.malinskiy.adam.interactor.StartAdbInteractor
 import com.malinskiy.adam.request.device.ListDevicesRequest
+import com.malinskiy.adam.request.pkg.PmListRequest
 import com.malinskiy.adam.request.shell.v2.ShellCommandRequest
 
 class Adb {
@@ -17,6 +18,12 @@ class Adb {
     }
 
     suspend fun devices() = adb.execute(request = ListDevicesRequest())
+    suspend fun packages(serial: String) = adb.execute(
+        request = PmListRequest(
+            includePath = false
+        ),
+        serial = serial
+    )
 
     suspend fun openPackage(packageName: String) {
         launchOnAllDevices(Commands.getLaunchCommandByPackageName(packageName))
