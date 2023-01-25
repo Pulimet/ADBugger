@@ -6,6 +6,8 @@ import com.malinskiy.adam.interactor.StartAdbInteractor
 import com.malinskiy.adam.request.device.ListDevicesRequest
 import com.malinskiy.adam.request.pkg.PmListRequest
 import com.malinskiy.adam.request.shell.v2.ShellCommandRequest
+import com.malinskiy.adam.request.shell.v2.ShellCommandResult
+import model.DeviceInfo
 import store.AppStore
 
 class Adb {
@@ -18,7 +20,11 @@ class Adb {
         StartAdbInteractor().execute()
     }
 
-    suspend fun devices() = adb.execute(request = ListDevicesRequest())
+    suspend fun devicesInfo() = devices().map {
+        val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.trim()
+        DeviceInfo(it.serial, it.state, avdName)
+    }
+
     suspend fun packages(serial: String) = adb.execute(
         request = PmListRequest(
             includePath = false
@@ -116,15 +122,17 @@ class Adb {
         }
     }
 
-    private suspend fun launchShellCommand(serial: String, command: String) {
+    private suspend fun launchShellCommand(serial: String, command: String): ShellCommandResult =
         adb.execute(
             request = ShellCommandRequest(command),
             serial = serial
         )
-    }
+
 
     private fun execCommand(command: String) {
         Runtime.getRuntime().exec(command)
     }
+
+    private suspend fun devices() = adb.execute(request = ListDevicesRequest())
 
 }

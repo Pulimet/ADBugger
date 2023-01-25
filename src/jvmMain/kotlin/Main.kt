@@ -8,7 +8,7 @@ import ui.MainContent
 
 fun main() = application {
     val state = rememberWindowState(
-        width = 700.dp,
+        width = 800.dp,
         height = 480.dp,
         position = WindowPosition(alignment = Alignment.Center)
     )

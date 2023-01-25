@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.malinskiy.adam.request.device.Device
 import com.malinskiy.adam.request.device.DeviceState
 import kotlinx.coroutines.CoroutineScope
+import model.DeviceInfo
 import store.AppStore
 import ui.widgets.LoadingSpinner
 import ui.widgets.SectionTitle
@@ -68,7 +68,7 @@ private fun AllOptionAndRefreshButton(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth().border(width = 1.dp, color = Color.LightGray)
     ) {
-        val allDevices = Device(AppStore.ALL_DEVICES, DeviceState.UNKNOWN)
+        val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
         DeviceItem(
             allDevices,
             state.selectedDevice == AppStore.ALL_DEVICES,
@@ -84,7 +84,7 @@ private fun AllOptionAndRefreshButton(
 }
 
 @Composable
-private fun DeviceList(state: AppStore.AppState, onClicked: (device: Device) -> Unit) {
+private fun DeviceList(state: AppStore.AppState, onClicked: (device: DeviceInfo) -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()
         LazyColumn(state = listState) {
@@ -103,9 +103,9 @@ private fun DeviceList(state: AppStore.AppState, onClicked: (device: Device) -> 
 
 @Composable
 private fun DeviceItem(
-    item: Device,
+    item: DeviceInfo,
     isSelected: Boolean,
-    onClicked: (device: Device) -> Unit,
+    onClicked: (device: DeviceInfo) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -113,7 +113,7 @@ private fun DeviceItem(
         modifier = modifier.clickable(onClick = { onClicked(item) })
     ) {
         RadioButton(selected = isSelected, { onClicked(item) })
-        val state = if (item.state == DeviceState.UNKNOWN) "" else " (${item.state.name})"
-        Text("${item.serial}$state")
+        val name = if (item.name.isEmpty()) "" else " (${item.name})"
+        Text("${item.serial}$name")
     }
 }

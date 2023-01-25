@@ -4,12 +4,12 @@ import adb.Adb
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.malinskiy.adam.request.device.Device
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import model.DeviceInfo
 
 class AppStore {
 
@@ -32,11 +32,11 @@ class AppStore {
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
             delay(500)
-            setState { copy(isDevicesLoading = false, devicesList = adb.devices()) }
+            setState { copy(isDevicesLoading = false, devicesList = adb.devicesInfo()) }
         }
     }
 
-    fun onDeviceClick(device: Device) {
+    fun onDeviceClick(device: DeviceInfo) {
         setState { copy(selectedDevice = device.serial) }
     }
 
@@ -190,7 +190,7 @@ class AppStore {
 
 
     data class AppState(
-        val devicesList: List<Device> = emptyList(),
+        val devicesList: List<DeviceInfo> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
         val packageList: List<Package> = emptyList(),
         val selectedPackage: String = NONE,
