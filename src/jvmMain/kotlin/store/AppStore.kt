@@ -41,9 +41,8 @@ class AppStore {
     }
 
     fun onGetPackageListClick(coroutineScope: CoroutineScope) {
-        if (state.selectedDevice == ALL_DEVICES) {
-            return
-        }
+        if (state.selectedDevice == ALL_DEVICES) return
+
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = NONE) }
             delay(500)
@@ -142,6 +141,13 @@ class AppStore {
     fun onPowerClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             adb.pressPower(state.selectedDevice)
+        }
+    }
+
+    fun onSnapClick(coroutineScope: CoroutineScope) {
+        if (state.selectedDevice == ALL_DEVICES) return
+        coroutineScope.launch {
+            adb.takeSnapshot(state.selectedDevice)
         }
     }
 

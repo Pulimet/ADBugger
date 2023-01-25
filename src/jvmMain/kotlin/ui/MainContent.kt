@@ -23,6 +23,7 @@ fun MainContent() {
     val model = remember { AppStore() }
     val state = model.state
     val isPackageSelected = state.selectedPackage != AppStore.NONE
+    val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
 
     LaunchedEffect(Unit) {
         model.onLaunchedEffect(coroutineScope)
@@ -47,6 +48,9 @@ fun MainContent() {
                 Button(onClick = { model.onTabClick(coroutineScope) }) { Text(text = "Tab") }
                 Button(onClick = { model.onEnterClick(coroutineScope) }) { Text(text = "Enter") }
                 Button(onClick = { model.onPowerClick(coroutineScope) }) { Text(text = "Power") }
+                Button(
+                    enabled = isDeviceSelected,
+                    onClick = { model.onSnapClick(coroutineScope) }) { Text(text = "Snap") }
             }
 
             Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {

@@ -83,6 +83,14 @@ class Adb {
         launchShell(selectedDevice, Commands.getPressPower())
     }
 
+    suspend fun takeSnapshot(selectedDevice: String) {
+        val filename = "snap_$selectedDevice.png"
+        launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
+        execCommand("adb -s $selectedDevice pull /sdcard/$filename")
+        launchShellCommand(selectedDevice, "rm /sdcard/$filename")
+    }
+
+
     suspend fun setDarkModeOff(selectedDevice: String) {
         launchShell(selectedDevice, Commands.getDarkModeOff())
     }
@@ -127,7 +135,6 @@ class Adb {
             request = ShellCommandRequest(command),
             serial = serial
         )
-
 
     private fun execCommand(command: String) {
         Runtime.getRuntime().exec(command)
