@@ -27,26 +27,46 @@ class Adb {
     )
 
     suspend fun openPackage(packageName: String, selectedDevice: String) {
-        val command = Commands.getLaunchCommandByPackageName(packageName)
-        if (selectedDevice == AppStore.ALL_DEVICES) {
-            launchShellCommandOnAllDevices(command)
-        } else {
-            launchShellCommand(selectedDevice, command)
-        }
+        launchShell(selectedDevice, Commands.getLaunchCommandByPackageName(packageName))
     }
 
     suspend fun closePackage(packageName: String, selectedDevice: String) {
-        val command = Commands.getCloseCommandByPackageName(packageName)
-        if (selectedDevice == AppStore.ALL_DEVICES) {
-            launchShellCommandOnAllDevices(command)
-        } else {
-            launchShellCommand(selectedDevice, command)
-        }
+        launchShell(selectedDevice,  Commands.getCloseCommandByPackageName(packageName))
     }
 
 
     suspend fun clearData(packageName: String, selectedDevice: String) {
-        val command = Commands.getClearDataCommandByPackageName(packageName)
+        launchShell(selectedDevice,  Commands.getClearDataCommandByPackageName(packageName))
+    }
+
+    suspend fun killAllEmulators() {
+        devices().forEach {
+            killEmulator(it.serial)
+        }
+    }
+
+    private fun killEmulator(serial: String) {
+        execCommand(Commands.getKillEmulator(serial))
+    }
+
+    suspend fun showHome(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getShowHome())
+    }
+
+    suspend fun pressBack(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getPressBack())
+    }
+
+    suspend fun pressTab(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getPressTab())
+    }
+
+    suspend fun pressEnter(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getPressEnter())
+    }
+
+    // Private
+    private suspend fun launchShell(selectedDevice: String, command: String) {
         if (selectedDevice == AppStore.ALL_DEVICES) {
             launchShellCommandOnAllDevices(command)
         } else {
@@ -54,13 +74,6 @@ class Adb {
         }
     }
 
-    suspend fun killAllEmulators() {
-        devices().forEach {
-            execCommand(Commands.getKillEmulator(it.serial))
-        }
-    }
-
-    // Private
     private suspend fun launchShellCommandOnAllDevices(command: String) {
         devices().forEach {
             launchShellCommand(it.serial, command)

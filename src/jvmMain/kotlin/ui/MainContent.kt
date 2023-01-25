@@ -46,6 +46,13 @@ fun MainContent() {
                 Button(onClick = { model.onClearDataClick(coroutineScope) }) { Text(text = "Clear Data") }
                 Button(onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear + Restart") }
             }
+
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = { model.onHomeClick(coroutineScope) }) { Text(text = "Home") }
+                Button(onClick = { model.onBackClick(coroutineScope) }) { Text(text = "Back") }
+                Button(onClick = { model.onTabClick(coroutineScope) }) { Text(text = "Tab") }
+                Button(onClick = { model.onEnterClick(coroutineScope) }) { Text(text = "Enter") }
+            }
         }
     }
 }

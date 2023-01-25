@@ -101,12 +101,37 @@ class AppStore {
         }
     }
 
+    fun onHomeClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.showHome(state.selectedDevice)
+        }
+    }
+
+    fun onBackClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressBack(state.selectedDevice)
+        }
+    }
+
+    fun onTabClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressTab(state.selectedDevice)
+        }
+    }
+
+    fun onEnterClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressEnter(state.selectedDevice)
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
+
 
     data class AppState(
         val devicesList: List<Device> = emptyList(),
