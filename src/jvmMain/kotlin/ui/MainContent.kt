@@ -52,6 +52,10 @@ fun MainContent() {
             Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = { model.onDayClick(coroutineScope) }) { Text(text = "Day") }
                 Button(onClick = { model.onNightClick(coroutineScope) }) { Text(text = "Night") }
+                Button(onClick = { model.onLeftClick(coroutineScope) }) { Text(text = "←") }
+                Button(onClick = { model.onUpClick(coroutineScope) }) { Text(text = "↑") }
+                Button(onClick = { model.onRightClick(coroutineScope) }) { Text(text = "→") }
+                Button(onClick = { model.onDownClick(coroutineScope) }) { Text(text = "↓") }
             }
 
             Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {

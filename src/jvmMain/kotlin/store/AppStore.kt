@@ -157,6 +157,30 @@ class AppStore {
         }
     }
 
+    fun onUpClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressUp(state.selectedDevice)
+        }
+    }
+
+    fun onDownClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressDown(state.selectedDevice)
+        }
+    }
+
+    fun onLeftClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressLeft(state.selectedDevice)
+        }
+    }
+
+    fun onRightClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressRight(state.selectedDevice)
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 

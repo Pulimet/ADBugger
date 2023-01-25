@@ -31,16 +31,16 @@ class Adb {
     }
 
     suspend fun closePackage(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice,  Commands.getCloseCommand(selectedPackage))
+        launchShell(selectedDevice, Commands.getCloseCommand(selectedPackage))
     }
 
 
     suspend fun clearData(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice,  Commands.getClearDataCommand(selectedPackage))
+        launchShell(selectedDevice, Commands.getClearDataCommand(selectedPackage))
     }
 
     suspend fun uninstall(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice,  Commands.getUninstallCommand(selectedPackage))
+        launchShell(selectedDevice, Commands.getUninstallCommand(selectedPackage))
     }
 
     suspend fun killAllEmulators() {
@@ -72,6 +72,7 @@ class Adb {
     suspend fun pressEnter(selectedDevice: String) {
         launchShell(selectedDevice, Commands.getPressEnter())
     }
+
     suspend fun pressPower(selectedDevice: String) {
         launchShell(selectedDevice, Commands.getPressPower())
     }
@@ -82,6 +83,22 @@ class Adb {
 
     suspend fun setDarkModeOn(selectedDevice: String) {
         launchShell(selectedDevice, Commands.getDarkModeOn())
+    }
+
+    suspend fun pressUp(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getUp())
+    }
+
+    suspend fun pressDown(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getDown())
+    }
+
+    suspend fun pressLeft(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getLeft())
+    }
+
+    suspend fun pressRight(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getRight())
     }
 
     // Private
