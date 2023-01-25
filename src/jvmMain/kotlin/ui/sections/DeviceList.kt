@@ -77,6 +77,7 @@ private fun AllOptionAndRefreshButton(
         Button(onClick = { model.onKillEmulatorClick(coroutineScope) }) { Text(text = "Kill Emu.") }
         Button(
             modifier = Modifier.padding(end = 8.dp),
+            enabled = !state.isDevicesLoading,
             onClick = { model.onGetDevicesListClick(coroutineScope) })
         { Text(text = "Refresh") }
     }

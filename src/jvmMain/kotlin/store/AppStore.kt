@@ -139,12 +139,31 @@ class AppStore {
         }
     }
 
+    fun onPowerClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressPower(state.selectedDevice)
+        }
+    }
+
+    fun onDayClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.setDarkModeOff(state.selectedDevice)
+        }
+    }
+
+    fun onNightClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.setDarkModeOn(state.selectedDevice)
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
+
 
     data class AppState(
         val devicesList: List<Device> = emptyList(),

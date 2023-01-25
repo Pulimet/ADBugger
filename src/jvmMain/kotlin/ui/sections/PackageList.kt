@@ -77,6 +77,7 @@ private fun AllOptionAndRefreshButton(
         )
         Button(
             modifier = Modifier.padding(horizontal = 8.dp),
+            enabled = !state.isPackagesLoading && state.selectedDevice != AppStore.ALL_DEVICES,
             onClick = { model.onGetPackageListClick(coroutineScope) })
         { Text(text = "Refresh") }
     }

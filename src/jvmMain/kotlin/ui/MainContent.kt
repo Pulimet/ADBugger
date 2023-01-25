@@ -22,6 +22,7 @@ fun MainContent() {
 
     val model = remember { AppStore() }
     val state = model.state
+    val isPackageSelected = state.selectedPackage != AppStore.NONE
 
     LaunchedEffect(Unit) {
         model.onLaunchedEffect(coroutineScope)
@@ -40,21 +41,40 @@ fun MainContent() {
                 )
             }
             Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
-                Button(onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
-                Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
-                Button(onClick = { model.onRestartClick(coroutineScope) }) { Text(text = "Restart") }
-                Button(onClick = { model.onClearDataClick(coroutineScope) }) { Text(text = "Clear Data") }
-                Button(onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear&Restart") }
-                Button(onClick = { model.onUninstallClick(coroutineScope) }) { Text(text = "Uninstall") }
-            }
-
-            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = { model.onHomeClick(coroutineScope) }) { Text(text = "Home") }
                 Button(onClick = { model.onSettingsClick(coroutineScope) }) { Text(text = "Settings") }
                 Button(onClick = { model.onBackClick(coroutineScope) }) { Text(text = "Back") }
                 Button(onClick = { model.onTabClick(coroutineScope) }) { Text(text = "Tab") }
                 Button(onClick = { model.onEnterClick(coroutineScope) }) { Text(text = "Enter") }
+                Button(onClick = { model.onPowerClick(coroutineScope) }) { Text(text = "Power") }
             }
+
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                Button(onClick = { model.onDayClick(coroutineScope) }) { Text(text = "Day") }
+                Button(onClick = { model.onNightClick(coroutineScope) }) { Text(text = "Night") }
+            }
+
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    enabled = isPackageSelected,
+                    onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
+                Button(
+                    enabled = isPackageSelected,
+                    onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
+                Button(
+                    enabled = isPackageSelected,
+                    onClick = { model.onRestartClick(coroutineScope) }) { Text(text = "Restart") }
+                Button(
+                    enabled = isPackageSelected,
+                    onClick = { model.onClearDataClick(coroutineScope) }) { Text(text = "Clear Data") }
+                Button(
+                    enabled = isPackageSelected,
+                    onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear&Restart") }
+                Button(
+                    enabled = isPackageSelected,
+                    onClick = { model.onUninstallClick(coroutineScope) }) { Text(text = "Uninstall") }
+            }
+
         }
     }
 }

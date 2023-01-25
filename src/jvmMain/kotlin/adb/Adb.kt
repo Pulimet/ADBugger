@@ -72,6 +72,17 @@ class Adb {
     suspend fun pressEnter(selectedDevice: String) {
         launchShell(selectedDevice, Commands.getPressEnter())
     }
+    suspend fun pressPower(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getPressPower())
+    }
+
+    suspend fun setDarkModeOff(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getDarkModeOff())
+    }
+
+    suspend fun setDarkModeOn(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getDarkModeOn())
+    }
 
     // Private
     private suspend fun launchShell(selectedDevice: String, command: String) {

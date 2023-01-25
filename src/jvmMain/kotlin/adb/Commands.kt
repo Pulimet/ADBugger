@@ -2,6 +2,7 @@ package adb
 
 object Commands {
     private const val KEYCODE_BACK = 4
+    private const val KEYCODE_POWER = 26
     private const val KEYCODE_TAB = 61
     private const val KEYCODE_ENTER = 66
 
@@ -15,10 +16,13 @@ object Commands {
     fun getShowSettings() = "am start com.android.settings"
     fun getPressBack() = getInputKeyEventFor(KEYCODE_BACK)
     fun getPressTab() = getInputKeyEventFor(KEYCODE_TAB)
-
     fun getPressEnter() =  getInputKeyEventFor(KEYCODE_ENTER)
-    //const val killEmulatorsCommand = "adb devices | grep emulator | cut -f1 | while read line; do adb -s \$line emu kill; done"
+    fun getPressPower() =  getInputKeyEventFor(KEYCODE_POWER)
+    fun getDarkModeOff() = "cmd uimode night no"
+    fun getDarkModeOn() = "cmd uimode night yes"
     fun getKillEmulator(serial: String) = "adb -s $serial emu kill"
+
+
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"
 }
