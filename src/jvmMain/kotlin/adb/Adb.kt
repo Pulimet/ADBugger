@@ -115,6 +115,14 @@ class Adb {
         launchShell(selectedDevice, Commands.getRight())
     }
 
+    suspend fun pressDelete(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getDelete())
+    }
+
+    suspend fun sendText(selectedDevice: String, value: String) {
+        launchShell(selectedDevice, Commands.sendTextCommand(value))
+    }
+
     // Private
     private suspend fun launchShell(selectedDevice: String, command: String) {
         if (selectedDevice == AppStore.ALL_DEVICES) {
@@ -139,7 +147,6 @@ class Adb {
     private fun execCommand(command: String) {
         Runtime.getRuntime().exec(command)
     }
-
     private suspend fun devices() = adb.execute(request = ListDevicesRequest())
 
 }

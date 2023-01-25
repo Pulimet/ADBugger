@@ -1,5 +1,6 @@
 package ui.widgets
 
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -13,6 +14,8 @@ fun SearchView(
 ) {
     TextField(
         modifier = modifier,
+        singleLine = true,
+        label = { Text("Search your package") },
         value = state.value,
         onValueChange = { value -> state.value = value })
 }

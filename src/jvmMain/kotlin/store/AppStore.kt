@@ -187,13 +187,24 @@ class AppStore {
         }
     }
 
+    fun onBackSpaceClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.pressDelete(state.selectedDevice)
+        }
+    }
+
+    fun onSendTextClick(coroutineScope: CoroutineScope, value: String) {
+        coroutineScope.launch {
+            adb.sendText(state.selectedDevice, value)
+        }
+    }
+
     // Private
     private fun initialState() = AppState()
 
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
-
 
     data class AppState(
         val devicesList: List<DeviceInfo> = emptyList(),

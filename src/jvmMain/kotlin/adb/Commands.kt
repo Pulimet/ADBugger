@@ -9,6 +9,7 @@ object Commands {
     private const val KEYCODE_POWER = 26
     private const val KEYCODE_TAB = 61
     private const val KEYCODE_ENTER = 66
+    private const val KEYCODE_DEL = 67
 
     fun getLaunchCommand(packageName: String) =
         "monkey -p $packageName -c android.intent.category.LAUNCHER 1"
@@ -26,10 +27,11 @@ object Commands {
     fun getDown() = getInputKeyEventFor(KEYCODE_DPAD_DOWN)
     fun getLeft() = getInputKeyEventFor(KEYCODE_DPAD_LEFT)
     fun getRight() = getInputKeyEventFor(KEYCODE_DPAD_RIGHT)
+    fun getDelete() = getInputKeyEventFor(KEYCODE_DEL)
     fun getDarkModeOff() = "cmd uimode night no"
     fun getDarkModeOn() = "cmd uimode night yes"
     fun getKillEmulator(serial: String) = "adb -s $serial emu kill"
-
+    fun sendTextCommand(value: String) = "input text $value"
 
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"
