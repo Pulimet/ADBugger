@@ -101,9 +101,23 @@ class AppStore {
         }
     }
 
+    fun onUninstallClick(coroutineScope: CoroutineScope) {
+        if (state.selectedPackage == NONE) return
+        coroutineScope.launch {
+            adb.uninstall(state.selectedPackage, state.selectedDevice)
+        }
+    }
+
+
     fun onHomeClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             adb.showHome(state.selectedDevice)
+        }
+    }
+
+    fun onSettingsClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.showSettings(state.selectedDevice)
         }
     }
 
@@ -131,7 +145,6 @@ class AppStore {
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
-
 
     data class AppState(
         val devicesList: List<Device> = emptyList(),

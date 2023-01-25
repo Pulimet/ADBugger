@@ -44,11 +44,13 @@ fun MainContent() {
                 Button(onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
                 Button(onClick = { model.onRestartClick(coroutineScope) }) { Text(text = "Restart") }
                 Button(onClick = { model.onClearDataClick(coroutineScope) }) { Text(text = "Clear Data") }
-                Button(onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear + Restart") }
+                Button(onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear&Restart") }
+                Button(onClick = { model.onUninstallClick(coroutineScope) }) { Text(text = "Uninstall") }
             }
 
             Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = { model.onHomeClick(coroutineScope) }) { Text(text = "Home") }
+                Button(onClick = { model.onSettingsClick(coroutineScope) }) { Text(text = "Settings") }
                 Button(onClick = { model.onBackClick(coroutineScope) }) { Text(text = "Back") }
                 Button(onClick = { model.onTabClick(coroutineScope) }) { Text(text = "Tab") }
                 Button(onClick = { model.onEnterClick(coroutineScope) }) { Text(text = "Enter") }

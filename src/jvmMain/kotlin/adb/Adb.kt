@@ -26,17 +26,21 @@ class Adb {
         serial = serial
     )
 
-    suspend fun openPackage(packageName: String, selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getLaunchCommandByPackageName(packageName))
+    suspend fun openPackage(selectedPackage: String, selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
     }
 
-    suspend fun closePackage(packageName: String, selectedDevice: String) {
-        launchShell(selectedDevice,  Commands.getCloseCommandByPackageName(packageName))
+    suspend fun closePackage(selectedPackage: String, selectedDevice: String) {
+        launchShell(selectedDevice,  Commands.getCloseCommand(selectedPackage))
     }
 
 
-    suspend fun clearData(packageName: String, selectedDevice: String) {
-        launchShell(selectedDevice,  Commands.getClearDataCommandByPackageName(packageName))
+    suspend fun clearData(selectedPackage: String, selectedDevice: String) {
+        launchShell(selectedDevice,  Commands.getClearDataCommand(selectedPackage))
+    }
+
+    suspend fun uninstall(selectedPackage: String, selectedDevice: String) {
+        launchShell(selectedDevice,  Commands.getUninstallCommand(selectedPackage))
     }
 
     suspend fun killAllEmulators() {
@@ -51,6 +55,10 @@ class Adb {
 
     suspend fun showHome(selectedDevice: String) {
         launchShell(selectedDevice, Commands.getShowHome())
+    }
+
+    suspend fun showSettings(selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getShowSettings())
     }
 
     suspend fun pressBack(selectedDevice: String) {
