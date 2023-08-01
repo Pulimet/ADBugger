@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.compose")
 }
 
-group = "net.alexandroid"
+group = "net.alexandroid.adbugger"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -22,8 +22,8 @@ kotlin {
     sourceSets {
         val jvmMain by getting {
             dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation("com.malinskiy.adam:adam:0.4.8")
+                implementation(compose.desktop.macos_arm64)
+                implementation("com.malinskiy.adam:adam:0.5.1")
             }
         }
         val jvmTest by getting
@@ -31,6 +31,18 @@ kotlin {
 }
 
 compose.desktop {
+    application {
+        mainClass = "MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "ADBugger"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+
+// ---
+/*compose.desktop {
     application {
         mainClass = "MainKt"
         javaHome = System.getenv("JDK_15")
@@ -62,4 +74,4 @@ compose.desktop {
             }
         }
     }
-}
+}*/

@@ -21,7 +21,7 @@ class Adb {
     }
 
     suspend fun devicesInfo() = devices().map {
-        val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.trim()
+        val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
         DeviceInfo(it.serial, it.state, avdName)
     }
 
