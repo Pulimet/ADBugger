@@ -33,26 +33,15 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "MainKt"
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "ADBugger"
-            packageVersion = "1.0.0"
-        }
-    }
-}
-
-// ---
-/*compose.desktop {
-    application {
-        mainClass = "MainKt"
-        javaHome = System.getenv("JDK_15")
+        javaHome = System.getenv("JDK_18")
         buildTypes.release.proguard {
             obfuscate.set(false)
+            optimize.set(false)
             configurationFiles.from(project.file("rules.pro"))
         }
         nativeDistributions {
             outputBaseDir.set(project.buildDir.resolve("output"))
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            targetFormats(TargetFormat.Dmg/*, TargetFormat.Msi*/)
             packageName = "ADBugger"
             packageVersion = "1.0.0"
 
@@ -74,4 +63,4 @@ compose.desktop {
             }
         }
     }
-}*/
+}
