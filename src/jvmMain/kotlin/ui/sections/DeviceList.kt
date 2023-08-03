@@ -78,7 +78,7 @@ private fun AllOptionAndRefreshButton(
         Button(
             modifier = Modifier.padding(end = 8.dp),
             enabled = !state.isDevicesLoading,
-            onClick = { model.onGetDevicesListClick(coroutineScope) })
+            onClick = { model.getDevicesList(coroutineScope) })
         { Text(text = "Refresh") }
     }
 }

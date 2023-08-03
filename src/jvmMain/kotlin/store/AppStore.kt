@@ -24,11 +24,14 @@ class AppStore {
 
     // Public
     fun onLaunchedEffect(coroutineScope: CoroutineScope) {
-        coroutineScope.launch { adb.startAdbInteract() }
+        coroutineScope.launch {
+            adb.startAdbInteract()
+            getDevicesList(this)
+        }
     }
 
     // User Actions
-    fun onGetDevicesListClick(coroutineScope: CoroutineScope) {
+    fun getDevicesList(coroutineScope: CoroutineScope) {
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
             delay(500)

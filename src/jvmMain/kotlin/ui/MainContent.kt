@@ -26,7 +26,7 @@ fun MainContent() {
     val isPackageSelected = state.selectedPackage != AppStore.NONE
     val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
 
-    val textInputState = remember { mutableStateOf(TextFieldValue("")) }
+    val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
 
     LaunchedEffect(Unit) {
         model.onLaunchedEffect(coroutineScope)
@@ -53,11 +53,11 @@ fun MainContent() {
                 TextField(
                     modifier = Modifier.padding(8.dp),
                     singleLine = true,
-                    value = textInputState.value,
+                    value = textInputSendTextState.value,
                     label = { Text("Send text to device/s") },
-                    onValueChange = { value -> textInputState.value = value }
+                    onValueChange = { value -> textInputSendTextState.value = value }
                 )
-                Button(onClick = { model.onSendTextClick(coroutineScope, textInputState.value.text) }) {
+                Button(onClick = { model.onSendTextClick(coroutineScope, textInputSendTextState.value.text) }) {
                     Text(text = "Send")
                 }
                 Button(onClick = { model.onBackSpaceClick(coroutineScope) }, modifier = Modifier.padding(start = 8.dp)) {
