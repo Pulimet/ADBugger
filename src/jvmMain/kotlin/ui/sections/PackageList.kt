@@ -1,12 +1,16 @@
 package ui.sections
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
+import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -14,15 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
+import ui.theme.MyColors
 import ui.widgets.LoadingSpinner
 import ui.widgets.SearchView
-import ui.widgets.SectionTitle
 
 @Composable
 fun PackageListSection(
@@ -31,11 +34,16 @@ fun PackageListSection(
     state: AppStore.AppState,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier) {
-        Content(state, model, coroutineScope)
-        SectionTitle("Package selection")
+    Box(
+        modifier = modifier
+            .padding(12.dp, 6.dp, 12.dp, 12.dp)
+            .background(MyColors.bg2)
+    ) {
+
         if (state.isPackagesLoading) {
-            LoadingSpinner()
+            LoadingSpinner(Modifier.padding(4.dp).fillMaxWidth())
+        } else {
+            Content(state, model, coroutineScope)
         }
     }
 }
@@ -48,10 +56,7 @@ private fun Content(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(16.dp, 26.dp, 16.dp, 16.dp)
-            .border(1.dp, Color.LightGray, RectangleShape),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AllOptionAndRefreshButton(state, model, coroutineScope)
@@ -67,7 +72,7 @@ private fun AllOptionAndRefreshButton(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth().border(width = 1.dp, color = Color.LightGray)
+        modifier = Modifier.fillMaxWidth()
     ) {
         val nonePackage = Package(AppStore.NONE)
         PackageItem(
@@ -88,9 +93,12 @@ private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> 
     val listState = rememberLazyListState()
     val textState = remember { mutableStateOf(TextFieldValue("")) }
     val query = textState.value.text
-    SearchView(state = textState, modifier = Modifier.fillMaxWidth())
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    if (state.packageList.isNotEmpty()) {
+        SearchView(state = textState, modifier = Modifier.fillMaxWidth())
+    }
+
+    Box(modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp)) {
         LazyColumn(state = listState) {
             items(
                 state.packageList.filter { it.name.contains(query, ignoreCase = true) },
@@ -99,12 +107,14 @@ private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> 
                 PackageItem(item, state.selectedPackage == item.name, { onClicked(it) }, Modifier.fillMaxWidth())
             }
         }
-        VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-            adapter = rememberScrollbarAdapter(
-                scrollState = listState
+        if (state.packageList.size > 2) {
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                adapter = rememberScrollbarAdapter(
+                    scrollState = listState
+                )
             )
-        )
+        }
     }
 }
 
@@ -119,7 +129,12 @@ private fun PackageItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.clickable(onClick = { onClicked(item) })
     ) {
-        RadioButton(selected = isSelected, { onClicked(item) })
-        Text(item.name)
+        RadioButton(
+            selected = isSelected, onClick = { onClicked(item) }, colors = RadioButtonDefaults.colors(
+                selectedColor = Color.White,
+                unselectedColor = Color.LightGray
+            )
+        )
+        Text(text = item.name, color = Color.White)
     }
 }
