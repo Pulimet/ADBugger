@@ -13,8 +13,8 @@ import ui.theme.MyColors
 
 fun main() = application {
     val state = rememberWindowState(
-        width = 500.dp,
-        height = Dp.Unspecified,
+        width = 450.dp,
+        height = 800.dp,
         position = WindowPosition(alignment = Alignment.Center)
     )
 

@@ -5,14 +5,26 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.KeyboardArrowLeft
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import compose.icons.LineaIcons
+import compose.icons.TablerIcons
+import compose.icons.WeatherIcons
+import compose.icons.lineaicons.Arrows
+import compose.icons.lineaicons.arrows.KeyboardTab
+import compose.icons.tablericons.ArrowBack
+import compose.icons.tablericons.Power
+import compose.icons.weathericons.DaySunny
+import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
+import ui.widgets.BtnIcon
 
 @Composable
 fun DeviceCommands(
@@ -22,34 +34,60 @@ fun DeviceCommands(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp).background(MyColors.bg2)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp).background(MyColors.bg2)
     ) {
-        Button(onClick = { model.onHomeClick(coroutineScope) }) { Text(text = "Home") }
-        Button(onClick = { model.onSettingsClick(coroutineScope) }) { Text(text = "Settings") }
-        Button(onClick = { model.onBackClick(coroutineScope) }) { Text(text = "Back") }
-        Button(onClick = { model.onTabClick(coroutineScope) }) { Text(text = "Tab") }
-    }
+        BtnIcon(
+            icon = Icons.Rounded.Home,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onHomeClick(coroutineScope) },
+            description = "Home"
+        )
+        BtnIcon(
+            icon = Icons.Rounded.Settings,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onSettingsClick(coroutineScope) },
+            description = "Settings"
+        )
+        BtnIcon(
+            icon = Icons.Rounded.KeyboardArrowLeft,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onBackClick(coroutineScope) },
+            description = "Back"
+        )
+        BtnIcon(
+            icon = LineaIcons.Arrows.KeyboardTab,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onTabClick(coroutineScope) },
+            description = "Tab"
+        )
+        BtnIcon(
+            icon = TablerIcons.ArrowBack,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onEnterClick(coroutineScope) },
+            description = "Enter"
+        )
+        BtnIcon(
+            icon = TablerIcons.Power,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onPowerClick(coroutineScope) },
+            description = "Power"
+        )
+        BtnIcon(
+            icon = WeatherIcons.DaySunny,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onDayClick(coroutineScope) },
+            description = "Day"
+        )
+        BtnIcon(
+            icon = WeatherIcons.NightClear,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onNightClick(coroutineScope) },
+            description = "Night"
+        )
 
-    Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp).background(MyColors.bg2)
-    ) {
-        Button(onClick = { model.onEnterClick(coroutineScope) }) { Text(text = "Enter") }
-        Button(onClick = { model.onPowerClick(coroutineScope) }) { Text(text = "Power") }
         // TODO Investigate why it not working
         /*Button(
             enabled = isDeviceSelected,
             onClick = { model.onSnapClick(coroutineScope) }) { Text(text = "Snap") }*/
-        Button(onClick = { model.onDayClick(coroutineScope) }) { Text(text = "Day") }
-        Button(onClick = { model.onNightClick(coroutineScope) }) { Text(text = "Night") }
-    }
-    Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp).background(MyColors.bg2)
-    ) {
-        Button(onClick = { model.onLeftClick(coroutineScope) }) { Text(text = "←") }
-        Button(onClick = { model.onUpClick(coroutineScope) }) { Text(text = "↑") }
-        Button(onClick = { model.onRightClick(coroutineScope) }) { Text(text = "→") }
-        Button(onClick = { model.onDownClick(coroutineScope) }) { Text(text = "↓") }
     }
 }

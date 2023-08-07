@@ -14,8 +14,8 @@ import model.DeviceInfo
 class AppStore {
 
     companion object {
-        const val ALL_DEVICES = "All"
-        const val NONE = "None"
+        const val ALL_DEVICES = "All Devices"
+        const val NONE = "Package not selected"
     }
 
     private val adb = Adb()

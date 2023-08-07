@@ -12,16 +12,23 @@ import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.device.DeviceState
+import compose.icons.LineAwesomeIcons
+import compose.icons.lineawesomeicons.PowerOffSolid
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import store.AppStore
 import ui.theme.MyColors
+import ui.widgets.BtnIcon
 import ui.widgets.LoadingSpinner
 
 
@@ -76,13 +83,23 @@ private fun AllOptionAndRefreshButton(
                 allDevices,
                 state.selectedDevice == AppStore.ALL_DEVICES,
                 { model.onDeviceClick(allDevices) },
+                Modifier.weight(1f)
             )
-            Button(onClick = { model.onKillEmulatorClick(coroutineScope) }) { Text(text = "Kill Emu.") }
-            Button(
-                modifier = Modifier.padding(end = 8.dp),
+
+            BtnIcon(
+                icon = LineAwesomeIcons.PowerOffSolid,
+                onClick = { model.onKillEmulatorClick(coroutineScope) },
+                description = "Kill All Emulators"
+            )
+
+            BtnIcon(
+                icon = Icons.Rounded.Refresh,
+                modifier = Modifier.padding(horizontal = 8.dp),
                 enabled = !state.isDevicesLoading,
-                onClick = { model.getDevicesList(coroutineScope) })
-            { Text(text = "Refresh") }
+                onClick = { model.getDevicesList(coroutineScope) },
+                description = "Refresh Device List"
+            )
+
         }
     }
 }

@@ -1,16 +1,16 @@
 package ui
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.sections.*
 import ui.theme.MyColors
@@ -37,14 +37,10 @@ fun MainContent() {
                 coroutineScope, model, state,
                 modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
             )
-            PackageListSection(
-                coroutineScope, model, state,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
-            )
-
-            SendTextToDevices(textInputSendTextState, model, coroutineScope)
             DeviceCommands(model, coroutineScope, isDeviceSelected)
-            PackageCommands(isPackageSelected, model, coroutineScope)
+            ArrowsCommands(model, coroutineScope, isDeviceSelected)
+            SendTextToDevices(textInputSendTextState, model, coroutineScope)
+            PackageListAndCommands(coroutineScope, model, state, isPackageSelected)
         }
     }
 }

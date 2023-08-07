@@ -24,6 +24,22 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.macos_arm64)
                 implementation("com.malinskiy.adam:adam:0.5.1")
+
+                // Icons Packs
+                listOf(
+                    "simple-icons",
+                    "feather",
+                    "tabler-icons",
+                    "eva-icons",
+                    "font-awesome",
+                    "octicons",
+                    "linea",
+                    "line-awesome",
+                    "erikflowers-weather-icons",
+                    "css-gg"
+                ).forEach {
+                    implementation("br.com.devsrsouza.compose.icons.jetbrains:$it:1.0.0")
+                }
             }
         }
         val jvmTest by getting
@@ -33,7 +49,8 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "MainKt"
-        javaHome = System.getenv("JDK_18")
+        //javaHome = System.getenv("JDK_18")
+        javaHome = "/Users/ak3140/Library/Java/JavaVirtualMachines/openjdk-18.0.1.1/Contents/Home"
         buildTypes.release.proguard {
             obfuscate.set(false)
             optimize.set(false)

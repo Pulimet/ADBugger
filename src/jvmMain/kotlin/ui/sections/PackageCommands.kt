@@ -17,10 +17,10 @@ fun PackageCommands(
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp).background(MyColors.bg2)
+            modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
         ) {
             Button(
                 enabled = isPackageSelected,
@@ -34,7 +34,7 @@ fun PackageCommands(
         }
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp).background(MyColors.bg2)
+            modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
         ) {
             Button(
                 enabled = isPackageSelected,
