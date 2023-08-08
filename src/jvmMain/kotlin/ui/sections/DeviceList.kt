@@ -8,13 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
-import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,7 +33,6 @@ import ui.widgets.LoadingSpinner
 fun DeviceListSection(
     coroutineScope: CoroutineScope,
     model: AppStore,
-    state: AppStore.AppState,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -46,31 +42,30 @@ fun DeviceListSection(
             .fillMaxWidth()
             .heightIn(min = 50.dp)
     ) {
-        Content(state, model, coroutineScope)
+        Content(model, coroutineScope)
     }
 }
 
 
 @Composable
 private fun Content(
-    state: AppStore.AppState,
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AllOptionAndRefreshButton(state, model, coroutineScope)
-        DeviceList(state) { model.onDeviceClick(it) }
+        AllOptionAndRefreshButton(model, coroutineScope)
+        DeviceList(model.state) { model.onDeviceClick(it) }
     }
 }
 
 @Composable
 private fun AllOptionAndRefreshButton(
-    state: AppStore.AppState,
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
+    val state = model.state
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()

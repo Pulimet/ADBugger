@@ -33,9 +33,9 @@ import ui.widgets.SearchView
 fun PackageListSection(
     coroutineScope: CoroutineScope,
     model: AppStore,
-    state: AppStore.AppState,
     modifier: Modifier = Modifier
 ) {
+    val state = model.state
     Box(
         modifier = modifier
             .padding(horizontal = 12.dp, vertical = 6.dp)
@@ -45,17 +45,17 @@ fun PackageListSection(
         if (state.isPackagesLoading) {
             LoadingSpinner(Modifier.padding(4.dp).fillMaxWidth())
         } else {
-            Content(state, model, coroutineScope)
+            Content(model, coroutineScope)
         }
     }
 }
 
 @Composable
 private fun Content(
-    state: AppStore.AppState,
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
+    val state = model.state
     Column(
         modifier = Modifier
             .fillMaxWidth(),

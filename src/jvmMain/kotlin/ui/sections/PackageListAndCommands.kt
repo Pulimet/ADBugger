@@ -14,7 +14,6 @@ import ui.widgets.ExpandableCard
 fun PackageListAndCommands(
     coroutineScope: CoroutineScope,
     model: AppStore,
-    state: AppStore.AppState,
     isPackageSelected: Boolean,
 ) {
     ExpandableCard(
@@ -24,8 +23,7 @@ fun PackageListAndCommands(
         )
     ) {
         PackageListSection(
-            coroutineScope, model, state,
-            modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
+            coroutineScope, model, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
         )
         PackageCommands(isPackageSelected, model, coroutineScope)
     }

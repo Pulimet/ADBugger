@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -21,6 +22,7 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.Minimize2
 import ui.theme.MyColors
+import ui.theme.bounceClick
 
 @Composable
 fun ExpandableCard(
@@ -31,11 +33,11 @@ fun ExpandableCard(
     val measurePolicy = customMeasurePolicy()
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier) {
+    Box {
         if (!expanded) {
-            Box(modifier = Modifier.clickable { expanded = !expanded }) {
+            Box(modifier = Modifier.clickable { expanded = !expanded }.padding(vertical = 8.dp, horizontal = 12.dp)) {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(top = 2.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     text = title,
                     fontSize = 14.sp,
@@ -45,12 +47,14 @@ fun ExpandableCard(
                     FeatherIcons.ChevronDown,
                     contentDescription = "Expand",
                     tint = Color.White,
-                    modifier = Modifier.align(Alignment.TopEnd)
+                    modifier = Modifier.size(16.dp).align(Alignment.TopEnd)
+                        .bounceClick(onClick = { expanded = !expanded })
                 )
             }
         }
 
         Card(
+            modifier = modifier,
             backgroundColor = MyColors.bg2,
             elevation = 6.dp,
             shape = RoundedCornerShape(8.dp)
@@ -65,7 +69,8 @@ fun ExpandableCard(
                     FeatherIcons.Minimize2,
                     contentDescription = "Collapse",
                     tint = Color.White,
-                    modifier = Modifier.padding(8.dp).align(Alignment.TopEnd).clickable { expanded = !expanded }
+                    modifier = Modifier.padding(4.dp).size(16.dp).align(Alignment.TopEnd)
+                        .bounceClick(onClick = { expanded = !expanded })
                 )
             }
         }

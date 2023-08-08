@@ -24,6 +24,8 @@ import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
+import ui.theme.bounceClick
+import ui.theme.pressClickEffect
 import ui.widgets.BtnIcon
 
 @Composable
@@ -38,49 +40,49 @@ fun DeviceCommands(
     ) {
         BtnIcon(
             icon = Icons.Rounded.Home,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onHomeClick(coroutineScope) },
             description = "Home"
         )
         BtnIcon(
             icon = Icons.Rounded.Settings,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onSettingsClick(coroutineScope) },
             description = "Settings"
         )
         BtnIcon(
             icon = Icons.Rounded.KeyboardArrowLeft,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onBackClick(coroutineScope) },
             description = "Back"
         )
         BtnIcon(
             icon = LineaIcons.Arrows.KeyboardTab,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onTabClick(coroutineScope) },
             description = "Tab"
         )
         BtnIcon(
             icon = TablerIcons.ArrowBack,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onEnterClick(coroutineScope) },
             description = "Enter"
         )
         BtnIcon(
             icon = TablerIcons.Power,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onPowerClick(coroutineScope) },
             description = "Power"
         )
         BtnIcon(
             icon = WeatherIcons.DaySunny,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onDayClick(coroutineScope) },
             description = "Day"
         )
         BtnIcon(
             icon = WeatherIcons.NightClear,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).bounceClick(),
             onClick = { model.onNightClick(coroutineScope) },
             description = "Night"
         )

@@ -32,6 +32,8 @@ object Commands {
     fun getDarkModeOn() = "cmd uimode night yes"
     fun getKillEmulator(serial: String) = "adb -s $serial emu kill"
     fun sendTextCommand(value: String) = "input text $value"
+    fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
+    fun adbReverseList() = "adb reverse --list"
 
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"

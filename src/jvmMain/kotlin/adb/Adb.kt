@@ -9,6 +9,9 @@ import com.malinskiy.adam.request.shell.v2.ShellCommandRequest
 import com.malinskiy.adam.request.shell.v2.ShellCommandResult
 import model.DeviceInfo
 import store.AppStore
+import java.io.BufferedReader
+import java.io.InputStreamReader
+
 
 class Adb {
 
@@ -123,6 +126,16 @@ class Adb {
         launchShell(selectedDevice, Commands.sendTextCommand(value))
     }
 
+    suspend fun reversePort(port: Int, log: (String) -> Unit) {
+        devices().forEach {
+            execCommand(Commands.adbReverse(it.serial, port), log)
+        }
+    }
+
+    fun reverseList(log: (String) -> Unit) {
+        execCommand(Commands.adbReverseList(), log)
+    }
+
     // Private
     private suspend fun launchShell(selectedDevice: String, command: String) {
         if (selectedDevice == AppStore.ALL_DEVICES) {
@@ -144,9 +157,17 @@ class Adb {
             serial = serial
         )
 
-    private fun execCommand(command: String) {
-        Runtime.getRuntime().exec(command)
+    private fun execCommand(command: String, log: (String) -> Unit = {}) {
+        log(command)
+        val p = Runtime.getRuntime().exec(arrayOf("/bin/zsh", "-c", "~/Library/Android/sdk/platform-tools/$command"))
+        p.waitFor()
+        val bufferedReader = BufferedReader(InputStreamReader(p.inputStream))
+        var line: String?
+        while (bufferedReader.readLine().also { line = it } != null) {
+            line?.let { log(it) }
+        }
     }
+
     private suspend fun devices() = adb.execute(request = ListDevicesRequest())
 
 }

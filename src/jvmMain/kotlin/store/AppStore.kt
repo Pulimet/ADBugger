@@ -202,7 +202,31 @@ class AppStore {
         }
     }
 
+    fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
+        if (port != null) {
+            coroutineScope.launch {
+                adb.reversePort(port, ::log)
+            }
+        }
+    }
+
+    fun onAdbReverseList(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.reverseList(::log)
+        }
+    }
+
+    fun clearLogs() {
+        setState { copy(logs = arrayListOf()) }
+    }
+
     // Private
+    private fun log(log: String) {
+        val newList = ArrayList(state.logs)
+        newList.add(log)
+        setState { copy(logs = newList) }
+    }
+
     private fun initialState() = AppState()
 
     private inline fun setState(update: AppState.() -> AppState) {
@@ -216,5 +240,6 @@ class AppStore {
         val selectedPackage: String = NONE,
         val isDevicesLoading: Boolean = false,
         val isPackagesLoading: Boolean = false,
+        val logs: ArrayList<String> = arrayListOf()
     )
 }

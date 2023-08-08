@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -21,19 +21,20 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
+import ui.theme.bounceClick
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 
 
 @Composable
-fun SendTextToDevices(
+fun PortForwarding(
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
-    val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
+    val textInputCustomPortState = remember { mutableStateOf(TextFieldValue("")) }
 
     ExpandableCard(
-        title = "Send text to device",
+        title = "Port forwarding / adb reverse",
         modifier = Modifier.padding(
             horizontal = 12.dp, vertical = 4.dp
         )
@@ -48,33 +49,30 @@ fun SendTextToDevices(
                 modifier = Modifier.padding(8.dp).weight(1f),
                 singleLine = true,
                 textStyle = TextStyle(color = Color.White),
-                value = textInputSendTextState.value,
-                label = { Text("Send text to device/s") },
-                onValueChange = { value -> textInputSendTextState.value = value }
+                value = textInputCustomPortState.value,
+                label = { Text("Custom port") },
+                onValueChange = { value -> textInputCustomPortState.value = value }
             )
 
             BtnIcon(
                 icon = Icons.Rounded.Send,
                 modifier = Modifier.padding(horizontal = 8.dp),
-                enabled = textInputSendTextState.value.text.isNotEmpty(),
-                onClick = { model.onSendTextClick(coroutineScope, textInputSendTextState.value.text) },
+                enabled = textInputCustomPortState.value.text.isNotEmpty(),
+                onClick = { model.onAdbReverse(coroutineScope, textInputCustomPortState.value.text.toIntOrNull()) },
                 description = "Send text to device"
             )
-
-            BtnIcon(
-                icon = Icons.Rounded.ArrowBack,
-                modifier = Modifier.padding(start = 4.dp, end = 16.dp),
-                enabled = textInputSendTextState.value.text.isNotEmpty(),
-                onClick = {
-                    model.onBackSpaceClick(coroutineScope)
-                    val text = textInputSendTextState.value.text
-                    val textLength = text.length
-                    if (textLength > 0) {
-                        textInputSendTextState.value = TextFieldValue(text.substring(0, textLength - 1))
-                    }
-                },
-                description = "Backspace"
-            )
+            Button(
+                onClick = { model.onAdbReverse(coroutineScope, 8081) },
+                modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
+            ) { Text(text = "8081") }
+            Button(
+                onClick = { model.onAdbReverse(coroutineScope, 9090) },
+                modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
+            ) { Text(text = "9090") }
+            Button(
+                onClick = { model.onAdbReverseList(coroutineScope) },
+                modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
+            ) { Text(text = "List") }
         }
     }
 }
