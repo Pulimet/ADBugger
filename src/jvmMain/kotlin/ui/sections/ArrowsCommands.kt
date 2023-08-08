@@ -24,7 +24,6 @@ import ui.widgets.ExpandableCard
 fun ArrowsCommands(
     model: AppStore,
     coroutineScope: CoroutineScope,
-    isDeviceSelected: Boolean
 ) {
     ExpandableCard(
         title = "Keyboard Arrows",

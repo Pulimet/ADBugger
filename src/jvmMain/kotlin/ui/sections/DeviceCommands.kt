@@ -12,9 +12,12 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import compose.icons.LineaIcons
 import compose.icons.Octicons
 import compose.icons.TablerIcons
 import compose.icons.WeatherIcons
+import compose.icons.lineaicons.Basic
+import compose.icons.lineaicons.basic.Photo
 import compose.icons.octicons.ArrowSwitch24
 import compose.icons.tablericons.ArrowBack
 import compose.icons.tablericons.Power
@@ -91,11 +94,13 @@ fun DeviceCommands(
                 onClick = { model.onNightClick(coroutineScope) },
                 description = "Night"
             )
-
-            // TODO Investigate why it not working
-            /*Button(
-            enabled = isDeviceSelected,
-            onClick = { model.onSnapClick(coroutineScope) }) { Text(text = "Snap") }*/
+            BtnIcon(
+                icon = LineaIcons.Basic.Photo,
+                modifier = Modifier.padding(horizontal = 4.dp),
+                onClick = { model.onSnapClick(coroutineScope) },
+                description = "Take a snapshot",
+                enabled = isDeviceSelected
+            )
         }
     }
 }

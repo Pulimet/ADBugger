@@ -32,11 +32,15 @@ fun MainContent() {
             DeviceListSection(coroutineScope, model)
             DeviceCommands(model, coroutineScope, isDeviceSelected)
             EmulatorLauncher(model, coroutineScope)
-            ArrowsCommands(model, coroutineScope, isDeviceSelected)
+            ArrowsCommands(model, coroutineScope)
             SendTextToDevices(model, coroutineScope)
-            PackageListAndCommands(coroutineScope, model, isPackageSelected)
+            if (isDeviceSelected) {
+                PackageListAndCommands(coroutineScope, model, isPackageSelected)
+            }
             PortForwarding(model, coroutineScope)
-            LoggerField(model)
+            if (state.logs.isNotEmpty()) {
+                LoggerField(model)
+            }
         }
     }
 }
