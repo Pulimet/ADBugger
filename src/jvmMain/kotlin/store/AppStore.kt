@@ -71,12 +71,6 @@ class AppStore {
         }
     }
 
-    fun onKillEmulatorClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.killAllEmulators()
-        }
-    }
-
     fun onRestartClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == NONE) return
         coroutineScope.launch(Dispatchers.IO) {
@@ -107,6 +101,12 @@ class AppStore {
         if (state.selectedPackage == NONE) return
         coroutineScope.launch {
             adb.uninstall(state.selectedPackage, state.selectedDevice)
+        }
+    }
+
+    fun onKillEmulatorClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.killAllEmulators()
         }
     }
 

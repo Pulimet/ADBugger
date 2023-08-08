@@ -34,7 +34,7 @@ fun MainContent() {
             EmulatorLauncher(model, coroutineScope)
             ArrowsCommands(model, coroutineScope)
             SendTextToDevices(model, coroutineScope)
-            if (isDeviceSelected) {
+            if (isDeviceSelected || isPackageSelected) {
                 PackageListAndCommands(coroutineScope, model, isPackageSelected)
             }
             PortForwarding(model, coroutineScope)
