@@ -15,7 +15,8 @@ class AppStore {
 
     companion object {
         const val ALL_DEVICES = "All Devices"
-        const val NONE = "Package not selected"
+        const val PACKAGE_NONE = "Package not selected"
+        const val EMULATOR_NONE = "Emulator not selected"
     }
 
     private val adb = Adb()
@@ -47,32 +48,47 @@ class AppStore {
         if (state.selectedDevice == ALL_DEVICES) return
 
         coroutineScope.launch(Dispatchers.IO) {
-            setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = NONE) }
+            setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
             delay(500)
             setState { copy(isPackagesLoading = false, packageList = adb.packages(state.selectedDevice)) }
         }
     }
 
+    fun onGetEmulatorsListClick(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList(), selectedEmulator = EMULATOR_NONE) }
+            val emulatorsList = adb.emulators(::log)
+            delay(500)
+            setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
+        }
+    }
+
+
     fun onPackageClick(pckg: Package) {
         setState { copy(selectedPackage = pckg.name) }
     }
 
+    fun onEmulatorClick(it: String) {
+        setState { copy(selectedEmulator = it) }
+    }
+
+
     fun onOpenClick(coroutineScope: CoroutineScope) {
-        if (state.selectedPackage == NONE) return
+        if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch(Dispatchers.IO) {
             adb.openPackage(state.selectedPackage, state.selectedDevice)
         }
     }
 
     fun onCloseClick(coroutineScope: CoroutineScope) {
-        if (state.selectedPackage == NONE) return
+        if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
         }
     }
 
     fun onRestartClick(coroutineScope: CoroutineScope) {
-        if (state.selectedPackage == NONE) return
+        if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
             delay(100)
@@ -81,14 +97,14 @@ class AppStore {
     }
 
     fun onClearDataClick(coroutineScope: CoroutineScope) {
-        if (state.selectedPackage == NONE) return
+        if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch {
             adb.clearData(state.selectedPackage, state.selectedDevice)
         }
     }
 
     fun onClearAndRestartClick(coroutineScope: CoroutineScope) {
-        if (state.selectedPackage == NONE) return
+        if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
             adb.clearData(state.selectedPackage, state.selectedDevice)
@@ -98,7 +114,7 @@ class AppStore {
     }
 
     fun onUninstallClick(coroutineScope: CoroutineScope) {
-        if (state.selectedPackage == NONE) return
+        if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch {
             adb.uninstall(state.selectedPackage, state.selectedDevice)
         }
@@ -233,13 +249,17 @@ class AppStore {
         state = state.update()
     }
 
+
     data class AppState(
         val devicesList: List<DeviceInfo> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
         val packageList: List<Package> = emptyList(),
-        val selectedPackage: String = NONE,
+        val emulatorsList: List<String> = emptyList(),
+        val selectedEmulator: String = EMULATOR_NONE,
+        val selectedPackage: String = PACKAGE_NONE,
         val isDevicesLoading: Boolean = false,
         val isPackagesLoading: Boolean = false,
+        val isEmulatorsLoading: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }

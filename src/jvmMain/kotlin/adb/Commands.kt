@@ -34,6 +34,8 @@ object Commands {
     fun sendTextCommand(value: String) = "input text $value"
     fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
     fun adbReverseList() = "adb reverse --list"
+    fun getPlatformToolsPath() = "~/Library/Android/sdk/platform-tools/"
+    fun getEmulatorPath() = "~/Library/Android/sdk/emulator/"
 
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"

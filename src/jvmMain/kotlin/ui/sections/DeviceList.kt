@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.malinskiy.adam.request.device.DeviceState
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
@@ -129,6 +130,6 @@ private fun DeviceItem(
             )
         )
         val name = if (item.name.isEmpty()) "" else " (${item.name})"
-        Text(text = "${item.serial}$name", color = Color.White)
+        Text(text = "${item.serial}$name", color = Color.White, fontSize = 12.sp)
     }
 }

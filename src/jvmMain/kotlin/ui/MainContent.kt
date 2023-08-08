@@ -20,7 +20,7 @@ fun MainContent() {
 
     val model = remember { AppStore() }
     val state = model.state
-    val isPackageSelected = state.selectedPackage != AppStore.NONE
+    val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
     val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
 
     LaunchedEffect(Unit) {

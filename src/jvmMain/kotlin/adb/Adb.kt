@@ -35,6 +35,11 @@ class Adb {
         serial = serial
     )
 
+    fun emulators(log: (String) -> Unit): List<String> {
+        return execCommand("emulator -list-avds", log, Commands.getEmulatorPath())
+    }
+
+
     suspend fun openPackage(selectedPackage: String, selectedDevice: String) {
         launchShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
     }
@@ -59,7 +64,7 @@ class Adb {
     }
 
     private fun killEmulator(serial: String) {
-        execCommand(Commands.getKillEmulator(serial))
+        execCommand(Commands.getKillEmulator(serial), path = Commands.getPlatformToolsPath())
     }
 
     suspend fun showHome(selectedDevice: String) {
@@ -89,7 +94,7 @@ class Adb {
     suspend fun takeSnapshot(selectedDevice: String) {
         val filename = "snap_$selectedDevice.png"
         launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
-        execCommand("adb -s $selectedDevice pull /sdcard/$filename")
+        execCommand("adb -s $selectedDevice pull /sdcard/$filename", path = Commands.getPlatformToolsPath())
         launchShellCommand(selectedDevice, "rm /sdcard/$filename")
     }
 
@@ -128,12 +133,18 @@ class Adb {
 
     suspend fun reversePort(port: Int, log: (String) -> Unit) {
         devices().forEach {
-            execCommand(Commands.adbReverse(it.serial, port), log)
+            val resultList = execCommand(Commands.adbReverse(it.serial, port), log, Commands.getPlatformToolsPath())
+            resultList.forEach {
+                log(it)
+            }
         }
     }
 
     fun reverseList(log: (String) -> Unit) {
-        execCommand(Commands.adbReverseList(), log)
+        val resultList = execCommand(Commands.adbReverseList(), log, Commands.getPlatformToolsPath())
+        resultList.forEach {
+            log(it)
+        }
     }
 
     // Private
@@ -157,17 +168,22 @@ class Adb {
             serial = serial
         )
 
-    private fun execCommand(command: String, log: (String) -> Unit = {}) {
+    private fun execCommand(command: String, log: (String) -> Unit = {}, path: String = ""): ArrayList<String> {
         log(command)
-        val p = Runtime.getRuntime().exec(arrayOf("/bin/zsh", "-c", "~/Library/Android/sdk/platform-tools/$command"))
+        val p = Runtime.getRuntime().exec(arrayOf("/bin/zsh", "-c", "${path}$command"))
         p.waitFor()
-        val bufferedReader = BufferedReader(InputStreamReader(p.inputStream))
-        var line: String?
-        while (bufferedReader.readLine().also { line = it } != null) {
-            line?.let { log(it) }
+        val reader = BufferedReader(InputStreamReader(p.inputStream))
+        val responseList = arrayListOf<String>()
+
+        reader.use { bufferedReader ->
+            var line: String?
+            while (bufferedReader.readLine().also { line = it } != null) {
+                line?.let { responseList.add(it) }
+            }
         }
+
+        return responseList
     }
 
     private suspend fun devices() = adb.execute(request = ListDevicesRequest())
-
 }

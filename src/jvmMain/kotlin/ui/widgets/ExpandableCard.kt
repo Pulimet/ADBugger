@@ -52,7 +52,7 @@ fun ExpandableCard(
                             .bounceClick(onClick = ::toggleState),
                         textAlign = TextAlign.Center,
                         text = title,
-                        fontSize = 10.sp,
+                        fontSize = 12.sp,
                         color = Color.LightGray
                     )
                     Layout(

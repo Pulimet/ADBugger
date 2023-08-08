@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
@@ -74,10 +75,10 @@ private fun AllOptionAndRefreshButton(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
     ) {
-        val nonePackage = Package(AppStore.NONE)
+        val nonePackage = Package(AppStore.PACKAGE_NONE)
         PackageItem(
             nonePackage,
-            state.selectedPackage == AppStore.NONE,
+            state.selectedPackage == AppStore.PACKAGE_NONE,
             { model.onPackageClick(nonePackage) },
             modifier = Modifier.weight(1f)
         )
@@ -142,6 +143,6 @@ private fun PackageItem(
                 unselectedColor = MyColors.radioButtonUnselected
             )
         )
-        Text(text = item.name, color = Color.White)
+        Text(text = item.name, color = Color.White, fontSize = 12.sp)
     }
 }
