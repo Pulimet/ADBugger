@@ -1,13 +1,10 @@
 package ui.sections
 
-import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
@@ -38,7 +35,7 @@ fun PackageListSection(
     val state = model.state
     Box(
         modifier = modifier
-            .padding(horizontal = 12.dp, vertical = 6.dp)
+            .padding(horizontal = 6.dp, vertical = 6.dp)
             .background(MyColors.bg2)
     ) {
 
@@ -104,7 +101,9 @@ private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> 
         SearchView(state = textState, modifier = Modifier.fillMaxWidth())
     }
 
-    Box(modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp)) {
+    Box(
+        modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp).border(BorderStroke(0.5.dp, color = Color.DarkGray))
+    ) {
         val items = state.packageList.filter { it.name.contains(query, ignoreCase = true) }
         LazyColumn(state = listState) {
             items(

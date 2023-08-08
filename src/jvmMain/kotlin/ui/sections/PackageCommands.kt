@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
+import ui.theme.bounceClick
 
 @Composable
 fun PackageCommands(
@@ -23,12 +24,14 @@ fun PackageCommands(
             modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
         ) {
             Button(
+                modifier = Modifier.bounceClick(),
                 enabled = isPackageSelected,
                 onClick = { model.onOpenClick(coroutineScope) }) { Text(text = "Open") }
             Button(
+                modifier = Modifier.bounceClick(),
                 enabled = isPackageSelected,
                 onClick = { model.onCloseClick(coroutineScope) }) { Text(text = "Close") }
-            Button(
+            Button(modifier = Modifier.bounceClick(),
                 enabled = isPackageSelected,
                 onClick = { model.onRestartClick(coroutineScope) }) { Text(text = "Restart") }
         }
@@ -36,13 +39,13 @@ fun PackageCommands(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
         ) {
-            Button(
+            Button(modifier = Modifier.bounceClick(),
                 enabled = isPackageSelected,
                 onClick = { model.onClearDataClick(coroutineScope) }) { Text(text = "Clear Data") }
-            Button(
+            Button(modifier = Modifier.bounceClick(),
                 enabled = isPackageSelected,
                 onClick = { model.onClearAndRestartClick(coroutineScope) }) { Text(text = "Clear&Restart") }
-            Button(
+            Button(modifier = Modifier.bounceClick(),
                 enabled = isPackageSelected,
                 onClick = { model.onUninstallClick(coroutineScope) }) { Text(text = "Uninstall") }
         }

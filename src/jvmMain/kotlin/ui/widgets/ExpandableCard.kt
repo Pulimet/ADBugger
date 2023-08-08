@@ -1,10 +1,7 @@
 package ui.widgets
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -34,7 +31,37 @@ fun ExpandableCard(
     var expanded by remember { mutableStateOf(false) }
 
     Box {
-        if (!expanded) {
+        if (expanded) {
+            Card(
+                modifier = modifier,
+                backgroundColor = MyColors.bg2,
+                elevation = 6.dp,
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Column {
+                    Text(
+                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
+                            .bounceClick(onClick = { expanded = !expanded }),
+                        textAlign = TextAlign.Center,
+                        text = title,
+                        fontSize = 10.sp,
+                        color = Color.LightGray
+                    )
+                    Layout(
+                        content = content,
+                        modifier = modifier,
+                        measurePolicy = measurePolicy
+                    )
+                }
+                Icon(
+                    FeatherIcons.Minimize2,
+                    contentDescription = "Collapse",
+                    tint = Color.White,
+                    modifier = Modifier.padding(4.dp).size(16.dp).align(Alignment.TopEnd)
+                        .bounceClick(onClick = { expanded = !expanded })
+                )
+            }
+        } else {
             Box(modifier = Modifier.clickable { expanded = !expanded }.padding(vertical = 8.dp, horizontal = 12.dp)) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -48,28 +75,6 @@ fun ExpandableCard(
                     contentDescription = "Expand",
                     tint = Color.White,
                     modifier = Modifier.size(16.dp).align(Alignment.TopEnd)
-                        .bounceClick(onClick = { expanded = !expanded })
-                )
-            }
-        }
-
-        Card(
-            modifier = modifier,
-            backgroundColor = MyColors.bg2,
-            elevation = 6.dp,
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            if (expanded) {
-                Layout(
-                    content = content,
-                    modifier = modifier,
-                    measurePolicy = measurePolicy
-                )
-                Icon(
-                    FeatherIcons.Minimize2,
-                    contentDescription = "Collapse",
-                    tint = Color.White,
-                    modifier = Modifier.padding(4.dp).size(16.dp).align(Alignment.TopEnd)
                         .bounceClick(onClick = { expanded = !expanded })
                 )
             }

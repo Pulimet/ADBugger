@@ -10,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,6 +20,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
+import ui.theme.Paddings
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 
@@ -35,7 +35,7 @@ fun SendTextToDevices(
     ExpandableCard(
         title = "Send text to device",
         modifier = Modifier.padding(
-            horizontal = 12.dp, vertical = 4.dp
+            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
         )
     ) {
         Row(
@@ -45,7 +45,7 @@ fun SendTextToDevices(
         )
         {
             TextField(
-                modifier = Modifier.padding(8.dp).weight(1f),
+                modifier = Modifier.padding(6.dp).weight(1f),
                 singleLine = true,
                 textStyle = TextStyle(color = Color.White),
                 value = textInputSendTextState.value,

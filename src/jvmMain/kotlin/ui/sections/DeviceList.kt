@@ -1,7 +1,6 @@
 package ui.sections
 
 import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,13 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.device.DeviceState
-import compose.icons.LineAwesomeIcons
-import compose.icons.lineawesomeicons.PowerOffSolid
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import store.AppStore
-import ui.theme.MyColors
+import ui.theme.Paddings
 import ui.widgets.BtnIcon
+import ui.widgets.ExpandableCard
 import ui.widgets.LoadingSpinner
 
 
@@ -33,14 +31,12 @@ import ui.widgets.LoadingSpinner
 fun DeviceListSection(
     coroutineScope: CoroutineScope,
     model: AppStore,
-    modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .padding(12.dp, 12.dp, 12.dp, 6.dp)
-            .background(MyColors.bg2)
-            .fillMaxWidth()
-            .heightIn(min = 50.dp)
+    ExpandableCard(
+        title = "Device Selection",
+        modifier = Modifier.padding(
+            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+        )
     ) {
         Content(model, coroutineScope)
     }
@@ -79,12 +75,6 @@ private fun AllOptionAndRefreshButton(
                 state.selectedDevice == AppStore.ALL_DEVICES,
                 { model.onDeviceClick(allDevices) },
                 Modifier.weight(1f)
-            )
-
-            BtnIcon(
-                icon = LineAwesomeIcons.PowerOffSolid,
-                onClick = { model.onKillEmulatorClick(coroutineScope) },
-                description = "Kill All Emulators"
             )
 
             BtnIcon(

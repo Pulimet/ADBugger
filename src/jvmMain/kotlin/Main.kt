@@ -1,6 +1,4 @@
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Surface
 import androidx.compose.ui.Alignment
@@ -16,7 +14,7 @@ import ui.theme.MyColors
 
 fun main() = application {
     val state = rememberWindowState(
-        width = 450.dp,
+        width = 460.dp,
         height = 1000.dp,
         position = WindowPosition(alignment = Alignment.Center)
     )
@@ -26,7 +24,7 @@ fun main() = application {
     Window(title = "ADBugger", state = state, onCloseRequest = ::exitApplication) {
         Surface(color = MyColors.bg, modifier = Modifier.fillMaxWidth().wrapContentHeight().onSizeChanged {
             if (it.height > 0) {
-                window.setSize(window.width, it.height + 30 )
+                window.setSize(window.width, it.height + 30)
             }
         }) {
             MainContent()

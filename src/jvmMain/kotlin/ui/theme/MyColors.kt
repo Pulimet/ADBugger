@@ -1,9 +1,5 @@
 package ui.theme
 
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.RadioButtonColors
-import androidx.compose.material.RadioButtonDefaults
-import androidx.compose.runtime.State
 import androidx.compose.ui.graphics.Color
 
 object MyColors {
