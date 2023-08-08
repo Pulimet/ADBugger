@@ -18,8 +18,10 @@ import androidx.compose.ui.unit.sp
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.Minimize2
+import pref.preference
 import ui.theme.MyColors
 import ui.theme.bounceClick
+
 
 @Composable
 fun ExpandableCard(
@@ -27,8 +29,14 @@ fun ExpandableCard(
     title: String = "Title",
     content: @Composable () -> Unit
 ) {
+    var state: Boolean by preference("Card_$title", false)
     val measurePolicy = customMeasurePolicy()
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(state) }
+
+    fun toggleState() {
+        expanded = !expanded
+        state = expanded
+    }
 
     Box {
         if (expanded) {
@@ -41,7 +49,7 @@ fun ExpandableCard(
                 Column {
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
-                            .bounceClick(onClick = { expanded = !expanded }),
+                            .bounceClick(onClick = ::toggleState),
                         textAlign = TextAlign.Center,
                         text = title,
                         fontSize = 10.sp,
@@ -58,11 +66,11 @@ fun ExpandableCard(
                     contentDescription = "Collapse",
                     tint = Color.White,
                     modifier = Modifier.padding(4.dp).size(16.dp).align(Alignment.TopEnd)
-                        .bounceClick(onClick = { expanded = !expanded })
+                        .bounceClick(onClick = ::toggleState)
                 )
             }
         } else {
-            Box(modifier = Modifier.clickable { expanded = !expanded }.padding(vertical = 8.dp, horizontal = 12.dp)) {
+            Box(modifier = Modifier.clickable { toggleState() }.padding(vertical = 8.dp, horizontal = 12.dp)) {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
@@ -75,7 +83,7 @@ fun ExpandableCard(
                     contentDescription = "Expand",
                     tint = Color.White,
                     modifier = Modifier.size(16.dp).align(Alignment.TopEnd)
-                        .bounceClick(onClick = { expanded = !expanded })
+                        .bounceClick(onClick = ::toggleState)
                 )
             }
         }

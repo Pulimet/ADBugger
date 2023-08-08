@@ -220,13 +220,13 @@ class AppStore {
         setState { copy(logs = arrayListOf()) }
     }
 
-    // Private
-    private fun log(log: String) {
+    fun log(log: String) {
         val newList = ArrayList(state.logs)
         newList.add(log)
         setState { copy(logs = newList) }
     }
 
+    // Private
     private fun initialState() = AppState()
 
     private inline fun setState(update: AppState.() -> AppState) {

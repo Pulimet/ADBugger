@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.malinskiy.adam.request.device.DeviceState
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
+import pref.Pref
 import store.AppStore
 import ui.theme.MyColors
 import ui.theme.Paddings
@@ -37,7 +38,7 @@ fun DeviceListSection(
         title = "Device Selection",
         modifier = Modifier.padding(
             horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
-        )
+        ),
     ) {
         Content(model, coroutineScope)
     }
