@@ -21,6 +21,7 @@ import com.malinskiy.adam.request.device.DeviceState
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import store.AppStore
+import ui.theme.MyColors
 import ui.theme.Paddings
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
@@ -67,7 +68,7 @@ private fun AllOptionAndRefreshButton(
         modifier = Modifier.fillMaxWidth()
     ) {
         if (state.isDevicesLoading) {
-            LoadingSpinner(Modifier.padding(4.dp).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Paddings.spinnerPadding).fillMaxWidth())
         } else {
             val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
             DeviceItem(
@@ -122,8 +123,8 @@ private fun DeviceItem(
     ) {
         RadioButton(
             selected = isSelected, onClick = { onClicked(item) }, colors = RadioButtonDefaults.colors(
-                selectedColor = Color.White,
-                unselectedColor = Color.LightGray
+                selectedColor = MyColors.radioButtonSelected,
+                unselectedColor = MyColors.radioButtonUnselected
             )
         )
         val name = if (item.name.isEmpty()) "" else " (${item.name})"

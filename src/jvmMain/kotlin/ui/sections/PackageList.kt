@@ -22,6 +22,7 @@ import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
+import ui.theme.Paddings
 import ui.widgets.BtnIcon
 import ui.widgets.LoadingSpinner
 import ui.widgets.SearchView
@@ -40,7 +41,7 @@ fun PackageListSection(
     ) {
 
         if (state.isPackagesLoading) {
-            LoadingSpinner(Modifier.padding(4.dp).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Paddings.spinnerPadding).fillMaxWidth())
         } else {
             Content(model, coroutineScope)
         }
@@ -137,8 +138,8 @@ private fun PackageItem(
     ) {
         RadioButton(
             selected = isSelected, onClick = { onClicked(item) }, colors = RadioButtonDefaults.colors(
-                selectedColor = Color.White,
-                unselectedColor = Color.LightGray
+                selectedColor = MyColors.radioButtonSelected,
+                unselectedColor = MyColors.radioButtonUnselected
             )
         )
         Text(text = item.name, color = Color.White)
