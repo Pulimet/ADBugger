@@ -18,9 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import compose.icons.FontAwesomeIcons
 import compose.icons.LineAwesomeIcons
+import compose.icons.TablerIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
-import compose.icons.lineawesomeicons.PowerOffSolid
+import compose.icons.lineawesomeicons.Android
+import compose.icons.tablericons.Wiper
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
@@ -59,14 +61,16 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
                 AppStore.EMULATOR_NONE,
                 model.state.selectedEmulator == AppStore.EMULATOR_NONE,
                 { model.onEmulatorClick(AppStore.EMULATOR_NONE) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                model,
+                coroutineScope
             )
             BtnIcon(
                 icon = FontAwesomeIcons.Solid.BookDead,
-                onClick = { model.onKillEmulatorClick(coroutineScope) },
-                description = "Kill All Emulators"
+                onClick = { model.onKillAllEmulatorClick(coroutineScope) },
+                description = "Kill All Emulators",
+                modifier = Modifier.padding(horizontal = 4.dp)
             )
-
             BtnIcon(
                 icon = Icons.Rounded.Refresh,
                 modifier = Modifier.padding(end = 8.dp),
@@ -74,15 +78,15 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
                 description = "Refresh Emulators List"
             )
         }
-        EmulatorsList(model.state) { model.onEmulatorClick(it) }
+        EmulatorsList(model, coroutineScope) { model.onEmulatorClick(it) }
 
     }
 }
 
 @Composable
-private fun EmulatorsList(state: AppStore.AppState, onClicked: (emulatorName: String) -> Unit) {
+private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (emulatorName: String) -> Unit) {
     val listState = rememberLazyListState()
-
+    val state = model.state
     Box(
         modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp).border(BorderStroke(0.5.dp, color = Color.DarkGray))
     ) {
@@ -92,7 +96,14 @@ private fun EmulatorsList(state: AppStore.AppState, onClicked: (emulatorName: St
                 items,
                 key = { item -> item }
             ) { item ->
-                EmulatorItem(item, state.selectedEmulator == item, { onClicked(it) }, Modifier.fillMaxWidth())
+                EmulatorItem(
+                    item,
+                    state.selectedEmulator == item,
+                    { onClicked(it) },
+                    Modifier.fillMaxWidth(),
+                    model,
+                    coroutineScope
+                )
             }
         }
         if (items.size > 2) {
@@ -111,7 +122,9 @@ private fun EmulatorItem(
     emulatorName: String,
     isSelected: Boolean,
     onClicked: (emulatorName: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore,
+    coroutineScope: CoroutineScope
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -123,6 +136,21 @@ private fun EmulatorItem(
                 unselectedColor = MyColors.radioButtonUnselected
             )
         )
-        Text(text = emulatorName, color = Color.White, fontSize = 12.sp)
+        Text(text = emulatorName, color = Color.White, fontSize = 12.sp, modifier = Modifier.weight(1f))
+
+        if (emulatorName != AppStore.EMULATOR_NONE) {
+            BtnIcon(
+                icon = TablerIcons.Wiper,
+                onClick = { model.onWipeAndLaunch(coroutineScope, emulatorName) },
+                description = "Wipe Data",
+                modifier = Modifier.padding(end = 4.dp)
+            )
+            BtnIcon(
+                icon = LineAwesomeIcons.Android,
+                onClick = { model.onLaunchEmulatorClick(coroutineScope, emulatorName) },
+                description = "Launch Emulator",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+        }
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import ui.theme.bounceClick
@@ -30,7 +31,9 @@ fun BtnIcon(
     enabled: Boolean = true,
     onClick: () -> Unit = {},
     description: String = "",
-    visible: Boolean = true
+    visible: Boolean = true,
+    buttonWidth: Dp = 40.dp,
+    iconSize: Dp = 24.dp,
 ) {
     if (!visible) {
         return
@@ -55,7 +58,7 @@ fun BtnIcon(
         )
     ) {
         Button(
-            modifier = modifier.width(40.dp).padding(2.dp).bounceClick(onClick, enabled),
+            modifier = modifier.width(buttonWidth).padding(2.dp).bounceClick(onClick, enabled),
             enabled = enabled,
             onClick = {},
             shape = RoundedCornerShape(50.dp),
@@ -64,7 +67,7 @@ fun BtnIcon(
         {
             Icon(
                 icon,
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(iconSize),
                 contentDescription = description
             )
         }

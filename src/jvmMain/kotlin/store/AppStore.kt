@@ -120,7 +120,26 @@ class AppStore {
         }
     }
 
-    fun onKillEmulatorClick(coroutineScope: CoroutineScope) {
+    fun onLaunchEmulatorClick(coroutineScope: CoroutineScope, emulatorName: String) {
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.launchEmulator(emulatorName)
+        }
+    }
+
+    fun onWipeAndLaunch(coroutineScope: CoroutineScope, emulatorName: String) {
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.wipeAndLaunchEmulator(emulatorName)
+        }
+    }
+
+    fun onKillEmulatorClick(coroutineScope: CoroutineScope, emulatorName: String) {
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.killEmulatorBySerial(emulatorName)
+        }
+    }
+
+
+    fun onKillAllEmulatorClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch(Dispatchers.IO) {
             adb.killAllEmulators()
         }
@@ -248,7 +267,6 @@ class AppStore {
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
-
 
     data class AppState(
         val devicesList: List<DeviceInfo> = emptyList(),

@@ -30,10 +30,14 @@ object Commands {
     fun getDelete() = getInputKeyEventFor(KEYCODE_DEL)
     fun getDarkModeOff() = "cmd uimode night no"
     fun getDarkModeOn() = "cmd uimode night yes"
-    fun getKillEmulator(serial: String) = "adb -s $serial emu kill"
+    fun getKillEmulatorBySerial(serial: String) = "adb -s $serial emu kill"
+    fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
+    fun getLaunchEmulator(emulatorName: String) = "emulator -avd $emulatorName -netdelay none -netspeed full"
     fun sendTextCommand(value: String) = "input text $value"
     fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
     fun adbReverseList() = "adb reverse --list"
+    fun getEmulatorList() = "emulator -list-avds"
+
     fun getPlatformToolsPath() = "~/Library/Android/sdk/platform-tools/"
     fun getEmulatorPath() = "~/Library/Android/sdk/emulator/"
 

@@ -31,14 +31,12 @@ class Adb {
     suspend fun packages(serial: String) = adb.execute(
         request = PmListRequest(
             includePath = false
-        ),
-        serial = serial
+        ), serial = serial
     )
 
     fun emulators(log: (String) -> Unit): List<String> {
-        return execCommand("emulator -list-avds", log, Commands.getEmulatorPath())
+        return execCommand(Commands.getEmulatorList(), log, Commands.getEmulatorPath())
     }
-
 
     suspend fun openPackage(selectedPackage: String, selectedDevice: String) {
         launchShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
@@ -59,12 +57,20 @@ class Adb {
 
     suspend fun killAllEmulators() {
         devices().forEach {
-            killEmulator(it.serial)
+            killEmulatorBySerial(it.serial)
         }
     }
 
-    private fun killEmulator(serial: String) {
-        execCommand(Commands.getKillEmulator(serial), path = Commands.getPlatformToolsPath())
+    fun killEmulatorBySerial(serial: String) {
+        execCommand(Commands.getKillEmulatorBySerial(serial), path = Commands.getPlatformToolsPath())
+    }
+
+    fun launchEmulator(emulatorName: String) {
+        execCommand(Commands.getLaunchEmulator(emulatorName), path = Commands.getEmulatorPath())
+    }
+
+    fun wipeAndLaunchEmulator(emulatorName: String) {
+        execCommand(Commands.getWipeDataEmulatorByName(emulatorName), path = Commands.getEmulatorPath())
     }
 
     suspend fun showHome(selectedDevice: String) {
@@ -162,11 +168,9 @@ class Adb {
         }
     }
 
-    private suspend fun launchShellCommand(serial: String, command: String): ShellCommandResult =
-        adb.execute(
-            request = ShellCommandRequest(command),
-            serial = serial
-        )
+    private suspend fun launchShellCommand(serial: String, command: String): ShellCommandResult = adb.execute(
+        request = ShellCommandRequest(command), serial = serial
+    )
 
     private fun execCommand(command: String, log: (String) -> Unit = {}, path: String = ""): ArrayList<String> {
         log(command)

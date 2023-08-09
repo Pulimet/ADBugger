@@ -19,9 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.malinskiy.adam.request.device.DeviceState
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.BookDead
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
-import pref.Pref
 import store.AppStore
 import ui.theme.MyColors
 import ui.theme.Paddings
@@ -55,7 +57,7 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AllOptionAndRefreshButton(model, coroutineScope)
-        DeviceList(model.state) { model.onDeviceClick(it) }
+        DeviceList(model, coroutineScope) { model.onDeviceClick(it) }
     }
 }
 
@@ -77,7 +79,9 @@ private fun AllOptionAndRefreshButton(
                 allDevices,
                 state.selectedDevice == AppStore.ALL_DEVICES,
                 { model.onDeviceClick(allDevices) },
-                Modifier.weight(1f)
+                Modifier.weight(1f),
+                model,
+                coroutineScope
             )
 
             BtnIcon(
@@ -93,12 +97,20 @@ private fun AllOptionAndRefreshButton(
 }
 
 @Composable
-private fun DeviceList(state: AppStore.AppState, onClicked: (device: DeviceInfo) -> Unit) {
+private fun DeviceList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (device: DeviceInfo) -> Unit) {
+    val state = model.state
     Box(modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp)) {
         val listState = rememberLazyListState()
         LazyColumn(state = listState) {
             items(state.devicesList, key = { device -> device.serial }) { item ->
-                DeviceItem(item, state.selectedDevice == item.serial, { onClicked(it) }, Modifier.fillMaxWidth())
+                DeviceItem(
+                    item,
+                    state.selectedDevice == item.serial,
+                    { onClicked(it) },
+                    Modifier.fillMaxWidth(),
+                    model,
+                    coroutineScope
+                )
             }
         }
         if (state.devicesList.size > 2) {
@@ -117,7 +129,9 @@ private fun DeviceItem(
     item: DeviceInfo,
     isSelected: Boolean,
     onClicked: (device: DeviceInfo) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore,
+    coroutineScope: CoroutineScope
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -130,6 +144,14 @@ private fun DeviceItem(
             )
         )
         val name = if (item.name.isEmpty()) "" else " (${item.name})"
-        Text(text = "${item.serial}$name", color = Color.White, fontSize = 12.sp)
+        Text(text = "${item.serial}$name", color = Color.White, fontSize = 12.sp, modifier = Modifier.weight(1f))
+        if (item.serial.contains("emulator")) {
+            BtnIcon(
+                icon = FontAwesomeIcons.Solid.BookDead,
+                onClick = { model.onKillEmulatorClick(coroutineScope, item.serial) },
+                description = "Kill Emulator",
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        }
     }
 }
