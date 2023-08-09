@@ -1,12 +1,13 @@
 package ui.sections
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.RadioButton
-import androidx.compose.material.RadioButtonDefaults
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
@@ -25,7 +26,6 @@ import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.MyColors
 import ui.theme.Paddings
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
@@ -59,9 +59,6 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
         ) {
             EmulatorItem(
                 AppStore.EMULATOR_NONE,
-                model.state.selectedEmulator == AppStore.EMULATOR_NONE,
-                { model.onEmulatorClick(AppStore.EMULATOR_NONE) },
-                modifier = Modifier.weight(1f),
                 model,
                 coroutineScope
             )
@@ -78,13 +75,13 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
                 description = "Refresh Emulators List"
             )
         }
-        EmulatorsList(model, coroutineScope) { model.onEmulatorClick(it) }
+        EmulatorsList(model, coroutineScope)
 
     }
 }
 
 @Composable
-private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (emulatorName: String) -> Unit) {
+private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope) {
     val listState = rememberLazyListState()
     val state = model.state
     Box(
@@ -98,9 +95,6 @@ private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope, onCli
             ) { item ->
                 EmulatorItem(
                     item,
-                    state.selectedEmulator == item,
-                    { onClicked(it) },
-                    Modifier.fillMaxWidth(),
                     model,
                     coroutineScope
                 )
@@ -120,22 +114,10 @@ private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope, onCli
 @Composable
 private fun EmulatorItem(
     emulatorName: String,
-    isSelected: Boolean,
-    onClicked: (emulatorName: String) -> Unit,
-    modifier: Modifier = Modifier,
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable(onClick = { onClicked(emulatorName) })
-    ) {
-        RadioButton(
-            selected = isSelected, onClick = { onClicked(emulatorName) }, colors = RadioButtonDefaults.colors(
-                selectedColor = MyColors.radioButtonSelected,
-                unselectedColor = MyColors.radioButtonUnselected
-            )
-        )
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Text(text = emulatorName, color = Color.White, fontSize = 12.sp, modifier = Modifier.weight(1f))
 
         if (emulatorName != AppStore.EMULATOR_NONE) {

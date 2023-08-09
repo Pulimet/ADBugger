@@ -56,7 +56,7 @@ class AppStore {
 
     fun onGetEmulatorsListClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList(), selectedEmulator = EMULATOR_NONE) }
+            setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
             val emulatorsList = adb.emulators(::log)
             delay(500)
             setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
@@ -66,10 +66,6 @@ class AppStore {
 
     fun onPackageClick(pckg: Package) {
         setState { copy(selectedPackage = pckg.name) }
-    }
-
-    fun onEmulatorClick(it: String) {
-        setState { copy(selectedEmulator = it) }
     }
 
 
@@ -279,7 +275,6 @@ class AppStore {
         val selectedDevice: String = ALL_DEVICES,
         val packageList: List<Package> = emptyList(),
         val emulatorsList: List<String> = emptyList(),
-        val selectedEmulator: String = EMULATOR_NONE,
         val selectedPackage: String = PACKAGE_NONE,
         val isDevicesLoading: Boolean = false,
         val isPackagesLoading: Boolean = false,
