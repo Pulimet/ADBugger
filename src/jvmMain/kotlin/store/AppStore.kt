@@ -1,6 +1,7 @@
 package store
 
 import adb.Adb
+import adb.Commands
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -33,6 +34,7 @@ class AppStore {
 
     // User Actions
     fun getDevicesList(coroutineScope: CoroutineScope) {
+        log("adb devices")
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
             delay(500)
@@ -128,9 +130,10 @@ class AppStore {
         }
     }
 
-    fun onKillEmulatorClick(coroutineScope: CoroutineScope, emulatorName: String) {
+    fun onKillEmulatorClick(coroutineScope: CoroutineScope, serial: String) {
         coroutineScope.launch(Dispatchers.IO) {
-            adb.killEmulatorBySerial(emulatorName)
+            log(Commands.getKillEmulatorBySerial(serial))
+            adb.killEmulatorBySerial(serial)
         }
     }
 
@@ -143,36 +146,42 @@ class AppStore {
 
 
     fun onHomeClick(coroutineScope: CoroutineScope) {
+        log(Commands.getShowHome())
         coroutineScope.launch {
             adb.showHome(state.selectedDevice)
         }
     }
 
     fun onSettingsClick(coroutineScope: CoroutineScope) {
+        log(Commands.getShowSettings())
         coroutineScope.launch {
             adb.showSettings(state.selectedDevice)
         }
     }
 
     fun onBackClick(coroutineScope: CoroutineScope) {
+        log(Commands.getPressBack())
         coroutineScope.launch {
             adb.pressBack(state.selectedDevice)
         }
     }
 
     fun onTabClick(coroutineScope: CoroutineScope) {
+        log(Commands.getPressTab())
         coroutineScope.launch {
             adb.pressTab(state.selectedDevice)
         }
     }
 
     fun onEnterClick(coroutineScope: CoroutineScope) {
+        log(Commands.getPressEnter())
         coroutineScope.launch {
             adb.pressEnter(state.selectedDevice)
         }
     }
 
     fun onPowerClick(coroutineScope: CoroutineScope) {
+        log(Commands.getPressPower())
         coroutineScope.launch {
             adb.pressPower(state.selectedDevice)
         }
@@ -186,54 +195,63 @@ class AppStore {
     }
 
     fun onDayClick(coroutineScope: CoroutineScope) {
+        log(Commands.getDarkModeOff())
         coroutineScope.launch {
             adb.setDarkModeOff(state.selectedDevice)
         }
     }
 
     fun onNightClick(coroutineScope: CoroutineScope) {
+        log(Commands.getDarkModeOn())
         coroutineScope.launch {
             adb.setDarkModeOn(state.selectedDevice)
         }
     }
 
     fun onUpClick(coroutineScope: CoroutineScope) {
+        log(Commands.getUp())
         coroutineScope.launch {
             adb.pressUp(state.selectedDevice)
         }
     }
 
     fun onDownClick(coroutineScope: CoroutineScope) {
+        log(Commands.getDown())
         coroutineScope.launch {
             adb.pressDown(state.selectedDevice)
         }
     }
 
     fun onLeftClick(coroutineScope: CoroutineScope) {
+        log(Commands.getLeft())
         coroutineScope.launch {
             adb.pressLeft(state.selectedDevice)
         }
     }
 
     fun onRightClick(coroutineScope: CoroutineScope) {
+        log(Commands.getRight())
         coroutineScope.launch {
             adb.pressRight(state.selectedDevice)
         }
     }
 
     fun onBackSpaceClick(coroutineScope: CoroutineScope) {
+        log(Commands.getDelete())
         coroutineScope.launch {
             adb.pressDelete(state.selectedDevice)
         }
     }
 
     fun onSendTextClick(coroutineScope: CoroutineScope, value: String) {
+        log(Commands.sendTextCommand(value))
         coroutineScope.launch {
             adb.sendText(state.selectedDevice, value)
         }
     }
 
     fun onSendInputClick(coroutineScope: CoroutineScope, value: String) {
+        log(Commands.sendInputCommand(value))
         coroutineScope.launch {
             adb.sendInput(state.selectedDevice, value)
         }
