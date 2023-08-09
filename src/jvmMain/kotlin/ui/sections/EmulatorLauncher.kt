@@ -54,23 +54,18 @@ fun EmulatorLauncher(
 fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
     Column {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
         ) {
-            EmulatorItem(
-                AppStore.EMULATOR_NONE,
-                model,
-                coroutineScope
-            )
             BtnIcon(
                 icon = FontAwesomeIcons.Solid.BookDead,
                 onClick = { model.onKillAllEmulatorClick(coroutineScope) },
                 description = "Kill All Emulators",
-                modifier = Modifier.padding(horizontal = 4.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             BtnIcon(
                 icon = Icons.Rounded.Refresh,
-                modifier = Modifier.padding(end = 8.dp),
+                modifier = Modifier.padding(horizontal = 8.dp),
                 onClick = { model.onGetEmulatorsListClick(coroutineScope) },
                 description = "Refresh Emulators List"
             )
@@ -117,8 +112,13 @@ private fun EmulatorItem(
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(text = emulatorName, color = Color.White, fontSize = 12.sp, modifier = Modifier.weight(1f))
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = emulatorName,
+            color = Color.White,
+            fontSize = 12.sp,
+            modifier = Modifier.weight(1f).padding(start = 8.dp)
+        )
 
         if (emulatorName != AppStore.EMULATOR_NONE) {
             BtnIcon(
