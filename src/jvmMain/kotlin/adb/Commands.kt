@@ -34,6 +34,7 @@ object Commands {
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
     fun getLaunchEmulator(emulatorName: String) = "emulator -avd $emulatorName -netdelay none -netspeed full"
     fun sendTextCommand(value: String) = "input text $value"
+    fun sendInputCommand(value: String) = getInputKeyEventFor(value.toInt())
     fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
     fun adbReverseList() = "adb reverse --list"
     fun getEmulatorList() = "emulator -list-avds"

@@ -237,6 +237,12 @@ class AppStore {
         }
     }
 
+    fun onSendInputClick(coroutineScope: CoroutineScope, value: String) {
+        coroutineScope.launch {
+            adb.sendInput(state.selectedDevice, value)
+        }
+    }
+
     fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
         if (port != null) {
             coroutineScope.launch {

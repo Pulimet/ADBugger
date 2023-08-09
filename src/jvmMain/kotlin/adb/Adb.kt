@@ -137,6 +137,10 @@ class Adb {
         launchShell(selectedDevice, Commands.sendTextCommand(value))
     }
 
+    suspend fun sendInput(selectedDevice: String, value: String) {
+        launchShell(selectedDevice, Commands.sendInputCommand(value))
+    }
+
     suspend fun reversePort(port: Int, log: (String) -> Unit) {
         devices().forEach {
             val resultList = execCommand(Commands.adbReverse(it.serial, port), log, Commands.getPlatformToolsPath())
