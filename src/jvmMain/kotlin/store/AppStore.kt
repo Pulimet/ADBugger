@@ -257,6 +257,13 @@ class AppStore {
         }
     }
 
+    fun onNumberClick(coroutineScope: CoroutineScope, i: Int) {
+        log(Commands.sendInputCommand(i.toString()))
+        coroutineScope.launch {
+            adb.sendInputNum(state.selectedDevice, i)
+        }
+    }
+
     fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
         if (port != null) {
             coroutineScope.launch {

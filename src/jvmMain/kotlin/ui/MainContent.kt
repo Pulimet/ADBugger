@@ -33,6 +33,7 @@ fun MainContent() {
             DeviceCommands(model, coroutineScope, isDeviceSelected)
             EmulatorLauncher(model, coroutineScope)
             ArrowsCommands(model, coroutineScope)
+            Numbers(model, coroutineScope)
             SendTextAndInputToDevices(model, coroutineScope)
             if (isDeviceSelected || isPackageSelected) {
                 PackageListAndCommands(coroutineScope, model, isPackageSelected)
