@@ -32,6 +32,9 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
             Numbers(model, coroutineScope)
             Keyboard(model, coroutineScope)
             SendTextAndInputToDevices(model, coroutineScope)
+            if(isPackageSelected) {
+                PermissionsCommands(model, coroutineScope)
+            }
             if (isDeviceSelected || isPackageSelected) {
                 PackageListAndCommands(coroutineScope, model, isPackageSelected)
             }

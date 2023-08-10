@@ -38,7 +38,15 @@ object Commands {
     fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
     fun adbReverseList() = "adb reverse --list"
     fun getEmulatorList() = "emulator -list-avds"
+    fun getRevokeAllPermissions(packageName: String) = "adb shell pm reset-permissions -p $packageName"
+    fun addSpecificPermission(packageName: String, permission: String) =
+        "adb shell pm grant $packageName android.permission.$permission"
 
+    fun revokeSpecificPermission(packageName: String, permission: String) =
+        "adb shell pm revoke $packageName android.permission.$permission"
+
+
+    // Path
     fun getPlatformToolsPath() = "~/Library/Android/sdk/platform-tools/"
     fun getEmulatorPath() = "~/Library/Android/sdk/emulator/"
 

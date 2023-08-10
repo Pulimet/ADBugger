@@ -161,6 +161,19 @@ class Adb {
         }
     }
 
+    suspend fun removeAllPermissions(selectedDevice: String, selectedPackage: String) {
+        launchShell(selectedDevice, Commands.getRevokeAllPermissions(selectedPackage))
+    }
+
+    suspend fun addPermission(selectedDevice: String, permission: String, selectedPackage: String) {
+        launchShell(selectedDevice, Commands.addSpecificPermission(selectedPackage, permission))
+    }
+
+    suspend fun removePermission(selectedDevice: String, permission: String, selectedPackage: String) {
+        launchShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
+    }
+
+
     // Private
     private suspend fun launchShell(selectedDevice: String, command: String) {
         if (selectedDevice == AppStore.ALL_DEVICES) {

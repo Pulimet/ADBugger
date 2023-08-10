@@ -310,6 +310,24 @@ class AppStore {
         }
     }
 
+    fun onAddPermission(coroutineScope: CoroutineScope, permission: String) {
+        coroutineScope.launch {
+            adb.addPermission(state.selectedDevice, permission, state.selectedPackage)
+        }
+    }
+
+    fun onRemovePermission(coroutineScope: CoroutineScope, permission: String) {
+        coroutineScope.launch {
+            adb.removePermission(state.selectedDevice, permission, state.selectedPackage)
+        }
+    }
+
+    fun onRemoveAllPermissions(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            adb.removeAllPermissions(state.selectedDevice, state.selectedPackage)
+        }
+    }
+
     fun clearLogs() {
         setState { copy(logs = arrayListOf()) }
     }

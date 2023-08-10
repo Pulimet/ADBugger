@@ -18,7 +18,7 @@ fun PackageListAndCommands(
     isPackageSelected: Boolean,
 ) {
     ExpandableCard(
-        title = "Apps Control",
+        title = "Apps Control / Package selection",
         modifier = Modifier.padding(
             horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
         )
