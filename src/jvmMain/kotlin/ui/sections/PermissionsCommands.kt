@@ -10,7 +10,6 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -70,10 +69,20 @@ fun PermissionsCommands(
                 onClick = { model.onRemovePermission(coroutineScope, textInputPermissionState.value.text) },
                 description = "Remove"
             )
+        }
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Button(
                 onClick = { model.onRemoveAllPermissions(coroutineScope) },
                 modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
             ) { Text(text = "Remove all") }
+            Button(
+                onClick = { model.onGetPermissions(coroutineScope) },
+                modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
+            ) { Text(text = "Show granted") }
         }
     }
 }

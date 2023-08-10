@@ -328,6 +328,14 @@ class AppStore {
         }
     }
 
+    fun onGetPermissions(coroutineScope: CoroutineScope) {
+        if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
+        coroutineScope.launch {
+            adb.getPermissions(state.selectedDevice, state.selectedPackage, ::log)
+        }
+    }
+
+
     fun clearLogs() {
         setState { copy(logs = arrayListOf()) }
     }

@@ -173,6 +173,14 @@ class Adb {
         launchShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
     }
 
+    suspend fun getPermissions(selectedDevice: String, selectedPackage: String, log: (String) -> Unit) {
+        val command = Commands.getGrantedPermissions(selectedPackage)
+        log(command)
+        // TODO check how can we get the printed repose
+        val result = launchShellCommand(selectedDevice, command).output
+        log(result)
+    }
+
 
     // Private
     private suspend fun launchShell(selectedDevice: String, command: String) {

@@ -45,6 +45,9 @@ object Commands {
     fun revokeSpecificPermission(packageName: String, permission: String) =
         "adb shell pm revoke $packageName android.permission.$permission"
 
+    fun getGrantedPermissions(packageName: String) =
+        "adb shell dumpsys package $packageName | grep permission | grep granted=true"
+
 
     // Path
     fun getPlatformToolsPath() = "~/Library/Android/sdk/platform-tools/"
