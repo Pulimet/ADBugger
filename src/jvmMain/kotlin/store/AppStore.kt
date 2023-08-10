@@ -5,6 +5,7 @@ import adb.Commands
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.input.key.*
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -250,7 +251,7 @@ class AppStore {
         }
     }
 
-    fun onSendInputClick(coroutineScope: CoroutineScope, value: String) {
+    fun onSendInputClick(coroutineScope: CoroutineScope, value: Int) {
         log(Commands.sendInputCommand(value))
         coroutineScope.launch {
             adb.sendInput(state.selectedDevice, value)
@@ -258,47 +259,42 @@ class AppStore {
     }
 
     fun onNumberClick(coroutineScope: CoroutineScope, i: Int) {
-        log(Commands.sendInputCommand(i.toString()))
+        log(Commands.sendInputCommand(i))
         coroutineScope.launch {
             adb.sendInputNum(state.selectedDevice, i)
         }
     }
 
     fun onLetterClick(coroutineScope: CoroutineScope, letter: String) {
-        val key = when (letter) {
-            "A" -> 29
-            "B" -> 30
-            "C" -> 31
-            "D" -> 32
-            "E" -> 33
-            "F" -> 34
-            "G" -> 35
-            "H" -> 36
-            "I" -> 37
-            "J" -> 38
-            "K" -> 39
-            "L" -> 40
-            "M" -> 41
-            "N" -> 42
-            "O" -> 43
-            "P" -> 44
-            "Q" -> 45
-            "R" -> 46
-            "S" -> 47
-            "T" -> 48
-            "U" -> 49
-            "V" -> 50
-            "W" -> 51
-            "X" -> 52
-            "Y" -> 53
-            "Z" -> 54
-            else -> 0
-        }
-        log(Commands.sendInputCommand(key.toString()))
+        val key = convertLetterToKeyCode(letter)
+        log(Commands.sendInputCommand(key))
         coroutineScope.launch {
-            adb.sendInput(state.selectedDevice, key.toString())
+            adb.sendInput(state.selectedDevice, key)
         }
     }
+
+    fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
+        if (event.type != KeyEventType.KeyDown) {
+            return false
+        }
+        val key: Int = covertEventKeyToKeyCode(event)
+        if (key != -1) {
+            coroutineScope.launch {
+                adb.sendInput(state.selectedDevice, key)
+            }
+            return true
+        }
+        val char = convertEventKeyToChar(event)
+        if (char.isNotEmpty()) {
+            coroutineScope.launch {
+                adb.sendText(state.selectedDevice, char)
+            }
+            return true
+        }
+
+        return false
+    }
+
 
     fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
         if (port != null) {
@@ -329,6 +325,120 @@ class AppStore {
 
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
+    }
+
+    private fun convertEventKeyToChar(event: KeyEvent) = when (event.key) {
+        Key.A -> if (event.isShiftPressed) "A" else "a"
+        Key.B -> if (event.isShiftPressed) "B" else "b"
+        Key.C -> if (event.isShiftPressed) "C" else "c"
+        Key.D -> if (event.isShiftPressed) "D" else "d"
+        Key.E -> if (event.isShiftPressed) "E" else "e"
+        Key.F -> if (event.isShiftPressed) "F" else "f"
+        Key.G -> if (event.isShiftPressed) "G" else "g"
+        Key.H -> if (event.isShiftPressed) "H" else "h"
+        Key.I -> if (event.isShiftPressed) "I" else "i"
+        Key.J -> if (event.isShiftPressed) "J" else "j"
+        Key.K -> if (event.isShiftPressed) "K" else "k"
+        Key.L -> if (event.isShiftPressed) "L" else "l"
+        Key.M -> if (event.isShiftPressed) "M" else "m"
+        Key.N -> if (event.isShiftPressed) "N" else "n"
+        Key.O -> if (event.isShiftPressed) "O" else "o"
+        Key.P -> if (event.isShiftPressed) "P" else "p"
+        Key.Q -> if (event.isShiftPressed) "Q" else "q"
+        Key.R -> if (event.isShiftPressed) "R" else "r"
+        Key.S -> if (event.isShiftPressed) "S" else "s"
+        Key.T -> if (event.isShiftPressed) "T" else "t"
+        Key.U -> if (event.isShiftPressed) "U" else "u"
+        Key.V -> if (event.isShiftPressed) "V" else "v"
+        Key.W -> if (event.isShiftPressed) "W" else "w"
+        Key.X -> if (event.isShiftPressed) "X" else "x"
+        Key.Y -> if (event.isShiftPressed) "Y" else "y"
+        Key.Z -> if (event.isShiftPressed) "Z" else "z"
+        Key.Zero -> if (event.isShiftPressed) ")" else "0"
+        Key.One -> if (event.isShiftPressed) "!" else "1"
+        Key.Two -> if (event.isShiftPressed) "@" else "2"
+        Key.Three -> if (event.isShiftPressed) "\\#" else "3" //
+        Key.Four -> if (event.isShiftPressed) "$" else "4"
+        Key.Five -> if (event.isShiftPressed) "%" else "5"
+        Key.Six -> if (event.isShiftPressed) "^" else "6"
+        Key.Seven -> if (event.isShiftPressed) "\\&" else "7" //
+        Key.Eight -> if (event.isShiftPressed) "\\*" else "8" //
+        Key.Nine -> if (event.isShiftPressed) "\\(" else "9" //
+        else -> {
+            ""
+        }
+    }
+
+    private fun covertEventKeyToKeyCode(event: KeyEvent) = when (event.key) {
+//        Key.A -> convertLetterToKeyCode("A")
+//        Key.B -> convertLetterToKeyCode("B")
+//        Key.C -> convertLetterToKeyCode("C")
+//        Key.D -> convertLetterToKeyCode("D")
+//        Key.E -> convertLetterToKeyCode("E")
+//        Key.F -> convertLetterToKeyCode("F")
+//        Key.G -> convertLetterToKeyCode("G")
+//        Key.H -> convertLetterToKeyCode("H")
+//        Key.I -> convertLetterToKeyCode("I")
+//        Key.J -> convertLetterToKeyCode("J")
+//        Key.K -> convertLetterToKeyCode("K")
+//        Key.L -> convertLetterToKeyCode("L")
+//        Key.M -> convertLetterToKeyCode("M")
+//        Key.N -> convertLetterToKeyCode("N")
+//        Key.O -> convertLetterToKeyCode("O")
+//        Key.P -> convertLetterToKeyCode("P")
+//        Key.Q -> convertLetterToKeyCode("Q")
+//        Key.R -> convertLetterToKeyCode("R")
+//        Key.S -> convertLetterToKeyCode("S")
+//        Key.T -> convertLetterToKeyCode("T")
+//        Key.U -> convertLetterToKeyCode("U")
+//        Key.V -> convertLetterToKeyCode("V")
+//        Key.W -> convertLetterToKeyCode("W")
+//        Key.X -> convertLetterToKeyCode("X")
+//        Key.Y -> convertLetterToKeyCode("Y")
+//        Key.Z -> convertLetterToKeyCode("Z")
+//        Key.Zero -> 7
+//        Key.One -> 8
+//        Key.Two -> 9
+//        Key.Three -> 10
+//        Key.Four -> 11
+//        Key.Five -> 12
+//        Key.Six -> 13
+//        Key.Seven -> 14
+//        Key.Eight -> 15
+//        Key.Nine -> 1
+        Key.Backspace -> 67
+        Key.Enter -> 66
+        else -> -1
+    }
+
+    private fun convertLetterToKeyCode(letter: String) = when (letter) {
+        "A" -> 29
+        "B" -> 30
+        "C" -> 31
+        "D" -> 32
+        "E" -> 33
+        "F" -> 34
+        "G" -> 35
+        "H" -> 36
+        "I" -> 37
+        "J" -> 38
+        "K" -> 39
+        "L" -> 40
+        "M" -> 41
+        "N" -> 42
+        "O" -> 43
+        "P" -> 44
+        "Q" -> 45
+        "R" -> 46
+        "S" -> 47
+        "T" -> 48
+        "U" -> 49
+        "V" -> 50
+        "W" -> 51
+        "X" -> 52
+        "Y" -> 53
+        "Z" -> 54
+        else -> 0
     }
 
     data class AppState(

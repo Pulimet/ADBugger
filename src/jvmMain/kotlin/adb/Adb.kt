@@ -137,12 +137,12 @@ class Adb {
         launchShell(selectedDevice, Commands.sendTextCommand(value))
     }
 
-    suspend fun sendInput(selectedDevice: String, value: String) {
+    suspend fun sendInput(selectedDevice: String, value: Int) {
         launchShell(selectedDevice, Commands.sendInputCommand(value))
     }
 
     suspend fun sendInputNum(selectedDevice: String, num: Int) {
-        launchShell(selectedDevice, Commands.sendInputCommand((num + 7).toString()))
+        launchShell(selectedDevice, Commands.sendInputCommand((num + 7)))
     }
 
     suspend fun reversePort(port: Int, log: (String) -> Unit) {

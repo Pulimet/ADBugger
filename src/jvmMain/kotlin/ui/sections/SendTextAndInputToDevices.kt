@@ -94,7 +94,7 @@ fun SendTextAndInputToDevices(
                     icon = Icons.Rounded.Send,
                     modifier = Modifier.padding(start = 8.dp, end = 16.dp),
                     enabled = textInputSendInputState.value.text.isNotEmpty(),
-                    onClick = { model.onSendInputClick(coroutineScope, textInputSendInputState.value.text) },
+                    onClick = { model.onSendInputClick(coroutineScope, textInputSendInputState.value.text.toInt()) },
                     description = "Send input/key to device"
                 )
             }
