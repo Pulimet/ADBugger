@@ -34,42 +34,60 @@ fun BtnIcon(
     visible: Boolean = true,
     buttonWidth: Dp = 40.dp,
     iconSize: Dp = 24.dp,
+    showTooltip: Boolean = true,
 ) {
     if (!visible) {
         return
     }
-    TooltipArea(
-        tooltip = {
-            Surface(
-                modifier = Modifier.shadow(4.dp),
-                color = Color(255, 255, 210),
-                shape = RoundedCornerShape(4.dp)
-            ) {
-                Text(
-                    text = description,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-        },
-        delayMillis = 1200,
-        tooltipPlacement = TooltipPlacement.CursorPoint(
-            alignment = Alignment.BottomEnd,
-            offset = DpOffset((-16).dp, 30.dp)
-        )
-    ) {
-        Button(
-            modifier = modifier.width(buttonWidth).padding(2.dp).bounceClick(onClick, enabled),
-            enabled = enabled,
-            onClick = {},
-            shape = RoundedCornerShape(50.dp),
-            contentPadding = PaddingValues(0.dp)
-        )
-        {
-            Icon(
-                icon,
-                modifier = Modifier.size(iconSize),
-                contentDescription = description
+    if (showTooltip)
+        TooltipArea(
+            tooltip = {
+                Surface(
+                    modifier = Modifier.shadow(4.dp),
+                    color = Color(255, 255, 210),
+                    shape = RoundedCornerShape(4.dp)
+                ) {
+                    Text(
+                        text = description,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
+            },
+            delayMillis = 1200,
+            tooltipPlacement = TooltipPlacement.CursorPoint(
+                alignment = Alignment.BottomEnd,
+                offset = DpOffset((-16).dp, 30.dp)
             )
+        ) {
+            TooltipContent(modifier, buttonWidth, onClick, enabled, icon, iconSize, description)
         }
+    else {
+        TooltipContent(modifier, buttonWidth, onClick, enabled, icon, iconSize, description)
+    }
+}
+
+@Composable
+private fun TooltipContent(
+    modifier: Modifier,
+    buttonWidth: Dp,
+    onClick: () -> Unit,
+    enabled: Boolean,
+    icon: ImageVector,
+    iconSize: Dp,
+    description: String
+) {
+    Button(
+        modifier = modifier.width(buttonWidth).padding(2.dp).bounceClick(onClick, enabled),
+        enabled = enabled,
+        onClick = {},
+        shape = RoundedCornerShape(50.dp),
+        contentPadding = PaddingValues(0.dp)
+    )
+    {
+        Icon(
+            icon,
+            modifier = Modifier.size(iconSize),
+            contentDescription = description
+        )
     }
 }

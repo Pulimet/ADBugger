@@ -264,6 +264,42 @@ class AppStore {
         }
     }
 
+    fun onLetterClick(coroutineScope: CoroutineScope, letter: String) {
+        val key = when (letter) {
+            "A" -> 29
+            "B" -> 30
+            "C" -> 31
+            "D" -> 32
+            "E" -> 33
+            "F" -> 34
+            "G" -> 35
+            "H" -> 36
+            "I" -> 37
+            "J" -> 38
+            "K" -> 39
+            "L" -> 40
+            "M" -> 41
+            "N" -> 42
+            "O" -> 43
+            "P" -> 44
+            "Q" -> 45
+            "R" -> 46
+            "S" -> 47
+            "T" -> 48
+            "U" -> 49
+            "V" -> 50
+            "W" -> 51
+            "X" -> 52
+            "Y" -> 53
+            "Z" -> 54
+            else -> 0
+        }
+        log(Commands.sendInputCommand(key.toString()))
+        coroutineScope.launch {
+            adb.sendInput(state.selectedDevice, key.toString())
+        }
+    }
+
     fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
         if (port != null) {
             coroutineScope.launch {

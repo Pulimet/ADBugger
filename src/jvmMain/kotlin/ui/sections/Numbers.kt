@@ -66,6 +66,7 @@ fun Num(model: AppStore, coroutineScope: CoroutineScope, icon: ImageVector, i: I
         icon = icon,
         modifier = Modifier.padding(horizontal = 4.dp),
         onClick = { model.onNumberClick(coroutineScope, i) },
-        description = i.toString()
+        description = i.toString(),
+        showTooltip = false
     )
 }

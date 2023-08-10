@@ -34,6 +34,7 @@ fun MainContent() {
             EmulatorLauncher(model, coroutineScope)
             ArrowsCommands(model, coroutineScope)
             Numbers(model, coroutineScope)
+            Keyboard(model, coroutineScope)
             SendTextAndInputToDevices(model, coroutineScope)
             if (isDeviceSelected || isPackageSelected) {
                 PackageListAndCommands(coroutineScope, model, isPackageSelected)

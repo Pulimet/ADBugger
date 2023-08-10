@@ -26,7 +26,7 @@ fun ArrowsCommands(
     coroutineScope: CoroutineScope,
 ) {
     ExpandableCard(
-        title = "Keyboard Arrows",
+        title = "Arrows",
         modifier = Modifier.padding(horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical)
     ) {
         Row(
