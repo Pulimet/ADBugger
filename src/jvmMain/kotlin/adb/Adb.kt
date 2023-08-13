@@ -174,11 +174,10 @@ class Adb {
     }
 
     suspend fun getPermissions(selectedDevice: String, selectedPackage: String, log: (String) -> Unit) {
-        val command = Commands.getGrantedPermissions(selectedPackage)
+        val command = "adb shell " + Commands.getGrantedPermissions(selectedPackage)
         log(command)
-        // TODO check how can we get the printed repose
-        val result = launchShellCommand(selectedDevice, command).output
-        log(result)
+        val result = launchShellCommand(selectedDevice, command)
+        log("output :" + result.output)
     }
 
 

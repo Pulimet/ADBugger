@@ -46,7 +46,7 @@ object Commands {
         "adb shell pm revoke $packageName android.permission.$permission"
 
     fun getGrantedPermissions(packageName: String) =
-        "adb shell dumpsys package $packageName | grep permission | grep granted=true"
+        "dumpsys package $packageName | grep permission | grep granted=true"
 
 
     // Path

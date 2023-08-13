@@ -34,7 +34,7 @@ fun main() = application {
     ) {
         Surface(color = MyColors.bg, modifier = Modifier.wrapContentSize().onSizeChanged {
             if (it.height > 100) {
-                window.setSize(window.width, it.height / 2 + 32)
+                window.setSize(window.width, it.height + 32)
             }
         }) {
             MainContent(model, coroutineScope)
