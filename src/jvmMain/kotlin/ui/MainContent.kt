@@ -37,7 +37,7 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
 
             if (state.isWorkingWithPackageShown) {
                 if (isDeviceSelected || isPackageSelected) {
-                    PackageListAndCommands(coroutineScope, model, isPackageSelected)
+                    PackageListAndCommands(coroutineScope, model, isPackageSelected, isDeviceSelected)
                 }
                 if (isPackageSelected) {
                     PermissionsCommands(model, coroutineScope)

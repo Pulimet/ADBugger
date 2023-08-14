@@ -16,7 +16,8 @@ import ui.theme.bounceClick
 fun PackageCommands(
     isPackageSelected: Boolean,
     model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    isDeviceSelected: Boolean
 ) {
     Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
         Row(
@@ -54,7 +55,7 @@ fun PackageCommands(
             modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
         ) {
             Button(modifier = Modifier.bounceClick(),
-                enabled = isPackageSelected,
+                enabled = isPackageSelected && isDeviceSelected,
                 onClick = { model.onApkPath(coroutineScope) }) { Text(text = "APK Path") }
         }
     }

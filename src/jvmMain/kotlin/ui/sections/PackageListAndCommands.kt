@@ -16,6 +16,7 @@ fun PackageListAndCommands(
     coroutineScope: CoroutineScope,
     model: AppStore,
     isPackageSelected: Boolean,
+    isDeviceSelected: Boolean,
 ) {
     ExpandableCard(
         title = "Apps Control / Package selection",
@@ -26,6 +27,6 @@ fun PackageListAndCommands(
         PackageListSection(
             coroutineScope, model, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
         )
-        PackageCommands(isPackageSelected, model, coroutineScope)
+        PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected)
     }
 }
