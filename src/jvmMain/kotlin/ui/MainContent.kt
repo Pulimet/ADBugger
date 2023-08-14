@@ -26,14 +26,16 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {
         Column {
             TopMenu(model)
-            DeviceListSection(coroutineScope, model)
-            DeviceCommands(model, coroutineScope, isDeviceSelected)
-            EmulatorLauncher(model, coroutineScope)
-            if (isPackageSelected) {
-                PermissionsCommands(model, coroutineScope)
+            if(state.isDevicesControlsShown) {
+                DeviceListSection(coroutineScope, model)
+                EmulatorLauncher(model, coroutineScope)
             }
+            DeviceCommands(model, coroutineScope, isDeviceSelected)
             if (isDeviceSelected || isPackageSelected) {
                 PackageListAndCommands(coroutineScope, model, isPackageSelected)
+            }
+            if (isPackageSelected) {
+                PermissionsCommands(model, coroutineScope)
             }
 
             if (state.isPortForwardingShown) {

@@ -17,7 +17,7 @@ import ui.theme.MyColors
 fun main() = application {
     val state = rememberWindowState(
         width = 460.dp,
-        height = 200.dp,
+        height = 100.dp,
         position = WindowPosition(alignment = Alignment.TopCenter)
     )
 

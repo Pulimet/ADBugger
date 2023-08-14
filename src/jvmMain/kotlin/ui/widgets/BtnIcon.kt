@@ -74,7 +74,7 @@ private fun TooltipContent(
     toggle: Boolean
 ) {
 
-    val bgColor = if (toggle) colors.primary else Color.DarkGray
+    val bgColor = if (toggle) colors.primary else Color.Gray
     Button(
         modifier = modifier.width(buttonSize).height(buttonSize).padding(2.dp).bounceClick(onClick, enabled, 0.85f),
         enabled = enabled,

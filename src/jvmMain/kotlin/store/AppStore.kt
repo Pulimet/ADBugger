@@ -285,8 +285,16 @@ class AppStore {
         setState { copy(isLogsShown = value) }
     }
 
+    fun onDevicesControlToggle(value: Boolean) {
+        setState { copy(isDevicesControlsShown = value) }
+    }
+
+    fun onForwardUserInputToggle(value: Boolean) {
+        setState { copy(isUserForwardInputEnabled = value) }
+    }
+
     fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
-        if (!state.isKeysInputEnabled || event.type != KeyEventType.KeyDown) {
+        if (!state.isUserForwardInputEnabled || event.type != KeyEventType.KeyDown) {
             return false
         }
         val key: Int = covertEventKeyToKeyCode(event)
@@ -459,6 +467,8 @@ class AppStore {
         val isKeysInputEnabled: Boolean = false,
         val isPortForwardingShown: Boolean = false,
         val isLogsShown: Boolean = false,
+        val isDevicesControlsShown: Boolean = false,
+        val isUserForwardInputEnabled: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }
