@@ -47,7 +47,7 @@ fun TopMenu(model: AppStore) {
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
             onClick = {
                 devicesControlState = !devicesControlState
-                model.onKeyboardInputToggle(devicesControlState)
+                model.onDevicesControlToggle(devicesControlState)
             },
             description = "Devices Control",
             toggle = devicesControlState,

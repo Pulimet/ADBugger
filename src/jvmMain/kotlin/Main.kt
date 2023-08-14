@@ -17,7 +17,7 @@ import ui.theme.MyColors
 fun main() = application {
     val state = rememberWindowState(
         width = 460.dp,
-        height = 100.dp,
+        height = 110.dp,
         position = WindowPosition(alignment = Alignment.TopCenter)
     )
 
@@ -33,9 +33,7 @@ fun main() = application {
         onKeyEvent = { model.onKeyEvent(coroutineScope, it) }
     ) {
         Surface(color = MyColors.bg, modifier = Modifier.wrapContentSize().onSizeChanged {
-            if (it.height > 100) {
-                window.setSize(window.width, it.height + 32)
-            }
+            window.setSize(window.width, it.height + 32)
         }) {
             MainContent(model, coroutineScope)
         }
