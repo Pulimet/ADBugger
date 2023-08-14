@@ -3,15 +3,10 @@ package ui.widgets
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.TooltipArea
 import androidx.compose.foundation.TooltipPlacement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,10 +24,11 @@ fun BtnIcon(
     icon: ImageVector,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    toggle: Boolean = true,
     onClick: () -> Unit = {},
     description: String = "",
     visible: Boolean = true,
-    buttonWidth: Dp = 40.dp,
+    buttonSize: Dp = 40.dp,
     iconSize: Dp = 24.dp,
     showTooltip: Boolean = true,
 ) {
@@ -59,29 +55,33 @@ fun BtnIcon(
                 offset = DpOffset((-16).dp, 30.dp)
             )
         ) {
-            TooltipContent(modifier, buttonWidth, onClick, enabled, icon, iconSize, description)
+            TooltipContent(modifier, buttonSize, onClick, enabled, icon, iconSize, description, toggle)
         }
     else {
-        TooltipContent(modifier, buttonWidth, onClick, enabled, icon, iconSize, description)
+        TooltipContent(modifier, buttonSize, onClick, enabled, icon, iconSize, description, toggle)
     }
 }
 
 @Composable
 private fun TooltipContent(
     modifier: Modifier,
-    buttonWidth: Dp,
+    buttonSize: Dp,
     onClick: () -> Unit,
     enabled: Boolean,
     icon: ImageVector,
     iconSize: Dp,
-    description: String
+    description: String,
+    toggle: Boolean
 ) {
+
+    val bgColor = if (toggle) colors.primary else Color.DarkGray
     Button(
-        modifier = modifier.width(buttonWidth).padding(2.dp).bounceClick(onClick, enabled),
+        modifier = modifier.width(buttonSize).height(buttonSize).padding(2.dp).bounceClick(onClick, enabled, 0.85f),
         enabled = enabled,
         onClick = {},
         shape = RoundedCornerShape(50.dp),
-        contentPadding = PaddingValues(0.dp)
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = bgColor)
     )
     {
         Icon(

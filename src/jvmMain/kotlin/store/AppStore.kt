@@ -273,8 +273,12 @@ class AppStore {
         }
     }
 
+    fun onKeyboardInputToggle(value: Boolean) {
+        setState { copy(isKeysInputEnabled = value) }
+    }
+
     fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
-        if (event.type != KeyEventType.KeyDown) {
+        if (!state.isKeysInputEnabled || event.type != KeyEventType.KeyDown) {
             return false
         }
         val key: Int = covertEventKeyToKeyCode(event)
@@ -335,7 +339,7 @@ class AppStore {
         }
     }
 
-
+    // Logs
     fun clearLogs() {
         setState { copy(logs = arrayListOf()) }
     }
@@ -383,57 +387,25 @@ class AppStore {
         Key.Zero -> if (event.isShiftPressed) ")" else "0"
         Key.One -> if (event.isShiftPressed) "!" else "1"
         Key.Two -> if (event.isShiftPressed) "@" else "2"
-        Key.Three -> if (event.isShiftPressed) "\\#" else "3" //
+        Key.Three -> if (event.isShiftPressed) "\\#" else "3"
         Key.Four -> if (event.isShiftPressed) "$" else "4"
         Key.Five -> if (event.isShiftPressed) "%" else "5"
         Key.Six -> if (event.isShiftPressed) "^" else "6"
-        Key.Seven -> if (event.isShiftPressed) "\\&" else "7" //
-        Key.Eight -> if (event.isShiftPressed) "\\*" else "8" //
-        Key.Nine -> if (event.isShiftPressed) "\\(" else "9" //
+        Key.Seven -> if (event.isShiftPressed) "\\&" else "7"
+        Key.Eight -> if (event.isShiftPressed) "\\*" else "8"
+        Key.Nine -> if (event.isShiftPressed) "\\(" else "9"
         else -> {
             ""
         }
     }
 
     private fun covertEventKeyToKeyCode(event: KeyEvent) = when (event.key) {
-//        Key.A -> convertLetterToKeyCode("A")
-//        Key.B -> convertLetterToKeyCode("B")
-//        Key.C -> convertLetterToKeyCode("C")
-//        Key.D -> convertLetterToKeyCode("D")
-//        Key.E -> convertLetterToKeyCode("E")
-//        Key.F -> convertLetterToKeyCode("F")
-//        Key.G -> convertLetterToKeyCode("G")
-//        Key.H -> convertLetterToKeyCode("H")
-//        Key.I -> convertLetterToKeyCode("I")
-//        Key.J -> convertLetterToKeyCode("J")
-//        Key.K -> convertLetterToKeyCode("K")
-//        Key.L -> convertLetterToKeyCode("L")
-//        Key.M -> convertLetterToKeyCode("M")
-//        Key.N -> convertLetterToKeyCode("N")
-//        Key.O -> convertLetterToKeyCode("O")
-//        Key.P -> convertLetterToKeyCode("P")
-//        Key.Q -> convertLetterToKeyCode("Q")
-//        Key.R -> convertLetterToKeyCode("R")
-//        Key.S -> convertLetterToKeyCode("S")
-//        Key.T -> convertLetterToKeyCode("T")
-//        Key.U -> convertLetterToKeyCode("U")
-//        Key.V -> convertLetterToKeyCode("V")
-//        Key.W -> convertLetterToKeyCode("W")
-//        Key.X -> convertLetterToKeyCode("X")
-//        Key.Y -> convertLetterToKeyCode("Y")
-//        Key.Z -> convertLetterToKeyCode("Z")
-//        Key.Zero -> 7
-//        Key.One -> 8
-//        Key.Two -> 9
-//        Key.Three -> 10
-//        Key.Four -> 11
-//        Key.Five -> 12
-//        Key.Six -> 13
-//        Key.Seven -> 14
-//        Key.Eight -> 15
-//        Key.Nine -> 1
         Key.Backspace -> 67
         Key.Enter -> 66
+        Key.DirectionUp -> 19
+        Key.DirectionDown -> 20
+        Key.DirectionLeft -> 21
+        Key.DirectionRight -> 22
         else -> -1
     }
 
@@ -476,6 +448,7 @@ class AppStore {
         val isDevicesLoading: Boolean = false,
         val isPackagesLoading: Boolean = false,
         val isEmulatorsLoading: Boolean = false,
+        val isKeysInputEnabled: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }

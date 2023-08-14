@@ -25,6 +25,7 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
 
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {
         Column {
+            TopMenu(model)
             DeviceListSection(coroutineScope, model)
             DeviceCommands(model, coroutineScope, isDeviceSelected)
             EmulatorLauncher(model, coroutineScope)
@@ -32,7 +33,7 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
             Numbers(model, coroutineScope)
             Keyboard(model, coroutineScope)
             SendTextAndInputToDevices(model, coroutineScope)
-            if(isPackageSelected) {
+            if (isPackageSelected) {
                 PermissionsCommands(model, coroutineScope)
             }
             if (isDeviceSelected || isPackageSelected) {
