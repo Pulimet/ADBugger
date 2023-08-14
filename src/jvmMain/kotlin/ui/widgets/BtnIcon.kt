@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ui.theme.bounceClick
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -45,11 +46,12 @@ fun BtnIcon(
                 ) {
                     Text(
                         text = description,
-                        modifier = Modifier.padding(10.dp)
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                     )
                 }
             },
-            delayMillis = 1200,
+            delayMillis = 700,
             tooltipPlacement = TooltipPlacement.CursorPoint(
                 alignment = Alignment.BottomEnd,
                 offset = DpOffset((-16).dp, 30.dp)

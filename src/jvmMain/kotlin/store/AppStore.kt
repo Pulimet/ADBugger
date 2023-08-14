@@ -312,6 +312,14 @@ class AppStore {
         setState { copy(isUserForwardInputEnabled = value) }
     }
 
+    fun onWorkingWithPackageToggle(value: Boolean) {
+        setState { copy(isWorkingWithPackageShown = value) }
+    }
+
+    fun onDevicesCommandsToggle(value: Boolean) {
+        setState { copy(isDevicesCommandsShown = value) }
+    }
+
     fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
         if (!state.isUserForwardInputEnabled || event.type != KeyEventType.KeyDown) {
             return false
@@ -494,6 +502,8 @@ class AppStore {
         val isLogsShown: Boolean = false,
         val isDevicesControlsShown: Boolean = false,
         val isUserForwardInputEnabled: Boolean = false,
+        val isWorkingWithPackageShown: Boolean = false,
+        val isDevicesCommandsShown: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }

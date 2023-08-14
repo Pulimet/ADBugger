@@ -10,13 +10,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
+import compose.icons.Octicons
 import compose.icons.TablerIcons
 import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.regular.Keyboard
-import compose.icons.tablericons.ArrowsRightLeft
-import compose.icons.tablericons.LetterA
-import compose.icons.tablericons.Notes
-import compose.icons.tablericons.SettingsAutomation
+import compose.icons.octicons.Package24
+import compose.icons.tablericons.*
 import pref.preference
 import store.AppStore
 import ui.theme.MyColors
@@ -25,6 +24,8 @@ import ui.widgets.BtnIcon
 @Composable
 fun TopMenu(model: AppStore) {
     var devicesControlState: Boolean by preference("Btn_DevicesControl", false)
+    var devicesCommandsState: Boolean by preference("Btn_DevicesCommands", false)
+    var workingWithPackageState: Boolean by preference("Btn_WorkingWithPackage", false)
     var keysState: Boolean by preference("Btn_KeyboardInput", false)
     var forwardUserInputState: Boolean by preference("Btn_ForwardUserInput", false)
     var portsState: Boolean by preference("Btn_PortForwarding", false)
@@ -36,6 +37,8 @@ fun TopMenu(model: AppStore) {
         model.onLogsToggle(logsState)
         model.onDevicesControlToggle(devicesControlState)
         model.onForwardUserInputToggle(forwardUserInputState)
+        model.onWorkingWithPackageToggle(workingWithPackageState)
+        model.onDevicesCommandsToggle(devicesCommandsState)
     }
 
     Row(
@@ -51,6 +54,30 @@ fun TopMenu(model: AppStore) {
             },
             description = "Devices Control",
             toggle = devicesControlState,
+            buttonSize = 26.dp,
+            iconSize = 16.dp
+        )
+        BtnIcon(
+            icon = TablerIcons.BrandAndroid,
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+            onClick = {
+                devicesCommandsState = !devicesCommandsState
+                model.onDevicesCommandsToggle(devicesCommandsState)
+            },
+            description = "Devices Commands",
+            toggle = devicesCommandsState,
+            buttonSize = 26.dp,
+            iconSize = 16.dp
+        )
+        BtnIcon(
+            icon = Octicons.Package24,
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+            onClick = {
+                workingWithPackageState = !workingWithPackageState
+                model.onWorkingWithPackageToggle(workingWithPackageState)
+            },
+            description = "Working with package",
+            toggle = workingWithPackageState,
             buttonSize = 26.dp,
             iconSize = 16.dp
         )

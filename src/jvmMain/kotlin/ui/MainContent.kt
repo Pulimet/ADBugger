@@ -26,20 +26,22 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {
         Column {
             TopMenu(model)
-            if(state.isDevicesControlsShown) {
+            if (state.isDevicesControlsShown) {
                 DeviceListSection(coroutineScope, model)
                 EmulatorLauncher(model, coroutineScope)
             }
-            DeviceCommands(model, coroutineScope, isDeviceSelected)
-            if (isDeviceSelected || isPackageSelected) {
-                PackageListAndCommands(coroutineScope, model, isPackageSelected)
-            }
-            if (isPackageSelected) {
-                PermissionsCommands(model, coroutineScope)
+
+            if (state.isDevicesCommandsShown) {
+                DeviceCommands(model, coroutineScope, isDeviceSelected)
             }
 
-            if (state.isPortForwardingShown) {
-                PortForwarding(model, coroutineScope)
+            if (state.isWorkingWithPackageShown) {
+                if (isDeviceSelected || isPackageSelected) {
+                    PackageListAndCommands(coroutineScope, model, isPackageSelected)
+                }
+                if (isPackageSelected) {
+                    PermissionsCommands(model, coroutineScope)
+                }
             }
 
             if (state.isKeysInputEnabled) {
@@ -47,6 +49,10 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
                 Numbers(model, coroutineScope)
                 Keyboard(model, coroutineScope)
                 SendTextAndInputToDevices(model, coroutineScope)
+            }
+
+            if (state.isPortForwardingShown) {
+                PortForwarding(model, coroutineScope)
             }
 
             if (state.isLogsShown) {

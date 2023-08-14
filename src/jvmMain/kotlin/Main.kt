@@ -17,8 +17,8 @@ import ui.theme.MyColors
 fun main() = application {
     val state = rememberWindowState(
         width = 460.dp,
-        height = 110.dp,
-        position = WindowPosition(alignment = Alignment.TopCenter)
+        height = 50.dp,
+        position = WindowPosition(alignment = Alignment.TopEnd)
     )
 
     val model = remember { AppStore() }
