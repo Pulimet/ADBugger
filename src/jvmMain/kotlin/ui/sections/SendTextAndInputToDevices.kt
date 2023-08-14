@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 
@@ -33,7 +33,7 @@ fun SendTextAndInputToDevices(
     ExpandableCard(
         title = "Send text to device",
         modifier = Modifier.padding(
-            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
         )
     ) {
         Column {

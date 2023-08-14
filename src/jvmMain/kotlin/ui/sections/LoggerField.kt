@@ -18,7 +18,7 @@ import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Trash2
 import store.AppStore
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.theme.bounceClick
 import ui.widgets.ExpandableCard
 
@@ -35,7 +35,7 @@ fun LoggerField(model: AppStore) {
     ExpandableCard(
         title = "Logs",
         modifier = Modifier.padding(
-            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
         )
     ) {
         Box(modifier = Modifier.heightIn(max = 250.dp)) {

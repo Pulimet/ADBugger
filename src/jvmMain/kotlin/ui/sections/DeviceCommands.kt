@@ -26,7 +26,7 @@ import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 
@@ -39,7 +39,7 @@ fun DeviceCommands(
     ExpandableCard(
         title = "Device Commands",
         modifier = Modifier.padding(
-            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
         )
     ) {
         Row(

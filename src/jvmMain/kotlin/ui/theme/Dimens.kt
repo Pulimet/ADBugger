@@ -2,8 +2,12 @@ package ui.theme
 
 import androidx.compose.ui.unit.dp
 
-object Paddings {
+object Dimens {
     val cardHorizontal = 6.dp
     val cardVertical = 4.dp
     val spinnerPadding = 4.dp
+    val btnSizeBig = 38.dp
+    val btnIconSizeBig = 20.dp
+    val btnSizeSmall = 26.dp
+    val btnIconSizeSmall = 16.dp
 }

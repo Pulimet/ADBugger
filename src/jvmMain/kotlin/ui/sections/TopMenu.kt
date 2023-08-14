@@ -18,6 +18,7 @@ import compose.icons.octicons.Package24
 import compose.icons.tablericons.*
 import pref.preference
 import store.AppStore
+import ui.theme.Dimens
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
@@ -54,8 +55,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Devices Control",
             toggle = devicesControlState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.BrandAndroid,
@@ -66,8 +67,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Devices Commands",
             toggle = devicesCommandsState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
         BtnIcon(
             icon = Octicons.Package24,
@@ -78,8 +79,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Working with package",
             toggle = workingWithPackageState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
         BtnIcon(
             icon = FontAwesomeIcons.Regular.Keyboard,
@@ -90,8 +91,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Keyboard Input",
             toggle = keysState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.LetterA,
@@ -102,8 +103,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Forward User Input",
             toggle = forwardUserInputState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.ArrowsRightLeft,
@@ -114,8 +115,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Port Forwarding",
             toggle = portsState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.Notes,
@@ -126,8 +127,8 @@ fun TopMenu(model: AppStore) {
             },
             description = "Logs",
             toggle = logsState,
-            buttonSize = 26.dp,
-            iconSize = 16.dp
+            buttonSize = Dimens.btnSizeSmall,
+            iconSize = Dimens.btnIconSizeSmall
         )
     }
 }

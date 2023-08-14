@@ -15,7 +15,7 @@ import compose.icons.octicons.ArrowRight24
 import compose.icons.octicons.ArrowUp24
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 
@@ -27,7 +27,7 @@ fun ArrowsCommands(
 ) {
     ExpandableCard(
         title = "Arrows",
-        modifier = Modifier.padding(horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical)
+        modifier = Modifier.padding(horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical)
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,

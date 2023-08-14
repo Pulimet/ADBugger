@@ -13,7 +13,7 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.*
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 
@@ -25,7 +25,7 @@ fun Numbers(
 ) {
     ExpandableCard(
         title = "Numbers",
-        modifier = Modifier.padding(horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical)
+        modifier = Modifier.padding(horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical)
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,

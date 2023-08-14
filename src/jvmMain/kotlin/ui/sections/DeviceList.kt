@@ -26,7 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import store.AppStore
 import ui.theme.MyColors
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 import ui.widgets.LoadingSpinner
@@ -40,7 +40,7 @@ fun DeviceListSection(
     ExpandableCard(
         title = "Device Selection",
         modifier = Modifier.padding(
-            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
         ),
     ) {
         Content(model, coroutineScope)
@@ -72,7 +72,7 @@ private fun AllOptionAndRefreshButton(
         modifier = Modifier.fillMaxWidth()
     ) {
         if (state.isDevicesLoading) {
-            LoadingSpinner(Modifier.padding(Paddings.spinnerPadding).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Dimens.spinnerPadding).fillMaxWidth())
         } else {
             val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
             DeviceItem(

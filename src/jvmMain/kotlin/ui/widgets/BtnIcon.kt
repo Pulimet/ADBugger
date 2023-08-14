@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ui.theme.Dimens
 import ui.theme.bounceClick
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -29,8 +30,8 @@ fun BtnIcon(
     onClick: () -> Unit = {},
     description: String = "",
     visible: Boolean = true,
-    buttonSize: Dp = 40.dp,
-    iconSize: Dp = 24.dp,
+    buttonSize: Dp = Dimens.btnSizeBig,
+    iconSize: Dp = Dimens.btnIconSizeBig,
     showTooltip: Boolean = true,
 ) {
     if (!visible) {

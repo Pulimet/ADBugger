@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.ExpandableCard
 
 @Composable
@@ -20,7 +20,7 @@ fun PackageListAndCommands(
     ExpandableCard(
         title = "Apps Control / Package selection",
         modifier = Modifier.padding(
-            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
         )
     ) {
         PackageListSection(

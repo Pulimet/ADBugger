@@ -26,7 +26,7 @@ import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Paddings
+import ui.theme.Dimens
 import ui.widgets.BtnIcon
 import ui.widgets.ExpandableCard
 import ui.widgets.LoadingSpinner
@@ -39,11 +39,11 @@ fun EmulatorLauncher(
     ExpandableCard(
         title = "Emulator Launcher",
         modifier = Modifier.padding(
-            horizontal = Paddings.cardHorizontal, vertical = Paddings.cardVertical
+            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
         )
     ) {
         if (model.state.isEmulatorsLoading) {
-            LoadingSpinner(Modifier.padding(Paddings.spinnerPadding).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Dimens.spinnerPadding).fillMaxWidth())
         } else {
             ContentEmulator(model, coroutineScope)
         }
