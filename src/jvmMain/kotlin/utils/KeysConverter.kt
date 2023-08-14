@@ -1,9 +1,6 @@
 package utils
 
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEvent
-import androidx.compose.ui.input.key.isShiftPressed
-import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.*
 
 object KeysConverter {
 
@@ -14,6 +11,9 @@ object KeysConverter {
         Key.DirectionDown -> 20
         Key.DirectionLeft -> 21
         Key.DirectionRight -> 22
+        Key.X -> if (event.isCtrlPressed || event.isMetaPressed) 277 else -1
+        Key.C -> if (event.isCtrlPressed || event.isMetaPressed) 278 else -1
+        Key.V -> if (event.isCtrlPressed || event.isMetaPressed) 279 else -1
         else -> -1
     }
 

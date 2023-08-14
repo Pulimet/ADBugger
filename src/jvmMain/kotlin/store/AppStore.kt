@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
@@ -334,6 +335,7 @@ class AppStore {
         if (!state.isUserForwardInputEnabled || event.type != KeyEventType.KeyDown) {
             return false
         }
+        log("KEY: ${event.key}")
         val key: Int = KeysConverter.covertEventKeyToKeyCode(event)
         if (key != -1) {
             log("adb shell " + Commands.sendInputCommand(key))
