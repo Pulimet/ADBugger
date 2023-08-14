@@ -4,6 +4,7 @@ import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -39,12 +40,14 @@ fun LoggerField(model: AppStore) {
     ) {
         Box(modifier = Modifier.heightIn(max = 250.dp)) {
             Column(modifier = Modifier.fillMaxWidth().verticalScroll(stateVertical)) {
-                Text(
-                    text = logs,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
-                    color = Color.White,
-                    fontSize = 12.sp
-                )
+                SelectionContainer {
+                    Text(
+                        text = logs,
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
+                        color = Color.White,
+                        fontSize = 12.sp
+                    )
+                }
             }
             if (logsList.isNotEmpty()) {
                 Icon(

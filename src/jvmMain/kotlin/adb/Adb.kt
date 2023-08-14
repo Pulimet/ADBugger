@@ -100,7 +100,10 @@ class Adb {
     suspend fun takeSnapshot(selectedDevice: String) {
         val filename = "snap_$selectedDevice.png"
         launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
-        execCommand("adb -s $selectedDevice pull /sdcard/$filename", path = Commands.getPlatformToolsPath())
+        execCommand(
+            "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename",
+            path = Commands.getPlatformToolsPath()
+        )
         launchShellCommand(selectedDevice, "rm /sdcard/$filename")
     }
 

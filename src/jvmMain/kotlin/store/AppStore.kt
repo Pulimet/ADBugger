@@ -206,7 +206,7 @@ class AppStore {
 
         val filename = "snap_${state.selectedDevice}.png"
         log("adb shell screencap -p /sdcard/$filename")
-        log("adb -s ${state.selectedDevice} pull /sdcard/$filename")
+        log("adb -s ${state.selectedDevice} pull /sdcard/$filename ~/Desktop/$filename")
         log("adb shell rm /sdcard/$filename")
 
         coroutineScope.launch {
