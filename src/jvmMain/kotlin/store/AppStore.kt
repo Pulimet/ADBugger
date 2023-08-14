@@ -49,7 +49,7 @@ class AppStore {
 
     fun onGetPackageListClick(coroutineScope: CoroutineScope) {
         if (state.selectedDevice == ALL_DEVICES) return
-
+        log("adb shell pm list packages")
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
             delay(500)
@@ -74,6 +74,7 @@ class AppStore {
 
     fun onOpenClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
+        log("adb shell" + Commands.getLaunchCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.openPackage(state.selectedPackage, state.selectedDevice)
         }
@@ -81,6 +82,7 @@ class AppStore {
 
     fun onCloseClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
+        log("adb shell" + Commands.getCloseCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
         }
@@ -88,6 +90,8 @@ class AppStore {
 
     fun onRestartClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
+        log("adb shell" + Commands.getLaunchCommand(state.selectedPackage))
+        log("adb shell" + Commands.getCloseCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
             delay(100)
@@ -97,6 +101,7 @@ class AppStore {
 
     fun onClearDataClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
+        log("adb shell" + Commands.getClearDataCommand(state.selectedPackage))
         coroutineScope.launch {
             adb.clearData(state.selectedPackage, state.selectedDevice)
         }
@@ -104,6 +109,10 @@ class AppStore {
 
     fun onClearAndRestartClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
+
+        log("adb shell" + Commands.getCloseCommand(state.selectedPackage))
+        log("adb shell" + Commands.getClearDataCommand(state.selectedPackage))
+        log("adb shell" + Commands.getLaunchCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
             adb.clearData(state.selectedPackage, state.selectedDevice)
@@ -114,32 +123,36 @@ class AppStore {
 
     fun onUninstallClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
+        log("adb shell" + Commands.getUninstallCommand(state.selectedPackage))
         coroutineScope.launch {
             adb.uninstall(state.selectedPackage, state.selectedDevice)
         }
     }
 
     fun onLaunchEmulatorClick(coroutineScope: CoroutineScope, emulatorName: String) {
+        log("emulator -avd $emulatorName -netdelay none -netspeed full")
         coroutineScope.launch(Dispatchers.IO) {
             adb.launchEmulator(emulatorName)
         }
     }
 
     fun onWipeAndLaunch(coroutineScope: CoroutineScope, emulatorName: String) {
+        log("emulator -avd $emulatorName -wipe-data")
         coroutineScope.launch(Dispatchers.IO) {
             adb.wipeAndLaunchEmulator(emulatorName)
         }
     }
 
     fun onKillEmulatorClick(coroutineScope: CoroutineScope, serial: String) {
+        log(Commands.getKillEmulatorBySerial(serial))
         coroutineScope.launch(Dispatchers.IO) {
-            log(Commands.getKillEmulatorBySerial(serial))
             adb.killEmulatorBySerial(serial)
         }
     }
 
 
     fun onKillAllEmulatorClick(coroutineScope: CoroutineScope) {
+        log(Commands.getKillEmulatorBySerial("[SERIAL]"))
         coroutineScope.launch(Dispatchers.IO) {
             adb.killAllEmulators()
         }
@@ -147,42 +160,42 @@ class AppStore {
 
 
     fun onHomeClick(coroutineScope: CoroutineScope) {
-        log(Commands.getShowHome())
+        log("adb shell " + Commands.getShowHome())
         coroutineScope.launch {
             adb.showHome(state.selectedDevice)
         }
     }
 
     fun onSettingsClick(coroutineScope: CoroutineScope) {
-        log(Commands.getShowSettings())
+        log("adb shell " + Commands.getShowSettings())
         coroutineScope.launch {
             adb.showSettings(state.selectedDevice)
         }
     }
 
     fun onBackClick(coroutineScope: CoroutineScope) {
-        log(Commands.getPressBack())
+        log("adb shell " + Commands.getPressBack())
         coroutineScope.launch {
             adb.pressBack(state.selectedDevice)
         }
     }
 
     fun onTabClick(coroutineScope: CoroutineScope) {
-        log(Commands.getPressTab())
+        log("adb shell " + Commands.getPressTab())
         coroutineScope.launch {
             adb.pressTab(state.selectedDevice)
         }
     }
 
     fun onEnterClick(coroutineScope: CoroutineScope) {
-        log(Commands.getPressEnter())
+        log("adb shell " + Commands.getPressEnter())
         coroutineScope.launch {
             adb.pressEnter(state.selectedDevice)
         }
     }
 
     fun onPowerClick(coroutineScope: CoroutineScope) {
-        log(Commands.getPressPower())
+        log("adb shell " + Commands.getPressPower())
         coroutineScope.launch {
             adb.pressPower(state.selectedDevice)
         }
@@ -190,76 +203,82 @@ class AppStore {
 
     fun onSnapClick(coroutineScope: CoroutineScope) {
         if (state.selectedDevice == ALL_DEVICES) return
+
+        val filename = "snap_${state.selectedDevice}.png"
+        log("adb shell screencap -p /sdcard/$filename")
+        log("adb -s ${state.selectedDevice} pull /sdcard/$filename")
+        log("adb shell rm /sdcard/$filename")
+
         coroutineScope.launch {
             adb.takeSnapshot(state.selectedDevice)
         }
     }
 
     fun onDayClick(coroutineScope: CoroutineScope) {
-        log(Commands.getDarkModeOff())
+        log("adb shell " + Commands.getDarkModeOff())
         coroutineScope.launch {
             adb.setDarkModeOff(state.selectedDevice)
         }
     }
 
     fun onNightClick(coroutineScope: CoroutineScope) {
-        log(Commands.getDarkModeOn())
+        log("adb shell " + Commands.getDarkModeOn())
         coroutineScope.launch {
             adb.setDarkModeOn(state.selectedDevice)
         }
     }
 
     fun onUpClick(coroutineScope: CoroutineScope) {
-        log(Commands.getUp())
+        log("adb shell " + Commands.getUp())
         coroutineScope.launch {
             adb.pressUp(state.selectedDevice)
         }
     }
 
     fun onDownClick(coroutineScope: CoroutineScope) {
-        log(Commands.getDown())
+        log("adb shell " + Commands.getDown())
         coroutineScope.launch {
             adb.pressDown(state.selectedDevice)
         }
     }
 
     fun onLeftClick(coroutineScope: CoroutineScope) {
-        log(Commands.getLeft())
+        log("adb shell " + Commands.getLeft())
         coroutineScope.launch {
             adb.pressLeft(state.selectedDevice)
         }
     }
 
     fun onRightClick(coroutineScope: CoroutineScope) {
-        log(Commands.getRight())
+        log("adb shell " + Commands.getRight())
         coroutineScope.launch {
             adb.pressRight(state.selectedDevice)
         }
     }
 
     fun onBackSpaceClick(coroutineScope: CoroutineScope) {
-        log(Commands.getDelete())
+        log("adb shell " + Commands.getDelete())
         coroutineScope.launch {
             adb.pressDelete(state.selectedDevice)
         }
     }
 
     fun onSendTextClick(coroutineScope: CoroutineScope, value: String) {
-        log(Commands.sendTextCommand(value))
+        log("adb shell " + Commands.sendTextCommand(value))
         coroutineScope.launch {
             adb.sendText(state.selectedDevice, value)
         }
     }
 
     fun onSendInputClick(coroutineScope: CoroutineScope, value: Int) {
-        log(Commands.sendInputCommand(value))
+        log("adb shell " + Commands.sendInputCommand(value))
         coroutineScope.launch {
             adb.sendInput(state.selectedDevice, value)
         }
     }
 
     fun onNumberClick(coroutineScope: CoroutineScope, i: Int) {
-        log(Commands.sendInputCommand(i))
+        log("adb shell " + Commands.sendInputCommand(i))
         coroutineScope.launch {
             adb.sendInputNum(state.selectedDevice, i)
         }
@@ -267,7 +286,7 @@ class AppStore {
 
     fun onLetterClick(coroutineScope: CoroutineScope, letter: String) {
         val key = convertLetterToKeyCode(letter)
-        log(Commands.sendInputCommand(key))
+        log("adb shell " + Commands.sendInputCommand(key))
         coroutineScope.launch {
             adb.sendInput(state.selectedDevice, key)
         }
@@ -299,6 +318,7 @@ class AppStore {
         }
         val key: Int = covertEventKeyToKeyCode(event)
         if (key != -1) {
+            log("adb shell " + Commands.sendInputCommand(key))
             coroutineScope.launch {
                 adb.sendInput(state.selectedDevice, key)
             }
@@ -306,6 +326,7 @@ class AppStore {
         }
         val char = convertEventKeyToChar(event)
         if (char.isNotEmpty()) {
+            log("adb shell " + Commands.sendTextCommand(char))
             coroutineScope.launch {
                 adb.sendText(state.selectedDevice, char)
             }
@@ -331,18 +352,21 @@ class AppStore {
     }
 
     fun onAddPermission(coroutineScope: CoroutineScope, permission: String) {
+        log(Commands.addSpecificPermission(state.selectedPackage, permission))
         coroutineScope.launch {
             adb.addPermission(state.selectedDevice, permission, state.selectedPackage)
         }
     }
 
     fun onRemovePermission(coroutineScope: CoroutineScope, permission: String) {
+        log(Commands.revokeSpecificPermission(state.selectedPackage, permission))
         coroutineScope.launch {
             adb.removePermission(state.selectedDevice, permission, state.selectedPackage)
         }
     }
 
     fun onRemoveAllPermissions(coroutineScope: CoroutineScope) {
+        log(Commands.getRevokeAllPermissions(state.selectedPackage))
         coroutineScope.launch {
             adb.removeAllPermissions(state.selectedDevice, state.selectedPackage)
         }
@@ -350,6 +374,7 @@ class AppStore {
 
     fun onGetPermissions(coroutineScope: CoroutineScope) {
         if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
+        log("adb shell " + Commands.getGrantedPermissions(state.selectedPackage))
         coroutineScope.launch {
             adb.getPermissions(state.selectedDevice, state.selectedPackage, ::log)
         }
