@@ -17,6 +17,7 @@ object Commands {
     fun getCloseCommand(packageName: String) = "am force-stop  $packageName"
     fun getClearDataCommand(packageName: String) = "pm clear $packageName"
     fun getUninstallCommand(packageName: String) = "uninstall $packageName"
+    fun getApkPathCommand(packageName: String, serial: String) = "adb -s $serial shell pm path $packageName"
     fun getShowHome() = "am start -a android.intent.action.MAIN -c android.intent.category.HOME"
     fun getShowSettings() = "am start com.android.settings"
     fun getPressBack() = getInputKeyEventFor(KEYCODE_BACK)

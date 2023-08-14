@@ -42,6 +42,17 @@ class Adb {
         launchShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
     }
 
+    fun getApkPath(selectedPackage: String, selectedDevice: String, log: (String) -> Unit) {
+        val result = execCommand(
+            Commands.getApkPathCommand(selectedPackage, selectedDevice),
+            log,
+            Commands.getPlatformToolsPath()
+        )
+        result.forEach {
+            log(it)
+        }
+    }
+
     suspend fun closePackage(selectedPackage: String, selectedDevice: String) {
         launchShell(selectedDevice, Commands.getCloseCommand(selectedPackage))
     }

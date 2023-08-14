@@ -49,5 +49,13 @@ fun PackageCommands(
                 enabled = isPackageSelected,
                 onClick = { model.onUninstallClick(coroutineScope) }) { Text(text = "Uninstall") }
         }
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
+        ) {
+            Button(modifier = Modifier.bounceClick(),
+                enabled = isPackageSelected,
+                onClick = { model.onApkPath(coroutineScope) }) { Text(text = "APK Path") }
+        }
     }
 }

@@ -74,15 +74,22 @@ class AppStore {
 
     fun onOpenClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
-        log("adb shell" + Commands.getLaunchCommand(state.selectedPackage))
+        log("adb shell " + Commands.getLaunchCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.openPackage(state.selectedPackage, state.selectedDevice)
         }
     }
 
+    fun onApkPath(coroutineScope: CoroutineScope) {
+        if (state.selectedPackage == PACKAGE_NONE) return
+        coroutineScope.launch(Dispatchers.IO) {
+            adb.getApkPath(state.selectedPackage, state.selectedDevice, ::log)
+        }
+    }
+
     fun onCloseClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
-        log("adb shell" + Commands.getCloseCommand(state.selectedPackage))
+        log("adb shell " + Commands.getCloseCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
         }
@@ -90,8 +97,8 @@ class AppStore {
 
     fun onRestartClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
-        log("adb shell" + Commands.getLaunchCommand(state.selectedPackage))
-        log("adb shell" + Commands.getCloseCommand(state.selectedPackage))
+        log("adb shell " + Commands.getLaunchCommand(state.selectedPackage))
+        log("adb shell " + Commands.getCloseCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
             delay(100)
@@ -101,7 +108,7 @@ class AppStore {
 
     fun onClearDataClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
-        log("adb shell" + Commands.getClearDataCommand(state.selectedPackage))
+        log("adb shell " + Commands.getClearDataCommand(state.selectedPackage))
         coroutineScope.launch {
             adb.clearData(state.selectedPackage, state.selectedDevice)
         }
@@ -110,9 +117,9 @@ class AppStore {
     fun onClearAndRestartClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
 
-        log("adb shell" + Commands.getCloseCommand(state.selectedPackage))
-        log("adb shell" + Commands.getClearDataCommand(state.selectedPackage))
-        log("adb shell" + Commands.getLaunchCommand(state.selectedPackage))
+        log("adb shell " + Commands.getCloseCommand(state.selectedPackage))
+        log("adb shell " + Commands.getClearDataCommand(state.selectedPackage))
+        log("adb shell " + Commands.getLaunchCommand(state.selectedPackage))
         coroutineScope.launch(Dispatchers.IO) {
             adb.closePackage(state.selectedPackage, state.selectedDevice)
             adb.clearData(state.selectedPackage, state.selectedDevice)
@@ -123,7 +130,7 @@ class AppStore {
 
     fun onUninstallClick(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
-        log("adb shell" + Commands.getUninstallCommand(state.selectedPackage))
+        log("adb shell " + Commands.getUninstallCommand(state.selectedPackage))
         coroutineScope.launch {
             adb.uninstall(state.selectedPackage, state.selectedDevice)
         }
