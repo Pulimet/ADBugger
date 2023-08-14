@@ -277,6 +277,14 @@ class AppStore {
         setState { copy(isKeysInputEnabled = value) }
     }
 
+    fun onPortForwardingToggle(value: Boolean) {
+        setState { copy(isPortForwardingShown = value) }
+    }
+
+    fun onLogsToggle(value: Boolean) {
+        setState { copy(isLogsShown = value) }
+    }
+
     fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
         if (!state.isKeysInputEnabled || event.type != KeyEventType.KeyDown) {
             return false
@@ -449,6 +457,8 @@ class AppStore {
         val isPackagesLoading: Boolean = false,
         val isEmulatorsLoading: Boolean = false,
         val isKeysInputEnabled: Boolean = false,
+        val isPortForwardingShown: Boolean = false,
+        val isLogsShown: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }
