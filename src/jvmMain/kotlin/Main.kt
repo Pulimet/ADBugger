@@ -19,7 +19,7 @@ import java.awt.Color
 
 fun main() = application {
     val state = rememberWindowState(
-        width = 460.dp,
+        width = 500.dp,
         height = 50.dp,
         position = WindowPosition(alignment = Alignment.TopEnd)
     )
