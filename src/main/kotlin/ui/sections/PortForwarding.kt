@@ -8,7 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Send
+import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,7 +55,7 @@ fun PortForwarding(
             )
 
             BtnIcon(
-                icon = Icons.Rounded.Send,
+                icon = Icons.AutoMirrored.Rounded.Send,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 enabled = textInputCustomPortState.value.text.isNotEmpty(),
                 onClick = { model.onAdbReverse(coroutineScope, textInputCustomPortState.value.text.toIntOrNull()) },

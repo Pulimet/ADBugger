@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -59,7 +59,7 @@ fun DeviceCommands(
                 description = "Settings"
             )
             BtnIcon(
-                icon = Icons.Rounded.KeyboardArrowLeft,
+                icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
                 modifier = Modifier.padding(horizontal = 4.dp),
                 onClick = { model.onBackClick(coroutineScope) },
                 description = "Back"

@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Send
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +53,7 @@ fun SendTextAndInputToDevices(
                 )
 
                 BtnIcon(
-                    icon = Icons.Rounded.Send,
+                    icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputSendTextState.value.text.isNotEmpty(),
                     onClick = { model.onSendTextClick(coroutineScope, textInputSendTextState.value.text) },
@@ -61,7 +61,7 @@ fun SendTextAndInputToDevices(
                 )
 
                 BtnIcon(
-                    icon = Icons.Rounded.ArrowBack,
+                    icon = Icons.AutoMirrored.Rounded.ArrowBack,
                     modifier = Modifier.padding(start = 4.dp, end = 16.dp),
                     enabled = textInputSendTextState.value.text.isNotEmpty(),
                     onClick = {
@@ -91,7 +91,7 @@ fun SendTextAndInputToDevices(
                 )
 
                 BtnIcon(
-                    icon = Icons.Rounded.Send,
+                    icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(start = 8.dp, end = 16.dp),
                     enabled = textInputSendInputState.value.text.isNotEmpty(),
                     onClick = { model.onSendInputClick(coroutineScope, textInputSendInputState.value.text.toInt()) },
