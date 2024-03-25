@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.navigation.SideBar
+import ui.navigation.TopMenu
 import ui.sections.*
 import ui.theme.MyColors
 

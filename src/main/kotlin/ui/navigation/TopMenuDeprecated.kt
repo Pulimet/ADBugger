@@ -1,4 +1,4 @@
-package ui.sections
+package ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
