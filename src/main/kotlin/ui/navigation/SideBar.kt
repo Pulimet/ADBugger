@@ -36,7 +36,7 @@ fun SideBar(
         .width(200.dp)
         .fillMaxHeight()
         .background(MyColors.bg2)
-        .padding(vertical = 12.dp, horizontal = 24.dp)
+        .padding(vertical = 12.dp)
 ) {
     var selectedId: Int by preference("SideMenuSelectedItem", 0)
     var selected by remember { mutableStateOf(selectedId) }
