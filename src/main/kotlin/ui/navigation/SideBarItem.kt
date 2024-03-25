@@ -1,4 +1,4 @@
-package ui.widgets
+package ui.navigation
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,13 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import ui.navigation.MenuItemId
 import ui.theme.Dimens
 import ui.theme.bounceClick
+import ui.widgets.BtnIcon
 
 @Composable
 fun SideBarItem(
-    id: MenuItemId,
     icon: ImageVector,
     enabled: Boolean = true,
     toggle: Boolean = true,

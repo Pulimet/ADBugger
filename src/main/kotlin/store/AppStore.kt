@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DeviceInfo
+import ui.navigation.MenuItemId
 import utils.KeysConverter
 
 class AppStore {
@@ -35,6 +36,11 @@ class AppStore {
             getDevicesList(this)
         }
     }
+
+    // Navigation
+    fun showPage(menuItemId: MenuItemId) {
+    }
+
 
     // User Actions
     fun getDevicesList(coroutineScope: CoroutineScope) {
@@ -415,7 +421,6 @@ class AppStore {
     private inline fun setState(update: AppState.() -> AppState) {
         state = state.update()
     }
-
 
     data class AppState(
         val devicesList: List<DeviceInfo> = emptyList(),

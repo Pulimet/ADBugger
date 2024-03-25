@@ -1,4 +1,4 @@
-package ui.widgets
+package ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
