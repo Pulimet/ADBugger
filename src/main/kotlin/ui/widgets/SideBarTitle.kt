@@ -13,7 +13,7 @@ import ui.theme.Dimens
 fun SideBarTitle(title: String = "Specify title", isSelected: Boolean = false) {
     Text(
         title,
-        modifier = Modifier.padding(start = 8.dp, end = 4.dp),
+        modifier = Modifier.padding(start = 8.dp, bottom = 6.dp),
         fontSize = Dimens.sideMenuFontSize,
         textAlign = TextAlign.Start,
         color = if (isSelected) Color.White else Color.LightGray

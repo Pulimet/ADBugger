@@ -33,6 +33,7 @@ fun BtnIcon(
     buttonSize: Dp = Dimens.btnSizeBig,
     iconSize: Dp = Dimens.btnIconSizeBig,
     showTooltip: Boolean = true,
+    clickEffect: Boolean = true,
 ) {
     if (!visible) {
         return
@@ -58,10 +59,10 @@ fun BtnIcon(
                 offset = DpOffset((-16).dp, 30.dp)
             )
         ) {
-            TooltipContent(modifier, buttonSize, onClick, enabled, icon, iconSize, description, toggle)
+            TooltipContent(modifier, buttonSize, onClick, enabled, icon, iconSize, description, toggle, clickEffect)
         }
     else {
-        TooltipContent(modifier, buttonSize, onClick, enabled, icon, iconSize, description, toggle)
+        TooltipContent(modifier, buttonSize, onClick, enabled, icon, iconSize, description, toggle, clickEffect)
     }
 }
 
@@ -74,12 +75,13 @@ private fun TooltipContent(
     icon: ImageVector,
     iconSize: Dp,
     description: String,
-    toggle: Boolean
+    toggle: Boolean,
+    clickEffect: Boolean,
 ) {
 
     val bgColor = if (toggle) colors.primary else Color.Gray
     Button(
-        modifier = modifier.width(buttonSize).height(buttonSize).padding(2.dp).bounceClick(onClick, enabled, 0.85f),
+        modifier = modifier.width(buttonSize).height(buttonSize).padding(2.dp).bounceClick(onClick, enabled && clickEffect, 0.85f),
         enabled = enabled,
         onClick = {},
         shape = RoundedCornerShape(50.dp),
