@@ -1,6 +1,7 @@
 package ui.theme
 
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 object Dimens {
     val cardHorizontal = 6.dp
@@ -10,4 +11,5 @@ object Dimens {
     val btnIconSizeBig = 20.dp
     val btnSizeSmall = 26.dp
     val btnIconSizeSmall = 16.dp
+    val sideMenuFontSize = 13.sp
 }
