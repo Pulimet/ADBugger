@@ -39,8 +39,8 @@ class AppStore {
 
     // Navigation
     fun showPage(menuItemId: MenuItemId) {
+        setState { copy(menuItemSelected = menuItemId) }
     }
-
 
     // User Actions
     fun getDevicesList(coroutineScope: CoroutineScope) {
@@ -423,6 +423,7 @@ class AppStore {
     }
 
     data class AppState(
+        val menuItemSelected: MenuItemId = MenuItemId.DEVICES,
         val devicesList: List<DeviceInfo> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
         val packageList: List<Package> = emptyList(),

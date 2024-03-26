@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
@@ -27,8 +29,8 @@ import compose.icons.tablericons.Wiper
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.Dimens
+import ui.theme.MyColors
 import ui.widgets.BtnIcon
-import ui.widgets.ExpandableCard
 import ui.widgets.LoadingSpinner
 
 @Composable
@@ -36,16 +38,18 @@ fun EmulatorLauncher(
     model: AppStore,
     coroutineScope: CoroutineScope,
 ) {
-    ExpandableCard(
-        title = "Emulator Launcher",
-        modifier = Modifier.padding(
-            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
-        )
+    Card(
+        backgroundColor = MyColors.bg2,
+        elevation = 6.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.padding(Dimens.selectedPagePadding),
     ) {
-        if (model.state.isEmulatorsLoading) {
-            LoadingSpinner(Modifier.padding(Dimens.spinnerPadding).fillMaxWidth())
-        } else {
-            ContentEmulator(model, coroutineScope)
+        Column(modifier = Modifier.padding(Dimens.cardPadding)) {
+            if (model.state.isEmulatorsLoading) {
+                LoadingSpinner(Modifier.padding(Dimens.spinnerPadding).fillMaxWidth())
+            } else {
+                ContentEmulator(model, coroutineScope)
+            }
         }
     }
 }
@@ -80,7 +84,7 @@ private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope) {
     val listState = rememberLazyListState()
     val state = model.state
     Box(
-        modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp).border(BorderStroke(0.5.dp, color = Color.DarkGray))
+        modifier = Modifier.fillMaxSize().border(BorderStroke(0.5.dp, color = Color.DarkGray))
     ) {
         val items = state.emulatorsList
         LazyColumn(state = listState) {

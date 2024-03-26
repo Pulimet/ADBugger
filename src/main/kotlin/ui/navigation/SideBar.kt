@@ -1,11 +1,9 @@
 package ui.navigation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
@@ -17,10 +15,12 @@ import compose.icons.octicons.Package24
 import compose.icons.tablericons.*
 import pref.preference
 import store.AppStore
+import ui.theme.Dimens
 import ui.theme.MyColors
+import ui.widgets.BtnIcon
 
 enum class MenuItemId {
-    DEVICES, EMULATORS, COMMANDS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, LOGS;
+    DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, LOGS;
 
     companion object {
         fun getByOrdinal(ordinal: Int): MenuItemId {
@@ -32,12 +32,16 @@ enum class MenuItemId {
 @Composable
 fun SideBar(
     model: AppStore,
-    modifier: Modifier = Modifier
-        .width(200.dp)
-        .fillMaxHeight()
-        .background(MyColors.bg2)
-        .padding(vertical = 12.dp)
+    modifier: Modifier = Modifier.width(Dimens.sideBarWidth).fillMaxHeight().background(MyColors.bg2)
 ) {
+    var isBarCollapsed: Boolean by preference("isSideBarCollapsed", false)
+    var barState by remember { mutableStateOf(isBarCollapsed) }
+
+    fun toggleBar() {
+        isBarCollapsed = !isBarCollapsed
+        barState = isBarCollapsed
+    }
+
     var selectedId: Int by preference("SideMenuSelectedItem", 0)
     var selected by remember { mutableStateOf(selectedId) }
 
@@ -54,7 +58,6 @@ fun SideBar(
     fun isSelected(menuItemId: MenuItemId) = menuItemId.ordinal == selected
 
     Column(modifier = modifier) {
-        SideBarLogo()
         SideBarItem(
             toggle = isSelected(MenuItemId.DEVICES),
             icon = TablerIcons.SettingsAutomation,
@@ -66,12 +69,6 @@ fun SideBar(
             icon = TablerIcons.BrandAndroid,
             title = "Emulators",
             onClick = { toggleState(MenuItemId.EMULATORS) },
-        )
-        SideBarItem(
-            toggle = isSelected(MenuItemId.COMMANDS),
-            icon = TablerIcons.Command,
-            title = "Basic Commands",
-            onClick = { toggleState(MenuItemId.COMMANDS) },
         )
         SideBarItem(
             toggle = isSelected(MenuItemId.PACKAGES),
@@ -103,5 +100,18 @@ fun SideBar(
             title = "Logs",
             onClick = { toggleState(MenuItemId.LOGS) },
         )
+        Column(
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.End
+        ) {
+            BtnIcon(
+                icon = if (barState) TablerIcons.ArrowNarrowRight else TablerIcons.ArrowNarrowLeft,
+                onClick = { toggleBar() },
+                modifier = Modifier.padding(12.dp),
+                buttonSize = Dimens.btnSizeSmall,
+                iconSize = Dimens.btnIconSizeSmall,
+            )
+        }
     }
 }

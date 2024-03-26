@@ -26,81 +26,73 @@ import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
-import ui.theme.Dimens
 import ui.widgets.BtnIcon
-import ui.widgets.ExpandableCard
 
 @Composable
 fun DeviceCommands(
     model: AppStore,
     coroutineScope: CoroutineScope,
-    isDeviceSelected: Boolean
 ) {
-    ExpandableCard(
-        title = "Device Commands",
-        modifier = Modifier.padding(
-            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
-        )
+    val isDeviceSelected = model.state.selectedDevice != AppStore.ALL_DEVICES
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
-        ) {
-            BtnIcon(
-                icon = Icons.Rounded.Home,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onHomeClick(coroutineScope) },
-                description = "Home"
-            )
-            BtnIcon(
-                icon = Icons.Rounded.Settings,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onSettingsClick(coroutineScope) },
-                description = "Settings"
-            )
-            BtnIcon(
-                icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onBackClick(coroutineScope) },
-                description = "Back"
-            )
-            BtnIcon(
-                icon = Octicons.ArrowSwitch24,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onTabClick(coroutineScope) },
-                description = "Tab"
-            )
-            BtnIcon(
-                icon = TablerIcons.ArrowBack,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onEnterClick(coroutineScope) },
-                description = "Enter"
-            )
-            BtnIcon(
-                icon = TablerIcons.Power,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onPowerClick(coroutineScope) },
-                description = "Power"
-            )
-            BtnIcon(
-                icon = WeatherIcons.DaySunny,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onDayClick(coroutineScope) },
-                description = "Day"
-            )
-            BtnIcon(
-                icon = WeatherIcons.NightClear,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onNightClick(coroutineScope) },
-                description = "Night"
-            )
-            BtnIcon(
-                icon = LineaIcons.Basic.Photo,
-                modifier = Modifier.padding(horizontal = 4.dp),
-                onClick = { model.onSnapClick(coroutineScope) },
-                description = "Take a snapshot",
-                enabled = isDeviceSelected
-            )
-        }
+        BtnIcon(
+            icon = Icons.Rounded.Home,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onHomeClick(coroutineScope) },
+            description = "Home"
+        )
+        BtnIcon(
+            icon = Icons.Rounded.Settings,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onSettingsClick(coroutineScope) },
+            description = "Settings"
+        )
+        BtnIcon(
+            icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onBackClick(coroutineScope) },
+            description = "Back"
+        )
+        BtnIcon(
+            icon = Octicons.ArrowSwitch24,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onTabClick(coroutineScope) },
+            description = "Tab"
+        )
+        BtnIcon(
+            icon = TablerIcons.ArrowBack,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onEnterClick(coroutineScope) },
+            description = "Enter"
+        )
+        BtnIcon(
+            icon = TablerIcons.Power,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onPowerClick(coroutineScope) },
+            description = "Power"
+        )
+        BtnIcon(
+            icon = WeatherIcons.DaySunny,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onDayClick(coroutineScope) },
+            description = "Day"
+        )
+        BtnIcon(
+            icon = WeatherIcons.NightClear,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onNightClick(coroutineScope) },
+            description = "Night"
+        )
+        BtnIcon(
+            icon = LineaIcons.Basic.Photo,
+            modifier = Modifier.padding(horizontal = 4.dp),
+            onClick = { model.onSnapClick(coroutineScope) },
+            description = "Take a snapshot",
+            enabled = isDeviceSelected
+        )
     }
 }

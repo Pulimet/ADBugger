@@ -20,7 +20,7 @@ import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
 @Composable
-fun TopMenu(model: AppStore) {
+fun TopMenuDeprecated(model: AppStore) {
     var devicesControlState: Boolean by preference("Btn_DevicesControl", false)
     var devicesCommandsState: Boolean by preference("Btn_DevicesCommands", false)
     var workingWithPackageState: Boolean by preference("Btn_WorkingWithPackage", false)

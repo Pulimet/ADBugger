@@ -13,4 +13,8 @@ object Dimens {
     val sideBarItemHeight = 40.dp
     val btnIconSizeSmall = 16.dp
     val sideMenuFontSize = 13.sp
+    val sideBarWidth = 200.dp
+    val topBarHeight = 50.dp
+    val selectedPagePadding = 16.dp
+    val cardPadding = 16.dp
 }
