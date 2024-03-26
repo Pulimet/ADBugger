@@ -24,11 +24,9 @@ fun PackageListAndCommands(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
-            PackageListSection(
-                coroutineScope, model, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
-            )
-            PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected)
+        Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
+            PackageListSection(coroutineScope, model, Modifier.weight(0.8f))
+            PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected, Modifier.weight(0.2f))
         }
     }
 }

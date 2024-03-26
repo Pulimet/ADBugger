@@ -56,8 +56,7 @@ private fun Content(
 ) {
     val state = model.state
     Column(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AllOptionAndRefreshButton(state, model, coroutineScope)
@@ -104,7 +103,7 @@ private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> 
     }
 
     Box(
-        modifier = Modifier.fillMaxWidth().heightIn(max = 120.dp).border(BorderStroke(0.5.dp, color = Color.DarkGray))
+        modifier = Modifier.fillMaxWidth().border(BorderStroke(0.5.dp, color = Color.DarkGray))
     ) {
         val items = state.packageList.filter { it.name.contains(query, ignoreCase = true) }
         LazyColumn(state = listState) {
