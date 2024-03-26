@@ -25,8 +25,8 @@ fun PackageListAndCommands(
         modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
-            PackageListSection(coroutineScope, model, Modifier.weight(0.8f))
-            PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected, Modifier.weight(0.2f))
+            PackageListSection(coroutineScope, model, Modifier.weight(1f))
+            PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected)
         }
     }
 }
