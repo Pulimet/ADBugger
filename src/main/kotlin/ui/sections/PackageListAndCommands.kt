@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
@@ -22,9 +22,9 @@ fun PackageListAndCommands(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(Dimens.selectedPagePadding),
+        modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Column(modifier = Modifier.padding(Dimens.cardPadding).fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
+        Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
             PackageListSection(
                 coroutineScope, model, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
             )

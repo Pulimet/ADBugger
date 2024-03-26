@@ -15,7 +15,7 @@ import compose.icons.octicons.Package24
 import compose.icons.tablericons.*
 import pref.preference
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
@@ -57,7 +57,7 @@ fun SideBar(
 
     fun isSelected(menuItemId: MenuItemId) = menuItemId.ordinal == selected
 
-    Column(modifier = modifier.width(if (barState) Dimens.sideBarWidthCollapsed else Dimens.sideBarWidth)) {
+    Column(modifier = modifier.width(if (barState) Dimensions.sideBarWidthCollapsed else Dimensions.sideBarWidth)) {
         SideBarItem(
             toggle = isSelected(MenuItemId.DEVICES),
             icon = TablerIcons.SettingsAutomation,
@@ -116,8 +116,8 @@ fun SideBar(
                 icon = if (barState) TablerIcons.ArrowNarrowRight else TablerIcons.ArrowNarrowLeft,
                 onClick = { toggleBar() },
                 modifier = Modifier.padding(horizontal = if (barState) 4.dp else 12.dp, vertical = 12.dp),
-                buttonSize = Dimens.btnSizeSmall,
-                iconSize = Dimens.btnIconSizeSmall,
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
             )
         }
     }

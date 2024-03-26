@@ -28,7 +28,7 @@ import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import pref.preference
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
@@ -53,64 +53,64 @@ fun DeviceCommands(
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onHomeClick(coroutineScope) },
             description = "Home",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = Icons.Rounded.Settings,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onSettingsClick(coroutineScope) },
             description = "Settings",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onBackClick(coroutineScope) },
             description = "Back",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = Octicons.ArrowSwitch24,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onTabClick(coroutineScope) },
             description = "Tab",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.ArrowBack,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onEnterClick(coroutineScope) },
             description = "Enter",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.Power,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onPowerClick(coroutineScope) },
             description = "Power Button",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = WeatherIcons.DaySunny,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onDayClick(coroutineScope) },
             description = "Day Mode",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = WeatherIcons.NightClear,
             modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onNightClick(coroutineScope) },
             description = "Night Mode",
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = LineaIcons.Basic.Photo,
@@ -118,20 +118,20 @@ fun DeviceCommands(
             onClick = { model.onSnapClick(coroutineScope) },
             description = "Take a snapshot",
             enabled = isDeviceSelected,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.LetterA,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = {
                 forwardUserInputState = !forwardUserInputState
                 model.onForwardUserInputToggle(forwardUserInputState)
             },
             description = "Forward User Input",
             toggle = forwardUserInputState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
     }
 }

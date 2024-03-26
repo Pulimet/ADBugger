@@ -27,7 +27,7 @@ import compose.icons.fontawesomeicons.solid.BookDead
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
 import ui.widgets.LoadingSpinner
@@ -42,9 +42,9 @@ fun DeviceListSection(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(Dimens.selectedPagePadding),
+        modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Column(modifier = Modifier.padding(Dimens.cardPadding)) {
+        Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             AllOptionAndRefreshButton(model, coroutineScope)
             DeviceList(model, coroutineScope) { model.onDeviceClick(it) }
         }
@@ -63,7 +63,7 @@ private fun AllOptionAndRefreshButton(
         modifier = Modifier.fillMaxWidth()
     ) {
         if (state.isDevicesLoading) {
-            LoadingSpinner(Modifier.padding(Dimens.spinnerPadding).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxWidth())
         } else {
             val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
             DeviceItem(

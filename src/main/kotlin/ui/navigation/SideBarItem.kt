@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
 import ui.widgets.BtnIcon
@@ -27,7 +27,7 @@ fun SideBarItem(
         if (!collapsed) {
             Spacer(
                 modifier = Modifier
-                    .height(Dimens.sideBarItemHeight)
+                    .height(Dimensions.sideBarItemHeight)
                     .width(6.dp)
                     .background(color = if (toggle) MyColors.accent else Color.Transparent)
             )
@@ -36,7 +36,7 @@ fun SideBarItem(
             modifier = Modifier.fillMaxWidth()
                 .background(color = if (toggle) MyColors.bgSelected else Color.Transparent)
                 .padding(start = if(collapsed) 8.dp else 18.dp)
-                .height(Dimens.sideBarItemHeight)
+                .height(Dimensions.sideBarItemHeight)
                 .bounceClick(onClick, enabled, 0.85f),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -48,8 +48,8 @@ fun SideBarItem(
                 showTooltip = collapsed,
                 description = title,
                 toggle = toggle,
-                buttonSize = Dimens.btnSizeSmall,
-                iconSize = Dimens.btnIconSizeSmall,
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
                 clickEffect = false,
             )
             if (!collapsed) {

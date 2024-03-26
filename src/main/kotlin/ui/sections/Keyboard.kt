@@ -28,7 +28,7 @@ import compose.icons.octicons.ArrowUp24
 import compose.icons.tablericons.*
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
@@ -56,9 +56,9 @@ fun Letters(
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier.padding(
-            start = Dimens.selectedPagePadding,
-            end = Dimens.selectedPagePadding,
-            top = Dimens.selectedPagePadding,
+            start = Dimensions.selectedPagePadding,
+            end = Dimensions.selectedPagePadding,
+            top = Dimensions.selectedPagePadding,
             bottom = 8.dp
         ),
     ) {
@@ -118,7 +118,7 @@ fun Numbers(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(horizontal = Dimens.selectedPagePadding, vertical = 8.dp),
+        modifier = Modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(
@@ -164,7 +164,7 @@ fun Arrows(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(horizontal = Dimens.selectedPagePadding, vertical = 8.dp),
+        modifier = Modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(
@@ -216,7 +216,7 @@ fun SendInput(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(horizontal = Dimens.selectedPagePadding, vertical = 8.dp),
+        modifier = Modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(

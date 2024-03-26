@@ -7,14 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ui.theme.Dimens
+import ui.theme.Dimensions
 
 @Composable
 fun SideBarTitle(title: String = "Specify title", isSelected: Boolean = false) {
     Text(
         title,
         modifier = Modifier.padding(start = 8.dp, bottom = 6.dp),
-        fontSize = Dimens.sideMenuFontSize,
+        fontSize = Dimensions.sideMenuFontSize,
         textAlign = TextAlign.Start,
         color = if (isSelected) Color.White else Color.LightGray
     )

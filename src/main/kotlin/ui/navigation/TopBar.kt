@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.sections.DeviceCommands
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 
 
 @Composable
 fun TopBar(model: AppStore, coroutineScope: CoroutineScope) {
     Row(
-        modifier = Modifier.fillMaxWidth().height(Dimens.topBarHeight).background(MyColors.bg2),
+        modifier = Modifier.fillMaxWidth().height(Dimensions.topBarHeight).background(MyColors.bg2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         SideBarLogo()

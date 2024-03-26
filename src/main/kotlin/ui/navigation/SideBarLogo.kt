@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
 fun SideBarLogo() {
-    Row(modifier = Modifier.width(Dimens.sideBarWidth), horizontalArrangement = Arrangement.Center) {
+    Row(modifier = Modifier.width(Dimensions.sideBarWidth), horizontalArrangement = Arrangement.Center) {
         Text(
             "ADB",
             fontSize = 24.sp,

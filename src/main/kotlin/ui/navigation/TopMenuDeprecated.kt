@@ -15,7 +15,7 @@ import compose.icons.octicons.Package24
 import compose.icons.tablericons.*
 import pref.preference
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
@@ -52,8 +52,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Devices Control",
             toggle = devicesControlState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.BrandAndroid,
@@ -64,8 +64,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Devices Commands",
             toggle = devicesCommandsState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = Octicons.Package24,
@@ -76,8 +76,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Working with package",
             toggle = workingWithPackageState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = FontAwesomeIcons.Regular.Keyboard,
@@ -88,8 +88,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Keyboard Input",
             toggle = keysState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.LetterA,
@@ -100,8 +100,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Forward User Input",
             toggle = forwardUserInputState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.ArrowsRightLeft,
@@ -112,8 +112,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Port Forwarding",
             toggle = portsState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
         BtnIcon(
             icon = TablerIcons.Notes,
@@ -124,8 +124,8 @@ fun TopMenuDeprecated(model: AppStore) {
             },
             description = "Logs",
             toggle = logsState,
-            buttonSize = Dimens.btnSizeSmall,
-            iconSize = Dimens.btnIconSizeSmall
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall
         )
     }
 }

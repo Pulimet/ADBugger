@@ -20,7 +20,7 @@ import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Trash2
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
 
@@ -38,9 +38,9 @@ fun LoggerField(model: AppStore) {
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(Dimens.selectedPagePadding),
+        modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Box(modifier = Modifier.padding(Dimens.cardPadding).fillMaxSize()) {
+        Box(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Column(modifier = Modifier.fillMaxWidth().verticalScroll(stateVertical)) {
                 SelectionContainer {
                     Text(

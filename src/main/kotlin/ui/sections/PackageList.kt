@@ -23,7 +23,7 @@ import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.MyColors
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.widgets.BtnIcon
 import ui.widgets.LoadingSpinner
 import ui.widgets.SearchView
@@ -42,7 +42,7 @@ fun PackageListSection(
     ) {
 
         if (state.isPackagesLoading) {
-            LoadingSpinner(Modifier.padding(Dimens.spinnerPadding).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxWidth())
         } else {
             Content(model, coroutineScope)
         }

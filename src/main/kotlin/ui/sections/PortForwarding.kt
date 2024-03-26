@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.theme.Dimens
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
 import ui.widgets.BtnIcon
@@ -36,9 +36,9 @@ fun PortForwarding(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(Dimens.selectedPagePadding),
+        modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Column(modifier = Modifier.padding(Dimens.cardPadding)) {
+        Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
