@@ -4,8 +4,10 @@ import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,8 +21,8 @@ import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Trash2
 import store.AppStore
 import ui.theme.Dimens
+import ui.theme.MyColors
 import ui.theme.bounceClick
-import ui.widgets.ExpandableCard
 
 @Composable
 fun LoggerField(model: AppStore) {
@@ -32,13 +34,13 @@ fun LoggerField(model: AppStore) {
         logs += it + "\n"
     }
 
-    ExpandableCard(
-        title = "Logs",
-        modifier = Modifier.padding(
-            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
-        )
+    Card(
+        backgroundColor = MyColors.bg2,
+        elevation = 6.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.padding(Dimens.selectedPagePadding),
     ) {
-        Box(modifier = Modifier.heightIn(max = 250.dp)) {
+        Box(modifier = Modifier.padding(Dimens.cardPadding).fillMaxSize()) {
             Column(modifier = Modifier.fillMaxWidth().verticalScroll(stateVertical)) {
                 SelectionContainer {
                     Text(

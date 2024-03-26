@@ -1,15 +1,15 @@
 package ui.sections
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.Dimens
-import ui.widgets.ExpandableCard
+import ui.theme.MyColors
 
 @Composable
 fun PackageListAndCommands(
@@ -18,15 +18,17 @@ fun PackageListAndCommands(
     isPackageSelected: Boolean,
     isDeviceSelected: Boolean,
 ) {
-    ExpandableCard(
-        title = "Apps Control / Package selection",
-        modifier = Modifier.padding(
-            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
-        )
+    Card(
+        backgroundColor = MyColors.bg2,
+        elevation = 6.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.padding(Dimens.selectedPagePadding),
     ) {
-        PackageListSection(
-            coroutineScope, model, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
-        )
-        PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected)
+        Column(modifier = Modifier.padding(Dimens.cardPadding).fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
+            PackageListSection(
+                coroutineScope, model, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp)
+            )
+            PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected)
+        }
     }
 }

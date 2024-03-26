@@ -1,5 +1,6 @@
 package ui.navigation
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
@@ -18,10 +19,12 @@ fun SelectedPage(model: AppStore, coroutineScope: CoroutineScope) {
         MenuItemId.PACKAGES -> PackageListAndCommands(coroutineScope, model, isPackageSelected, isDeviceSelected)
         MenuItemId.PERMISSIONS -> PermissionsCommands(model, coroutineScope)
         MenuItemId.KEYBOARD -> {
-            ArrowsCommands(model, coroutineScope)
-            Numbers(model, coroutineScope)
-            Keyboard(model, coroutineScope)
-            SendTextAndInputToDevices(model, coroutineScope)
+            Column {
+                ArrowsCommands(model, coroutineScope)
+                Numbers(model, coroutineScope)
+                Keyboard(model, coroutineScope)
+                SendTextAndInputToDevices(model, coroutineScope)
+            }
         }
 
         MenuItemId.PORTS -> PortForwarding(model, coroutineScope)

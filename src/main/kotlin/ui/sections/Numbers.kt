@@ -1,10 +1,9 @@
 package ui.sections
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -14,8 +13,8 @@ import compose.icons.tablericons.*
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.Dimens
+import ui.theme.MyColors
 import ui.widgets.BtnIcon
-import ui.widgets.ExpandableCard
 
 @Composable
 @Preview
@@ -23,13 +22,15 @@ fun Numbers(
     model: AppStore,
     coroutineScope: CoroutineScope,
 ) {
-    ExpandableCard(
-        title = "Numbers",
-        modifier = Modifier.padding(horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical)
+    Card(
+        backgroundColor = MyColors.bg2,
+        elevation = 6.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.padding(Dimens.selectedPagePadding),
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().height(160.dp)
         ) {
             Num(model, coroutineScope, TablerIcons.Number1, 1)
             Num(model, coroutineScope, TablerIcons.Number2, 2)

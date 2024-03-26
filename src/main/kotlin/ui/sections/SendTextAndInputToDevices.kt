@@ -1,6 +1,8 @@
 package ui.sections
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -18,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.Dimens
+import ui.theme.MyColors
 import ui.widgets.BtnIcon
-import ui.widgets.ExpandableCard
 
 
 @Composable
@@ -30,11 +32,11 @@ fun SendTextAndInputToDevices(
     val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
     val textInputSendInputState = remember { mutableStateOf(TextFieldValue("")) }
 
-    ExpandableCard(
-        title = "Send text to device",
-        modifier = Modifier.padding(
-            horizontal = Dimens.cardHorizontal, vertical = Dimens.cardVertical
-        )
+    Card(
+        backgroundColor = MyColors.bg2,
+        elevation = 6.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier.padding(Dimens.selectedPagePadding),
     ) {
         Column {
             Row(
