@@ -21,18 +21,21 @@ fun SideBarItem(
     onClick: () -> Unit = {},
     title: String = "",
     visible: Boolean = true,
+    collapsed: Boolean,
 ) {
     Row {
-        Spacer(
-            modifier = Modifier
-                .height(Dimens.sideBarItemHeight)
-                .width(6.dp)
-                .background(color = if (toggle) MyColors.accent else Color.Transparent)
-        )
+        if (!collapsed) {
+            Spacer(
+                modifier = Modifier
+                    .height(Dimens.sideBarItemHeight)
+                    .width(6.dp)
+                    .background(color = if (toggle) MyColors.accent else Color.Transparent)
+            )
+        }
         Row(
             modifier = Modifier.fillMaxWidth()
                 .background(color = if (toggle) MyColors.bgSelected else Color.Transparent)
-                .padding(start = 18.dp)
+                .padding(start = if(collapsed) 8.dp else 18.dp)
                 .height(Dimens.sideBarItemHeight)
                 .bounceClick(onClick, enabled, 0.85f),
             verticalAlignment = Alignment.CenterVertically
@@ -42,14 +45,16 @@ fun SideBarItem(
                 onClick = onClick,
                 enabled = enabled,
                 visible = visible,
-                showTooltip = false,
+                showTooltip = collapsed,
                 description = title,
                 toggle = toggle,
                 buttonSize = Dimens.btnSizeSmall,
                 iconSize = Dimens.btnIconSizeSmall,
                 clickEffect = false,
             )
-            SideBarTitle(title = title, isSelected = toggle)
+            if (!collapsed) {
+                SideBarTitle(title = title, isSelected = toggle)
+            }
         }
     }
 }

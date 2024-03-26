@@ -32,7 +32,7 @@ enum class MenuItemId {
 @Composable
 fun SideBar(
     model: AppStore,
-    modifier: Modifier = Modifier.width(Dimens.sideBarWidth).fillMaxHeight().background(MyColors.bg2)
+    modifier: Modifier = Modifier.fillMaxHeight().background(MyColors.bg2)
 ) {
     var isBarCollapsed: Boolean by preference("isSideBarCollapsed", false)
     var barState by remember { mutableStateOf(isBarCollapsed) }
@@ -57,48 +57,55 @@ fun SideBar(
 
     fun isSelected(menuItemId: MenuItemId) = menuItemId.ordinal == selected
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.width(if (barState) Dimens.sideBarWidthCollapsed else Dimens.sideBarWidth)) {
         SideBarItem(
             toggle = isSelected(MenuItemId.DEVICES),
             icon = TablerIcons.SettingsAutomation,
             title = "Device Selection",
             onClick = { toggleState(MenuItemId.DEVICES) },
+            collapsed = barState,
         )
         SideBarItem(
-            toggle = isSelected(MenuItemId.EMULATORS),
             icon = TablerIcons.BrandAndroid,
-            title = "Emulators",
+            toggle = isSelected(MenuItemId.EMULATORS),
             onClick = { toggleState(MenuItemId.EMULATORS) },
+            title = "Emulators",
+            collapsed = barState,
         )
         SideBarItem(
-            toggle = isSelected(MenuItemId.PACKAGES),
             icon = Octicons.Package24,
-            title = "Packages",
+            toggle = isSelected(MenuItemId.PACKAGES),
             onClick = { toggleState(MenuItemId.PACKAGES) },
+            title = "Packages",
+            collapsed = barState,
         )
         SideBarItem(
-            toggle = isSelected(MenuItemId.PERMISSIONS),
             icon = TablerIcons.Ruler,
-            title = "Permissions",
+            toggle = isSelected(MenuItemId.PERMISSIONS),
             onClick = { toggleState(MenuItemId.PERMISSIONS) },
+            title = "Permissions",
+            collapsed = barState,
         )
         SideBarItem(
-            toggle = isSelected(MenuItemId.KEYBOARD),
             icon = FontAwesomeIcons.Regular.Keyboard,
-            title = "Keyboard",
+            toggle = isSelected(MenuItemId.KEYBOARD),
             onClick = { toggleState(MenuItemId.KEYBOARD) },
+            title = "Keyboard",
+            collapsed = barState,
         )
         SideBarItem(
-            toggle = isSelected(MenuItemId.PORTS),
             icon = TablerIcons.ArrowsRightLeft,
-            title = "Ports",
+            toggle = isSelected(MenuItemId.PORTS),
             onClick = { toggleState(MenuItemId.PORTS) },
+            title = "Ports",
+            collapsed = barState,
         )
         SideBarItem(
-            toggle = isSelected(MenuItemId.LOGS),
             icon = TablerIcons.Notes,
-            title = "Logs",
+            toggle = isSelected(MenuItemId.LOGS),
             onClick = { toggleState(MenuItemId.LOGS) },
+            title = "Logs",
+            collapsed = barState,
         )
         Column(
             modifier = Modifier.weight(1f).fillMaxWidth(),
@@ -108,7 +115,7 @@ fun SideBar(
             BtnIcon(
                 icon = if (barState) TablerIcons.ArrowNarrowRight else TablerIcons.ArrowNarrowLeft,
                 onClick = { toggleBar() },
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(horizontal = if (barState) 4.dp else 12.dp, vertical = 12.dp),
                 buttonSize = Dimens.btnSizeSmall,
                 iconSize = Dimens.btnIconSizeSmall,
             )
