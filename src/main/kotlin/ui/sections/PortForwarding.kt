@@ -2,7 +2,6 @@ package ui.sections
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -21,8 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.theme.bounceClick
 import ui.widgets.BtnIcon
+import ui.widgets.HoverButton
 
 
 @Composable
@@ -61,18 +60,24 @@ fun PortForwarding(
                     onClick = { model.onAdbReverse(coroutineScope, textInputCustomPortState.value.text.toIntOrNull()) },
                     description = "Send text to device"
                 )
-                Button(
+                HoverButton(
                     onClick = { model.onAdbReverse(coroutineScope, 8081) },
-                    modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
-                ) { Text(text = "8081") }
-                Button(
+                    enabled = true,
+                    text = "8081",
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+                HoverButton(
                     onClick = { model.onAdbReverse(coroutineScope, 9090) },
-                    modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
-                ) { Text(text = "9090") }
-                Button(
+                    enabled = true,
+                    text = "9090",
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+                HoverButton(
                     onClick = { model.onAdbReverseList(coroutineScope) },
-                    modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
-                ) { Text(text = "List") }
+                    enabled = true,
+                    text = "List",
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
             }
         }
     }

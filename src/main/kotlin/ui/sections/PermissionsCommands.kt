@@ -2,7 +2,6 @@ package ui.sections
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -22,8 +21,8 @@ import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.theme.bounceClick
 import ui.widgets.BtnIcon
+import ui.widgets.HoverButton
 
 
 @Composable
@@ -75,14 +74,18 @@ fun PermissionsCommands(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Button(
+                HoverButton(
                     onClick = { model.onRemoveAllPermissions(coroutineScope) },
-                    modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
-                ) { Text(text = "Remove all") }
-                Button(
+                    enabled = true,
+                    text = "Remove all",
+                    modifier = Modifier.padding(6.dp)
+                )
+                HoverButton(
                     onClick = { model.onGetPermissions(coroutineScope) },
-                    modifier = Modifier.padding(horizontal = 4.dp).bounceClick()
-                ) { Text(text = "Show granted") }
+                    enabled = true,
+                    text = "Show granted",
+                    modifier = Modifier.padding(6.dp)
+                )
             }
         }
     }

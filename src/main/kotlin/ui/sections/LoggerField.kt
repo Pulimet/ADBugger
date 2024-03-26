@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,7 +21,7 @@ import compose.icons.evaicons.fill.Trash2
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.theme.bounceClick
+import ui.widgets.BtnIcon
 
 @Composable
 fun LoggerField(model: AppStore) {
@@ -45,24 +44,23 @@ fun LoggerField(model: AppStore) {
                 SelectionContainer {
                     Text(
                         text = logs,
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 40.dp),
                         color = Color.White,
                         fontSize = 12.sp
                     )
                 }
             }
             if (logsList.isNotEmpty()) {
-                Icon(
+                BtnIcon(
                     EvaIcons.Fill.Trash2,
-                    contentDescription = "Clear logs",
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp).align(Alignment.TopEnd).padding(top = 4.dp)
-                        .bounceClick(onClick = { model.clearLogs() })
+                    description = "Clear logs",
+                    onClick = { model.clearLogs() },
+                    modifier = Modifier.align(Alignment.TopEnd),
                 )
             }
             if (logsList.size > 15) {
                 VerticalScrollbar(
-                    modifier = Modifier.align(Alignment.CenterEnd).padding(top = 32.dp).fillMaxHeight(),
+                    modifier = Modifier.align(Alignment.CenterEnd).padding(top = 68.dp).fillMaxHeight(),
                     adapter = rememberScrollbarAdapter(stateVertical)
                 )
             }
