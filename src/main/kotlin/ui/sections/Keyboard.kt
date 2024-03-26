@@ -40,8 +40,10 @@ fun Keyboard(
 ) {
     Column {
         Letters(model, coroutineScope)
-        Numbers(model, coroutineScope)
-        Arrows(model, coroutineScope)
+        Row {
+            Numbers(model, coroutineScope, Modifier.weight(0.5f).height(180.dp))
+            Arrows(model, coroutineScope, Modifier.weight(0.5f).height(180.dp))
+        }
         SendInput(model, coroutineScope)
     }
 }
@@ -113,12 +115,13 @@ fun Letters(
 fun Numbers(
     model: AppStore,
     coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
+        modifier = modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(
@@ -159,14 +162,18 @@ fun Numbers(
 fun Arrows(
     model: AppStore,
     coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
+        modifier = modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
     ) {
-        Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+        Column(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()

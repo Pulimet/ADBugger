@@ -1,12 +1,10 @@
 package ui.sections
 
-import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.RadioButton
@@ -78,9 +76,11 @@ private fun AllOptionAndRefreshButton(
             BtnIcon(
                 icon = Icons.Rounded.Refresh,
                 modifier = Modifier.padding(horizontal = 8.dp),
-                enabled = !state.isDevicesLoading,
+                enabled = true,
                 onClick = { model.getDevicesList(coroutineScope) },
-                description = "Refresh Device List"
+                description = "Refresh Device List",
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
             )
 
         }
@@ -90,7 +90,7 @@ private fun AllOptionAndRefreshButton(
 @Composable
 private fun DeviceList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (device: DeviceInfo) -> Unit) {
     val state = model.state
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().border(BorderStroke(1.dp, color = Color.DarkGray))) {
         val listState = rememberLazyListState()
         LazyColumn(state = listState) {
             items(state.devicesList, key = { device -> device.serial }) { item ->
@@ -124,6 +124,9 @@ private fun DeviceItem(
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
+
+    val name = if (item.name.isEmpty()) "" else " (${item.name})"
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.clickable(onClick = { onClicked(item) })
@@ -134,14 +137,22 @@ private fun DeviceItem(
                 unselectedColor = MyColors.radioButtonUnselected
             )
         )
-        val name = if (item.name.isEmpty()) "" else " (${item.name})"
-        Text(text = "${item.serial}$name", color = Color.White, fontSize = 12.sp, modifier = Modifier.weight(1f))
+
+        Text(
+            text = "${item.serial}$name",
+            color = Color.White,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(bottom = 6.dp).weight(1f)
+        )
+
         if (item.serial.contains("emulator")) {
             BtnIcon(
                 icon = FontAwesomeIcons.Solid.BookDead,
                 onClick = { model.onKillEmulatorClick(coroutineScope, item.serial) },
                 description = "Kill Emulator",
-                modifier = Modifier.padding(horizontal = 8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp),
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
             )
         }
     }

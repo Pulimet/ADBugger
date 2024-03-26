@@ -21,7 +21,7 @@ fun SideBarItem(
     onClick: () -> Unit = {},
     title: String = "",
     visible: Boolean = true,
-    collapsed: Boolean,
+    collapsed: Boolean = false
 ) {
     Row {
         if (!collapsed) {

@@ -72,6 +72,7 @@ private fun AllOptionAndRefreshButton(
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
         val nonePackage = Package(AppStore.PACKAGE_NONE)
@@ -87,7 +88,9 @@ private fun AllOptionAndRefreshButton(
             modifier = Modifier.padding(end = 8.dp),
             visible = !state.isPackagesLoading && state.selectedDevice != AppStore.ALL_DEVICES,
             onClick = { model.onGetPackageListClick(coroutineScope) },
-            description = "Refresh Package List"
+            description = "Refresh Package List",
+            buttonSize = Dimensions.btnSizeSmall,
+            iconSize = Dimensions.btnIconSizeSmall,
         )
     }
 }
@@ -103,7 +106,7 @@ private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> 
     }
 
     Box(
-        modifier = Modifier.fillMaxWidth().border(BorderStroke(0.5.dp, color = Color.DarkGray))
+        modifier = Modifier.fillMaxWidth().border(BorderStroke(1.dp, color = Color.DarkGray))
     ) {
         val items = state.packageList.filter { it.name.contains(query, ignoreCase = true) }
         LazyColumn(state = listState) {
@@ -142,6 +145,6 @@ private fun PackageItem(
                 unselectedColor = MyColors.radioButtonUnselected
             )
         )
-        Text(text = item.name, color = Color.White, fontSize = 12.sp)
+        Text(text = item.name, color = Color.White, fontSize = 12.sp, modifier = Modifier.padding(bottom = 6.dp))
     }
 }

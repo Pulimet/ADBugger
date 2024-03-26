@@ -59,19 +59,23 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         ) {
             BtnIcon(
                 icon = FontAwesomeIcons.Solid.BookDead,
                 onClick = { model.onKillAllEmulatorClick(coroutineScope) },
                 description = "Kill All Emulators",
-                modifier = Modifier.padding(horizontal = 8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp),
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
             )
             BtnIcon(
                 icon = Icons.Rounded.Refresh,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 onClick = { model.onGetEmulatorsListClick(coroutineScope) },
-                description = "Refresh Emulators List"
+                description = "Refresh Emulators List",
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
             )
         }
         EmulatorsList(model, coroutineScope)
@@ -84,7 +88,7 @@ private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope) {
     val listState = rememberLazyListState()
     val state = model.state
     Box(
-        modifier = Modifier.fillMaxSize().border(BorderStroke(0.5.dp, color = Color.DarkGray))
+        modifier = Modifier.fillMaxSize().border(BorderStroke(1.dp, color = Color.DarkGray))
     ) {
         val items = state.emulatorsList
         LazyColumn(state = listState) {
