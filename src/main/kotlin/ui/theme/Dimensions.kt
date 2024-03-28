@@ -12,9 +12,10 @@ object Dimensions {
     val sideBarItemHeight = 40.dp
     val btnIconSizeSmall = 16.dp
     val sideMenuFontSize = 13.sp
+    val topMenuFontSize = 11.sp
     val sideBarWidth = 200.dp
     val sideBarWidthCollapsed = 40.dp
-    val topBarHeight = 40.dp
+    val topBarHeight = 54.dp
     val selectedPagePadding = 16.dp
     val cardPadding = 16.dp
 }

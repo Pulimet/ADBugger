@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.Home
@@ -12,7 +11,6 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import compose.icons.LineaIcons
 import compose.icons.Octicons
 import compose.icons.TablerIcons
@@ -28,12 +26,11 @@ import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import pref.preference
 import store.AppStore
-import ui.theme.Dimensions
+import ui.navigation.TopBarItem
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
 
 @Composable
-fun DeviceCommands(
+fun TopBarDeviceCommands(
     model: AppStore,
     coroutineScope: CoroutineScope,
 ) {
@@ -46,92 +43,62 @@ fun DeviceCommands(
 
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
+        modifier = Modifier.fillMaxWidth().background(MyColors.bg2),
     ) {
-        BtnIcon(
+        TopBarItem(
             icon = Icons.Rounded.Home,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onHomeClick(coroutineScope) },
             description = "Home",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
-        BtnIcon(
+        TopBarItem(
             icon = Icons.Rounded.Settings,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onSettingsClick(coroutineScope) },
             description = "Settings",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
-        BtnIcon(
+        TopBarItem(
             icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onBackClick(coroutineScope) },
             description = "Back",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
-        BtnIcon(
+        TopBarItem(
             icon = Octicons.ArrowSwitch24,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onTabClick(coroutineScope) },
             description = "Tab",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
-        BtnIcon(
+        TopBarItem(
             icon = TablerIcons.ArrowBack,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onEnterClick(coroutineScope) },
             description = "Enter",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
-        BtnIcon(
+        TopBarItem(
             icon = TablerIcons.Power,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onPowerClick(coroutineScope) },
-            description = "Power Button",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
+            description = "Power",
         )
-        BtnIcon(
+        TopBarItem(
             icon = WeatherIcons.DaySunny,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onDayClick(coroutineScope) },
-            description = "Day Mode",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
+            description = "Day",
         )
-        BtnIcon(
+        TopBarItem(
             icon = WeatherIcons.NightClear,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onNightClick(coroutineScope) },
-            description = "Night Mode",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
+            description = "Night",
         )
-        BtnIcon(
+        TopBarItem(
             icon = LineaIcons.Basic.Photo,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = { model.onSnapClick(coroutineScope) },
-            description = "Take a snapshot",
+            description = "Snapshot",
             enabled = isDeviceSelected,
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
-        BtnIcon(
+        TopBarItem(
             icon = TablerIcons.LetterA,
-            modifier = Modifier.padding(horizontal = 4.dp),
             onClick = {
                 forwardUserInputState = !forwardUserInputState
                 model.onForwardUserInputToggle(forwardUserInputState)
             },
-            description = "Forward User Input",
+            description = "Input",
             toggle = forwardUserInputState,
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall
         )
     }
 }

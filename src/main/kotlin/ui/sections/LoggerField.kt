@@ -44,7 +44,7 @@ fun LoggerField(model: AppStore) {
                 SelectionContainer {
                     Text(
                         text = logs,
-                        modifier = Modifier.padding(24.dp),
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
                         color = Color.White,
                         fontSize = 12.sp
                     )

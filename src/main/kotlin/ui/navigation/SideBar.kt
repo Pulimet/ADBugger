@@ -104,7 +104,7 @@ fun SideBar(
             icon = TablerIcons.Notes,
             toggle = isSelected(MenuItemId.LOGS),
             onClick = { toggleState(MenuItemId.LOGS) },
-            title = "Logs",
+            title = "ADB Logs",
             collapsed = barState,
         )
         Column(

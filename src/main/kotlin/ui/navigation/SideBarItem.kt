@@ -50,7 +50,6 @@ fun SideBarItem(
         ) {
             BtnIcon(
                 icon = icon,
-                onClick = onClick,
                 enabled = enabled,
                 visible = visible,
                 showTooltip = collapsed,
