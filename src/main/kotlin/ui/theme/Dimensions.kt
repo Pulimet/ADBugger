@@ -12,6 +12,7 @@ object Dimensions {
     val sideBarItemHeight = 40.dp
     val btnIconSizeSmall = 16.dp
     val titleFontSize = 18.sp
+    val subtitleFontSize = 13.sp
     val sideMenuFontSize = 13.sp
     val topMenuFontSize = 11.sp
     val versionFontSize = 10.sp
