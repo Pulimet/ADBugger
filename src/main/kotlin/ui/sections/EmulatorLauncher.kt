@@ -57,7 +57,7 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
             BtnWithText(
                 icon = Icons.Rounded.Refresh,
