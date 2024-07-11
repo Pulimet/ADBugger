@@ -20,7 +20,7 @@ import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
 enum class MenuItemId {
-    DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, LOGS;
+    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, LOGS, SETTINGS;
 
     companion object {
         fun getByOrdinal(ordinal: Int): MenuItemId {
@@ -58,6 +58,13 @@ fun SideBar(
     fun isSelected(menuItemId: MenuItemId) = menuItemId.ordinal == selected
 
     Column(modifier = modifier.width(if (barState) Dimensions.sideBarWidthCollapsed else Dimensions.sideBarWidth)) {
+        SideBarItem(
+            toggle = isSelected(MenuItemId.WELCOME),
+            icon = TablerIcons.Home,
+            title = "Welcome",
+            onClick = { toggleState(MenuItemId.WELCOME) },
+            collapsed = barState,
+        )
         SideBarItem(
             toggle = isSelected(MenuItemId.DEVICES),
             icon = TablerIcons.SettingsAutomation,
@@ -107,6 +114,13 @@ fun SideBar(
             title = "ADB Logs",
             collapsed = barState,
         )
+        SideBarItem(
+            toggle = isSelected(MenuItemId.SETTINGS),
+            icon = TablerIcons.Settings,
+            title = "Settings",
+            onClick = { toggleState(MenuItemId.SETTINGS) },
+            collapsed = barState,
+        )
         Column(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             verticalArrangement = Arrangement.Bottom,
@@ -118,6 +132,7 @@ fun SideBar(
                 modifier = Modifier.padding(horizontal = if (barState) 4.dp else 12.dp, vertical = 12.dp),
                 buttonSize = Dimensions.btnSizeSmall,
                 iconSize = Dimensions.btnIconSizeSmall,
+                showTooltip = false
             )
         }
     }

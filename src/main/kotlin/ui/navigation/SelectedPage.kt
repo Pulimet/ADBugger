@@ -10,6 +10,7 @@ fun SelectedPage(model: AppStore, coroutineScope: CoroutineScope) {
     val state = model.state
 
     when (state.menuItemSelected) {
+        MenuItemId.WELCOME -> Welcome()
         MenuItemId.DEVICES -> DeviceListSection(model, coroutineScope)
         MenuItemId.EMULATORS -> EmulatorLauncher(model, coroutineScope)
         MenuItemId.PACKAGES -> PackageListAndCommands(model, coroutineScope)
@@ -17,5 +18,6 @@ fun SelectedPage(model: AppStore, coroutineScope: CoroutineScope) {
         MenuItemId.KEYBOARD -> Keyboard(model, coroutineScope)
         MenuItemId.PORTS -> PortForwarding(model, coroutineScope)
         MenuItemId.LOGS -> LoggerField(model)
+        MenuItemId.SETTINGS -> Settings()
     }
 }
