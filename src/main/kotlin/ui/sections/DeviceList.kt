@@ -29,7 +29,6 @@ import model.DeviceInfo
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
 import ui.widgets.BtnWithText
 import ui.widgets.LoadingSpinner
 
