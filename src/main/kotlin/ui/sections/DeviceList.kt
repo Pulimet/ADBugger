@@ -1,10 +1,12 @@
 package ui.sections
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.RadioButton
@@ -28,6 +30,7 @@ import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
+import ui.widgets.BtnWithText
 import ui.widgets.LoadingSpinner
 
 
@@ -36,15 +39,21 @@ fun DeviceListSection(
     model: AppStore,
     coroutineScope: CoroutineScope,
 ) {
+    val state = model.state
+
     Card(
         backgroundColor = MyColors.bg2,
-        elevation = 6.dp,
-        shape = RoundedCornerShape(8.dp),
+        elevation = Dimensions.pageElevation,
+        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
         modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
-            AllOptionAndRefreshButton(model, coroutineScope)
-            DeviceList(model, coroutineScope) { model.onDeviceClick(it) }
+            if (state.isDevicesLoading) {
+                LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
+            } else {
+                AllOptionAndRefreshButton(model, coroutineScope)
+                DeviceList(model, coroutineScope) { model.onDeviceClick(it) }
+            }
         }
     }
 }
@@ -60,37 +69,31 @@ private fun AllOptionAndRefreshButton(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        if (state.isDevicesLoading) {
-            LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxWidth())
-        } else {
-            val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
-            DeviceItem(
-                allDevices,
-                state.selectedDevice == AppStore.ALL_DEVICES,
-                { model.onDeviceClick(allDevices) },
-                Modifier.weight(1f),
-                model,
-                coroutineScope
-            )
+        val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
+        DeviceItem(
+            allDevices,
+            state.selectedDevice == AppStore.ALL_DEVICES,
+            { model.onDeviceClick(allDevices) },
+            Modifier.weight(1f),
+            model,
+            coroutineScope
+        )
 
-            BtnIcon(
-                icon = Icons.Rounded.Refresh,
-                modifier = Modifier.padding(horizontal = 8.dp),
-                enabled = true,
-                onClick = { model.getDevicesList(coroutineScope) },
-                description = "Refresh Device List",
-                buttonSize = Dimensions.btnSizeSmall,
-                iconSize = Dimensions.btnIconSizeSmall,
-            )
-
-        }
+        BtnWithText(
+            icon = Icons.Rounded.Refresh,
+            modifier = Modifier.padding(horizontal = 8.dp),
+            enabled = true,
+            onClick = { model.getDevicesList(coroutineScope) },
+            description = "Refresh List",
+            width = 120.dp,
+        )
     }
 }
 
 @Composable
 private fun DeviceList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (device: DeviceInfo) -> Unit) {
     val state = model.state
-    Box(modifier = Modifier.fillMaxSize().border(BorderStroke(1.dp, color = Color.DarkGray))) {
+    Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()
         LazyColumn(state = listState) {
             items(state.devicesList, key = { device -> device.serial }) { item ->
@@ -146,13 +149,12 @@ private fun DeviceItem(
         )
 
         if (item.serial.contains("emulator")) {
-            BtnIcon(
+            BtnWithText(
                 icon = FontAwesomeIcons.Solid.BookDead,
                 onClick = { model.onKillEmulatorClick(coroutineScope, item.serial) },
                 description = "Kill Emulator",
                 modifier = Modifier.padding(horizontal = 8.dp),
-                buttonSize = Dimensions.btnSizeSmall,
-                iconSize = Dimensions.btnIconSizeSmall,
+                width = 120.dp,
             )
         }
     }

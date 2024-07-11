@@ -26,8 +26,8 @@ import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
 import pref.preference
 import store.AppStore
-import ui.navigation.TopBarItem
 import ui.theme.MyColors
+import ui.widgets.BtnWithText
 
 @Composable
 fun TopBarDeviceCommands(
@@ -45,53 +45,53 @@ fun TopBarDeviceCommands(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxWidth().background(MyColors.bg2),
     ) {
-        TopBarItem(
+        BtnWithText(
             icon = Icons.Rounded.Home,
             onClick = { model.onHomeClick(coroutineScope) },
             description = "Home",
         )
-        TopBarItem(
+        BtnWithText(
             icon = Icons.Rounded.Settings,
             onClick = { model.onSettingsClick(coroutineScope) },
             description = "Settings",
         )
-        TopBarItem(
+        BtnWithText(
             icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
             onClick = { model.onBackClick(coroutineScope) },
             description = "Back",
         )
-        TopBarItem(
+        BtnWithText(
             icon = Octicons.ArrowSwitch24,
             onClick = { model.onTabClick(coroutineScope) },
             description = "Tab",
         )
-        TopBarItem(
+        BtnWithText(
             icon = TablerIcons.ArrowBack,
             onClick = { model.onEnterClick(coroutineScope) },
             description = "Enter",
         )
-        TopBarItem(
+        BtnWithText(
             icon = TablerIcons.Power,
             onClick = { model.onPowerClick(coroutineScope) },
             description = "Power",
         )
-        TopBarItem(
+        BtnWithText(
             icon = WeatherIcons.DaySunny,
             onClick = { model.onDayClick(coroutineScope) },
             description = "Day",
         )
-        TopBarItem(
+        BtnWithText(
             icon = WeatherIcons.NightClear,
             onClick = { model.onNightClick(coroutineScope) },
             description = "Night",
         )
-        TopBarItem(
+        BtnWithText(
             icon = LineaIcons.Basic.Photo,
             onClick = { model.onSnapClick(coroutineScope) },
             description = "Snapshot",
             enabled = isDeviceSelected,
         )
-        TopBarItem(
+        BtnWithText(
             icon = TablerIcons.LetterA,
             onClick = {
                 forwardUserInputState = !forwardUserInputState

@@ -18,4 +18,6 @@ object Dimensions {
     val topBarHeight = 54.dp
     val selectedPagePadding = 16.dp
     val cardPadding = 16.dp
+    val pageElevation = 6.dp
+    val pageCornerRadius = 8.dp
 }

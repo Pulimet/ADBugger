@@ -42,7 +42,7 @@ fun PackageListSection(
     ) {
 
         if (state.isPackagesLoading) {
-            LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxWidth())
+            LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
         } else {
             Content(model, coroutineScope)
         }

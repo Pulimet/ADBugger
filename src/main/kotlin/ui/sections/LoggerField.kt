@@ -32,8 +32,8 @@ fun LoggerField(model: AppStore) {
 
     Card(
         backgroundColor = MyColors.bg2,
-        elevation = 6.dp,
-        shape = RoundedCornerShape(8.dp),
+        elevation = Dimensions.pageElevation,
+        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
         modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Box(

@@ -1,8 +1,6 @@
 package ui.sections
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +29,7 @@ import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnIcon
+import ui.widgets.BtnWithText
 import ui.widgets.LoadingSpinner
 
 @Composable
@@ -40,13 +39,13 @@ fun EmulatorLauncher(
 ) {
     Card(
         backgroundColor = MyColors.bg2,
-        elevation = 6.dp,
-        shape = RoundedCornerShape(8.dp),
+        elevation = Dimensions.pageElevation,
+        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
         modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             if (model.state.isEmulatorsLoading) {
-                LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxWidth())
+                LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
             } else {
                 ContentEmulator(model, coroutineScope)
             }
@@ -61,21 +60,19 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         ) {
-            BtnIcon(
-                icon = FontAwesomeIcons.Solid.BookDead,
-                onClick = { model.onKillAllEmulatorClick(coroutineScope) },
-                description = "Kill All Emulators",
-                modifier = Modifier.padding(horizontal = 8.dp),
-                buttonSize = Dimensions.btnSizeSmall,
-                iconSize = Dimensions.btnIconSizeSmall,
-            )
-            BtnIcon(
+            BtnWithText(
                 icon = Icons.Rounded.Refresh,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 onClick = { model.onGetEmulatorsListClick(coroutineScope) },
                 description = "Refresh Emulators List",
-                buttonSize = Dimensions.btnSizeSmall,
-                iconSize = Dimensions.btnIconSizeSmall,
+                width = 160.dp
+            )
+            BtnWithText(
+                icon = FontAwesomeIcons.Solid.BookDead,
+                onClick = { model.onKillAllEmulatorClick(coroutineScope) },
+                description = "Kill All Emulators",
+                modifier = Modifier.padding(horizontal = 8.dp),
+                width = 160.dp
             )
         }
         EmulatorsList(model, coroutineScope)
@@ -87,9 +84,7 @@ fun ContentEmulator(model: AppStore, coroutineScope: CoroutineScope) {
 private fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope) {
     val listState = rememberLazyListState()
     val state = model.state
-    Box(
-        modifier = Modifier.fillMaxSize().border(BorderStroke(1.dp, color = Color.DarkGray))
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         val items = state.emulatorsList
         LazyColumn(state = listState) {
             items(
@@ -120,7 +115,7 @@ private fun EmulatorItem(
     model: AppStore,
     coroutineScope: CoroutineScope
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().height(50.dp)) {
         Text(
             text = emulatorName,
             color = Color.White,
@@ -129,17 +124,19 @@ private fun EmulatorItem(
         )
 
         if (emulatorName != AppStore.EMULATOR_NONE) {
-            BtnIcon(
+            BtnWithText(
                 icon = TablerIcons.Wiper,
                 onClick = { model.onWipeAndLaunch(coroutineScope, emulatorName) },
                 description = "Wipe Data",
-                modifier = Modifier.padding(end = 4.dp)
+                modifier = Modifier.padding(end = 4.dp),
+                width = 100.dp
             )
-            BtnIcon(
+            BtnWithText(
                 icon = LineAwesomeIcons.Android,
                 onClick = { model.onLaunchEmulatorClick(coroutineScope, emulatorName) },
                 description = "Launch Emulator",
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = 8.dp),
+                width = 100.dp
             )
         }
     }

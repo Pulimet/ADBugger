@@ -61,7 +61,7 @@ fun SideBar(
         SideBarItem(
             toggle = isSelected(MenuItemId.DEVICES),
             icon = TablerIcons.SettingsAutomation,
-            title = "Device Selection",
+            title = "Target Selection",
             onClick = { toggleState(MenuItemId.DEVICES) },
             collapsed = barState,
         )

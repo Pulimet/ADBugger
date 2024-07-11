@@ -20,8 +20,8 @@ import utils.KeysConverter
 class AppStore {
 
     companion object {
-        const val ALL_DEVICES = "All Devices"
-        const val PACKAGE_NONE = "Package not selected"
+        const val ALL_DEVICES = "All Devices / Emulators"
+        const val PACKAGE_NONE = "Target not selected"
         const val EMULATOR_NONE = "Emulator not selected"
     }
 
