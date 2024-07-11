@@ -224,7 +224,11 @@ class Adb {
         reader.use { bufferedReader ->
             var line: String?
             while (bufferedReader.readLine().also { line = it } != null) {
-                line?.let { responseList.add(it) }
+                line?.let {
+                    if (!it.contains("crashdata", ignoreCase = true)) {
+                        responseList.add(it)
+                    }
+                }
             }
         }
 
