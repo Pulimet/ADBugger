@@ -14,6 +14,7 @@ object Dimensions {
     val titleFontSize = 18.sp
     val sideMenuFontSize = 13.sp
     val topMenuFontSize = 11.sp
+    val versionFontSize = 10.sp
     val sideBarWidth = 200.dp
     val sideBarWidthCollapsed = 40.dp
     val topBarHeight = 54.dp

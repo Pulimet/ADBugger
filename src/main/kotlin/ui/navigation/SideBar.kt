@@ -2,9 +2,12 @@ package ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
 import compose.icons.Octicons
@@ -35,11 +38,11 @@ fun SideBar(
     modifier: Modifier = Modifier.fillMaxHeight().background(MyColors.bg2)
 ) {
     var isBarCollapsed: Boolean by preference("isSideBarCollapsed", false)
-    var barState by remember { mutableStateOf(isBarCollapsed) }
+    var isBarClosedState by remember { mutableStateOf(isBarCollapsed) }
 
     fun toggleBar() {
         isBarCollapsed = !isBarCollapsed
-        barState = isBarCollapsed
+        isBarClosedState = isBarCollapsed
     }
 
     var selectedId: Int by preference("SideMenuSelectedItem", 0)
@@ -57,79 +60,88 @@ fun SideBar(
 
     fun isSelected(menuItemId: MenuItemId) = menuItemId.ordinal == selected
 
-    Column(modifier = modifier.width(if (barState) Dimensions.sideBarWidthCollapsed else Dimensions.sideBarWidth)) {
+    Column(modifier = modifier.width(if (isBarClosedState) Dimensions.sideBarWidthCollapsed else Dimensions.sideBarWidth)) {
         SideBarItem(
             toggle = isSelected(MenuItemId.WELCOME),
             icon = TablerIcons.Home,
             title = "Welcome",
             onClick = { toggleState(MenuItemId.WELCOME) },
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             toggle = isSelected(MenuItemId.DEVICES),
             icon = TablerIcons.SettingsAutomation,
             title = "Target Selection",
             onClick = { toggleState(MenuItemId.DEVICES) },
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             icon = TablerIcons.BrandAndroid,
             toggle = isSelected(MenuItemId.EMULATORS),
             onClick = { toggleState(MenuItemId.EMULATORS) },
             title = "Emulators",
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             icon = Octicons.Package24,
             toggle = isSelected(MenuItemId.PACKAGES),
             onClick = { toggleState(MenuItemId.PACKAGES) },
             title = "Packages",
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             icon = TablerIcons.Ruler,
             toggle = isSelected(MenuItemId.PERMISSIONS),
             onClick = { toggleState(MenuItemId.PERMISSIONS) },
             title = "Permissions",
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             icon = FontAwesomeIcons.Regular.Keyboard,
             toggle = isSelected(MenuItemId.KEYBOARD),
             onClick = { toggleState(MenuItemId.KEYBOARD) },
             title = "Keyboard",
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             icon = TablerIcons.ArrowsRightLeft,
             toggle = isSelected(MenuItemId.PORTS),
             onClick = { toggleState(MenuItemId.PORTS) },
             title = "Ports",
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             icon = TablerIcons.Notes,
             toggle = isSelected(MenuItemId.LOGS),
             onClick = { toggleState(MenuItemId.LOGS) },
             title = "ADB Logs",
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
         SideBarItem(
             toggle = isSelected(MenuItemId.SETTINGS),
             icon = TablerIcons.Settings,
             title = "Settings",
             onClick = { toggleState(MenuItemId.SETTINGS) },
-            collapsed = barState,
+            collapsed = isBarClosedState,
         )
+        if (!isBarClosedState) {
+            Text(
+                text = "Version: ${model.version}",
+                fontSize = Dimensions.versionFontSize,
+                textAlign = TextAlign.Center,
+                color = Color.Gray,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Column(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
             BtnIcon(
-                icon = if (barState) TablerIcons.ArrowNarrowRight else TablerIcons.ArrowNarrowLeft,
+                icon = if (isBarClosedState) TablerIcons.ArrowNarrowRight else TablerIcons.ArrowNarrowLeft,
                 onClick = { toggleBar() },
-                modifier = Modifier.padding(horizontal = if (barState) 4.dp else 12.dp, vertical = 12.dp),
+                modifier = Modifier.padding(horizontal = if (isBarClosedState) 4.dp else 12.dp, vertical = 12.dp),
                 buttonSize = Dimensions.btnSizeSmall,
                 iconSize = Dimensions.btnIconSizeSmall,
                 showTooltip = false
