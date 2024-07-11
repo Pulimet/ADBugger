@@ -13,11 +13,13 @@ import ui.theme.MyColors
 
 @Composable
 fun PackageListAndCommands(
-    coroutineScope: CoroutineScope,
     model: AppStore,
-    isPackageSelected: Boolean,
-    isDeviceSelected: Boolean,
+    coroutineScope: CoroutineScope
 ) {
+    val state = model.state
+    val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
+    val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
+
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,

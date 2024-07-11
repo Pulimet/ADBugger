@@ -15,7 +15,7 @@ import ui.theme.MyColors
 import java.awt.Color
 
 fun main() = application {
-    val state = rememberWindowState(
+    val windowState = rememberWindowState(
         width = 1200.dp,
         height = 800.dp,
         position = WindowPosition(alignment = Alignment.Center)
@@ -24,11 +24,11 @@ fun main() = application {
     val model = remember { AppStore() }
     val coroutineScope = rememberCoroutineScope()
 
-    ApplicationTray(state)
+    ApplicationTray(windowState)
 
     Window(
         title = "ADBugger",
-        state = state,
+        state = windowState,
         onCloseRequest = ::exitApplication,
         onKeyEvent = { model.onKeyEvent(coroutineScope, it) }
     ) {
