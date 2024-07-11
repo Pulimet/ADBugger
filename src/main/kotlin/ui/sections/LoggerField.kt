@@ -1,9 +1,12 @@
 package ui.sections
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -36,10 +39,7 @@ fun LoggerField(model: AppStore) {
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
         modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Box(
-            modifier = Modifier.padding(Dimensions.cardPadding).border(BorderStroke(1.dp, color = Color.DarkGray))
-                .fillMaxSize()
-        ) {
+        Box(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Column(modifier = Modifier.fillMaxWidth().verticalScroll(stateVertical)) {
                 SelectionContainer {
                     Text(
