@@ -22,7 +22,7 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
 
-    implementation("com.malinskiy.adam:adam:0.5.1")
+    implementation("com.malinskiy.adam:adam:0.5.7")
 
     // Icons Packs
     listOf(
