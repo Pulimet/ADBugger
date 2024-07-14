@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.sections.TopBarDeviceCommands
+import ui.sections.TopBarIcons
 import ui.theme.Dimensions
 import ui.theme.MyColors
 
@@ -20,6 +20,6 @@ fun TopBar(model: AppStore, coroutineScope: CoroutineScope) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Logo()
-        TopBarDeviceCommands(model, coroutineScope)
+        TopBarIcons(model, coroutineScope)
     }
 }

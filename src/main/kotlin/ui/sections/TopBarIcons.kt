@@ -30,7 +30,7 @@ import ui.theme.MyColors
 import ui.widgets.BtnWithText
 
 @Composable
-fun TopBarDeviceCommands(
+fun TopBarIcons(
     model: AppStore,
     coroutineScope: CoroutineScope,
 ) {
