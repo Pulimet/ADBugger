@@ -310,36 +310,12 @@ class AppStore {
         }
     }
 
-    fun onKeyboardInputToggle(value: Boolean) {
-        setState { copy(isKeysInputEnabled = value) }
-    }
-
-    fun onPortForwardingToggle(value: Boolean) {
-        setState { copy(isPortForwardingShown = value) }
-    }
-
-    fun onLogsToggle(value: Boolean) {
-        setState { copy(isLogsShown = value) }
-    }
-
-    fun onDevicesControlToggle(value: Boolean) {
-        setState { copy(isDevicesControlsShown = value) }
-    }
-
     fun onForwardUserInputToggle(value: Boolean) {
         setState { copy(isUserForwardInputEnabled = value) }
     }
 
     fun onChangeAlwaysShowLog(alwaysShowLogsEnabled: Boolean) {
         setState { copy(isLogsAlwaysShown = alwaysShowLogsEnabled) }
-    }
-
-    fun onWorkingWithPackageToggle(value: Boolean) {
-        setState { copy(isWorkingWithPackageShown = value) }
-    }
-
-    fun onDevicesCommandsToggle(value: Boolean) {
-        setState { copy(isDevicesCommandsShown = value) }
     }
 
     fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
@@ -415,7 +391,7 @@ class AppStore {
         setState { copy(logs = arrayListOf()) }
     }
 
-    fun log(log: String) {
+    private fun log(log: String) {
         val newList = ArrayList(state.logs)
         newList.add(log)
         setState { copy(logs = newList) }
@@ -438,13 +414,7 @@ class AppStore {
         val isDevicesLoading: Boolean = false,
         val isPackagesLoading: Boolean = false,
         val isEmulatorsLoading: Boolean = false,
-        val isKeysInputEnabled: Boolean = false,
-        val isPortForwardingShown: Boolean = false,
-        val isLogsShown: Boolean = false,
-        val isDevicesControlsShown: Boolean = false,
         val isUserForwardInputEnabled: Boolean = false,
-        val isWorkingWithPackageShown: Boolean = false,
-        val isDevicesCommandsShown: Boolean = false,
         val isLogsAlwaysShown: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
