@@ -46,11 +46,10 @@ class AppStore {
 
     // User Actions
     fun getDevicesList(coroutineScope: CoroutineScope) {
-        log("adb devices")
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
-            delay(500)
-            setState { copy(isDevicesLoading = false, devicesList = adb.devicesInfo()) }
+            val devicesList = adb.devicesInfo(::log)
+            setState { copy(isDevicesLoading = false, devicesList = devicesList) }
         }
     }
 

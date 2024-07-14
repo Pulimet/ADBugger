@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.malinskiy.adam.request.device.DeviceState
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
@@ -69,7 +68,7 @@ private fun AllOptionAndRefreshButton(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        val allDevices = DeviceInfo(AppStore.ALL_DEVICES, DeviceState.UNKNOWN, "")
+        val allDevices = DeviceInfo(AppStore.ALL_DEVICES, "All Devices")
         DeviceItem(
             allDevices,
             state.selectedDevice == AppStore.ALL_DEVICES,
@@ -128,8 +127,6 @@ private fun DeviceItem(
     coroutineScope: CoroutineScope
 ) {
 
-    val name = if (item.name.isEmpty()) "" else " (${item.name})"
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.clickable(onClick = { onClicked(item) })
@@ -142,7 +139,7 @@ private fun DeviceItem(
         )
 
         Text(
-            text = "${item.serial}$name",
+            text = "${item.serial} - ${item.type}",
             color = Color.White,
             fontSize = 12.sp,
             modifier = Modifier.padding(bottom = 6.dp).weight(1f)

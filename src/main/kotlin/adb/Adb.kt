@@ -23,10 +23,13 @@ class Adb {
         StartAdbInteractor().execute()
     }
 
-    suspend fun devicesInfo() = devices().map {
-        val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
-        DeviceInfo(it.serial, it.state, avdName)
-    }
+    fun devicesInfo(log: (String) -> Unit) =
+        execCommand(Commands.getDeviceList(), log, Commands.getPlatformToolsPath()).drop(1).dropLast(1).map {
+            // For case I need it later
+            // val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
+            val serialAndType = it.split("\\s+".toRegex())
+            DeviceInfo(serialAndType[0], serialAndType[1])
+        }
 
     suspend fun packages(serial: String) = adb.execute(
         request = PmListRequest(
@@ -214,8 +217,8 @@ class Adb {
         request = ShellCommandRequest(command), serial = serial
     )
 
-    private fun execCommand(command: String, log: (String) -> Unit = {}, path: String = ""): ArrayList<String> {
-        log(command)
+    private fun execCommand(command: String, log: ((String) -> Unit)? = {}, path: String = ""): ArrayList<String> {
+        if (log != null) log(command)
         val p = Runtime.getRuntime().exec(arrayOf("/bin/zsh", "-c", "${path}$command"))
         p.waitFor()
         val reader = BufferedReader(InputStreamReader(p.inputStream))
