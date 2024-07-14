@@ -13,7 +13,7 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun SideBarLogo() {
+fun Logo() {
     Row(modifier = Modifier.width(Dimensions.sideBarWidth), horizontalArrangement = Arrangement.Center) {
         Text(
             "ADB",

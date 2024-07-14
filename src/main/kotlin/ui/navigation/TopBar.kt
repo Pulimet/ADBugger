@@ -19,7 +19,7 @@ fun TopBar(model: AppStore, coroutineScope: CoroutineScope) {
         modifier = Modifier.fillMaxWidth().height(Dimensions.topBarHeight).background(MyColors.bg2),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SideBarLogo()
+        Logo()
         TopBarDeviceCommands(model, coroutineScope)
     }
 }
