@@ -15,12 +15,12 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun Settings() {
+fun Settings(modifier: Modifier = Modifier) {
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Text(

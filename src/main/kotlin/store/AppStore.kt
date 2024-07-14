@@ -330,6 +330,10 @@ class AppStore {
         setState { copy(isUserForwardInputEnabled = value) }
     }
 
+    fun onChangeAlwaysShowLog(alwaysShowLogsEnabled: Boolean) {
+        setState { copy(isLogsAlwaysShown = alwaysShowLogsEnabled) }
+    }
+
     fun onWorkingWithPackageToggle(value: Boolean) {
         setState { copy(isWorkingWithPackageShown = value) }
     }
@@ -441,6 +445,7 @@ class AppStore {
         val isUserForwardInputEnabled: Boolean = false,
         val isWorkingWithPackageShown: Boolean = false,
         val isDevicesCommandsShown: Boolean = false,
+        val isLogsAlwaysShown: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }

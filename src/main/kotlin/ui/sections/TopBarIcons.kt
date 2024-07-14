@@ -20,6 +20,7 @@ import compose.icons.lineaicons.basic.Photo
 import compose.icons.octicons.ArrowSwitch24
 import compose.icons.tablericons.ArrowBack
 import compose.icons.tablericons.LetterA
+import compose.icons.tablericons.Notes
 import compose.icons.tablericons.Power
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.NightClear
@@ -36,9 +37,11 @@ fun TopBarIcons(
 ) {
     val isDeviceSelected = model.state.selectedDevice != AppStore.ALL_DEVICES
     var forwardUserInputState: Boolean by preference("Btn_ForwardUserInput", false)
+    var alwaysShowLogsEnabled: Boolean by preference("Btn_alwaysShowLogsEnabled", false)
 
     LaunchedEffect(Unit) {
         model.onForwardUserInputToggle(forwardUserInputState)
+        model.onChangeAlwaysShowLog(alwaysShowLogsEnabled)
     }
 
     Row(
@@ -99,6 +102,15 @@ fun TopBarIcons(
             },
             description = "Input",
             toggle = forwardUserInputState,
+        )
+        BtnWithText(
+            icon = TablerIcons.Notes,
+            onClick = {
+                alwaysShowLogsEnabled = !alwaysShowLogsEnabled
+                model.onChangeAlwaysShowLog(alwaysShowLogsEnabled)
+            },
+            description = "Logs",
+            toggle = alwaysShowLogsEnabled,
         )
     }
 }

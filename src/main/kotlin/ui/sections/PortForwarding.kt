@@ -27,7 +27,8 @@ import ui.widgets.HoverButton
 @Composable
 fun PortForwarding(
     model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     val textInputCustomPortState = remember { mutableStateOf(TextFieldValue("")) }
 
@@ -35,7 +36,7 @@ fun PortForwarding(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             Row(

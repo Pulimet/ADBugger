@@ -28,7 +28,8 @@ import ui.widgets.HoverButton
 @Composable
 fun PermissionsCommands(
     model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     val textInputPermissionState = remember { mutableStateOf(TextFieldValue("")) }
 
@@ -36,7 +37,7 @@ fun PermissionsCommands(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             Row(

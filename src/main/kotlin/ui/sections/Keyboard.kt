@@ -37,8 +37,9 @@ import ui.widgets.BtnIcon
 fun Keyboard(
     model: AppStore,
     coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(modifier = modifier) {
         Letters(model, coroutineScope)
         Row {
             Numbers(model, coroutineScope, Modifier.weight(0.5f).height(180.dp))

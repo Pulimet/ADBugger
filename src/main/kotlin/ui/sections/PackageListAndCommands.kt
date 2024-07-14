@@ -13,7 +13,8 @@ import ui.theme.MyColors
 @Composable
 fun PackageListAndCommands(
     model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     val state = model.state
     val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
@@ -23,7 +24,7 @@ fun PackageListAndCommands(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             PackageListSection(coroutineScope, model, Modifier.weight(1f))

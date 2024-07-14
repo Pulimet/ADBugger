@@ -37,6 +37,7 @@ import ui.widgets.LoadingSpinner
 fun DeviceListSection(
     model: AppStore,
     coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     val state = model.state
 
@@ -44,7 +45,7 @@ fun DeviceListSection(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             if (state.isDevicesLoading) {

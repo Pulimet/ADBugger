@@ -35,12 +35,13 @@ import ui.widgets.LoadingSpinner
 fun EmulatorLauncher(
     model: AppStore,
     coroutineScope: CoroutineScope,
+    modifier: Modifier = Modifier
 ) {
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             if (model.state.isEmulatorsLoading) {

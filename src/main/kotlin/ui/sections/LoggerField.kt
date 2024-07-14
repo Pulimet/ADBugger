@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,49 +20,74 @@ import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Trash2
 import store.AppStore
+import ui.navigation.MenuItemId
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
+import ui.widgets.BtnWithText
 
 @Composable
-fun LoggerField(model: AppStore) {
+fun LoggerField(model: AppStore, modifier: Modifier = Modifier) {
     val stateVertical = rememberScrollState(0)
-
+    val isSelectedPageNotLogs = model.state.menuItemSelected != MenuItemId.LOGS
     val logsList = model.state.logs
     var logs = ""
-    logsList.forEach {
-        logs += it + "\n"
+    logsList.forEachIndexed { index, log ->
+        logs += "${index + 1}: $log"
+        if (index != logsList.size - 1) logs += "\n"
+    }
+
+    LaunchedEffect(logsList) {
+        if (logsList.isNotEmpty()) {
+            stateVertical.animateScrollTo(stateVertical.maxValue)
+        }
     }
 
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
+        modifier = if (isSelectedPageNotLogs) {
+            modifier.padding(
+                Dimensions.selectedPagePadding,
+                0.dp,
+                Dimensions.selectedPagePadding,
+                Dimensions.selectedPagePadding
+            )
+        } else {
+            modifier.padding(Dimensions.selectedPagePadding)
+        },
     ) {
         Box(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
+            if (logsList.isEmpty()) {
+                Text(
+                    text = "No logs yet. Start by running a command.",
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color.White,
+                    fontSize = Dimensions.titleFontSize
+                )
+            }
             Column(modifier = Modifier.fillMaxWidth().verticalScroll(stateVertical)) {
                 SelectionContainer {
                     Text(
                         text = logs,
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                        modifier = Modifier.padding(horizontal = 24.dp),
                         color = Color.White,
                         fontSize = 12.sp
                     )
                 }
             }
             if (logsList.isNotEmpty()) {
-                BtnIcon(
-                    EvaIcons.Fill.Trash2,
-                    description = "Clear logs",
+                BtnWithText(
+                    icon = EvaIcons.Fill.Trash2,
+                    modifier = Modifier.align(Alignment.TopEnd),
                     onClick = { model.clearLogs() },
-                    modifier = Modifier.align(Alignment.TopEnd).padding(16.dp),
-                    showTooltip = false,
+                    description = "Clear logs",
+                    width = 60.dp,
                 )
             }
-            if (logsList.size > 15) {
+            if (logsList.size > 3) {
                 VerticalScrollbar(
-                    modifier = Modifier.align(Alignment.CenterEnd).padding(top = 68.dp).fillMaxHeight(),
+                    modifier = Modifier.align(Alignment.CenterEnd).padding(top = 16.dp).fillMaxHeight(),
                     adapter = rememberScrollbarAdapter(stateVertical)
                 )
             }
