@@ -2,6 +2,8 @@ package ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -37,6 +39,7 @@ fun SideBar(
     model: AppStore,
     modifier: Modifier = Modifier.fillMaxHeight().background(MyColors.bg2)
 ) {
+    val stateVertical = rememberScrollState(0)
     var isBarCollapsed: Boolean by preference("isSideBarCollapsed", false)
     var isBarClosedState by remember { mutableStateOf(isBarCollapsed) }
 
@@ -60,7 +63,11 @@ fun SideBar(
 
     fun isSelected(menuItemId: MenuItemId) = menuItemId.ordinal == selected
 
-    Column(modifier = modifier.width(if (isBarClosedState) Dimensions.sideBarWidthCollapsed else Dimensions.sideBarWidth)) {
+    Column(
+        modifier = modifier
+            .width(if (isBarClosedState) Dimensions.sideBarWidthCollapsed else Dimensions.sideBarWidth)
+            .verticalScroll(stateVertical)
+    ) {
         SideBarItem(
             toggle = isSelected(MenuItemId.WELCOME),
             icon = TablerIcons.Home,

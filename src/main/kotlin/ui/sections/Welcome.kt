@@ -2,7 +2,9 @@ package ui.sections
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,13 +18,15 @@ import ui.theme.MyColors
 
 @Composable
 fun Welcome(modifier: Modifier = Modifier) {
+    val stateVertical = rememberScrollState(0)
+
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
         modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
-        Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
+        Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize().verticalScroll(stateVertical)) {
             Text(
                 text = "Welcome to ADBugger!",
                 fontSize = Dimensions.titleFontSize,

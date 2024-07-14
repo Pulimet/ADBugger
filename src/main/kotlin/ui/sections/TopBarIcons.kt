@@ -1,9 +1,11 @@
 package ui.sections
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.Home
@@ -35,6 +37,8 @@ fun TopBarIcons(
     model: AppStore,
     coroutineScope: CoroutineScope,
 ) {
+    val stateHorizontal = rememberScrollState(0)
+
     val isDeviceSelected = model.state.selectedDevice != AppStore.ALL_DEVICES
     var forwardUserInputState: Boolean by preference("Btn_ForwardUserInput", false)
     var alwaysShowLogsEnabled: Boolean by preference("Btn_alwaysShowLogsEnabled", false)
@@ -46,7 +50,7 @@ fun TopBarIcons(
 
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().background(MyColors.bg2),
+        modifier = Modifier.fillMaxWidth().background(MyColors.bg2).horizontalScroll(stateHorizontal),
     ) {
         BtnWithText(
             icon = Icons.Rounded.Home,
