@@ -6,7 +6,7 @@ import androidx.compose.ui.window.WindowState
 
 @Composable
 fun ApplicationScope.ApplicationTray(state: WindowState) {
-    val icon = painterResource("sample.png")
+    val icon = painterResource("128.png")
 
     Tray(
         icon = icon,

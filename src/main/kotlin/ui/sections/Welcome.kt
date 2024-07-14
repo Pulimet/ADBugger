@@ -52,12 +52,12 @@ fun Welcome() {
                     fontSize = Dimensions.subtitleFontSize,
                     textAlign = TextAlign.Start,
                     color = Color.LightGray,
-                    modifier = Modifier.fillMaxWidth(0.6f).padding(16.dp),
+                    modifier = Modifier.fillMaxWidth(0.55f).padding(16.dp),
                 )
                 Image(
-                    painter = painterResource("adbugger.png"),
+                    painter = painterResource("icon.png"),
                     contentDescription = "ADBugger Logo",
-                    modifier = Modifier.fillMaxWidth(1f),
+                    modifier = Modifier.fillMaxWidth(1f).padding(24.dp),
                 )
             }
         }
