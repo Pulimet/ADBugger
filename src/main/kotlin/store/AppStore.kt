@@ -49,6 +49,7 @@ class AppStore {
         coroutineScope.launch {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
             val devicesList = adb.devicesInfo(::log)
+            delay(200)
             setState { copy(isDevicesLoading = false, devicesList = devicesList) }
         }
     }
@@ -62,7 +63,7 @@ class AppStore {
         log("adb shell pm list packages")
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
-            delay(500)
+            delay(200)
             setState { copy(isPackagesLoading = false, packageList = adb.packages(state.selectedDevice)) }
         }
     }
@@ -71,7 +72,7 @@ class AppStore {
         coroutineScope.launch {
             setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
             val emulatorsList = adb.emulators(::log)
-            delay(500)
+            delay(200)
             setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
         }
     }
