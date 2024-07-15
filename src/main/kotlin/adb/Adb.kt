@@ -5,8 +5,6 @@ import com.malinskiy.adam.AndroidDebugBridgeClientFactory
 import com.malinskiy.adam.interactor.StartAdbInteractor
 import com.malinskiy.adam.request.device.ListDevicesRequest
 import com.malinskiy.adam.request.pkg.PmListRequest
-import com.malinskiy.adam.request.shell.v2.ShellCommandRequest
-import com.malinskiy.adam.request.shell.v2.ShellCommandResult
 import model.DeviceInfo
 import store.AppStore
 
@@ -107,11 +105,13 @@ class Adb(private val log: (String) -> Unit) {
         launchShell(selectedDevice, Commands.getPressPower())
     }
 
-    suspend fun takeSnapshot(selectedDevice: String) {
+    fun takeSnapshot(selectedDevice: String) {
         val filename = "snap_$selectedDevice.png"
         launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
+        val pullCommand = "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename"
+        log(pullCommand)
         Cmd.execute(
-            "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename",
+            pullCommand,
             path = Commands.getPlatformToolsPath()
         )
         launchShellCommand(selectedDevice, "rm /sdcard/$filename")
@@ -159,8 +159,8 @@ class Adb(private val log: (String) -> Unit) {
     }
 
     suspend fun reversePort(port: Int) {
-        devices().forEach {
-            val resultList = Cmd.execute(Commands.adbReverse(it.serial, port), log, Commands.getPlatformToolsPath())
+        devices().forEach { device ->
+            val resultList = Cmd.execute(Commands.adbReverse(device.serial, port), log, Commands.getPlatformToolsPath())
             resultList.forEach {
                 log(it)
             }
@@ -186,11 +186,11 @@ class Adb(private val log: (String) -> Unit) {
         launchShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
     }
 
-    suspend fun getPermissions(selectedDevice: String, selectedPackage: String) {
+    fun getPermissions(selectedDevice: String, selectedPackage: String) {
         val command = "adb shell " + Commands.getGrantedPermissions(selectedPackage)
         log(command)
         val result = launchShellCommand(selectedDevice, command)
-        log("output :" + result.output)
+        log("output :$result")
     }
 
 
@@ -209,9 +209,12 @@ class Adb(private val log: (String) -> Unit) {
         }
     }
 
-    private suspend fun launchShellCommand(serial: String, command: String): ShellCommandResult = adb.execute(
-        request = ShellCommandRequest(command), serial = serial
-    )
+    private fun launchShellCommand(serial: String, command: String): ArrayList<String> {
+        val commandToExecute = "adb -s $serial shell $command"
+        log(commandToExecute)
+        return Cmd.execute(commandToExecute)
+    }
+
 
     private suspend fun devices() = adb.execute(request = ListDevicesRequest())
 }

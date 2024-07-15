@@ -95,7 +95,7 @@ class AppStore {
     fun onApkPath(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch(Dispatchers.IO) {
-            adb.getApkPath(state.selectedPackage, state.selectedDevice )
+            adb.getApkPath(state.selectedPackage, state.selectedDevice)
         }
     }
 
@@ -179,42 +179,36 @@ class AppStore {
 
 
     fun onHomeClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getShowHome())
         coroutineScope.launch {
             adb.showHome(state.selectedDevice)
         }
     }
 
     fun onSettingsClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getShowSettings())
         coroutineScope.launch {
             adb.showSettings(state.selectedDevice)
         }
     }
 
     fun onBackClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getPressBack())
         coroutineScope.launch {
             adb.pressBack(state.selectedDevice)
         }
     }
 
     fun onTabClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getPressTab())
         coroutineScope.launch {
             adb.pressTab(state.selectedDevice)
         }
     }
 
     fun onEnterClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getPressEnter())
         coroutineScope.launch {
             adb.pressEnter(state.selectedDevice)
         }
     }
 
     fun onPowerClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getPressPower())
         coroutineScope.launch {
             adb.pressPower(state.selectedDevice)
         }
@@ -222,26 +216,18 @@ class AppStore {
 
     fun onSnapClick(coroutineScope: CoroutineScope) {
         if (state.selectedDevice == ALL_DEVICES) return
-
-        val filename = "snap_${state.selectedDevice}.png"
-        log("adb shell screencap -p /sdcard/$filename")
-        log("adb -s ${state.selectedDevice} pull /sdcard/$filename ~/Desktop/$filename")
-        log("adb shell rm /sdcard/$filename")
-
         coroutineScope.launch {
             adb.takeSnapshot(state.selectedDevice)
         }
     }
 
     fun onDayClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getDarkModeOff())
         coroutineScope.launch {
             adb.setDarkModeOff(state.selectedDevice)
         }
     }
 
     fun onNightClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getDarkModeOn())
         coroutineScope.launch {
             adb.setDarkModeOn(state.selectedDevice)
         }
@@ -347,7 +333,7 @@ class AppStore {
     fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
         if (port != null) {
             coroutineScope.launch {
-                adb.reversePort(port )
+                adb.reversePort(port)
             }
         }
     }
@@ -383,7 +369,7 @@ class AppStore {
         if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
         log("adb shell " + Commands.getGrantedPermissions(state.selectedPackage))
         coroutineScope.launch {
-            adb.getPermissions(state.selectedDevice, state.selectedPackage )
+            adb.getPermissions(state.selectedDevice, state.selectedPackage)
         }
     }
 
