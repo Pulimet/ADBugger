@@ -32,7 +32,7 @@ fun LoggerField(model: AppStore, modifier: Modifier = Modifier) {
     val logsList = model.state.logs
     var logs = ""
     logsList.forEachIndexed { index, log ->
-        logs += "${index + 1}: $log"
+        logs += log
         if (index != logsList.size - 1) logs += "\n"
     }
 

@@ -200,6 +200,6 @@ class Adb(private val log: (String) -> Unit) {
     private fun launchShellCommand(serial: String, command: String): ArrayList<String> {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
-        return Cmd.execute(commandToExecute)
+        return Cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())
     }
 }
