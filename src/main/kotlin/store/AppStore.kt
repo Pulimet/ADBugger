@@ -25,7 +25,7 @@ class AppStore {
         const val EMULATOR_NONE = "Emulator not selected"
     }
 
-    val version = "0.1.0"
+    val version = "1.0.0"
 
     private val adb = Adb(::log)
 
