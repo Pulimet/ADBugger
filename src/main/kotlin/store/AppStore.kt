@@ -334,21 +334,18 @@ class AppStore {
     }
 
     fun onAddPermission(coroutineScope: CoroutineScope, permission: String) {
-        log(Commands.addSpecificPermission(state.selectedPackage, permission))
         coroutineScope.launch {
             adb.addPermission(state.selectedDevice, permission, state.selectedPackage)
         }
     }
 
     fun onRemovePermission(coroutineScope: CoroutineScope, permission: String) {
-        log(Commands.revokeSpecificPermission(state.selectedPackage, permission))
         coroutineScope.launch {
             adb.removePermission(state.selectedDevice, permission, state.selectedPackage)
         }
     }
 
     fun onRemoveAllPermissions(coroutineScope: CoroutineScope) {
-        log(Commands.getRevokeAllPermissions(state.selectedPackage))
         coroutineScope.launch {
             adb.removeAllPermissions(state.selectedDevice, state.selectedPackage)
         }
@@ -356,7 +353,6 @@ class AppStore {
 
     fun onGetPermissions(coroutineScope: CoroutineScope) {
         if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
-        log("adb shell " + Commands.getGrantedPermissions(state.selectedPackage))
         coroutineScope.launch {
             adb.getPermissions(state.selectedDevice, state.selectedPackage)
         }

@@ -187,9 +187,7 @@ class Adb(private val log: (String) -> Unit) {
     }
 
     fun getPermissions(selectedDevice: String, selectedPackage: String) {
-        val command = "adb shell " + Commands.getGrantedPermissions(selectedPackage)
-        log(command)
-        val result = launchShellCommand(selectedDevice, command)
+        val result = launchShellCommand(selectedDevice, Commands.getGrantedPermissions(selectedPackage))
         log("output :$result")
     }
 
