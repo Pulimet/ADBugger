@@ -25,6 +25,7 @@ import store.AppStore
 import ui.theme.MyColors
 import ui.theme.Dimensions
 import ui.widgets.BtnIcon
+import ui.widgets.BtnWithText
 import ui.widgets.LoadingSpinner
 import ui.widgets.SearchView
 
@@ -83,14 +84,14 @@ private fun AllOptionAndRefreshButton(
             modifier = Modifier.weight(1f)
         )
 
-        BtnIcon(
+        BtnWithText(
             icon = Icons.Rounded.Refresh,
-            modifier = Modifier.padding(end = 8.dp),
+            modifier = Modifier.padding(horizontal = 8.dp),
             visible = !state.isPackagesLoading && state.selectedDevice != AppStore.ALL_DEVICES,
+            enabled = true,
             onClick = { model.onGetPackageListClick(coroutineScope) },
-            description = "Refresh Package List",
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall,
+            description = "Get Packages List",
+            width = 120.dp,
         )
     }
 }

@@ -311,7 +311,6 @@ class AppStore {
         }
         val key: Int = KeysConverter.covertEventKeyToKeyCode(event)
         if (key != -1) {
-            log("adb shell " + Commands.sendInputCommand(key))
             coroutineScope.launch {
                 adb.sendInput(state.selectedDevice, key)
             }
@@ -319,7 +318,6 @@ class AppStore {
         }
         val char = KeysConverter.convertEventKeyToChar(event)
         if (char.isNotEmpty()) {
-            log("adb shell " + Commands.sendTextCommand(char))
             coroutineScope.launch {
                 adb.sendText(state.selectedDevice, char)
             }

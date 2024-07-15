@@ -31,6 +31,7 @@ fun BtnWithText(
     enabled: Boolean = true,
     toggle: Boolean = true,
     modifier: Modifier = Modifier,
+    visible: Boolean = true
 ) {
     var active by remember { mutableStateOf(false) }
 
@@ -52,6 +53,7 @@ fun BtnWithText(
             iconSize = Dimensions.btnIconSizeSmall,
             enabled = enabled,
             toggle = toggle,
+            visible = visible,
             showTooltip = false,
             clickEffect = false,
             hoverEnabled = false
