@@ -35,7 +35,6 @@ class AppStore {
     // Public
     fun onLaunchedEffect(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            adb.startAdbInteract()
             getDevicesList(this)
         }
     }
