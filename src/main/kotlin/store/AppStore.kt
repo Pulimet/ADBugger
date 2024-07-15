@@ -140,14 +140,12 @@ class AppStore {
     }
 
     fun onLaunchEmulatorClick(coroutineScope: CoroutineScope, emulatorName: String) {
-        log("emulator -avd $emulatorName -netdelay none -netspeed full")
         coroutineScope.launch(Dispatchers.IO) {
             adb.launchEmulator(emulatorName)
         }
     }
 
     fun onWipeAndLaunch(coroutineScope: CoroutineScope, emulatorName: String) {
-        log("emulator -avd $emulatorName -wipe-data")
         coroutineScope.launch(Dispatchers.IO) {
             adb.wipeAndLaunchEmulator(emulatorName)
         }
@@ -225,56 +223,48 @@ class AppStore {
     }
 
     fun onUpClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getUp())
         coroutineScope.launch {
             adb.pressUp(state.selectedDevice)
         }
     }
 
     fun onDownClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getDown())
         coroutineScope.launch {
             adb.pressDown(state.selectedDevice)
         }
     }
 
     fun onLeftClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getLeft())
         coroutineScope.launch {
             adb.pressLeft(state.selectedDevice)
         }
     }
 
     fun onRightClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getRight())
         coroutineScope.launch {
             adb.pressRight(state.selectedDevice)
         }
     }
 
     fun onBackSpaceClick(coroutineScope: CoroutineScope) {
-        log("adb shell " + Commands.getDelete())
         coroutineScope.launch {
             adb.pressDelete(state.selectedDevice)
         }
     }
 
     fun onSendTextClick(coroutineScope: CoroutineScope, value: String) {
-        log("adb shell " + Commands.sendTextCommand(value))
         coroutineScope.launch {
             adb.sendText(state.selectedDevice, value)
         }
     }
 
     fun onSendInputClick(coroutineScope: CoroutineScope, value: Int) {
-        log("adb shell " + Commands.sendInputCommand(value))
         coroutineScope.launch {
             adb.sendInput(state.selectedDevice, value)
         }
     }
 
     fun onNumberClick(coroutineScope: CoroutineScope, i: Int) {
-        log("adb shell " + Commands.sendInputCommand(i))
         coroutineScope.launch {
             adb.sendInputNum(state.selectedDevice, i)
         }
@@ -282,7 +272,6 @@ class AppStore {
 
     fun onLetterClick(coroutineScope: CoroutineScope, letter: String) {
         val key = KeysConverter.convertLetterToKeyCode(letter)
-        log("adb shell " + Commands.sendInputCommand(key))
         coroutineScope.launch {
             adb.sendInput(state.selectedDevice, key)
         }
