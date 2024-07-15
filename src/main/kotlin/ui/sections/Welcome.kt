@@ -61,7 +61,7 @@ fun Welcome(modifier: Modifier = Modifier) {
                 Image(
                     painter = painterResource("icon.png"),
                     contentDescription = "ADBugger Logo",
-                    modifier = Modifier.fillMaxWidth(1f).padding(24.dp),
+                    modifier = Modifier.fillMaxWidth(0.8f).padding(24.dp),
                 )
             }
         }

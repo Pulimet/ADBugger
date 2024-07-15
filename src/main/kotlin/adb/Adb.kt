@@ -9,22 +9,18 @@ import com.malinskiy.adam.request.shell.v2.ShellCommandRequest
 import com.malinskiy.adam.request.shell.v2.ShellCommandResult
 import model.DeviceInfo
 import store.AppStore
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
-
-class Adb {
+class Adb(private val log: (String) -> Unit) {
 
     private val adb: AndroidDebugBridgeClient by lazy { AndroidDebugBridgeClientFactory().build() }
-
 
     // Public
     suspend fun startAdbInteract() {
         StartAdbInteractor().execute()
     }
 
-    fun devicesInfo(log: (String) -> Unit) =
-        execCommand(Commands.getDeviceList(), log, Commands.getPlatformToolsPath()).drop(1).dropLast(1).map {
+    fun devicesInfo() =
+        Cmd.execute(Commands.getDeviceList(), log, Commands.getPlatformToolsPath()).drop(1).dropLast(1).map {
             // For case I need it later
             // val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
             val serialAndType = it.split("\\s+".toRegex())
@@ -37,16 +33,16 @@ class Adb {
         ), serial = serial
     )
 
-    fun emulators(log: (String) -> Unit): List<String> {
-        return execCommand(Commands.getEmulatorList(), log, Commands.getEmulatorPath())
+    fun emulators(): List<String> {
+        return Cmd.execute(Commands.getEmulatorList(), log, Commands.getEmulatorPath())
     }
 
     suspend fun openPackage(selectedPackage: String, selectedDevice: String) {
         launchShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
     }
 
-    fun getApkPath(selectedPackage: String, selectedDevice: String, log: (String) -> Unit) {
-        val result = execCommand(
+    fun getApkPath(selectedPackage: String, selectedDevice: String) {
+        val result = Cmd.execute(
             Commands.getApkPathCommand(selectedPackage, selectedDevice),
             log,
             Commands.getPlatformToolsPath()
@@ -76,15 +72,15 @@ class Adb {
     }
 
     fun killEmulatorBySerial(serial: String) {
-        execCommand(Commands.getKillEmulatorBySerial(serial), path = Commands.getPlatformToolsPath())
+        Cmd.execute(Commands.getKillEmulatorBySerial(serial), path = Commands.getPlatformToolsPath())
     }
 
     fun launchEmulator(emulatorName: String) {
-        execCommand(Commands.getLaunchEmulator(emulatorName), path = Commands.getEmulatorPath())
+        Cmd.execute(Commands.getLaunchEmulator(emulatorName), path = Commands.getEmulatorPath())
     }
 
     fun wipeAndLaunchEmulator(emulatorName: String) {
-        execCommand(Commands.getWipeDataEmulatorByName(emulatorName), path = Commands.getEmulatorPath())
+        Cmd.execute(Commands.getWipeDataEmulatorByName(emulatorName), path = Commands.getEmulatorPath())
     }
 
     suspend fun showHome(selectedDevice: String) {
@@ -114,7 +110,7 @@ class Adb {
     suspend fun takeSnapshot(selectedDevice: String) {
         val filename = "snap_$selectedDevice.png"
         launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
-        execCommand(
+        Cmd.execute(
             "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename",
             path = Commands.getPlatformToolsPath()
         )
@@ -162,17 +158,17 @@ class Adb {
         launchShell(selectedDevice, Commands.sendInputCommand((num + 7)))
     }
 
-    suspend fun reversePort(port: Int, log: (String) -> Unit) {
+    suspend fun reversePort(port: Int) {
         devices().forEach {
-            val resultList = execCommand(Commands.adbReverse(it.serial, port), log, Commands.getPlatformToolsPath())
+            val resultList = Cmd.execute(Commands.adbReverse(it.serial, port), log, Commands.getPlatformToolsPath())
             resultList.forEach {
                 log(it)
             }
         }
     }
 
-    fun reverseList(log: (String) -> Unit) {
-        val resultList = execCommand(Commands.adbReverseList(), log, Commands.getPlatformToolsPath())
+    fun reverseList() {
+        val resultList = Cmd.execute(Commands.adbReverseList(), log, Commands.getPlatformToolsPath())
         resultList.forEach {
             log(it)
         }
@@ -190,7 +186,7 @@ class Adb {
         launchShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
     }
 
-    suspend fun getPermissions(selectedDevice: String, selectedPackage: String, log: (String) -> Unit) {
+    suspend fun getPermissions(selectedDevice: String, selectedPackage: String) {
         val command = "adb shell " + Commands.getGrantedPermissions(selectedPackage)
         log(command)
         val result = launchShellCommand(selectedDevice, command)
@@ -216,27 +212,6 @@ class Adb {
     private suspend fun launchShellCommand(serial: String, command: String): ShellCommandResult = adb.execute(
         request = ShellCommandRequest(command), serial = serial
     )
-
-    private fun execCommand(command: String, log: ((String) -> Unit)? = {}, path: String = ""): ArrayList<String> {
-        if (log != null) log(command)
-        val p = Runtime.getRuntime().exec(arrayOf("/bin/zsh", "-c", "${path}$command"))
-        p.waitFor()
-        val reader = BufferedReader(InputStreamReader(p.inputStream))
-        val responseList = arrayListOf<String>()
-
-        reader.use { bufferedReader ->
-            var line: String?
-            while (bufferedReader.readLine().also { line = it } != null) {
-                line?.let {
-                    if (!it.contains("crashdata", ignoreCase = true)) {
-                        responseList.add(it)
-                    }
-                }
-            }
-        }
-
-        return responseList
-    }
 
     private suspend fun devices() = adb.execute(request = ListDevicesRequest())
 }

@@ -27,7 +27,8 @@ class AppStore {
 
     val version = "0.1.0"
 
-    private val adb = Adb()
+    private val adb = Adb(::log)
+
     var state: AppState by mutableStateOf(initialState())
         private set
 
@@ -48,7 +49,7 @@ class AppStore {
     fun getDevicesList(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
-            val devicesList = adb.devicesInfo(::log)
+            val devicesList = adb.devicesInfo()
             delay(200)
             setState { copy(isDevicesLoading = false, devicesList = devicesList) }
         }
@@ -71,7 +72,7 @@ class AppStore {
     fun onGetEmulatorsListClick(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
             setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
-            val emulatorsList = adb.emulators(::log)
+            val emulatorsList = adb.emulators()
             delay(200)
             setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
         }
@@ -94,7 +95,7 @@ class AppStore {
     fun onApkPath(coroutineScope: CoroutineScope) {
         if (state.selectedPackage == PACKAGE_NONE) return
         coroutineScope.launch(Dispatchers.IO) {
-            adb.getApkPath(state.selectedPackage, state.selectedDevice, ::log)
+            adb.getApkPath(state.selectedPackage, state.selectedDevice )
         }
     }
 
@@ -346,14 +347,14 @@ class AppStore {
     fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
         if (port != null) {
             coroutineScope.launch {
-                adb.reversePort(port, ::log)
+                adb.reversePort(port )
             }
         }
     }
 
     fun onAdbReverseList(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
-            adb.reverseList(::log)
+            adb.reverseList()
         }
     }
 
@@ -382,7 +383,7 @@ class AppStore {
         if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
         log("adb shell " + Commands.getGrantedPermissions(state.selectedPackage))
         coroutineScope.launch {
-            adb.getPermissions(state.selectedDevice, state.selectedPackage, ::log)
+            adb.getPermissions(state.selectedDevice, state.selectedPackage )
         }
     }
 
