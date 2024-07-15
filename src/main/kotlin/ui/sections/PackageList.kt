@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
+import model.Package2
 import store.AppStore
 import ui.theme.MyColors
 import ui.theme.Dimensions
-import ui.widgets.BtnIcon
 import ui.widgets.BtnWithText
 import ui.widgets.LoadingSpinner
 import ui.widgets.SearchView
@@ -76,7 +76,7 @@ private fun AllOptionAndRefreshButton(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        val nonePackage = Package(AppStore.PACKAGE_NONE)
+        val nonePackage = Package2(AppStore.PACKAGE_NONE)
         PackageItem(
             nonePackage,
             state.selectedPackage == AppStore.PACKAGE_NONE,
@@ -97,7 +97,7 @@ private fun AllOptionAndRefreshButton(
 }
 
 @Composable
-private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> Unit) {
+private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package2) -> Unit) {
     val listState = rememberLazyListState()
     val textState = remember { mutableStateOf(TextFieldValue("")) }
     val query = textState.value.text
@@ -131,9 +131,9 @@ private fun PackageList(state: AppStore.AppState, onClicked: (pckg: Package) -> 
 
 @Composable
 private fun PackageItem(
-    item: Package,
+    item: Package2,
     isSelected: Boolean,
-    onClicked: (device: Package) -> Unit,
+    onClicked: (device: Package2) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(

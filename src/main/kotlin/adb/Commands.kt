@@ -39,6 +39,7 @@ object Commands {
     fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
     fun adbReverseList() = "adb reverse --list"
     fun getDeviceList() = "adb devices"
+    fun getPackageList() = "pm list packages"
     fun getEmulatorList() = "emulator -list-avds"
     fun getRevokeAllPermissions(packageName: String) = "adb shell pm reset-permissions -p $packageName"
     fun addSpecificPermission(packageName: String, permission: String) =

@@ -8,12 +8,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.type
-import com.malinskiy.adam.request.pkg.Package
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DeviceInfo
+import model.Package2
 import ui.navigation.MenuItemId
 import utils.KeysConverter
 
@@ -61,11 +61,11 @@ class AppStore {
 
     fun onGetPackageListClick(coroutineScope: CoroutineScope) {
         if (state.selectedDevice == ALL_DEVICES) return
-        log("adb shell pm list packages")
         coroutineScope.launch(Dispatchers.IO) {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
+            val packagesList = adb.packages(state.selectedDevice)
             delay(200)
-            setState { copy(isPackagesLoading = false, packageList = adb.packages(state.selectedDevice)) }
+            setState { copy(isPackagesLoading = false, packageList = packagesList) }
         }
     }
 
@@ -79,7 +79,7 @@ class AppStore {
     }
 
 
-    fun onPackageClick(pckg: Package) {
+    fun onPackageClick(pckg: Package2) {
         setState { copy(selectedPackage = pckg.name) }
     }
 
@@ -393,7 +393,7 @@ class AppStore {
         val menuItemSelected: MenuItemId = MenuItemId.DEVICES,
         val devicesList: List<DeviceInfo> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
-        val packageList: List<Package> = emptyList(),
+        val packageList: List<Package2> = emptyList(),
         val emulatorsList: List<String> = emptyList(),
         val selectedPackage: String = PACKAGE_NONE,
         val isDevicesLoading: Boolean = false,

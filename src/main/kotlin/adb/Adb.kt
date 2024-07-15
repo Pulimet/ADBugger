@@ -4,8 +4,8 @@ import com.malinskiy.adam.AndroidDebugBridgeClient
 import com.malinskiy.adam.AndroidDebugBridgeClientFactory
 import com.malinskiy.adam.interactor.StartAdbInteractor
 import com.malinskiy.adam.request.device.ListDevicesRequest
-import com.malinskiy.adam.request.pkg.PmListRequest
 import model.DeviceInfo
+import model.Package2
 import store.AppStore
 
 class Adb(private val log: (String) -> Unit) {
@@ -25,11 +25,11 @@ class Adb(private val log: (String) -> Unit) {
             DeviceInfo(serialAndType[0], serialAndType[1])
         }
 
-    suspend fun packages(serial: String) = adb.execute(
-        request = PmListRequest(
-            includePath = false
-        ), serial = serial
-    )
+    fun packages(serial: String): ArrayList<Package2> {
+        return launchShellCommand(serial, Commands.getPackageList())
+            .map { Package2(it.split(":").last()) }
+            .filter { it.name.isNotEmpty() } as ArrayList<Package2>
+    }
 
     fun emulators(): List<String> {
         return Cmd.execute(Commands.getEmulatorList(), log, Commands.getEmulatorPath())

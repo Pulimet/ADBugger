@@ -8,6 +8,7 @@ import java.util.stream.Collectors
 object Cmd {
     fun execute(command: String, log: ((String) -> Unit)? = {}, path: String = ""): ArrayList<String> {
         return try {
+            println("Invoking command: $command")
             log?.invoke(command)
 
             val process = createProcess(path, command)
@@ -19,10 +20,12 @@ object Cmd {
             }
 
         } catch (e: IOException) {
+            println("Error executing command: $command")
             log?.invoke("Error executing command: $command")
             e.printStackTrace()
             ArrayList()
         } catch (e: InterruptedException) {
+            println("Command interrupted: $command")
             log?.invoke("Command interrupted: $command")
             e.printStackTrace()
             ArrayList()
