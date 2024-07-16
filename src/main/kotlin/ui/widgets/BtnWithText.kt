@@ -35,6 +35,8 @@ fun BtnWithText(
 ) {
     var active by remember { mutableStateOf(false) }
 
+    if(!visible) return
+
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = modifier
@@ -53,7 +55,6 @@ fun BtnWithText(
             iconSize = Dimensions.btnIconSizeSmall,
             enabled = enabled,
             toggle = toggle,
-            visible = visible,
             showTooltip = false,
             clickEffect = false,
             hoverEnabled = false
