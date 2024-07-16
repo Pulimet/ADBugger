@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DeviceInfo
-import model.Package2
+import model.Package
 import ui.navigation.MenuItemId
 import utils.KeysConverter
 
@@ -78,7 +78,7 @@ class AppStore {
     }
 
 
-    fun onPackageClick(pckg: Package2) {
+    fun onPackageClick(pckg: Package) {
         setState { copy(selectedPackage = pckg.name) }
     }
 
@@ -368,7 +368,7 @@ class AppStore {
         val menuItemSelected: MenuItemId = MenuItemId.DEVICES,
         val devicesList: List<DeviceInfo> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
-        val packageList: List<Package2> = emptyList(),
+        val packageList: List<Package> = emptyList(),
         val emulatorsList: List<String> = emptyList(),
         val selectedPackage: String = PACKAGE_NONE,
         val isDevicesLoading: Boolean = false,

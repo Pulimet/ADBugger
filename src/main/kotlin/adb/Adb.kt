@@ -1,7 +1,7 @@
 package adb
 
 import model.DeviceInfo
-import model.Package2
+import model.Package
 import store.AppStore
 
 class Adb(private val log: (String) -> Unit) {
@@ -15,10 +15,10 @@ class Adb(private val log: (String) -> Unit) {
             DeviceInfo(serialAndType[0], serialAndType[1])
         }
 
-    fun packages(serial: String): ArrayList<Package2> {
+    fun packages(serial: String): ArrayList<Package> {
         return launchShellCommand(serial, Commands.getPackageList())
-            .map { Package2(it.split(":").last()) }
-            .filter { it.name.isNotEmpty() } as ArrayList<Package2>
+            .map { Package(it.split(":").last()) }
+            .filter { it.name.isNotEmpty() } as ArrayList<Package>
     }
 
     fun emulators(): List<String> {
