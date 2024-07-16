@@ -1,6 +1,8 @@
-package ui.sections
+package ui.sections.packages
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
@@ -11,15 +13,11 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun PackageListAndCommands(
+fun PackagesPage(
     model: AppStore,
     coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier
 ) {
-    val state = model.state
-    val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
-    val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
-
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
@@ -27,8 +25,8 @@ fun PackageListAndCommands(
         modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
-            PackageListSection(coroutineScope, model, Modifier.weight(1f))
-            PackageCommands(isPackageSelected, model, coroutineScope, isDeviceSelected)
+            PackagesMain(coroutineScope, model, Modifier.weight(1f))
+            PackageCommands(model, coroutineScope)
         }
     }
 }

@@ -1,4 +1,4 @@
-package ui.sections
+package ui.sections.packages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,12 +13,15 @@ import ui.widgets.HoverButton
 
 @Composable
 fun PackageCommands(
-    isPackageSelected: Boolean,
     model: AppStore,
     coroutineScope: CoroutineScope,
-    isDeviceSelected: Boolean,
     modifier: Modifier = Modifier
 ) {
+
+    val state = model.state
+    val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
+    val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
+
     Column(
         modifier = modifier.padding(horizontal = 12.dp, vertical = 6.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
