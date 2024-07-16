@@ -17,7 +17,7 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun Welcome(modifier: Modifier = Modifier) {
+fun WelcomePage(modifier: Modifier = Modifier) {
     val stateVertical = rememberScrollState(0)
 
     Card(

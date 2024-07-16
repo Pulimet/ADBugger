@@ -7,15 +7,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.navigation.MenuItemId
-import ui.navigation.SelectedPage
 import ui.navigation.SideBar
 import ui.navigation.TopBar
-import ui.sections.LoggerField
 import ui.theme.MyColors
 
 @Composable
@@ -25,23 +21,12 @@ fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
         model.onLaunchedEffect(coroutineScope)
     }
 
-    val isBottomLogsShown = model.state.isLogsAlwaysShown && model.state.menuItemSelected != MenuItemId.LOGS
-
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {
         Column {
             TopBar(model, coroutineScope)
             Row {
                 SideBar(model)
-                Column {
-                    SelectedPage(
-                        model,
-                        coroutineScope,
-                        if (isBottomLogsShown) Modifier.weight(0.75f) else Modifier.weight(1f)
-                    )
-                    if (isBottomLogsShown) {
-                        LoggerField(model, Modifier.weight(0.25f))
-                    }
-                }
+                Content(model, coroutineScope)
             }
         }
     }

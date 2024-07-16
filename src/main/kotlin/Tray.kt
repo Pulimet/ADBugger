@@ -10,8 +10,8 @@ fun ApplicationScope.ApplicationTray(state: WindowState) {
 
     Tray(
         icon = icon,
-        onAction = { state.isMinimized = !state.isMinimized },
         menu = {
+            Item("Show/Hide", onClick = { state.isMinimized = !state.isMinimized })
             Item("Quit", onClick = ::exitApplication)
         }
     )

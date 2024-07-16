@@ -5,14 +5,15 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.sections.*
+import ui.sections.target.TargetSelectionPage
 
 @Composable
 fun SelectedPage(model: AppStore, coroutineScope: CoroutineScope, modifier: Modifier = Modifier) {
     val state = model.state
 
     when (state.menuItemSelected) {
-        MenuItemId.WELCOME -> Welcome(modifier)
-        MenuItemId.DEVICES -> DeviceListSection(model, coroutineScope, modifier)
+        MenuItemId.WELCOME -> WelcomePage(modifier)
+        MenuItemId.DEVICES -> TargetSelectionPage(model, coroutineScope, modifier)
         MenuItemId.EMULATORS -> EmulatorLauncher(model, coroutineScope, modifier)
         MenuItemId.PACKAGES -> PackageListAndCommands(model, coroutineScope, modifier)
         MenuItemId.PERMISSIONS -> PermissionsCommands(model, coroutineScope, modifier)
