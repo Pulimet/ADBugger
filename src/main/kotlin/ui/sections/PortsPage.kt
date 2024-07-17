@@ -59,23 +59,23 @@ fun PortsPage(
                     icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputCustomPortState.value.text.isNotEmpty(),
-                    onClick = { model.onAdbReverse(coroutineScope, textInputCustomPortState.value.text.toIntOrNull()) },
+                    onClick = { model.onAdbReverse(textInputCustomPortState.value.text.toIntOrNull()) },
                     description = "Open specified port"
                 )
                 HoverButton(
-                    onClick = { model.onAdbReverse(coroutineScope, 8081) },
+                    onClick = { model.onAdbReverse(8081) },
                     enabled = true,
                     text = "8081",
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
                 HoverButton(
-                    onClick = { model.onAdbReverse(coroutineScope, 9090) },
+                    onClick = { model.onAdbReverse(9090) },
                     enabled = true,
                     text = "9090",
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
                 HoverButton(
-                    onClick = { model.onAdbReverseList(coroutineScope) },
+                    onClick = { model.onAdbReverseList() },
                     enabled = true,
                     text = "List",
                     modifier = Modifier.padding(horizontal = 4.dp)

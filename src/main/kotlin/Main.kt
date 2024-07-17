@@ -1,6 +1,5 @@
 import androidx.compose.material.Surface
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -25,7 +24,6 @@ fun main() = application {
 
     val appStore = koinInject<AppStore>()
     val model = remember { appStore }
-    val coroutineScope = rememberCoroutineScope()
 
     ApplicationTray(windowState)
 
@@ -33,7 +31,7 @@ fun main() = application {
         title = "ADBugger",
         state = windowState,
         onCloseRequest = ::exitApplication,
-        onKeyEvent = { model.onKeyEvent(coroutineScope, it) }
+        onKeyEvent = { model.onKeyEvent(it) }
     ) {
         Surface(color = MyColors.bg) {
             MainContent()

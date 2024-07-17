@@ -53,7 +53,7 @@ fun TargetItem(
         if (item.serial.contains("emulator")) {
             BtnWithText(
                 icon = FontAwesomeIcons.Solid.BookDead,
-                onClick = { model.onKillEmulatorClick(coroutineScope, item.serial) },
+                onClick = { model.onKillEmulatorClick(item.serial) },
                 description = "Kill Emulator",
                 modifier = Modifier.padding(horizontal = 8.dp),
                 width = 120.dp,

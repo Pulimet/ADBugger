@@ -9,10 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.type
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import model.DeviceInfo
 import model.Package
 import ui.navigation.sidebar.MenuItemId
@@ -35,10 +32,8 @@ class AppStore(cmd: Cmd) {
         private set
 
     // Public
-    fun onLaunchedEffect(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            getDevicesList(this)
-        }
+    suspend fun onLaunchedEffect() {
+        getDevicesList()
     }
 
     // Navigation
@@ -47,36 +42,31 @@ class AppStore(cmd: Cmd) {
     }
 
     // User Actions
-    fun getDevicesList(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
-            val devicesList = adb.devicesInfo()
-            delay(200)
-            setState { copy(isDevicesLoading = false, devicesList = devicesList) }
-        }
+    suspend fun getDevicesList() {
+        setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
+        val devicesList = adb.devicesInfo()
+        delay(200)
+        setState { copy(isDevicesLoading = false, devicesList = devicesList) }
     }
+
 
     fun onDeviceClick(device: DeviceInfo) {
         setState { copy(selectedDevice = device.serial) }
     }
 
-    fun onGetPackageListClick(coroutineScope: CoroutineScope) {
+    suspend fun onGetPackageListClick() {
         if (state.selectedDevice == ALL_DEVICES) return
-        coroutineScope.launch(Dispatchers.IO) {
-            setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
-            val packagesList = adb.packages(state.selectedDevice)
-            delay(200)
-            setState { copy(isPackagesLoading = false, packageList = packagesList) }
-        }
+        setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
+        val packagesList = adb.packages(state.selectedDevice)
+        delay(200)
+        setState { copy(isPackagesLoading = false, packageList = packagesList) }
     }
 
-    fun onGetEmulatorsListClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
-            val emulatorsList = adb.emulators()
-            delay(200)
-            setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
-        }
+    suspend fun onGetEmulatorsListClick() {
+        setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
+        val emulatorsList = adb.emulators()
+        delay(200)
+        setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
     }
 
 
@@ -85,197 +75,143 @@ class AppStore(cmd: Cmd) {
     }
 
 
-    fun onOpenClick(coroutineScope: CoroutineScope) {
+    fun onOpenClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.openPackage(state.selectedPackage, state.selectedDevice)
-        }
+        adb.openPackage(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onApkPath(coroutineScope: CoroutineScope) {
+    fun onApkPath() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.getApkPath(state.selectedPackage, state.selectedDevice)
-        }
+        adb.getApkPath(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onCloseClick(coroutineScope: CoroutineScope) {
+    fun onCloseClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.closePackage(state.selectedPackage, state.selectedDevice)
-        }
+        adb.closePackage(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onRestartClick(coroutineScope: CoroutineScope) {
+    suspend fun onRestartClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.closePackage(state.selectedPackage, state.selectedDevice)
-            delay(100)
-            adb.openPackage(state.selectedPackage, state.selectedDevice)
-        }
+        adb.closePackage(state.selectedPackage, state.selectedDevice)
+        delay(100)
+        adb.openPackage(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onClearDataClick(coroutineScope: CoroutineScope) {
+    fun onClearDataClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch {
-            adb.clearData(state.selectedPackage, state.selectedDevice)
-        }
+        adb.clearData(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onClearAndRestartClick(coroutineScope: CoroutineScope) {
+    suspend fun onClearAndRestartClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
 
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.closePackage(state.selectedPackage, state.selectedDevice)
-            adb.clearData(state.selectedPackage, state.selectedDevice)
-            delay(100)
-            adb.openPackage(state.selectedPackage, state.selectedDevice)
-        }
+        adb.closePackage(state.selectedPackage, state.selectedDevice)
+        adb.clearData(state.selectedPackage, state.selectedDevice)
+        delay(100)
+        adb.openPackage(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onUninstallClick(coroutineScope: CoroutineScope) {
+    fun onUninstallClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch {
-            adb.uninstall(state.selectedPackage, state.selectedDevice)
-        }
+
+        adb.uninstall(state.selectedPackage, state.selectedDevice)
     }
 
-    fun onLaunchEmulatorClick(coroutineScope: CoroutineScope, emulatorName: String) {
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.launchEmulator(emulatorName)
-        }
+
+    fun onLaunchEmulatorClick(emulatorName: String) {
+        adb.launchEmulator(emulatorName)
     }
 
-    fun onWipeAndLaunch(coroutineScope: CoroutineScope, emulatorName: String) {
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.wipeAndLaunchEmulator(emulatorName)
-        }
+    fun onWipeAndLaunch(emulatorName: String) {
+        adb.wipeAndLaunchEmulator(emulatorName)
     }
 
-    fun onKillEmulatorClick(coroutineScope: CoroutineScope, serial: String) {
+    fun onKillEmulatorClick(serial: String) {
         log(Commands.getKillEmulatorBySerial(serial))
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.killEmulatorBySerial(serial)
-        }
+        adb.killEmulatorBySerial(serial)
     }
 
-
-    fun onKillAllEmulatorClick(coroutineScope: CoroutineScope) {
+    fun onKillAllEmulatorClick() {
         log(Commands.getKillEmulatorBySerial("[SERIAL]"))
-        coroutineScope.launch(Dispatchers.IO) {
-            adb.killAllEmulators()
-        }
+        adb.killAllEmulators()
     }
 
-
-    fun onHomeClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.showHome(state.selectedDevice)
-        }
+    fun onHomeClick() {
+        adb.showHome(state.selectedDevice)
     }
 
-    fun onSettingsClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.showSettings(state.selectedDevice)
-        }
+    fun onSettingsClick() {
+        adb.showSettings(state.selectedDevice)
     }
 
-    fun onBackClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressBack(state.selectedDevice)
-        }
+    fun onBackClick() {
+        adb.pressBack(state.selectedDevice)
     }
 
-    fun onTabClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressTab(state.selectedDevice)
-        }
+    fun onTabClick() {
+        adb.pressTab(state.selectedDevice)
     }
 
-    fun onEnterClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressEnter(state.selectedDevice)
-        }
+    fun onEnterClick() {
+        adb.pressEnter(state.selectedDevice)
     }
 
-    fun onPowerClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressPower(state.selectedDevice)
-        }
+    fun onPowerClick() {
+        adb.pressPower(state.selectedDevice)
     }
 
-    fun onSnapClick(coroutineScope: CoroutineScope) {
+    fun onSnapClick() {
         if (state.selectedDevice == ALL_DEVICES) return
-        coroutineScope.launch {
-            adb.takeSnapshot(state.selectedDevice)
-        }
+
+        adb.takeSnapshot(state.selectedDevice)
     }
 
-    fun onDayClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.setDarkModeOff(state.selectedDevice)
-        }
+    fun onDayClick() {
+        adb.setDarkModeOff(state.selectedDevice)
     }
 
-    fun onNightClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.setDarkModeOn(state.selectedDevice)
-        }
+    fun onNightClick() {
+        adb.setDarkModeOn(state.selectedDevice)
     }
 
-    fun onUpClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressUp(state.selectedDevice)
-        }
+    fun onUpClick() {
+        adb.pressUp(state.selectedDevice)
     }
 
-    fun onDownClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressDown(state.selectedDevice)
-        }
+    fun onDownClick() {
+        adb.pressDown(state.selectedDevice)
     }
 
-    fun onLeftClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressLeft(state.selectedDevice)
-        }
+    fun onLeftClick() {
+        adb.pressLeft(state.selectedDevice)
     }
 
-    fun onRightClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressRight(state.selectedDevice)
-        }
+    fun onRightClick() {
+        adb.pressRight(state.selectedDevice)
     }
 
-    fun onBackSpaceClick(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.pressDelete(state.selectedDevice)
-        }
+    fun onBackSpaceClick() {
+        adb.pressDelete(state.selectedDevice)
     }
 
-    fun onSendTextClick(coroutineScope: CoroutineScope, value: String) {
-        coroutineScope.launch {
-            adb.sendText(state.selectedDevice, value)
-        }
+
+    fun onSendTextClick(value: String) {
+        adb.sendText(state.selectedDevice, value)
     }
 
-    fun onSendInputClick(coroutineScope: CoroutineScope, value: Int) {
-        coroutineScope.launch {
-            adb.sendInput(state.selectedDevice, value)
-        }
+
+    fun onSendInputClick(value: Int) {
+        adb.sendInput(state.selectedDevice, value)
     }
 
-    fun onNumberClick(coroutineScope: CoroutineScope, i: Int) {
-        coroutineScope.launch {
-            adb.sendInputNum(state.selectedDevice, i)
-        }
+    fun onNumberClick(i: Int) {
+        adb.sendInputNum(state.selectedDevice, i)
     }
 
-    fun onLetterClick(coroutineScope: CoroutineScope, letter: String) {
+    fun onLetterClick(letter: String) {
         val key = KeysConverter.convertLetterToKeyCode(letter)
-        coroutineScope.launch {
-            adb.sendInput(state.selectedDevice, key)
-        }
+
+        adb.sendInput(state.selectedDevice, key)
     }
 
     fun onForwardUserInputToggle(value: Boolean) {
@@ -286,66 +222,49 @@ class AppStore(cmd: Cmd) {
         setState { copy(isLogsAlwaysShown = alwaysShowLogsEnabled) }
     }
 
-    fun onKeyEvent(coroutineScope: CoroutineScope, event: KeyEvent): Boolean {
+    fun onKeyEvent(event: KeyEvent): Boolean {
         if (!state.isUserForwardInputEnabled || event.type != KeyEventType.KeyDown) {
             return false
         }
         val key: Int = KeysConverter.covertEventKeyToKeyCode(event)
         if (key != -1) {
-            coroutineScope.launch {
-                adb.sendInput(state.selectedDevice, key)
-            }
+            adb.sendInput(state.selectedDevice, key)
             return true
         }
         val char = KeysConverter.convertEventKeyToChar(event)
         if (char.isNotEmpty()) {
-            coroutineScope.launch {
-                adb.sendText(state.selectedDevice, char)
-            }
+            adb.sendText(state.selectedDevice, char)
             return true
         }
 
         return false
     }
 
-
-    fun onAdbReverse(coroutineScope: CoroutineScope, port: Int?) {
+    fun onAdbReverse(port: Int?) {
         if (port != null) {
-            coroutineScope.launch {
-                adb.reversePort(port)
-            }
+            adb.reversePort(port)
         }
     }
 
-    fun onAdbReverseList(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.reverseList()
-        }
+    fun onAdbReverseList() {
+        adb.reverseList()
     }
 
-    fun onAddPermission(coroutineScope: CoroutineScope, permission: String) {
-        coroutineScope.launch {
-            adb.addPermission(state.selectedDevice, permission, state.selectedPackage)
-        }
+    fun onAddPermission(permission: String) {
+        adb.addPermission(state.selectedDevice, permission, state.selectedPackage)
     }
 
-    fun onRemovePermission(coroutineScope: CoroutineScope, permission: String) {
-        coroutineScope.launch {
-            adb.removePermission(state.selectedDevice, permission, state.selectedPackage)
-        }
+    fun onRemovePermission(permission: String) {
+        adb.removePermission(state.selectedDevice, permission, state.selectedPackage)
     }
 
-    fun onRemoveAllPermissions(coroutineScope: CoroutineScope) {
-        coroutineScope.launch {
-            adb.removeAllPermissions(state.selectedDevice, state.selectedPackage)
-        }
+    fun onRemoveAllPermissions() {
+        adb.removeAllPermissions(state.selectedDevice, state.selectedPackage)
     }
 
-    fun onGetPermissions(coroutineScope: CoroutineScope) {
+    fun onGetPermissions() {
         if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
-        coroutineScope.launch {
-            adb.getPermissions(state.selectedDevice, state.selectedPackage)
-        }
+        adb.getPermissions(state.selectedDevice, state.selectedPackage)
     }
 
     // Logs

@@ -15,17 +15,12 @@ import compose.icons.LineAwesomeIcons
 import compose.icons.TablerIcons
 import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
 
 @Composable
-fun EmulatorItem(
-    emulatorName: String,
-    coroutineScope: CoroutineScope,
-    model: AppStore = koinInject()
-) {
+fun EmulatorItem(emulatorName: String, model: AppStore = koinInject()) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().height(50.dp)) {
         Text(
             text = emulatorName,
@@ -37,14 +32,14 @@ fun EmulatorItem(
         if (emulatorName != AppStore.EMULATOR_NONE) {
             BtnWithText(
                 icon = TablerIcons.Wiper,
-                onClick = { model.onWipeAndLaunch(coroutineScope, emulatorName) },
+                onClick = { model.onWipeAndLaunch(emulatorName) },
                 description = "Wipe Data",
                 modifier = Modifier.padding(end = 4.dp),
                 width = 100.dp
             )
             BtnWithText(
                 icon = LineAwesomeIcons.Android,
-                onClick = { model.onLaunchEmulatorClick(coroutineScope, emulatorName) },
+                onClick = { model.onLaunchEmulatorClick(emulatorName) },
                 description = "Launch Emulator",
                 modifier = Modifier.padding(end = 8.dp),
                 width = 100.dp

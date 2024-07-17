@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.*
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -31,42 +30,42 @@ fun InputNumbers(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Num(coroutineScope, TablerIcons.Number1, 1)
-                Num(coroutineScope, TablerIcons.Number2, 2)
-                Num(coroutineScope, TablerIcons.Number3, 3)
+                Num(TablerIcons.Number1, 1)
+                Num(TablerIcons.Number2, 2)
+                Num(TablerIcons.Number3, 3)
             }
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Num(coroutineScope, TablerIcons.Number4, 4)
-                Num(coroutineScope, TablerIcons.Number5, 5)
-                Num(coroutineScope, TablerIcons.Number6, 6)
+                Num(TablerIcons.Number4, 4)
+                Num(TablerIcons.Number5, 5)
+                Num(TablerIcons.Number6, 6)
             }
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Num(coroutineScope, TablerIcons.Number7, 7)
-                Num(coroutineScope, TablerIcons.Number8, 8)
-                Num(coroutineScope, TablerIcons.Number9, 9)
+                Num(TablerIcons.Number7, 7)
+                Num(TablerIcons.Number8, 8)
+                Num(TablerIcons.Number9, 9)
             }
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Num(coroutineScope, TablerIcons.Number0, 0)
+                Num(TablerIcons.Number0, 0)
             }
         }
     }
 }
 
 @Composable
-private fun Num(coroutineScope: CoroutineScope, icon: ImageVector, i: Int, model: AppStore = koinInject()) {
+private fun Num(icon: ImageVector, i: Int, model: AppStore = koinInject()) {
     BtnIcon(
         icon = icon,
         modifier = Modifier.padding(horizontal = 4.dp),
-        onClick = { model.onNumberClick(coroutineScope, i) },
+        onClick = { model.onNumberClick(i) },
         description = i.toString(),
         showTooltip = false
     )

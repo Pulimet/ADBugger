@@ -60,14 +60,14 @@ fun PermissionsPage(
                     icon = Icons.Rounded.Add,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputPermissionState.value.text.isNotEmpty(),
-                    onClick = { model.onAddPermission(coroutineScope, textInputPermissionState.value.text) },
+                    onClick = { model.onAddPermission(textInputPermissionState.value.text) },
                     description = "Add"
                 )
                 BtnIcon(
                     icon = Icons.Rounded.Clear,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputPermissionState.value.text.isNotEmpty(),
-                    onClick = { model.onRemovePermission(coroutineScope, textInputPermissionState.value.text) },
+                    onClick = { model.onRemovePermission(textInputPermissionState.value.text) },
                     description = "Remove"
                 )
             }
@@ -77,13 +77,13 @@ fun PermissionsPage(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 HoverButton(
-                    onClick = { model.onRemoveAllPermissions(coroutineScope) },
+                    onClick = { model.onRemoveAllPermissions() },
                     enabled = true,
                     text = "Remove all",
                     modifier = Modifier.padding(6.dp)
                 )
                 HoverButton(
-                    onClick = { model.onGetPermissions(coroutineScope) },
+                    onClick = { model.onGetPermissions() },
                     enabled = true,
                     text = "Show granted",
                     modifier = Modifier.padding(6.dp)

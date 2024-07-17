@@ -11,7 +11,6 @@ import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +25,6 @@ import ui.widgets.BtnIcon
 
 @Composable
 fun InputCustom(model: AppStore = koinInject()) {
-    val coroutineScope = rememberCoroutineScope()
     val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
     val textInputSendInputState = remember { mutableStateOf(TextFieldValue("")) }
     Card(
@@ -55,7 +53,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                     icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputSendTextState.value.text.isNotEmpty(),
-                    onClick = { model.onSendTextClick(coroutineScope, textInputSendTextState.value.text) },
+                    onClick = { model.onSendTextClick(textInputSendTextState.value.text) },
                     description = "Send text to device"
                 )
 
@@ -64,7 +62,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                     modifier = Modifier.padding(start = 4.dp, end = 16.dp),
                     enabled = textInputSendTextState.value.text.isNotEmpty(),
                     onClick = {
-                        model.onBackSpaceClick(coroutineScope)
+                        model.onBackSpaceClick()
                         val text = textInputSendTextState.value.text
                         val textLength = text.length
                         if (textLength > 0) {
@@ -93,7 +91,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                     icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(start = 8.dp, end = 16.dp),
                     enabled = textInputSendInputState.value.text.isNotEmpty(),
-                    onClick = { model.onSendInputClick(coroutineScope, textInputSendInputState.value.text.toInt()) },
+                    onClick = { model.onSendInputClick(textInputSendInputState.value.text.toInt()) },
                     description = "Send input/key to device"
                 )
             }

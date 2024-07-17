@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.HoverButton
@@ -17,7 +19,6 @@ fun PackageCommands(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val state = model.state
     val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
     val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
@@ -29,37 +30,45 @@ fun PackageCommands(
     ) {
         HoverButton(
             enabled = isPackageSelected,
-            onClick = { model.onOpenClick(coroutineScope) },
+            onClick = { model.onOpenClick() },
             text = "Open"
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = { model.onCloseClick(coroutineScope) },
+            onClick = { model.onCloseClick() },
             text = "Close"
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = { model.onRestartClick(coroutineScope) },
+            onClick = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    model.onRestartClick()
+                }
+            },
             text = "Restart"
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = { model.onClearDataClick(coroutineScope) },
+            onClick = { model.onClearDataClick() },
             text = "Clear Data"
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = { model.onClearAndRestartClick(coroutineScope) },
+            onClick = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    model.onClearAndRestartClick()
+                }
+            },
             text = "Clear&Restart"
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = { model.onUninstallClick(coroutineScope) },
+            onClick = { model.onUninstallClick() },
             text = "Uninstall"
         )
         HoverButton(
             enabled = isPackageSelected && isDeviceSelected,
-            onClick = { model.onApkPath(coroutineScope) },
+            onClick = { model.onApkPath() },
             text = "APK Path"
         )
     }

@@ -17,7 +17,6 @@ import store.AppStore
 
 @Composable
 fun EmulatorsList(model: AppStore = koinInject()) {
-    val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
     val state = model.state
     Box(modifier = Modifier.fillMaxSize()) {
@@ -27,7 +26,7 @@ fun EmulatorsList(model: AppStore = koinInject()) {
                 items,
                 key = { item -> item }
             ) { item ->
-                EmulatorItem(item, coroutineScope)
+                EmulatorItem(item)
             }
         }
         if (items.size > 2) {

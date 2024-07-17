@@ -21,7 +21,7 @@ fun MainContent(model: AppStore = koinInject()) {
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        model.onLaunchedEffect(coroutineScope)
+        model.onLaunchedEffect()
     }
 
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {

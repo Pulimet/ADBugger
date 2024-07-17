@@ -53,47 +53,47 @@ fun TopBarIcons(model: AppStore = koinInject()) {
     ) {
         BtnWithText(
             icon = Icons.Rounded.Home,
-            onClick = { model.onHomeClick(coroutineScope) },
+            onClick = { model.onHomeClick() },
             description = "Home",
         )
         BtnWithText(
             icon = Icons.Rounded.Settings,
-            onClick = { model.onSettingsClick(coroutineScope) },
+            onClick = { model.onSettingsClick() },
             description = "Settings",
         )
         BtnWithText(
             icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-            onClick = { model.onBackClick(coroutineScope) },
+            onClick = { model.onBackClick() },
             description = "Back",
         )
         BtnWithText(
             icon = Octicons.ArrowSwitch24,
-            onClick = { model.onTabClick(coroutineScope) },
+            onClick = { model.onTabClick() },
             description = "Tab",
         )
         BtnWithText(
             icon = TablerIcons.ArrowBack,
-            onClick = { model.onEnterClick(coroutineScope) },
+            onClick = { model.onEnterClick() },
             description = "Enter",
         )
         BtnWithText(
             icon = TablerIcons.Power,
-            onClick = { model.onPowerClick(coroutineScope) },
+            onClick = { model.onPowerClick() },
             description = "Power",
         )
         BtnWithText(
             icon = WeatherIcons.DaySunny,
-            onClick = { model.onDayClick(coroutineScope) },
+            onClick = { model.onDayClick() },
             description = "Day",
         )
         BtnWithText(
             icon = WeatherIcons.NightClear,
-            onClick = { model.onNightClick(coroutineScope) },
+            onClick = { model.onNightClick() },
             description = "Night",
         )
         BtnWithText(
             icon = LineaIcons.Basic.Photo,
-            onClick = { model.onSnapClick(coroutineScope) },
+            onClick = { model.onSnapClick() },
             description = "Snapshot",
             enabled = isDeviceSelected,
         )

@@ -23,7 +23,6 @@ fun InputArrows(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
@@ -41,7 +40,7 @@ fun InputArrows(
                 BtnIcon(
                     icon = Octicons.ArrowUp24,
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { model.onUpClick(coroutineScope) },
+                    onClick = { model.onUpClick() },
                     description = "Up"
                 )
             }
@@ -52,19 +51,19 @@ fun InputArrows(
                 BtnIcon(
                     icon = Octicons.ArrowLeft24,
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { model.onLeftClick(coroutineScope) },
+                    onClick = { model.onLeftClick() },
                     description = "Left"
                 )
                 BtnIcon(
                     icon = Octicons.ArrowDown24,
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { model.onDownClick(coroutineScope) },
+                    onClick = { model.onDownClick() },
                     description = "Down"
                 )
                 BtnIcon(
                     icon = Octicons.ArrowRight24,
                     modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { model.onRightClick(coroutineScope) },
+                    onClick = { model.onRightClick() },
                     description = "Right"
                 )
             }
