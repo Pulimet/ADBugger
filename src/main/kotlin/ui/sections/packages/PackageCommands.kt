@@ -8,14 +8,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.HoverButton
 
 @Composable
 fun PackageCommands(
-    model: AppStore,
     coroutineScope: CoroutineScope,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject()
 ) {
 
     val state = model.state

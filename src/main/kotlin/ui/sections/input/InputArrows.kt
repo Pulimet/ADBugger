@@ -12,6 +12,7 @@ import compose.icons.octicons.ArrowLeft24
 import compose.icons.octicons.ArrowRight24
 import compose.icons.octicons.ArrowUp24
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
@@ -19,9 +20,9 @@ import ui.widgets.BtnIcon
 
 @Composable
 fun InputArrows(
-    model: AppStore,
     coroutineScope: CoroutineScope,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject()
 ) {
     Card(
         backgroundColor = MyColors.bg2,

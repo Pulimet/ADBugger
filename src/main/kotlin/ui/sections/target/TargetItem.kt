@@ -17,6 +17,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.MyColors
 import ui.widgets.BtnWithText
@@ -27,8 +28,8 @@ fun TargetItem(
     isSelected: Boolean,
     onClicked: (device: DeviceInfo) -> Unit,
     modifier: Modifier = Modifier,
-    model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
 ) {
 
     Row(

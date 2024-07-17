@@ -30,16 +30,16 @@ fun EmulatorsPage(
             if (model.state.isEmulatorsLoading) {
                 LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
             } else {
-                Content(model, coroutineScope)
+                Content(coroutineScope)
             }
         }
     }
 }
 
 @Composable
-private fun Content(model: AppStore, coroutineScope: CoroutineScope) {
+private fun Content(coroutineScope: CoroutineScope) {
     Column {
-        EmulatorsTopMenu(model, coroutineScope)
-        EmulatorsList(model, coroutineScope)
+        EmulatorsTopMenu(coroutineScope)
+        EmulatorsList(coroutineScope)
     }
 }

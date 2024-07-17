@@ -19,7 +19,6 @@ import ui.widgets.LoadingSpinner
 fun TargetSelectionPage(
     coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
-    model: AppStore = koinInject()
 ) {
     Card(
         backgroundColor = MyColors.bg2,
@@ -28,18 +27,21 @@ fun TargetSelectionPage(
         modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
-            Content(model, coroutineScope)
+            Content(coroutineScope)
         }
     }
 }
 
 @Composable
-private fun Content(model: AppStore, coroutineScope: CoroutineScope) {
+private fun Content(
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
+) {
     val state = model.state
     if (state.isDevicesLoading) {
         LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
     } else {
-        AllTargetsAndRefreshButton(model, coroutineScope)
-        TargetList(model, coroutineScope) { model.onDeviceClick(it) }
+        AllTargetsAndRefreshButton(coroutineScope)
+        TargetList(coroutineScope, { model.onDeviceClick(it) })
     }
 }

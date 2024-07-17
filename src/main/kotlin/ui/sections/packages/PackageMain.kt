@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
@@ -15,8 +16,8 @@ import ui.widgets.LoadingSpinner
 @Composable
 fun PackagesMain(
     coroutineScope: CoroutineScope,
-    model: AppStore,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject()
 ) {
     val state = model.state
     Box(
@@ -27,22 +28,22 @@ fun PackagesMain(
         if (state.isPackagesLoading) {
             LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
         } else {
-            Content(model, coroutineScope)
+            Content(coroutineScope)
         }
     }
 }
 
 @Composable
 private fun Content(
-    model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
 ) {
     val state = model.state
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PackageNoneAndRefreshButton(state, model, coroutineScope)
+        PackageNoneAndRefreshButton(state, coroutineScope)
         PackagesList(state) { model.onPackageClick(it) }
     }
 }

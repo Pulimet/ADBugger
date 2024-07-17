@@ -13,10 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
+import org.koin.compose.koinInject
 import store.AppStore
 
 @Composable
-fun TargetList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (device: DeviceInfo) -> Unit) {
+fun TargetList(
+    coroutineScope: CoroutineScope,
+    onClicked: (device: DeviceInfo) -> Unit,
+    model: AppStore = koinInject()
+) {
     val state = model.state
     Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()
@@ -27,7 +32,6 @@ fun TargetList(model: AppStore, coroutineScope: CoroutineScope, onClicked: (devi
                     state.selectedDevice == item.serial,
                     { onClicked(it) },
                     Modifier.fillMaxWidth(),
-                    model,
                     coroutineScope
                 )
             }

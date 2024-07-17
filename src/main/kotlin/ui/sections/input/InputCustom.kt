@@ -18,6 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
@@ -25,8 +26,8 @@ import ui.widgets.BtnIcon
 
 @Composable
 fun InputCustom(
-    model: AppStore,
     coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
 ) {
     val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
     val textInputSendInputState = remember { mutableStateOf(TextFieldValue("")) }

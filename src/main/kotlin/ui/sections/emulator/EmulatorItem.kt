@@ -16,14 +16,15 @@ import compose.icons.TablerIcons
 import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
 
 @Composable
 fun EmulatorItem(
     emulatorName: String,
-    model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().height(50.dp)) {
         Text(

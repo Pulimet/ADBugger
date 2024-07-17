@@ -12,13 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
 
 @Composable
 fun AllTargetsAndRefreshButton(
-    model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
 ) {
     val state = model.state
     Row(
@@ -32,7 +33,6 @@ fun AllTargetsAndRefreshButton(
             state.selectedDevice == AppStore.ALL_DEVICES,
             { model.onDeviceClick(allDevices) },
             Modifier.weight(1f),
-            model,
             coroutineScope
         )
 

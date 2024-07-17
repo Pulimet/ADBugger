@@ -12,10 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 
 @Composable
-fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope) {
+fun EmulatorsList(
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
+) {
     val listState = rememberLazyListState()
     val state = model.state
     Box(modifier = Modifier.fillMaxSize()) {
@@ -27,7 +31,6 @@ fun EmulatorsList(model: AppStore, coroutineScope: CoroutineScope) {
             ) { item ->
                 EmulatorItem(
                     item,
-                    model,
                     coroutineScope
                 )
             }

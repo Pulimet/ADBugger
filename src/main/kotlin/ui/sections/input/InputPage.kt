@@ -19,12 +19,12 @@ fun InputPage(
     model: AppStore = koinInject()
 ) {
     Column(modifier = modifier) {
-        InputLetters(model, coroutineScope)
+        InputLetters(coroutineScope)
         Row {
-            InputNumbers(model, coroutineScope, Modifier.weight(0.5f).height(180.dp))
-            InputArrows(model, coroutineScope, Modifier.weight(0.5f).height(180.dp))
+            InputNumbers(coroutineScope, Modifier.weight(0.5f).height(180.dp))
+            InputArrows(coroutineScope, Modifier.weight(0.5f).height(180.dp))
         }
-        InputCustom(model, coroutineScope)
+        InputCustom(coroutineScope)
     }
 }
 

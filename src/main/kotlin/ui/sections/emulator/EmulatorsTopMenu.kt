@@ -13,11 +13,15 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
 
 @Composable
-fun EmulatorsTopMenu(model: AppStore, coroutineScope: CoroutineScope) {
+fun EmulatorsTopMenu(
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth()

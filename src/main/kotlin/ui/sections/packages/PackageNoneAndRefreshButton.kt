@@ -12,14 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import model.Package
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
 
 @Composable
 fun PackageNoneAndRefreshButton(
     state: AppStore.AppState,
-    model: AppStore,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    model: AppStore = koinInject()
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
