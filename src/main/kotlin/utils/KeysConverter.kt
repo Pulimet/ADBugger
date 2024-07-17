@@ -5,6 +5,8 @@ import androidx.compose.ui.input.key.*
 object KeysConverter {
 
     fun covertEventKeyToKeyCode(event: KeyEvent) = when (event.key) {
+        Key.Comma -> 55
+        Key.Period -> 56
         Key.Backspace -> 67
         Key.Enter -> 66
         Key.DirectionUp -> 19

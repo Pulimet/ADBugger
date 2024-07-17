@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -245,6 +246,8 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
             launch {   adb.sendText(state.selectedDevice, char) }
             return true
         }
+
+        log("Ket not handled by a system: ${event.key}")
 
         return false
     }
