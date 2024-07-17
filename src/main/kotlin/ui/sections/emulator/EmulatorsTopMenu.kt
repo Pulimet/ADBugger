@@ -7,21 +7,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
 
 @Composable
-fun EmulatorsTopMenu(
-    coroutineScope: CoroutineScope,
-    model: AppStore = koinInject()
-) {
+fun EmulatorsTopMenu(model: AppStore = koinInject()) {
+    val coroutineScope = rememberCoroutineScope()
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth()

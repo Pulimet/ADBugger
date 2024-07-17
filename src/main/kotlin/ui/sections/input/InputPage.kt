@@ -7,24 +7,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 
 @Composable
 @Preview
 fun InputPage(
-    coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
     Column(modifier = modifier) {
-        InputLetters(coroutineScope)
+        InputLetters()
         Row {
-            InputNumbers(coroutineScope, Modifier.weight(0.5f).height(180.dp))
-            InputArrows(coroutineScope, Modifier.weight(0.5f).height(180.dp))
+            InputNumbers(Modifier.weight(0.5f).height(180.dp))
+            InputArrows(Modifier.weight(0.5f).height(180.dp))
         }
-        InputCustom(coroutineScope)
+        InputCustom()
     }
 }
 

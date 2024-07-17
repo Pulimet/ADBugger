@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -16,7 +15,6 @@ import ui.widgets.LoadingSpinner
 
 @Composable
 fun EmulatorsPage(
-    coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
@@ -30,16 +28,16 @@ fun EmulatorsPage(
             if (model.state.isEmulatorsLoading) {
                 LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
             } else {
-                Content(coroutineScope)
+                Content()
             }
         }
     }
 }
 
 @Composable
-private fun Content(coroutineScope: CoroutineScope) {
+private fun Content() {
     Column {
-        EmulatorsTopMenu(coroutineScope)
-        EmulatorsList(coroutineScope)
+        EmulatorsTopMenu()
+        EmulatorsList()
     }
 }

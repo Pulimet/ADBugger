@@ -11,13 +11,13 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -28,10 +28,10 @@ import ui.widgets.HoverButton
 
 @Composable
 fun PermissionsPage(
-    coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val textInputPermissionState = remember { mutableStateOf(TextFieldValue("")) }
 
     Card(

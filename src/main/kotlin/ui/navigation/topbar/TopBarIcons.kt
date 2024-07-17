@@ -12,6 +12,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import compose.icons.LineaIcons
 import compose.icons.Octicons
@@ -26,7 +27,6 @@ import compose.icons.tablericons.Notes
 import compose.icons.tablericons.Power
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.NightClear
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
@@ -34,10 +34,8 @@ import ui.theme.MyColors
 import ui.widgets.BtnWithText
 
 @Composable
-fun TopBarIcons(
-    coroutineScope: CoroutineScope,
-    model: AppStore = koinInject(),
-) {
+fun TopBarIcons(model: AppStore = koinInject()) {
+    val coroutineScope = rememberCoroutineScope()
     val stateHorizontal = rememberScrollState(0)
 
     val isDeviceSelected = model.state.selectedDevice != AppStore.ALL_DEVICES

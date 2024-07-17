@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -17,10 +18,8 @@ import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
 @Composable
-fun InputNumbers(
-    coroutineScope: CoroutineScope,
-    modifier: Modifier = Modifier,
-) {
+fun InputNumbers(modifier: Modifier = Modifier) {
+    val coroutineScope = rememberCoroutineScope()
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,

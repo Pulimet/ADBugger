@@ -11,13 +11,13 @@ import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -25,10 +25,8 @@ import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
 @Composable
-fun InputCustom(
-    coroutineScope: CoroutineScope,
-    model: AppStore = koinInject()
-) {
+fun InputCustom(model: AppStore = koinInject()) {
+    val coroutineScope = rememberCoroutineScope()
     val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
     val textInputSendInputState = remember { mutableStateOf(TextFieldValue("")) }
     Card(

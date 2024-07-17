@@ -7,13 +7,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.CoroutineScope
 import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
 fun PackagesPage(
-    coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -23,8 +21,8 @@ fun PackagesPage(
         modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
-            PackagesMain(coroutineScope, Modifier.weight(1f))
-            PackageCommands(coroutineScope)
+            PackagesMain(Modifier.weight(1f))
+            PackageCommands()
         }
     }
 }

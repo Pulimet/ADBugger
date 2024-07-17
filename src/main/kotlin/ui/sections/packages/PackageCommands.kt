@@ -4,21 +4,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.HoverButton
 
 @Composable
 fun PackageCommands(
-    coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-
+    val coroutineScope = rememberCoroutineScope()
     val state = model.state
     val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
     val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES

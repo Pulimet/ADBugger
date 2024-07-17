@@ -36,7 +36,7 @@ fun main() = application {
         onKeyEvent = { model.onKeyEvent(coroutineScope, it) }
     ) {
         Surface(color = MyColors.bg) {
-            MainContent(coroutineScope)
+            MainContent()
         }
     }
 }

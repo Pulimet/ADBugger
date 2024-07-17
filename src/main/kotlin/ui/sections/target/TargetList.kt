@@ -9,19 +9,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import org.koin.compose.koinInject
 import store.AppStore
 
 @Composable
 fun TargetList(
-    coroutineScope: CoroutineScope,
     onClicked: (device: DeviceInfo) -> Unit,
     model: AppStore = koinInject()
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val state = model.state
     Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()

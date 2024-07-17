@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import compose.icons.Octicons
@@ -11,7 +12,6 @@ import compose.icons.octicons.ArrowDown24
 import compose.icons.octicons.ArrowLeft24
 import compose.icons.octicons.ArrowRight24
 import compose.icons.octicons.ArrowUp24
-import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -20,10 +20,10 @@ import ui.widgets.BtnIcon
 
 @Composable
 fun InputArrows(
-    coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,
