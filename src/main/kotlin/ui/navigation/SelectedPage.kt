@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import store.AppStore
 import ui.sections.*
 import ui.sections.emulator.EmulatorsPage
+import ui.sections.input.InputPage
 import ui.sections.packages.PackagesPage
 import ui.sections.target.TargetSelectionPage
 
@@ -18,8 +19,8 @@ fun SelectedPage(model: AppStore, coroutineScope: CoroutineScope, modifier: Modi
         MenuItemId.DEVICES -> TargetSelectionPage(model, coroutineScope, modifier)
         MenuItemId.EMULATORS -> EmulatorsPage(model, coroutineScope, modifier)
         MenuItemId.PACKAGES -> PackagesPage(model, coroutineScope, modifier)
-        MenuItemId.PERMISSIONS -> PermissionsCommands(model, coroutineScope, modifier)
-        MenuItemId.KEYBOARD -> Keyboard(model, coroutineScope, modifier)
+        MenuItemId.PERMISSIONS -> PermissionsPage(model, coroutineScope, modifier)
+        MenuItemId.KEYBOARD -> InputPage(model, coroutineScope, modifier)
         MenuItemId.PORTS -> PortForwarding(model, coroutineScope, modifier)
         MenuItemId.LOGS -> LoggerField(model, modifier)
         MenuItemId.SETTINGS -> Settings(modifier)

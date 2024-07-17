@@ -26,7 +26,7 @@ import ui.widgets.HoverButton
 
 
 @Composable
-fun PermissionsCommands(
+fun PermissionsPage(
     model: AppStore,
     coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier
