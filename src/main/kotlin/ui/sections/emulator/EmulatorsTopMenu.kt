@@ -30,7 +30,7 @@ fun EmulatorsTopMenu(model: AppStore = koinInject()) {
             modifier = Modifier.padding(horizontal = 8.dp),
             onClick = {
                 CoroutineScope(Dispatchers.IO).launch {
-                    model.onGetEmulatorsListClick()
+                    model.getEmulatorsListClick()
                 }
             },
             description = "Refresh Emulators List",

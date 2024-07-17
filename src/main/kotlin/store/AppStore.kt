@@ -34,6 +34,7 @@ class AppStore(cmd: Cmd) {
     // Public
     suspend fun onLaunchedEffect() {
         getDevicesList()
+        getEmulatorsListClick()
     }
 
     // Navigation
@@ -62,7 +63,7 @@ class AppStore(cmd: Cmd) {
         setState { copy(isPackagesLoading = false, packageList = packagesList) }
     }
 
-    suspend fun onGetEmulatorsListClick() {
+    suspend fun getEmulatorsListClick() {
         setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
         val emulatorsList = adb.emulators()
         delay(200)

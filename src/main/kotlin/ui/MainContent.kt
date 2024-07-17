@@ -8,6 +8,8 @@ import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.navigation.sidebar.SideBar
@@ -18,7 +20,9 @@ import ui.theme.MyColors
 @Preview
 fun MainContent(model: AppStore = koinInject()) {
     LaunchedEffect(Unit) {
-        model.onLaunchedEffect()
+        withContext(Dispatchers.IO) {
+            model.onLaunchedEffect()
+        }
     }
 
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {
