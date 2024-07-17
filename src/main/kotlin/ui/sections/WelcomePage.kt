@@ -56,28 +56,55 @@ fun WelcomePage(modifier: Modifier = Modifier) {
                 color = Color.LightGray,
                 modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
             )
-            Text(
-                text = "Version 1.0.0 (16 July 2024)",
-                fontSize = Dimensions.releaseNotesFontSize,
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Bold,
-                color = Color.LightGray,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Text(
-                text = "- Get a list of connected devices and running emulators.\n" +
-                        "- Retrieve a list of installed packages on the selected target.\n" +
-                        "- Launch and terminate emulators.\n" +
-                        "- Grant and remove permissions for specific packages.\n" +
-                        "- Send input events using buttons in the app or via keyboard.\n" +
-                        "- List and adb reverse specific ports.\n" +
-                        "- Launch commands simultaneously across all connected devices and emulators.\n" +
-                        "- Show which command is actually launched under the hood.",
-                fontSize = Dimensions.releaseNotesFontSize,
-                textAlign = TextAlign.Start,
-                color = Color.LightGray,
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
+            Version_1_0_1()
+            Version_1_0_0()
         }
     }
+}
+
+@Composable
+private fun Version_1_0_1() {
+    Text(
+        text = "Version 1.0.1 (17 July 2024)",
+        fontSize = Dimensions.releaseNotesFontSize,
+        textAlign = TextAlign.Start,
+        fontWeight = FontWeight.Bold,
+        color = Color.LightGray,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    )
+    Text(
+        text = "- Support forwarding input of: Enter, Dot, Comma\n" +
+                "- New status line with selected target anf package name\n" +
+                "- Adb Logger - allow to copy all or specific log",
+        fontSize = Dimensions.releaseNotesFontSize,
+        textAlign = TextAlign.Start,
+        color = Color.LightGray,
+        modifier = Modifier.padding(horizontal = 16.dp),
+    )
+}
+
+@Composable
+private fun Version_1_0_0() {
+    Text(
+        text = "Version 1.0.0 (16 July 2024)",
+        fontSize = Dimensions.releaseNotesFontSize,
+        textAlign = TextAlign.Start,
+        fontWeight = FontWeight.Bold,
+        color = Color.LightGray,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+    )
+    Text(
+        text = "- Get a list of connected devices and running emulators.\n" +
+                "- Retrieve a list of installed packages on the selected target.\n" +
+                "- Launch and terminate emulators.\n" +
+                "- Grant and remove permissions for specific packages.\n" +
+                "- Send input events using buttons in the app or via keyboard.\n" +
+                "- List and adb reverse specific ports.\n" +
+                "- Launch commands simultaneously across all connected devices and emulators.\n" +
+                "- Show which command is actually launched under the hood.",
+        fontSize = Dimensions.releaseNotesFontSize,
+        textAlign = TextAlign.Start,
+        color = Color.LightGray,
+        modifier = Modifier.padding(horizontal = 16.dp),
+    )
 }
