@@ -21,7 +21,7 @@ object Dimensions {
     val sideBarWidth = 200.dp
     val sideBarWidthCollapsed = 40.dp
     val topBarHeight = 54.dp
-    val selectedPagePadding = 1.dp
+    val selectedPagePadding = 4.dp
     val cardPadding = 16.dp
     val pageElevation = 6.dp
     val pageCornerRadius = 8.dp

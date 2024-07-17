@@ -16,7 +16,7 @@ import ui.theme.Dimensions
 @Composable
 fun StatusBar(model: AppStore = koinInject()) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(
