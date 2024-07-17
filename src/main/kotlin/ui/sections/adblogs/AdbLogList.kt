@@ -21,7 +21,9 @@ fun AdbLogList(clipboard: Clipboard, model: AppStore = koinInject()) {
     val listState = rememberLazyListState()
 
     LaunchedEffect(logsList) {
-        listState.scrollToItem(logsList.size - 1)
+        if (logsList.size > 2) {
+            listState.scrollToItem(logsList.size - 1)
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
