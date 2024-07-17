@@ -27,6 +27,7 @@ import compose.icons.tablericons.Power
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.NightClear
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
 import ui.theme.MyColors
@@ -34,8 +35,8 @@ import ui.widgets.BtnWithText
 
 @Composable
 fun TopBarIcons(
-    model: AppStore,
     coroutineScope: CoroutineScope,
+    model: AppStore = koinInject(),
 ) {
     val stateHorizontal = rememberScrollState(0)
 

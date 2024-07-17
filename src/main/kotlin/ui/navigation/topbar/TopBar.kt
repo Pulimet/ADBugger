@@ -14,12 +14,12 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun TopBar(coroutineScope: CoroutineScope, model: AppStore = koinInject()) {
+fun TopBar(coroutineScope: CoroutineScope) {
     Row(
         modifier = Modifier.fillMaxWidth().height(Dimensions.topBarHeight).background(MyColors.bg2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Logo()
-        TopBarIcons(model, coroutineScope)
+        TopBarIcons(coroutineScope)
     }
 }

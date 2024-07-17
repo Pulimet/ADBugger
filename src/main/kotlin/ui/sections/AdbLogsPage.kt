@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Trash2
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.navigation.sidebar.MenuItemId
 import ui.theme.Dimensions
@@ -26,7 +27,7 @@ import ui.theme.MyColors
 import ui.widgets.BtnWithText
 
 @Composable
-fun AdbLogsPage(model: AppStore, modifier: Modifier = Modifier) {
+fun AdbLogsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     val stateVertical = rememberScrollState(0)
     val isSelectedPageNotLogs = model.state.menuItemSelected != MenuItemId.LOGS
     val logsList = model.state.logs

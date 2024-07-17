@@ -18,6 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
@@ -27,9 +28,9 @@ import ui.widgets.HoverButton
 
 @Composable
 fun PermissionsPage(
-    model: AppStore,
     coroutineScope: CoroutineScope,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject()
 ) {
     val textInputPermissionState = remember { mutableStateOf(TextFieldValue("")) }
 

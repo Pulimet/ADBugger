@@ -8,6 +8,7 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
@@ -16,9 +17,9 @@ import ui.widgets.LoadingSpinner
 
 @Composable
 fun TargetSelectionPage(
-    model: AppStore,
     coroutineScope: CoroutineScope,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject()
 ) {
     Card(
         backgroundColor = MyColors.bg2,

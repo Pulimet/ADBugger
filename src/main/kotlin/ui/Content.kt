@@ -18,10 +18,10 @@ fun Content(coroutineScope: CoroutineScope, model: AppStore = koinInject()) {
     val selectedPageWeight = if (isBottomLogsShown) 0.75f else 1f
 
     Column {
-        SelectedPage(model, coroutineScope, Modifier.weight(selectedPageWeight))
+        SelectedPage(coroutineScope, Modifier.weight(selectedPageWeight))
 
         if (isBottomLogsShown) {
-            AdbLogsPage(model, Modifier.weight(0.25f))
+            AdbLogsPage(Modifier.weight(0.25f))
         }
     }
 
