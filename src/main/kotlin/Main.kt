@@ -1,4 +1,3 @@
-import adb.Cmd
 import androidx.compose.material.Surface
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -16,9 +15,7 @@ import ui.MainContent
 import ui.theme.MyColors
 
 fun main() = application {
-    startKoin {
-        modules(appModule())
-    }
+    startKoin { modules(appModule()) }
 
     val windowState = rememberWindowState(
         width = 1200.dp,
@@ -39,7 +36,7 @@ fun main() = application {
         onKeyEvent = { model.onKeyEvent(coroutineScope, it) }
     ) {
         Surface(color = MyColors.bg) {
-            MainContent(model, coroutineScope)
+            MainContent(coroutineScope)
         }
     }
 }

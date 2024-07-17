@@ -8,12 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun TopBar(model: AppStore, coroutineScope: CoroutineScope) {
+fun TopBar(coroutineScope: CoroutineScope, model: AppStore = koinInject()) {
     Row(
         modifier = Modifier.fillMaxWidth().height(Dimensions.topBarHeight).background(MyColors.bg2),
         verticalAlignment = Alignment.CenterVertically

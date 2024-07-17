@@ -18,6 +18,7 @@ import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.regular.Keyboard
 import compose.icons.octicons.Package24
 import compose.icons.tablericons.*
+import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
 import ui.theme.Dimensions
@@ -36,7 +37,7 @@ enum class MenuItemId {
 
 @Composable
 fun SideBar(
-    model: AppStore,
+    model: AppStore = koinInject(),
     modifier: Modifier = Modifier.fillMaxHeight().background(MyColors.bg2)
 ) {
     val stateVertical = rememberScrollState(0)

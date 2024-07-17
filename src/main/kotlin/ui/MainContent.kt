@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
+import org.koin.compose.koinInject
 import store.AppStore
 import ui.navigation.sidebar.SideBar
 import ui.navigation.topbar.TopBar
@@ -16,17 +17,17 @@ import ui.theme.MyColors
 
 @Composable
 @Preview
-fun MainContent(model: AppStore, coroutineScope: CoroutineScope) {
+fun MainContent(coroutineScope: CoroutineScope, model: AppStore = koinInject()) {
     LaunchedEffect(Unit) {
         model.onLaunchedEffect(coroutineScope)
     }
 
     MaterialTheme(colors = darkColors(background = MyColors.bg, primary = Color.White, secondary = Color.White)) {
         Column {
-            TopBar(model, coroutineScope)
+            TopBar(coroutineScope)
             Row {
-                SideBar(model)
-                Content(model, coroutineScope)
+                SideBar()
+                Content(coroutineScope)
             }
         }
     }
