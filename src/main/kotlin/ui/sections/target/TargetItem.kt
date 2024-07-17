@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
-import kotlinx.coroutines.CoroutineScope
 import model.DeviceInfo
 import org.koin.compose.koinInject
 import store.AppStore
