@@ -13,6 +13,7 @@ object Dimensions {
     val btnIconSizeSmall = 16.dp
     val titleFontSize = 20.sp
     val subtitleFontSize = 17.sp
+    val statusBarFontSize = 12.sp
     val releaseNotesFontSize = 13.sp
     val sideMenuFontSize = 13.sp
     val topMenuFontSize = 11.sp

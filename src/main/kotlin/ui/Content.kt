@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.navigation.SelectedPage
+import ui.navigation.StatusBar
 import ui.navigation.sidebar.MenuItemId
 import ui.sections.AdbLogsPage
 
@@ -22,6 +23,8 @@ fun Content(model: AppStore = koinInject()) {
         if (isBottomLogsShown) {
             AdbLogsPage(Modifier.weight(0.25f))
         }
+
+        StatusBar()
     }
 
 }
