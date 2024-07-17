@@ -279,6 +279,14 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         launch {   adb.getPermissions(state.selectedDevice, state.selectedPackage)}
     }
 
+    fun scaleFontTo(d: Double, selectedDevice: String) {
+        launch { adb.changeFontSize(d, selectedDevice) }
+    }
+
+    fun setDensity(density: Int, selectedDevice: String) {
+        launch { adb.changeDisplayDensity(density, selectedDevice) }
+    }
+
     // Logs
     fun clearLogs() {
         setState { copy(logs = arrayListOf()) }

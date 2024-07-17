@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.koin.compose.koinInject
@@ -17,10 +18,14 @@ import java.awt.datatransfer.Clipboard
 @Composable
 fun AdbLogList(clipboard: Clipboard, model: AppStore = koinInject()) {
     val logsList = model.state.logs
+    val listState = rememberLazyListState()
 
+    LaunchedEffect(logsList) {
+        listState.scrollToItem(logsList.size - 1)
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        val listState = rememberLazyListState()
+
         LazyColumn(state = listState) {
             items(logsList) { item ->
                 AdbLogItem(item, clipboard)

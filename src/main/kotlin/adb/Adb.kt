@@ -185,6 +185,15 @@ class Adb(private val cmd: Cmd) {
     }
 
 
+    suspend fun changeFontSize(d: Double, selectedDevice: String) {
+        launchShell(selectedDevice, Commands.getChangeFontSize(d))
+    }
+
+    suspend fun changeDisplayDensity(density: Int, selectedDevice: String) {
+        val d = if (density == 0) "reset" else "$density"
+        launchShell(selectedDevice, Commands.getChangeDisplayDensity(d))
+    }
+
     // Private
     private suspend fun launchShell(selectedDevice: String, command: String) {
         if (selectedDevice == AppStore.ALL_DEVICES) {

@@ -24,6 +24,7 @@ fun SelectedPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         MenuItemId.PERMISSIONS -> PermissionsPage(modifier)
         MenuItemId.KEYBOARD -> InputPage(modifier)
         MenuItemId.PORTS -> PortsPage(modifier)
+        MenuItemId.SCALING -> ScalingPage(modifier)
         MenuItemId.LOGS -> AdbLogsPage(modifier)
         MenuItemId.SETTINGS -> SettingsPage(modifier)
     }

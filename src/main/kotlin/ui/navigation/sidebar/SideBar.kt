@@ -26,7 +26,7 @@ import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
 enum class MenuItemId {
-    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, LOGS, SETTINGS;
+    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGS, SETTINGS;
 
     companion object {
         fun getByOrdinal(ordinal: Int): MenuItemId {
@@ -116,6 +116,13 @@ fun SideBar(
             toggle = isSelected(MenuItemId.PORTS),
             onClick = { toggleState(MenuItemId.PORTS) },
             title = "Ports",
+            collapsed = isBarClosedState,
+        )
+        SideBarItem(
+            icon = TablerIcons.Resize,
+            toggle = isSelected(MenuItemId.SCALING),
+            onClick = { toggleState(MenuItemId.SCALING) },
+            title = "Scaling",
             collapsed = isBarClosedState,
         )
         SideBarItem(

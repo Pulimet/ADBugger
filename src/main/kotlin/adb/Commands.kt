@@ -42,8 +42,12 @@ object Commands {
     fun getPackageList() = "pm list packages"
     fun getEmulatorList() = "emulator -list-avds"
     fun getRevokeAllPermissions(packageName: String) = "adb shell pm reset-permissions -p $packageName"
+    fun getChangeFontSize(d: Double) = "settings put system font_scale $d"
+    fun getChangeDisplayDensity(density: String) = "wm density $density"
+
     fun addSpecificPermission(packageName: String, permission: String) =
         "adb shell pm grant $packageName android.permission.$permission"
+
 
     fun revokeSpecificPermission(packageName: String, permission: String) =
         "adb shell pm revoke $packageName android.permission.$permission"
@@ -51,11 +55,10 @@ object Commands {
     fun getGrantedPermissions(packageName: String) =
         "dumpsys package $packageName | grep permission | grep granted=true"
 
-
     // Path
     fun getPlatformToolsPath() = "~/Library/Android/sdk/platform-tools/"
-    fun getEmulatorPath() = "~/Library/Android/sdk/emulator/"
 
+    fun getEmulatorPath() = "~/Library/Android/sdk/emulator/"
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"
 }
