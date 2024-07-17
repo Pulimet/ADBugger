@@ -74,6 +74,10 @@ compose.desktop {
                 dmgPackageBuildVersion = appVersion
                 // a build version only for the pkg package
                 pkgPackageBuildVersion = appVersion
+
+                //Icon
+                val iconsRoot = project.file("src/main/resources")
+                iconFile.set(iconsRoot.resolve("macos.icns"))
             }
         }
     }
