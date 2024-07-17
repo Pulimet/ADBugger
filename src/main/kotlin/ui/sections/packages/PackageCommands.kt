@@ -7,9 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.HoverButton
@@ -40,11 +37,7 @@ fun PackageCommands(
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.onRestartClick()
-                }
-            },
+            onClick = { model.onRestartClick() },
             text = "Restart"
         )
         HoverButton(
@@ -54,11 +47,7 @@ fun PackageCommands(
         )
         HoverButton(
             enabled = isPackageSelected,
-            onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.onClearAndRestartClick()
-                }
-            },
+            onClick = { model.onClearAndRestartClick() },
             text = "Clear&Restart"
         )
         HoverButton(

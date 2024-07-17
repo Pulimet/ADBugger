@@ -10,9 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import model.DeviceInfo
 import org.koin.compose.koinInject
 import store.AppStore
@@ -38,11 +35,7 @@ fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
             icon = Icons.Rounded.Refresh,
             modifier = Modifier.padding(horizontal = 8.dp),
             enabled = true,
-            onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.getDevicesList()
-                }
-            },
+            onClick = { model.getDevicesList() },
             description = "Refresh List",
             width = 120.dp,
         )

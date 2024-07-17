@@ -10,9 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import model.Package
 import org.koin.compose.koinInject
 import store.AppStore
@@ -41,11 +38,7 @@ fun PackageNoneAndRefreshButton(
             modifier = Modifier.padding(horizontal = 8.dp),
             visible = !state.isPackagesLoading && state.selectedDevice != AppStore.ALL_DEVICES,
             enabled = true,
-            onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.onGetPackageListClick()
-                }
-            },
+            onClick = { model.onGetPackageListClick() },
             description = "Get Packages List",
             width = 120.dp,
         )

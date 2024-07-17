@@ -12,9 +12,6 @@ import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
@@ -28,11 +25,7 @@ fun EmulatorsTopMenu(model: AppStore = koinInject()) {
         BtnWithText(
             icon = Icons.Rounded.Refresh,
             modifier = Modifier.padding(horizontal = 8.dp),
-            onClick = {
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.getEmulatorsListClick()
-                }
-            },
+            onClick = { model.getEmulatorsListClick() },
             description = "Refresh Emulators List",
             width = 160.dp
         )
