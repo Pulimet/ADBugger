@@ -21,7 +21,6 @@ import ui.widgets.BtnWithText
 
 @Composable
 fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
-    val coroutineScope = rememberCoroutineScope()
     val state = model.state
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -34,7 +33,6 @@ fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
             state.selectedDevice == AppStore.ALL_DEVICES,
             { model.onDeviceClick(allDevices) },
             Modifier.weight(1f),
-            coroutineScope
         )
 
         BtnWithText(

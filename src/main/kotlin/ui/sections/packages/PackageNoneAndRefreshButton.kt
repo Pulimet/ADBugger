@@ -21,7 +21,6 @@ import ui.widgets.BtnWithText
 @Composable
 fun PackageNoneAndRefreshButton(
     state: AppStore.AppState,
-    coroutineScope: CoroutineScope,
     model: AppStore = koinInject()
 ) {
     Row(

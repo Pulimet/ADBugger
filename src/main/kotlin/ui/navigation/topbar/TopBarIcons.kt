@@ -35,7 +35,6 @@ import ui.widgets.BtnWithText
 
 @Composable
 fun TopBarIcons(model: AppStore = koinInject()) {
-    val coroutineScope = rememberCoroutineScope()
     val stateHorizontal = rememberScrollState(0)
 
     val isDeviceSelected = model.state.selectedDevice != AppStore.ALL_DEVICES

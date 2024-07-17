@@ -21,7 +21,6 @@ fun TargetList(
     onClicked: (device: DeviceInfo) -> Unit,
     model: AppStore = koinInject()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val state = model.state
     Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()
@@ -32,7 +31,6 @@ fun TargetList(
                     state.selectedDevice == item.serial,
                     { onClicked(it) },
                     Modifier.fillMaxWidth(),
-                    coroutineScope
                 )
             }
         }

@@ -18,8 +18,6 @@ import ui.theme.MyColors
 @Composable
 @Preview
 fun MainContent(model: AppStore = koinInject()) {
-    val coroutineScope = rememberCoroutineScope()
-
     LaunchedEffect(Unit) {
         model.onLaunchedEffect()
     }

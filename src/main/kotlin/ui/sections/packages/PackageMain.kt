@@ -34,13 +34,12 @@ fun PackagesMain(
 
 @Composable
 private fun Content(model: AppStore = koinInject()) {
-    val coroutineScope = rememberCoroutineScope()
     val state = model.state
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PackageNoneAndRefreshButton(state, coroutineScope)
+        PackageNoneAndRefreshButton(state)
         PackagesList(state) { model.onPackageClick(it) }
     }
 }

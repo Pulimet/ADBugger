@@ -30,7 +30,6 @@ fun PortsPage(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val textInputCustomPortState = remember { mutableStateOf(TextFieldValue("")) }
 
     Card(

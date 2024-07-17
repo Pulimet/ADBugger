@@ -28,7 +28,6 @@ fun TargetItem(
     isSelected: Boolean,
     onClicked: (device: DeviceInfo) -> Unit,
     modifier: Modifier = Modifier,
-    coroutineScope: CoroutineScope,
     model: AppStore = koinInject()
 ) {
 

@@ -18,7 +18,6 @@ import ui.widgets.BtnIcon
 
 @Composable
 fun InputNumbers(modifier: Modifier = Modifier) {
-    val coroutineScope = rememberCoroutineScope()
     Card(
         backgroundColor = MyColors.bg2,
         elevation = 6.dp,

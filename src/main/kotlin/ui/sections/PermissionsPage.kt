@@ -31,7 +31,6 @@ fun PermissionsPage(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val textInputPermissionState = remember { mutableStateOf(TextFieldValue("")) }
 
     Card(
