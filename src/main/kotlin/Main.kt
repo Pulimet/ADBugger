@@ -1,3 +1,4 @@
+import adb.Cmd
 import androidx.compose.material.Surface
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -7,18 +8,26 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import koin.appModule
+import org.koin.compose.koinInject
+import org.koin.core.context.startKoin
 import store.AppStore
 import ui.MainContent
 import ui.theme.MyColors
 
 fun main() = application {
+    startKoin {
+        modules(appModule())
+    }
+
     val windowState = rememberWindowState(
         width = 1200.dp,
         height = 800.dp,
         position = WindowPosition(alignment = Alignment.Center)
     )
 
-    val model = remember { AppStore() }
+    val appStore = koinInject<AppStore>()
+    val model = remember { appStore }
     val coroutineScope = rememberCoroutineScope()
 
     ApplicationTray(windowState)

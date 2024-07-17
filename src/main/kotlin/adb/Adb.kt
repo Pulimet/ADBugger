@@ -4,11 +4,11 @@ import model.DeviceInfo
 import model.Package
 import store.AppStore
 
-class Adb(private val log: (String) -> Unit) {
+class Adb(private val cmd: Cmd, private val log: (String) -> Unit) {
 
     // Public
     fun devicesInfo() =
-        Cmd.execute(Commands.getDeviceList(), log, Commands.getPlatformToolsPath()).drop(1).dropLast(1).map {
+        cmd.execute(Commands.getDeviceList(), log, Commands.getPlatformToolsPath()).drop(1).dropLast(1).map {
             // For case I need it later
             // val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
             val serialAndType = it.split("\\s+".toRegex())
@@ -22,7 +22,7 @@ class Adb(private val log: (String) -> Unit) {
     }
 
     fun emulators(): List<String> {
-        return Cmd.execute(Commands.getEmulatorList(), log, Commands.getEmulatorPath())
+        return cmd.execute(Commands.getEmulatorList(), log, Commands.getEmulatorPath())
     }
 
     fun openPackage(selectedPackage: String, selectedDevice: String) {
@@ -30,7 +30,7 @@ class Adb(private val log: (String) -> Unit) {
     }
 
     fun getApkPath(selectedPackage: String, selectedDevice: String) {
-        val result = Cmd.execute(
+        val result = cmd.execute(
             Commands.getApkPathCommand(selectedPackage, selectedDevice),
             log,
             Commands.getPlatformToolsPath()
@@ -60,15 +60,15 @@ class Adb(private val log: (String) -> Unit) {
     }
 
     fun killEmulatorBySerial(serial: String) {
-        Cmd.execute(Commands.getKillEmulatorBySerial(serial), path = Commands.getPlatformToolsPath())
+        cmd.execute(Commands.getKillEmulatorBySerial(serial), path = Commands.getPlatformToolsPath())
     }
 
     fun launchEmulator(emulatorName: String) {
-        Cmd.execute(Commands.getLaunchEmulator(emulatorName), path = Commands.getEmulatorPath())
+        cmd.execute(Commands.getLaunchEmulator(emulatorName), path = Commands.getEmulatorPath())
     }
 
     fun wipeAndLaunchEmulator(emulatorName: String) {
-        Cmd.execute(Commands.getWipeDataEmulatorByName(emulatorName), path = Commands.getEmulatorPath())
+        cmd.execute(Commands.getWipeDataEmulatorByName(emulatorName), path = Commands.getEmulatorPath())
     }
 
     fun showHome(selectedDevice: String) {
@@ -100,7 +100,7 @@ class Adb(private val log: (String) -> Unit) {
         launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
         val pullCommand = "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename"
         log(pullCommand)
-        Cmd.execute(
+        cmd.execute(
             pullCommand,
             path = Commands.getPlatformToolsPath()
         )
@@ -150,7 +150,7 @@ class Adb(private val log: (String) -> Unit) {
 
     fun reversePort(port: Int) {
         devicesInfo().forEach { device ->
-            val resultList = Cmd.execute(Commands.adbReverse(device.serial, port), log, Commands.getPlatformToolsPath())
+            val resultList = cmd.execute(Commands.adbReverse(device.serial, port), log, Commands.getPlatformToolsPath())
             resultList.forEach {
                 log(it)
             }
@@ -158,7 +158,7 @@ class Adb(private val log: (String) -> Unit) {
     }
 
     fun reverseList() {
-        val resultList = Cmd.execute(Commands.adbReverseList(), log, Commands.getPlatformToolsPath())
+        val resultList = cmd.execute(Commands.adbReverseList(), log, Commands.getPlatformToolsPath())
         resultList.forEach {
             log(it)
         }
@@ -200,6 +200,6 @@ class Adb(private val log: (String) -> Unit) {
     private fun launchShellCommand(serial: String, command: String): ArrayList<String> {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
-        return Cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())
+        return cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())
     }
 }

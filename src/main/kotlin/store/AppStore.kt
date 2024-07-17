@@ -1,6 +1,7 @@
 package store
 
 import adb.Adb
+import adb.Cmd
 import adb.Commands
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +18,7 @@ import model.Package
 import ui.navigation.sidebar.MenuItemId
 import utils.KeysConverter
 
-class AppStore {
+class AppStore(cmd: Cmd) {
 
     companion object {
         const val ALL_DEVICES = "All Devices / Emulators"
@@ -27,7 +28,8 @@ class AppStore {
 
     val version = "1.0.0"
 
-    private val adb = Adb(::log)
+
+    private val adb = Adb(cmd, ::log)
 
     var state: AppState by mutableStateOf(initialState())
         private set

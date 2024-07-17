@@ -6,8 +6,10 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+val appVersion = "1.0.0"
+
 group = "net.alexandroid.adbugger"
-version = "1.0-SNAPSHOT"
+version = appVersion
 
 repositories {
     mavenCentral()
@@ -17,6 +19,11 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+
+    // Koin
+    implementation("co.touchlab:stately-concurrent-collections:2.0.6")
+    implementation("io.insert-koin:koin-core:3.6.0-wasm-alpha2")
+    implementation("io.insert-koin:koin-compose:1.2.0-Beta4")
 
     // Icons Packs
     listOf(
@@ -50,23 +57,23 @@ compose.desktop {
             outputBaseDir.set(project.buildDir.resolve("output"))
             targetFormats(TargetFormat.Dmg/*, TargetFormat.Msi*/)
             packageName = "ADBugger"
-            packageVersion = "1.0.0"
+            packageVersion = appVersion
 
             macOS {
                 bundleID = "net.alexandroid.adbugger"
                 // a version for all macOS distributables
-                packageVersion = "1.0.0"
+                packageVersion = appVersion
                 // a version only for the dmg package
-                dmgPackageVersion = "1.0.0"
+                dmgPackageVersion = appVersion
                 // a version only for the pkg package
-                pkgPackageVersion = "1.0.0"
+                pkgPackageVersion = appVersion
 
                 // a build version for all macOS distributables
-                packageBuildVersion = "1.0.0"
+                packageBuildVersion = appVersion
                 // a build version only for the dmg package
-                dmgPackageBuildVersion = "1.0.0"
+                dmgPackageBuildVersion = appVersion
                 // a build version only for the pkg package
-                pkgPackageBuildVersion = "1.0.0"
+                pkgPackageBuildVersion = appVersion
             }
         }
     }

@@ -5,7 +5,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.util.stream.Collectors
 
-object Cmd {
+class Cmd {
     fun execute(command: String, log: ((String) -> Unit)? = {}, path: String = ""): ArrayList<String> {
         return try {
             println("Invoking command: $command")
