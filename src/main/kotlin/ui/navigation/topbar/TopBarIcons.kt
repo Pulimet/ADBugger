@@ -1,4 +1,4 @@
-package ui.sections
+package ui.navigation.topbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll

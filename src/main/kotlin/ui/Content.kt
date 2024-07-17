@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.navigation.MenuItemId
+import ui.navigation.sidebar.MenuItemId
 import ui.navigation.SelectedPage
-import ui.sections.LoggerField
+import ui.sections.AdbLogsPage
 
 @Composable
 @Preview
@@ -20,7 +20,7 @@ fun Content(model: AppStore, coroutineScope: CoroutineScope) {
         SelectedPage(model, coroutineScope, Modifier.weight(selectedPageWeight))
 
         if (isBottomLogsShown) {
-            LoggerField(model, Modifier.weight(0.25f))
+            AdbLogsPage(model, Modifier.weight(0.25f))
         }
     }
 

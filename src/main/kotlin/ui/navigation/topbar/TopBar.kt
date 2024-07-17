@@ -1,4 +1,4 @@
-package ui.navigation
+package ui.navigation.topbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -9,7 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.sections.TopBarIcons
 import ui.theme.Dimensions
 import ui.theme.MyColors
 

@@ -20,13 +20,13 @@ import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Trash2
 import store.AppStore
-import ui.navigation.MenuItemId
+import ui.navigation.sidebar.MenuItemId
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnWithText
 
 @Composable
-fun LoggerField(model: AppStore, modifier: Modifier = Modifier) {
+fun AdbLogsPage(model: AppStore, modifier: Modifier = Modifier) {
     val stateVertical = rememberScrollState(0)
     val isSelectedPageNotLogs = model.state.menuItemSelected != MenuItemId.LOGS
     val logsList = model.state.logs

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
+import ui.navigation.sidebar.MenuItemId
 import ui.sections.*
 import ui.sections.emulator.EmulatorsPage
 import ui.sections.input.InputPage
@@ -21,8 +22,8 @@ fun SelectedPage(model: AppStore, coroutineScope: CoroutineScope, modifier: Modi
         MenuItemId.PACKAGES -> PackagesPage(model, coroutineScope, modifier)
         MenuItemId.PERMISSIONS -> PermissionsPage(model, coroutineScope, modifier)
         MenuItemId.KEYBOARD -> InputPage(model, coroutineScope, modifier)
-        MenuItemId.PORTS -> PortForwarding(model, coroutineScope, modifier)
-        MenuItemId.LOGS -> LoggerField(model, modifier)
-        MenuItemId.SETTINGS -> Settings(modifier)
+        MenuItemId.PORTS -> PortsPage(model, coroutineScope, modifier)
+        MenuItemId.LOGS -> AdbLogsPage(model, modifier)
+        MenuItemId.SETTINGS -> SettingsPage(modifier)
     }
 }

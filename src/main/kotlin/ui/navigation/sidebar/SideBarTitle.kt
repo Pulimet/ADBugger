@@ -1,4 +1,4 @@
-package ui.navigation
+package ui.navigation.sidebar
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text

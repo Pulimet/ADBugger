@@ -1,4 +1,4 @@
-package ui.navigation
+package ui.navigation.topbar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

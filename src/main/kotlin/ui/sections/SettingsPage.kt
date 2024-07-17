@@ -15,7 +15,7 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun Settings(modifier: Modifier = Modifier) {
+fun SettingsPage(modifier: Modifier = Modifier) {
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,

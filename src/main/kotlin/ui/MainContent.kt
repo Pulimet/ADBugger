@@ -10,8 +10,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.CoroutineScope
 import store.AppStore
-import ui.navigation.SideBar
-import ui.navigation.TopBar
+import ui.navigation.sidebar.SideBar
+import ui.navigation.topbar.TopBar
 import ui.theme.MyColors
 
 @Composable

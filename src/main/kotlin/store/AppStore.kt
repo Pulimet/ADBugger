@@ -14,7 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DeviceInfo
 import model.Package
-import ui.navigation.MenuItemId
+import ui.navigation.sidebar.MenuItemId
 import utils.KeysConverter
 
 class AppStore {

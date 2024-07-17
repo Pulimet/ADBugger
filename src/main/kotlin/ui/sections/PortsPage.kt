@@ -25,7 +25,7 @@ import ui.widgets.HoverButton
 
 
 @Composable
-fun PortForwarding(
+fun PortsPage(
     model: AppStore,
     coroutineScope: CoroutineScope,
     modifier: Modifier = Modifier
@@ -59,7 +59,7 @@ fun PortForwarding(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputCustomPortState.value.text.isNotEmpty(),
                     onClick = { model.onAdbReverse(coroutineScope, textInputCustomPortState.value.text.toIntOrNull()) },
-                    description = "Send text to device"
+                    description = "Open specified port"
                 )
                 HoverButton(
                     onClick = { model.onAdbReverse(coroutineScope, 8081) },
