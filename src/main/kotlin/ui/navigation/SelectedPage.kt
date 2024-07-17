@@ -6,6 +6,7 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.navigation.sidebar.MenuItemId
 import ui.sections.*
+import ui.sections.adblogs.AdbLogsPage
 import ui.sections.emulator.EmulatorsPage
 import ui.sections.input.InputPage
 import ui.sections.packages.PackagesPage

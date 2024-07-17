@@ -9,7 +9,7 @@ import store.AppStore
 import ui.navigation.SelectedPage
 import ui.navigation.StatusBar
 import ui.navigation.sidebar.MenuItemId
-import ui.sections.AdbLogsPage
+import ui.sections.adblogs.AdbLogsPage
 
 @Composable
 @Preview

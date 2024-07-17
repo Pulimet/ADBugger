@@ -1,23 +1,20 @@
-package ui.sections
+package ui.sections.adblogs
 
-import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.rememberScrollbarAdapter
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
+import compose.icons.evaicons.fill.Copy
 import compose.icons.evaicons.fill.Trash2
 import org.koin.compose.koinInject
 import store.AppStore
@@ -25,23 +22,15 @@ import ui.navigation.sidebar.MenuItemId
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.BtnWithText
+import java.awt.Toolkit
+import java.awt.datatransfer.Clipboard
+import java.awt.datatransfer.StringSelection
 
 @Composable
 fun AdbLogsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
-    val stateVertical = rememberScrollState(0)
     val isSelectedPageNotLogs = model.state.menuItemSelected != MenuItemId.LOGS
     val logsList = model.state.logs
-    var logs = ""
-    logsList.forEachIndexed { index, log ->
-        logs += log
-        if (index != logsList.size - 1) logs += "\n"
-    }
-
-    LaunchedEffect(logsList) {
-        if (logsList.isNotEmpty()) {
-            stateVertical.animateScrollTo(stateVertical.maxValue)
-        }
-    }
+    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
 
     Card(
         backgroundColor = MyColors.bg2,
@@ -67,31 +56,30 @@ fun AdbLogsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                     fontSize = Dimensions.titleFontSize
                 )
             }
-            Column(modifier = Modifier.fillMaxWidth().verticalScroll(stateVertical)) {
-                SelectionContainer {
-                    Text(
-                        text = logs,
-                        modifier = Modifier.padding(horizontal = 24.dp),
-                        color = Color.White,
-                        fontSize = 12.sp
+
+            AdbLogList(clipboard)
+
+            if (logsList.isNotEmpty()) {
+                Row(modifier = Modifier.align(Alignment.TopEnd)) {
+                    BtnWithText(
+                        icon = EvaIcons.Fill.Copy,
+                        onClick = { copyAllLogsToClipboard(clipboard, logsList) },
+                        description = "Copy All",
+                        width = 60.dp,
+                    )
+                    BtnWithText(
+                        icon = EvaIcons.Fill.Trash2,
+                        onClick = { model.clearLogs() },
+                        description = "Clear logs",
+                        width = 60.dp,
                     )
                 }
             }
-            if (logsList.isNotEmpty()) {
-                BtnWithText(
-                    icon = EvaIcons.Fill.Trash2,
-                    modifier = Modifier.align(Alignment.TopEnd),
-                    onClick = { model.clearLogs() },
-                    description = "Clear logs",
-                    width = 60.dp,
-                )
-            }
-            if (logsList.size > 3) {
-                VerticalScrollbar(
-                    modifier = Modifier.align(Alignment.CenterEnd).padding(top = 16.dp).fillMaxHeight(),
-                    adapter = rememberScrollbarAdapter(stateVertical)
-                )
-            }
         }
     }
+}
+
+private fun copyAllLogsToClipboard(clipboard: Clipboard, logsList: ArrayList<String>) {
+    val logs = logsList.joinToString("\n")
+    clipboard.setContents(StringSelection(logs), null)
 }
