@@ -74,8 +74,8 @@ private fun Version_1_0_1() {
     )
     Text(
         text = "- Support forwarding input of: Enter, Dot, Comma\n" +
-                "- New status line with selected target anf package name\n" +
-                "- Adb Logger - allow to copy all or specific log",
+                "- New status line with selected target and package name\n" +
+                "- Adb Logger - allow copying all or specific log",
         fontSize = Dimensions.releaseNotesFontSize,
         textAlign = TextAlign.Start,
         color = Color.LightGray,
