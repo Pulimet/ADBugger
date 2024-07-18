@@ -86,17 +86,17 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun onOpenClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch {  adb.openPackage(state.selectedPackage, state.selectedDevice) }
+        launch { adb.openPackage(state.selectedPackage, state.selectedDevice) }
     }
 
     fun onApkPath() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch {  adb.getApkPath(state.selectedPackage, state.selectedDevice) }
+        launch { adb.getApkPath(state.selectedPackage, state.selectedDevice) }
     }
 
     fun onCloseClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch {   adb.closePackage(state.selectedPackage, state.selectedDevice) }
+        launch { adb.closePackage(state.selectedPackage, state.selectedDevice) }
     }
 
     fun onRestartClick() {
@@ -110,7 +110,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun onClearDataClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch {  adb.clearData(state.selectedPackage, state.selectedDevice) }
+        launch { adb.clearData(state.selectedPackage, state.selectedDevice) }
     }
 
     fun onClearAndRestartClick() {
@@ -126,102 +126,102 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     fun onUninstallClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
 
-        launch {  adb.uninstall(state.selectedPackage, state.selectedDevice) }
+        launch { adb.uninstall(state.selectedPackage, state.selectedDevice) }
     }
 
 
     fun onLaunchEmulatorClick(emulatorName: String) {
-        launch {  adb.launchEmulator(emulatorName) }
+        launch { adb.launchEmulator(emulatorName) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {
-        launch {   adb.wipeAndLaunchEmulator(emulatorName) }
+        launch { adb.wipeAndLaunchEmulator(emulatorName) }
     }
 
     fun onKillEmulatorClick(serial: String) {
-        launch {  adb.killEmulatorBySerial(serial) }
+        launch { adb.killEmulatorBySerial(serial) }
     }
 
     fun onKillAllEmulatorClick() {
-        launch {  adb.killAllEmulators() }
+        launch { adb.killAllEmulators() }
     }
 
     fun onHomeClick() {
-        launch {  adb.showHome(state.selectedDevice) }
+        launch { adb.showHome(state.selectedDevice) }
     }
 
     fun onSettingsClick() {
-        launch {  adb.showSettings(state.selectedDevice) }
+        launch { adb.showSettings(state.selectedDevice) }
     }
 
     fun onBackClick() {
-        launch {  adb.pressBack(state.selectedDevice) }
+        launch { adb.pressBack(state.selectedDevice) }
     }
 
     fun onTabClick() {
-        launch {  adb.pressTab(state.selectedDevice) }
+        launch { adb.pressTab(state.selectedDevice) }
     }
 
     fun onEnterClick() {
-        launch {  adb.pressEnter(state.selectedDevice) }
+        launch { adb.pressEnter(state.selectedDevice) }
     }
 
     fun onPowerClick() {
-        launch {  adb.pressPower(state.selectedDevice) }
+        launch { adb.pressPower(state.selectedDevice) }
     }
 
     fun onSnapClick() {
         if (state.selectedDevice == ALL_DEVICES) return
 
-        launch {  adb.takeSnapshot(state.selectedDevice) }
+        launch { adb.takeSnapshot(state.selectedDevice) }
     }
 
     fun onDayClick() {
-        launch {  adb.setDarkModeOff(state.selectedDevice) }
+        launch { adb.setDarkModeOff(state.selectedDevice) }
     }
 
     fun onNightClick() {
-        launch {  adb.setDarkModeOn(state.selectedDevice) }
+        launch { adb.setDarkModeOn(state.selectedDevice) }
     }
 
     fun onUpClick() {
-        launch {   adb.pressUp(state.selectedDevice) }
+        launch { adb.pressUp(state.selectedDevice) }
     }
 
     fun onDownClick() {
-        launch {   adb.pressDown(state.selectedDevice) }
+        launch { adb.pressDown(state.selectedDevice) }
     }
 
     fun onLeftClick() {
-        launch {   adb.pressLeft(state.selectedDevice) }
+        launch { adb.pressLeft(state.selectedDevice) }
     }
 
     fun onRightClick() {
-        launch {   adb.pressRight(state.selectedDevice) }
+        launch { adb.pressRight(state.selectedDevice) }
     }
 
     fun onBackSpaceClick() {
-        launch {  adb.pressDelete(state.selectedDevice) }
+        launch { adb.pressDelete(state.selectedDevice) }
     }
 
 
     fun onSendTextClick(value: String) {
-        launch {  adb.sendText(state.selectedDevice, value) }
+        launch { adb.sendText(state.selectedDevice, value) }
     }
 
 
     fun onSendInputClick(value: Int) {
-        launch {   adb.sendInput(state.selectedDevice, value) }
+        launch { adb.sendInput(state.selectedDevice, value) }
     }
 
     fun onNumberClick(i: Int) {
-        launch {  adb.sendInputNum(state.selectedDevice, i) }
+        launch { adb.sendInputNum(state.selectedDevice, i) }
     }
 
     fun onLetterClick(letter: String) {
         val key = KeysConverter.convertLetterToKeyCode(letter)
 
-        launch {   adb.sendInput(state.selectedDevice, key) }
+        launch { adb.sendInput(state.selectedDevice, key) }
     }
 
     fun onForwardUserInputToggle(value: Boolean) {
@@ -238,12 +238,12 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         val key: Int = KeysConverter.covertEventKeyToKeyCode(event)
         if (key != -1) {
-            launch {   adb.sendInput(state.selectedDevice, key) }
+            launch { adb.sendInput(state.selectedDevice, key) }
             return true
         }
         val char = KeysConverter.convertEventKeyToChar(event)
         if (char.isNotEmpty()) {
-            launch {   adb.sendText(state.selectedDevice, char) }
+            launch { adb.sendText(state.selectedDevice, char) }
             return true
         }
 
@@ -254,29 +254,29 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun onAdbReverse(port: Int?) {
         if (port != null) {
-            launch {  adb.reversePort(port) }
+            launch { adb.reversePort(port) }
         }
     }
 
     fun onAdbReverseList() {
-        launch {   adb.reverseList() }
+        launch { adb.reverseList() }
     }
 
     fun onAddPermission(permission: String) {
-        launch {   adb.addPermission(state.selectedDevice, permission, state.selectedPackage) }
+        launch { adb.addPermission(state.selectedDevice, permission, state.selectedPackage) }
     }
 
     fun onRemovePermission(permission: String) {
-        launch {   adb.removePermission(state.selectedDevice, permission, state.selectedPackage) }
+        launch { adb.removePermission(state.selectedDevice, permission, state.selectedPackage) }
     }
 
     fun onRemoveAllPermissions() {
-        launch {   adb.removeAllPermissions(state.selectedDevice, state.selectedPackage)}
+        launch { adb.removeAllPermissions(state.selectedDevice, state.selectedPackage) }
     }
 
     fun onGetPermissions() {
         if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
-        launch {   adb.getPermissions(state.selectedDevice, state.selectedPackage)}
+        launch { adb.getPermissions(state.selectedDevice, state.selectedPackage) }
     }
 
     fun scaleFontTo(d: Double, selectedDevice: String) {
@@ -286,6 +286,16 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     fun setDensity(density: Int, selectedDevice: String) {
         launch { adb.changeDisplayDensity(density, selectedDevice) }
     }
+
+    fun openFilePicker() {
+        setState { copy(isFilePickerShown = true) }
+    }
+
+    fun onFilePickerResult(result: String?) {
+        setState { copy(isFilePickerShown = false) }
+        log("File picked: $result")
+    }
+
 
     // Logs
     fun clearLogs() {
@@ -317,6 +327,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         val isEmulatorsLoading: Boolean = false,
         val isUserForwardInputEnabled: Boolean = false,
         val isLogsAlwaysShown: Boolean = false,
+        val isFilePickerShown: Boolean = false,
         val logs: ArrayList<String> = arrayListOf()
     )
 }

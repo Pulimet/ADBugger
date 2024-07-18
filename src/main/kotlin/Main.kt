@@ -12,6 +12,7 @@ import org.koin.core.context.startKoin
 import store.AppStore
 import ui.MainContent
 import ui.theme.MyColors
+import ui.widgets.FileDialog
 
 fun main() = application {
     startKoin { modules(appModule()) }
@@ -36,8 +37,9 @@ fun main() = application {
         Surface(color = MyColors.bg) {
             MainContent()
         }
+
+        if (model.state.isFilePickerShown) {
+            FileDialog { model.onFilePickerResult(it) }
+        }
     }
 }
-
-
-
