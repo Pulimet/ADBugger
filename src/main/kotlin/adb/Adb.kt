@@ -105,7 +105,6 @@ class Adb(private val cmd: Cmd) {
         val filename = "snap_$selectedDevice.png"
         launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
         val pullCommand = "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename"
-        log(pullCommand)
         cmd.execute(pullCommand, log, path = Commands.getPlatformToolsPath())
         launchShellCommand(selectedDevice, "rm /sdcard/$filename")
     }
