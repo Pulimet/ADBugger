@@ -2,14 +2,18 @@ package ui.sections.packages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.widgets.HoverButton
+import ui.theme.Dimensions
+import ui.widgets.BtnWithText
 
 @Composable
 fun PackageCommands(
@@ -21,44 +25,59 @@ fun PackageCommands(
     val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
 
     Column(
-        modifier = modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = modifier.fillMaxHeight().padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HoverButton(
+
+        BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onOpenClick() },
-            text = "Open"
+            icon = Icons.Rounded.CheckCircle,
+            description = "Open",
+            width = Dimensions.packageCommandsBtnWidth,
         )
-        HoverButton(
+        BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onCloseClick() },
-            text = "Close"
+            icon = Icons.Rounded.CheckCircle,
+            description = "Close",
+            width = Dimensions.packageCommandsBtnWidth,
         )
-        HoverButton(
+        BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onRestartClick() },
-            text = "Restart"
+            icon = Icons.Rounded.CheckCircle,
+            description = "Restart",
+            width = Dimensions.packageCommandsBtnWidth,
         )
-        HoverButton(
+        BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onClearDataClick() },
-            text = "Clear Data"
+            icon = Icons.Rounded.CheckCircle,
+            description = "Clear Data",
+            width = Dimensions.packageCommandsBtnWidth,
         )
-        HoverButton(
+        BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onClearAndRestartClick() },
-            text = "Clear&Restart"
+            icon = Icons.Rounded.CheckCircle,
+            description = "Clear&Restart",
+            width = Dimensions.packageCommandsBtnWidth,
         )
-        HoverButton(
+        BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onUninstallClick() },
-            text = "Uninstall"
+            icon = Icons.Rounded.CheckCircle,
+            description = "Uninstall",
+            width = Dimensions.packageCommandsBtnWidth,
         )
-        HoverButton(
+        BtnWithText(
             enabled = isPackageSelected && isDeviceSelected,
             onClick = { model.onApkPath() },
-            text = "APK Path"
+            icon = Icons.Rounded.CheckCircle,
+            description = "APK Path",
+            width = Dimensions.packageCommandsBtnWidth,
         )
     }
 }

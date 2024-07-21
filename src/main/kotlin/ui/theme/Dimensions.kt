@@ -25,4 +25,5 @@ object Dimensions {
     val cardPadding = 16.dp
     val pageElevation = 6.dp
     val pageCornerRadius = 8.dp
+    val packageCommandsBtnWidth = 100.dp
 }
