@@ -26,4 +26,6 @@ object Dimensions {
     val pageElevation = 6.dp
     val pageCornerRadius = 8.dp
     val packageCommandsBtnWidth = 100.dp
+    val permissionsCommandsBtnWidthShort = 60.dp
+    val permissionsCommandsBtnWidth = 80.dp
 }

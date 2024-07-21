@@ -8,6 +8,8 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.DateRange
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,8 +23,7 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
-import ui.widgets.HoverButton
+import ui.widgets.BtnWithText
 
 
 @Composable
@@ -54,37 +55,39 @@ fun PermissionsPage(
                     onValueChange = { value -> textInputPermissionState.value = value }
                 )
 
-                BtnIcon(
+                BtnWithText(
                     icon = Icons.Rounded.Add,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputPermissionState.value.text.isNotEmpty(),
                     onClick = { model.onAddPermission(textInputPermissionState.value.text) },
-                    description = "Add"
+                    description = "Add",
+                    width = Dimensions.permissionsCommandsBtnWidthShort,
                 )
-                BtnIcon(
+
+                BtnWithText(
                     icon = Icons.Rounded.Clear,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputPermissionState.value.text.isNotEmpty(),
                     onClick = { model.onRemovePermission(textInputPermissionState.value.text) },
-                    description = "Remove"
+                    description = "Remove",
+                    width = Dimensions.permissionsCommandsBtnWidthShort,
                 )
-            }
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                HoverButton(
+
+                BtnWithText(
+                    icon = Icons.Rounded.Delete,
                     onClick = { model.onRemoveAllPermissions() },
-                    enabled = true,
-                    text = "Remove all",
-                    modifier = Modifier.padding(6.dp)
+                    enabled = model.state.selectedPackage != AppStore.PACKAGE_NONE,
+                    description = "Remove all",
+                    modifier = Modifier.padding(6.dp),
+                    width = Dimensions.permissionsCommandsBtnWidth
                 )
-                HoverButton(
+                BtnWithText(
+                    icon = Icons.Rounded.DateRange,
                     onClick = { model.onGetPermissions() },
-                    enabled = true,
-                    text = "Show granted",
-                    modifier = Modifier.padding(6.dp)
+                    enabled = model.state.selectedPackage != AppStore.PACKAGE_NONE,
+                    description = "Show granted",
+                    modifier = Modifier.padding(6.dp),
+                    width = Dimensions.permissionsCommandsBtnWidth,
                 )
             }
         }
