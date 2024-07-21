@@ -31,27 +31,27 @@ object Commands {
     fun getDelete() = getInputKeyEventFor(KEYCODE_DEL)
     fun getDarkModeOff() = "cmd uimode night no"
     fun getDarkModeOn() = "cmd uimode night yes"
-    fun getKillEmulatorBySerial(serial: String) = "adb -s $serial emu kill"
+    fun getKillEmulatorBySerial() = "emu kill"
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
     fun getLaunchEmulator(emulatorName: String) = "emulator -avd $emulatorName -netdelay none -netspeed full"
     fun sendTextCommand(value: String) = "input text $value"
     fun sendInputCommand(input: Int) = getInputKeyEventFor(input)
-    fun adbReverse(serial: String, port: Int) = "adb -s $serial reverse tcp:$port tcp:$port"
+    fun adbReverse(port: Int) = "reverse tcp:$port tcp:$port"
     fun adbReverseList() = "adb reverse --list"
     fun getDeviceList() = "adb devices"
     fun getPackageList() = "pm list packages"
     fun getEmulatorList() = "emulator -list-avds"
-    fun getRevokeAllPermissions(packageName: String) = "adb shell pm reset-permissions -p $packageName"
+    fun getRevokeAllPermissions(packageName: String) = "pm reset-permissions -p $packageName"
     fun getChangeFontSize(d: Double) = "settings put system font_scale $d"
     fun getChangeDisplayDensity(density: String) = "wm density $density"
-    fun getAdbInstall(apkPath: String) = "adb install $apkPath"
+    fun getAdbInstall(apkPath: String) = "install $apkPath"
 
     fun addSpecificPermission(packageName: String, permission: String) =
-        "adb shell pm grant $packageName android.permission.$permission"
+        "pm grant $packageName android.permission.$permission"
 
 
     fun revokeSpecificPermission(packageName: String, permission: String) =
-        "adb shell pm revoke $packageName android.permission.$permission"
+        "pm revoke $packageName android.permission.$permission"
 
     fun getGrantedPermissions(packageName: String) =
         "dumpsys package $packageName | grep permission | grep granted=true"

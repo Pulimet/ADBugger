@@ -50,7 +50,7 @@ class Adb(private val cmd: Cmd) {
     }
 
     suspend fun uninstall(selectedPackage: String, selectedDevice: String) {
-        launchAdbShell(selectedDevice, Commands.getUninstallCommand(selectedPackage))
+        launchAdb(selectedDevice, Commands.getUninstallCommand(selectedPackage))
     }
 
     suspend fun killAllEmulators() {
@@ -60,7 +60,7 @@ class Adb(private val cmd: Cmd) {
     }
 
     suspend fun killEmulatorBySerial(serial: String) {
-        launchNonAdb(Commands.getKillEmulatorBySerial(serial))
+        launchAdb(serial, Commands.getKillEmulatorBySerial())
     }
 
     suspend fun launchEmulator(emulatorName: String) {
@@ -146,7 +146,7 @@ class Adb(private val cmd: Cmd) {
 
     suspend fun reversePort(port: Int) {
         devicesInfo().forEach { device ->
-            val resultList = launchNonAdb(Commands.adbReverse(device.serial, port))
+            val resultList = launchAdbCommand(device.serial, Commands.adbReverse(port))
             resultList.forEach {
                 log(it)
             }
