@@ -44,6 +44,7 @@ object Commands {
     fun getRevokeAllPermissions(packageName: String) = "adb shell pm reset-permissions -p $packageName"
     fun getChangeFontSize(d: Double) = "settings put system font_scale $d"
     fun getChangeDisplayDensity(density: String) = "wm density $density"
+    fun getAdbInstall(apkPath: String) = "adb install $apkPath"
 
     fun addSpecificPermission(packageName: String, permission: String) =
         "adb shell pm grant $packageName android.permission.$permission"
@@ -59,6 +60,7 @@ object Commands {
     fun getPlatformToolsPath() = "~/Library/Android/sdk/platform-tools/"
 
     fun getEmulatorPath() = "~/Library/Android/sdk/emulator/"
+
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"
 }

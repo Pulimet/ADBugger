@@ -8,7 +8,7 @@ import java.awt.Frame
 @Composable
 fun FileDialog(
     parent: Frame? = null,
-    onCloseRequest: (result: String?) -> Unit
+    onCloseRequest: (result: String) -> Unit
 ) = AwtWindow(
     create = {
         object : FileDialog(parent, "Choose a file", LOAD) {

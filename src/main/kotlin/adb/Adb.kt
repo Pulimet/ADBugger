@@ -14,7 +14,7 @@ class Adb(private val cmd: Cmd) {
     }
 
     suspend fun devicesInfo() =
-        cmd.execute(Commands.getDeviceList(), log, Commands.getPlatformToolsPath()).drop(1).dropLast(1).map {
+        launchNonAdb(Commands.getDeviceList()).drop(1).dropLast(1).map {
             // For case I need it later
             // val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
             val serialAndType = it.split("\\s+".toRegex())
@@ -22,41 +22,35 @@ class Adb(private val cmd: Cmd) {
         }
 
     suspend fun packages(serial: String): ArrayList<Package> {
-        return launchShellCommand(serial, Commands.getPackageList())
+        return launchAdbShellCommand(serial, Commands.getPackageList())
             .map { Package(it.split(":").last()) }
             .filter { it.name.isNotEmpty() } as ArrayList<Package>
     }
 
-    suspend fun emulators(): List<String> {
-        return cmd.execute(Commands.getEmulatorList(), log, Commands.getEmulatorPath())
-    }
+    suspend fun emulators() = launchNonAdb(Commands.getEmulatorList(), Commands.getEmulatorPath())
+
 
     suspend fun openPackage(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
+        launchAdbShell(selectedDevice, Commands.getLaunchCommand(selectedPackage))
     }
 
     suspend fun getApkPath(selectedPackage: String, selectedDevice: String) {
-        val result = cmd.execute(
-            Commands.getApkPathCommand(selectedPackage, selectedDevice),
-            log,
-            Commands.getPlatformToolsPath()
-        )
-        result.forEach {
+        launchNonAdb(Commands.getApkPathCommand(selectedPackage, selectedDevice)).forEach {
             log(it)
         }
     }
 
     suspend fun closePackage(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getCloseCommand(selectedPackage))
+        launchAdbShell(selectedDevice, Commands.getCloseCommand(selectedPackage))
     }
 
 
     suspend fun clearData(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getClearDataCommand(selectedPackage))
+        launchAdbShell(selectedDevice, Commands.getClearDataCommand(selectedPackage))
     }
 
     suspend fun uninstall(selectedPackage: String, selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getUninstallCommand(selectedPackage))
+        launchAdbShell(selectedDevice, Commands.getUninstallCommand(selectedPackage))
     }
 
     suspend fun killAllEmulators() {
@@ -66,93 +60,93 @@ class Adb(private val cmd: Cmd) {
     }
 
     suspend fun killEmulatorBySerial(serial: String) {
-        cmd.execute(Commands.getKillEmulatorBySerial(serial), log, path = Commands.getPlatformToolsPath())
+        launchNonAdb(Commands.getKillEmulatorBySerial(serial))
     }
 
     suspend fun launchEmulator(emulatorName: String) {
-        cmd.execute(Commands.getLaunchEmulator(emulatorName), log, path = Commands.getEmulatorPath())
+        launchNonAdb(Commands.getLaunchEmulator(emulatorName), Commands.getEmulatorPath())
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {
-        cmd.execute(Commands.getWipeDataEmulatorByName(emulatorName), log, path = Commands.getEmulatorPath())
+        launchNonAdb(Commands.getWipeDataEmulatorByName(emulatorName), Commands.getEmulatorPath())
     }
 
     suspend fun showHome(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getShowHome())
+        launchAdbShell(selectedDevice, Commands.getShowHome())
     }
 
     suspend fun showSettings(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getShowSettings())
+        launchAdbShell(selectedDevice, Commands.getShowSettings())
     }
 
     suspend fun pressBack(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getPressBack())
+        launchAdbShell(selectedDevice, Commands.getPressBack())
     }
 
     suspend fun pressTab(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getPressTab())
+        launchAdbShell(selectedDevice, Commands.getPressTab())
     }
 
     suspend fun pressEnter(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getPressEnter())
+        launchAdbShell(selectedDevice, Commands.getPressEnter())
     }
 
     suspend fun pressPower(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getPressPower())
+        launchAdbShell(selectedDevice, Commands.getPressPower())
     }
 
     suspend fun takeSnapshot(selectedDevice: String) {
         val filename = "snap_$selectedDevice.png"
-        launchShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
+        launchAdbShellCommand(selectedDevice, "screencap -p /sdcard/$filename")
         val pullCommand = "adb -s $selectedDevice pull /sdcard/$filename ~/Desktop/$filename"
-        cmd.execute(pullCommand, log, path = Commands.getPlatformToolsPath())
-        launchShellCommand(selectedDevice, "rm /sdcard/$filename")
+        launchNonAdb(pullCommand)
+        launchAdbShellCommand(selectedDevice, "rm /sdcard/$filename")
     }
 
 
     suspend fun setDarkModeOff(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getDarkModeOff())
+        launchAdbShell(selectedDevice, Commands.getDarkModeOff())
     }
 
     suspend fun setDarkModeOn(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getDarkModeOn())
+        launchAdbShell(selectedDevice, Commands.getDarkModeOn())
     }
 
     suspend fun pressUp(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getUp())
+        launchAdbShell(selectedDevice, Commands.getUp())
     }
 
     suspend fun pressDown(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getDown())
+        launchAdbShell(selectedDevice, Commands.getDown())
     }
 
     suspend fun pressLeft(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getLeft())
+        launchAdbShell(selectedDevice, Commands.getLeft())
     }
 
     suspend fun pressRight(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getRight())
+        launchAdbShell(selectedDevice, Commands.getRight())
     }
 
     suspend fun pressDelete(selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getDelete())
+        launchAdbShell(selectedDevice, Commands.getDelete())
     }
 
     suspend fun sendText(selectedDevice: String, value: String) {
-        launchShell(selectedDevice, Commands.sendTextCommand(value))
+        launchAdbShell(selectedDevice, Commands.sendTextCommand(value))
     }
 
     suspend fun sendInput(selectedDevice: String, value: Int) {
-        launchShell(selectedDevice, Commands.sendInputCommand(value))
+        launchAdbShell(selectedDevice, Commands.sendInputCommand(value))
     }
 
     suspend fun sendInputNum(selectedDevice: String, num: Int) {
-        launchShell(selectedDevice, Commands.sendInputCommand((num + 7)))
+        launchAdbShell(selectedDevice, Commands.sendInputCommand((num + 7)))
     }
 
     suspend fun reversePort(port: Int) {
         devicesInfo().forEach { device ->
-            val resultList = cmd.execute(Commands.adbReverse(device.serial, port), log, Commands.getPlatformToolsPath())
+            val resultList = launchNonAdb(Commands.adbReverse(device.serial, port))
             resultList.forEach {
                 log(it)
             }
@@ -160,55 +154,96 @@ class Adb(private val cmd: Cmd) {
     }
 
     suspend fun reverseList() {
-        val resultList = cmd.execute(Commands.adbReverseList(), log, Commands.getPlatformToolsPath())
+        val resultList = launchNonAdb(Commands.adbReverseList())
         resultList.forEach {
             log(it)
         }
     }
 
     suspend fun removeAllPermissions(selectedDevice: String, selectedPackage: String) {
-        launchShell(selectedDevice, Commands.getRevokeAllPermissions(selectedPackage))
+        launchAdbShell(selectedDevice, Commands.getRevokeAllPermissions(selectedPackage))
     }
 
     suspend fun addPermission(selectedDevice: String, permission: String, selectedPackage: String) {
-        launchShell(selectedDevice, Commands.addSpecificPermission(selectedPackage, permission))
+        launchAdbShell(selectedDevice, Commands.addSpecificPermission(selectedPackage, permission))
     }
 
     suspend fun removePermission(selectedDevice: String, permission: String, selectedPackage: String) {
-        launchShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
+        launchAdbShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
     }
 
     suspend fun getPermissions(selectedDevice: String, selectedPackage: String) {
-        val result = launchShellCommand(selectedDevice, Commands.getGrantedPermissions(selectedPackage))
+        val result = launchAdbShellCommand(selectedDevice, Commands.getGrantedPermissions(selectedPackage))
         log("output :$result")
     }
 
-
     suspend fun changeFontSize(d: Double, selectedDevice: String) {
-        launchShell(selectedDevice, Commands.getChangeFontSize(d))
+        launchAdbShell(selectedDevice, Commands.getChangeFontSize(d))
     }
 
     suspend fun changeDisplayDensity(density: Int, selectedDevice: String) {
         val d = if (density == 0) "reset" else "$density"
-        launchShell(selectedDevice, Commands.getChangeDisplayDensity(d))
+        launchAdbShell(selectedDevice, Commands.getChangeDisplayDensity(d))
     }
 
-    // Private
-    private suspend fun launchShell(selectedDevice: String, command: String) {
+    suspend fun installApk(pathApk: String, selectedDevice: String) {
+        launchAdb(selectedDevice, Commands.getAdbInstall(pathApk))
+    }
+
+    // Private - Launch nonAdb commands
+    private suspend fun launchNonAdb(
+        command: String,
+        path: String = Commands.getPlatformToolsPath()
+    ): ArrayList<String> {
+        return cmd.execute(command, log, path)
+    }
+
+    // Private - Launch regular adb  commands
+    private suspend fun launchAdb(
+        selectedDevice: String,
+        command: String,
+        path: String = Commands.getPlatformToolsPath()
+    ) {
         if (selectedDevice == AppStore.ALL_DEVICES) {
-            launchShellCommandOnAllDevices(command)
+            launchAdbOnAllDevices(command, path)
         } else {
-            launchShellCommand(selectedDevice, command)
+            launchAdbCommand(selectedDevice, command, path)
         }
     }
 
-    private suspend fun launchShellCommandOnAllDevices(command: String) {
+    private suspend fun launchAdbOnAllDevices(command: String, path: String = Commands.getPlatformToolsPath()) {
         devicesInfo().forEach {
-            launchShellCommand(it.serial, command)
+            launchAdbCommand(it.serial, command, path)
         }
     }
 
-    private suspend fun launchShellCommand(serial: String, command: String): ArrayList<String> {
+    private suspend fun launchAdbCommand(
+        serial: String,
+        command: String,
+        path: String = Commands.getPlatformToolsPath()
+    ): ArrayList<String> {
+        val commandToExecute = "adb -s $serial $command"
+        log(commandToExecute)
+        return cmd.execute(commandToExecute, null, path)
+    }
+
+
+    // Private - Launch shell commands
+    private suspend fun launchAdbShell(selectedDevice: String, command: String) {
+        if (selectedDevice == AppStore.ALL_DEVICES) {
+            launchAdbShellCommandOnAllDevices(command)
+        } else {
+            launchAdbShellCommand(selectedDevice, command)
+        }
+    }
+
+    private suspend fun launchAdbShellCommandOnAllDevices(command: String) {
+        devicesInfo().forEach {
+            launchAdbShellCommand(it.serial, command)
+        }
+    }
+
+    private suspend fun launchAdbShellCommand(serial: String, command: String): ArrayList<String> {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
         return cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())

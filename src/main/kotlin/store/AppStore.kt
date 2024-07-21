@@ -279,21 +279,22 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         launch { adb.getPermissions(state.selectedDevice, state.selectedPackage) }
     }
 
-    fun scaleFontTo(d: Double, selectedDevice: String) {
-        launch { adb.changeFontSize(d, selectedDevice) }
+    fun scaleFontTo(d: Double) {
+        launch { adb.changeFontSize(d, state.selectedDevice) }
     }
 
-    fun setDensity(density: Int, selectedDevice: String) {
-        launch { adb.changeDisplayDensity(density, selectedDevice) }
+    fun setDensity(density: Int) {
+        launch { adb.changeDisplayDensity(density, state.selectedDevice) }
     }
 
     fun openFilePicker() {
         setState { copy(isFilePickerShown = true) }
     }
 
-    fun onFilePickerResult(result: String?) {
+    fun onFilePickerResult(pathApk: String) {
         setState { copy(isFilePickerShown = false) }
-        log("File picked: $result")
+        log("File picked: $pathApk")
+        launch { adb.installApk(pathApk, state.selectedDevice) }
     }
 
 

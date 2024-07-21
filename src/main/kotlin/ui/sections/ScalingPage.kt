@@ -17,7 +17,6 @@ import ui.widgets.HoverButton
 
 @Composable
 fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
-    val selectedDevice = model.state.selectedDevice
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
@@ -38,25 +37,25 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
             ) {
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.scaleFontTo(0.85, selectedDevice) },
+                    onClick = { model.scaleFontTo(0.85) },
                     enabled = true,
                     text = "Font small"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.scaleFontTo(1.0, selectedDevice) },
+                    onClick = { model.scaleFontTo(1.0) },
                     enabled = true,
                     text = "Font default"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.scaleFontTo(1.15, selectedDevice) },
+                    onClick = { model.scaleFontTo(1.15) },
                     enabled = true,
                     text = "Font large"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.scaleFontTo(1.3, selectedDevice) },
+                    onClick = { model.scaleFontTo(1.3) },
                     enabled = true,
                     text = "Font largest"
                 )
@@ -67,31 +66,31 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
             ) {
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.setDensity(0, selectedDevice) },
+                    onClick = { model.setDensity(0) },
                     enabled = true,
                     text = "Density reset"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.setDensity(300, selectedDevice) },
+                    onClick = { model.setDensity(300) },
                     enabled = true,
                     text = "Density 300"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.setDensity(400, selectedDevice) },
+                    onClick = { model.setDensity(400) },
                     enabled = true,
                     text = "Density 400"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.setDensity(500, selectedDevice) },
+                    onClick = { model.setDensity(500) },
                     enabled = true,
                     text = "Density 500"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.setDensity(600, selectedDevice) },
+                    onClick = { model.setDensity(600) },
                     enabled = true,
                     text = "Density 600"
                 )
