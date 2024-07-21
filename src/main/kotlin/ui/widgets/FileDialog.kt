@@ -8,14 +8,14 @@ import java.awt.Frame
 @Composable
 fun FileDialog(
     parent: Frame? = null,
-    onCloseRequest: (result: String) -> Unit
+    onCloseRequest: (directory: String?, file: String?) -> Unit
 ) = AwtWindow(
     create = {
         object : FileDialog(parent, "Choose a file", LOAD) {
             override fun setVisible(value: Boolean) {
                 super.setVisible(value)
                 if (value) {
-                    onCloseRequest(directory + file)
+                    onCloseRequest(directory, file)
                 }
             }
         }

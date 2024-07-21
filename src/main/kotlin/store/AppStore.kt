@@ -291,8 +291,13 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         setState { copy(isFilePickerShown = true) }
     }
 
-    fun onFilePickerResult(pathApk: String) {
+    fun onFilePickerResult(dir: String?, file: String?) {
         setState { copy(isFilePickerShown = false) }
+        if (dir.isNullOrEmpty() || file.isNullOrEmpty()) {
+            log("File not picked")
+            return
+        }
+        val pathApk = dir + file
         log("File picked: $pathApk")
         launch { adb.installApk(pathApk, state.selectedDevice) }
     }

@@ -39,7 +39,7 @@ fun main() = application {
         }
 
         if (model.state.isFilePickerShown) {
-            FileDialog { model.onFilePickerResult(it) }
+            FileDialog { dir, file -> model.onFilePickerResult(dir, file) }
         }
     }
 }
