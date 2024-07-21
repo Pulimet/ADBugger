@@ -31,9 +31,13 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     var state: AppState by mutableStateOf(initialState())
         private set
 
+    private fun updateDevicesList(list: List<DeviceInfo>) {
+        setState { copy(devicesList = list) }
+    }
+
     // Public
     fun onLaunchedEffect() {
-        adb.setLogger(::log)
+        adb.setupCallBacks(::log, ::updateDevicesList)
 
         launch { getDevicesList() }
         launch { getEmulatorsListClick() }
@@ -48,9 +52,9 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     fun getDevicesList() {
         launch {
             setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
-            val devicesList = adb.devicesInfo()
+            adb.devicesInfo()
             delay(200)
-            setState { copy(isDevicesLoading = false, devicesList = devicesList) }
+            setState { copy(isDevicesLoading = false) }
         }
     }
 

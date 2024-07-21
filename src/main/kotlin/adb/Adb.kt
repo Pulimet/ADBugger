@@ -7,10 +7,12 @@ import store.AppStore
 class Adb(private val cmd: Cmd) {
 
     private var log: (String) -> Unit = { println(it) }
+    private var updateDevices: (List<DeviceInfo>) -> Unit = {}
 
     // Public
-    fun setLogger(logger: (String) -> Unit) {
+    fun setupCallBacks(logger: (String) -> Unit, updateDevicesList: (List<DeviceInfo>) -> Unit) {
         log = logger
+        updateDevices = updateDevicesList
     }
 
     suspend fun devicesInfo() =
@@ -19,7 +21,7 @@ class Adb(private val cmd: Cmd) {
             // val avdName = launchShellCommand(it.serial, "getprop ro.boot.qemu.avd_name").stdout.toString().trim()
             val serialAndType = it.split("\\s+".toRegex())
             DeviceInfo(serialAndType[0], serialAndType[1])
-        }
+        }.also { updateDevices(it) }
 
     suspend fun packages(serial: String): ArrayList<Package> {
         return launchAdbShellCommand(serial, Commands.getPackageList())
