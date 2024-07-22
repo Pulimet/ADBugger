@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -35,7 +34,10 @@ fun SearchView(
             icon = Icons.Rounded.Star,
             modifier = Modifier.padding(horizontal = 8.dp),
             enabled = state.value.text.isNotEmpty(),
-            onClick = { model.addPackageNameToFavorites(state.value.text) },
+            onClick = {
+                model.addPackageNameToFavorites(state.value.text)
+                state.value = TextFieldValue("")
+            },
             description = "Save",
         )
     }

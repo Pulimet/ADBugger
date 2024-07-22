@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DeviceInfo
 import model.Package
+import pref.preference
 import ui.navigation.sidebar.MenuItemId
 import utils.KeysConverter
 import kotlin.coroutines.CoroutineContext
@@ -31,6 +32,10 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     var state: AppState by mutableStateOf(initialState())
         private set
 
+    private var favoritePackagesPref: List<String> by preference("favoritePackages", emptyList())
+
+
+    // Callbacks
     private fun updateDevicesList(list: List<DeviceInfo>) {
         setState { copy(devicesList = list) }
     }
@@ -41,6 +46,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
         launch { getDevicesList() }
         launch { getEmulatorsListClick() }
+        setState { copy(favoritePackages = favoritePackages) }
     }
 
     // Navigation
@@ -307,7 +313,13 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
     fun addPackageNameToFavorites(packageName: String) {
-        // TODO
+        favoritePackagesPref = favoritePackagesPref + packageName
+        setState { copy(favoritePackages = favoritePackagesPref.map { Package(it) }) }
+    }
+
+    fun removePackageNamFromFavorites(packageName: String) {
+        favoritePackagesPref = favoritePackagesPref - packageName
+        setState { copy(favoritePackages = favoritePackagesPref.map { Package(it) }) }
     }
 
     // Logs
@@ -333,6 +345,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         val devicesList: List<DeviceInfo> = emptyList(),
         val selectedDevice: String = ALL_DEVICES,
         val packageList: List<Package> = emptyList(),
+        val favoritePackages: List<Package> = emptyList(),
         val emulatorsList: List<String> = emptyList(),
         val selectedPackage: String = PACKAGE_NONE,
         val isDevicesLoading: Boolean = false,

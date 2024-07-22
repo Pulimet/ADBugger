@@ -28,6 +28,8 @@ fun PackagesList(
     packageList: List<Package> = emptyList(),
     modifier: Modifier = Modifier,
     addToFavoritesEnabled: Boolean = true,
+    removeFromFavoritesEnabled: Boolean = false,
+    forceShowSearchView: Boolean = false,
     model: AppStore = koinInject()
 ) {
 
@@ -36,7 +38,7 @@ fun PackagesList(
     val query = textState.value.text
     val state = model.state
 
-    if (packageList.isNotEmpty()) {
+    if (packageList.isNotEmpty() || forceShowSearchView) {
         SearchView(state = textState, modifier = modifier.fillMaxWidth())
     }
 
@@ -45,14 +47,16 @@ fun PackagesList(
     ) {
         val items = packageList.filter { it.name.contains(query, ignoreCase = true) }
         LazyColumn(state = listState) {
-            items(items, key = { device -> device.name }) { item ->
+            items(items) { item ->
                 PackageItem(
                     item,
                     state.selectedPackage == item.name,
                     { model.onPackageClick(it) },
                     addToFavoritesEnabled,
+                    removeFromFavoritesEnabled,
                     Modifier.fillMaxWidth(),
-                    { model.addPackageNameToFavorites(it.name)}
+                    { model.addPackageNameToFavorites(it.name) },
+                    { model.removePackageNamFromFavorites(it.name) },
                 )
             }
         }

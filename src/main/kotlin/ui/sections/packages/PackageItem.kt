@@ -7,6 +7,7 @@ import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,8 +26,10 @@ fun PackageItem(
     isSelected: Boolean,
     onClicked: (pckg: Package) -> Unit,
     addToFavoritesEnabled: Boolean = true,
+    removeFromFavoritesEnabled: Boolean = false,
     modifier: Modifier = Modifier,
-    onAddToFavorites: (pckg: Package) -> Unit = {}
+    onAddToFavorites: (pckg: Package) -> Unit = {},
+    onRemoveFromFavorites: (pckg: Package) -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -56,6 +59,20 @@ fun PackageItem(
                 clickEffect = true,
                 hoverEnabled = true,
                 onClick = { onAddToFavorites(item) }
+            )
+        }
+
+        if (removeFromFavoritesEnabled) {
+            BtnIcon(
+                icon = Icons.Rounded.Delete,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                description = "Remove from favorites",
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
+                showTooltip = false,
+                clickEffect = true,
+                hoverEnabled = true,
+                onClick = { onRemoveFromFavorites(item) }
             )
         }
     }

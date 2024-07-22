@@ -24,6 +24,7 @@ class PreferenceDelegate<T : Any>(
                 Boolean::class -> putBoolean(key, value as Boolean)
                 String::class -> put(key, value as String)
                 ByteArray::class -> putByteArray(key, value as ByteArray)
+                List::class -> put(key, (value as List<*>).joinToString(","))
                 else -> error("Unsupported preference type $type.")
             }
         }
@@ -39,6 +40,12 @@ class PreferenceDelegate<T : Any>(
                 Boolean::class -> getBoolean(key, defaultValue as Boolean)
                 String::class -> get(key, defaultValue as String)
                 ByteArray::class -> getByteArray(key, defaultValue as ByteArray)
+                List::class -> {
+                    val rawString = get(key, "")
+                    if (rawString.isEmpty()) return@with defaultValue
+                    rawString.split(",")
+                }
+
                 else -> error("Unsupported preference type $type.")
             }
         } as T

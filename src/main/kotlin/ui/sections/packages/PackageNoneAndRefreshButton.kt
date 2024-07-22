@@ -31,6 +31,7 @@ fun PackageNoneAndRefreshButton(
             state.selectedPackage == AppStore.PACKAGE_NONE,
             { model.onPackageClick(nonePackage) },
             false,
+            false,
             Modifier.weight(1f)
         )
 
