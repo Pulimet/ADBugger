@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import model.Package
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
