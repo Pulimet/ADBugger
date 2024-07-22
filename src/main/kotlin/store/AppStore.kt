@@ -306,6 +306,9 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         launch { adb.installApk(pathApk, state.selectedDevice) }
     }
 
+    fun addPackageNameToFavorites(packageName: String) {
+        // TODO
+    }
 
     // Logs
     fun clearLogs() {

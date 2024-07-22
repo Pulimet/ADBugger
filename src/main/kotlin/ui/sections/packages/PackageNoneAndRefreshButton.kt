@@ -30,7 +30,8 @@ fun PackageNoneAndRefreshButton(
             nonePackage,
             state.selectedPackage == AppStore.PACKAGE_NONE,
             { model.onPackageClick(nonePackage) },
-            modifier = Modifier.weight(1f)
+            false,
+            Modifier.weight(1f)
         )
 
         BtnWithText(

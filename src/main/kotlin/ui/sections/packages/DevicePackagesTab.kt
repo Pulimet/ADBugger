@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -22,7 +23,7 @@ fun DevicePackagesTab(model: AppStore = koinInject()) {
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             PackageNoneAndRefreshButton()
-            PackagesList(model.state.packageList)
+            PackagesList(model.state.packageList, modifier = Modifier.padding(top = 8.dp))
         }
     }
 }

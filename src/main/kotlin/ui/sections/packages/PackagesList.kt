@@ -24,14 +24,20 @@ import store.AppStore
 import ui.widgets.SearchView
 
 @Composable
-fun PackagesList(packageList: List<Package> = emptyList(), model: AppStore = koinInject()) {
+fun PackagesList(
+    packageList: List<Package> = emptyList(),
+    modifier: Modifier = Modifier,
+    addToFavoritesEnabled: Boolean = true,
+    model: AppStore = koinInject()
+) {
+
     val listState = rememberLazyListState()
     val textState = remember { mutableStateOf(TextFieldValue("")) }
     val query = textState.value.text
     val state = model.state
 
     if (packageList.isNotEmpty()) {
-        SearchView(state = textState, modifier = Modifier.fillMaxWidth())
+        SearchView(state = textState, modifier = modifier.fillMaxWidth())
     }
 
     Box(
@@ -44,7 +50,9 @@ fun PackagesList(packageList: List<Package> = emptyList(), model: AppStore = koi
                     item,
                     state.selectedPackage == item.name,
                     { model.onPackageClick(it) },
-                    Modifier.fillMaxWidth()
+                    addToFavoritesEnabled,
+                    Modifier.fillMaxWidth(),
+                    { model.addPackageNameToFavorites(it.name)}
                 )
             }
         }

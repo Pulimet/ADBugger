@@ -8,13 +8,11 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import model.Package
-import org.koin.compose.koinInject
-import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-fun FavoritePackagesTab(model: AppStore = koinInject()) {
+fun FavoritePackagesTab() {
     Card(
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
@@ -23,7 +21,7 @@ fun FavoritePackagesTab(model: AppStore = koinInject()) {
     ) {
         val list = listOf(Package("Testing 1"), Package("Testing 2"), Package("Testing 3"))
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
-            PackagesList(list)
+            PackagesList(list, addToFavoritesEnabled = false)
         }
     }
 }

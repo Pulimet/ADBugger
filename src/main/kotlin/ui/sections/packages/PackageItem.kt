@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,14 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.Package
+import ui.theme.Dimensions
 import ui.theme.MyColors
+import ui.widgets.BtnIcon
 
 @Composable
 fun PackageItem(
     item: Package,
     isSelected: Boolean,
-    onClicked: (device: Package) -> Unit,
-    modifier: Modifier = Modifier
+    onClicked: (pckg: Package) -> Unit,
+    addToFavoritesEnabled: Boolean = true,
+    modifier: Modifier = Modifier,
+    onAddToFavorites: (pckg: Package) -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -32,7 +38,26 @@ fun PackageItem(
                 unselectedColor = MyColors.radioButtonUnselected
             )
         )
-        Text(text = item.name, color = Color.White, fontSize = 12.sp, modifier = Modifier.padding(bottom = 6.dp))
+        Text(
+            text = item.name,
+            color = Color.White,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(bottom = 6.dp).weight(1f)
+        )
+
+        if (addToFavoritesEnabled) {
+            BtnIcon(
+                icon = Icons.Rounded.Star,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                description = "Add to favorites",
+                buttonSize = Dimensions.btnSizeSmall,
+                iconSize = Dimensions.btnIconSizeSmall,
+                showTooltip = false,
+                clickEffect = true,
+                hoverEnabled = true,
+                onClick = { onAddToFavorites(item) }
+            )
+        }
     }
 }
 

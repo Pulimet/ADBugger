@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.sections.WelcomePage
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.LoadingSpinner
