@@ -17,9 +17,9 @@ import ui.widgets.BtnWithText
 
 @Composable
 fun PackageNoneAndRefreshButton(
-    state: AppStore.AppState,
     model: AppStore = koinInject()
 ) {
+    val state = model.state
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

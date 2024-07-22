@@ -8,20 +8,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.sections.WelcomePage
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.LoadingSpinner
+import ui.widgets.tabs.Tabs
 
 @Composable
 fun PackagesMain(
-    modifier: Modifier = Modifier,
-    model: AppStore = koinInject()
+    modifier: Modifier = Modifier, model: AppStore = koinInject()
 ) {
     val state = model.state
     Box(
-        modifier = modifier
-            .padding(horizontal = 6.dp, vertical = 6.dp)
-            .background(MyColors.bg2)
+        modifier = modifier.padding(horizontal = 6.dp, vertical = 6.dp).background(MyColors.bg2)
     ) {
         if (state.isPackagesLoading) {
             LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
@@ -31,14 +30,19 @@ fun PackagesMain(
     }
 }
 
+
 @Composable
-private fun Content(model: AppStore = koinInject()) {
-    val state = model.state
+private fun Content() {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PackageNoneAndRefreshButton(state)
-        PackagesList(state) { model.onPackageClick(it) }
+        Tabs(listOf("Device Packages", "Favorites")) {
+            when (it) {
+                0 -> DevicePackagesTab()
+                1 -> WelcomePage()
+            }
+        }
     }
 }
+
+
