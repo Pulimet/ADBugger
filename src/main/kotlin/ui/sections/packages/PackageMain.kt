@@ -39,7 +39,7 @@ private fun Content() {
         Tabs(listOf("Device Packages", "Favorites")) {
             when (it) {
                 0 -> DevicePackagesTab()
-                1 -> WelcomePage()
+                1 -> FavoritePackagesTab()
             }
         }
     }

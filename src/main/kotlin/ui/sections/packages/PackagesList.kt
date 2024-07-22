@@ -18,25 +18,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import model.Package
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.SearchView
 
 @Composable
-fun PackagesList(model: AppStore = koinInject()) {
+fun PackagesList(packageList: List<Package> = emptyList(), model: AppStore = koinInject()) {
     val listState = rememberLazyListState()
     val textState = remember { mutableStateOf(TextFieldValue("")) }
     val query = textState.value.text
     val state = model.state
 
-    if (state.packageList.isNotEmpty()) {
+    if (packageList.isNotEmpty()) {
         SearchView(state = textState, modifier = Modifier.fillMaxWidth())
     }
 
     Box(
         modifier = Modifier.fillMaxWidth().border(BorderStroke(1.dp, color = Color.DarkGray))
     ) {
-        val items = state.packageList.filter { it.name.contains(query, ignoreCase = true) }
+        val items = packageList.filter { it.name.contains(query, ignoreCase = true) }
         LazyColumn(state = listState) {
             items(items, key = { device -> device.name }) { item ->
                 PackageItem(
