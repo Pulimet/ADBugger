@@ -58,6 +58,10 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg/*, TargetFormat.Msi*/)
             packageName = "ADBugger"
             packageVersion = appVersion
+            description = "ADBugger is a tool for Android Developers to debug their apps on real devices and emulators."
+            copyright = "© 2024 Alexey Korolev. All rights reserved."
+            vendor = "Alexey Korolev"
+            // licenseFile.set(project.file("LICENSE.txt"))
 
             macOS {
                 bundleID = "net.alexandroid.adbugger"
