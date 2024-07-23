@@ -36,4 +36,37 @@ jobs:
       with:
         name: ADBugger-dmg
         path: build/output/main/dmg/ADBugger-${{ github.event.inputs.version }}.dmg
+        
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ADBugger-dmg
+          path: ./
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          release_name: Release v${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ADBugger-${{ github.event.inputs.version }}.dmg
+          asset_name: ADBugger-${{ github.event.inputs.version }}.dmg
+          asset_content_type: application/x-apple-diskimage        
+        
 
