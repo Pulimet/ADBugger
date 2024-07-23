@@ -35,7 +35,9 @@ jobs:
             VERSION=${TAG_NAME#v}
             echo "VERSION=${VERSION}" >> $GITHUB_ENV
           fi
-          echo "Version is $VERSION"  
+
+      - name: Use Version
+        run: echo "Using version ${{ env.VERSION }}"
 
       - name: Setup Java 18
         uses: actions/setup-java@v1  # Uses the setup-java action to set up JDK 18
