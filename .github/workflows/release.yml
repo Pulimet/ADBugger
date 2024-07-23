@@ -40,7 +40,7 @@ jobs:
         run: echo "Using version ${{ env.VERSION }}"
 
       - name: Setup Java 18
-        uses: actions/setup-java@v1  # Uses the setup-java action to set up JDK 18
+        uses: actions/setup-java@v3  # Uses the setup-java action to set up JDK 18
         with:
           java-version: 18  # Specifies the version of Java to set up
 
@@ -67,15 +67,29 @@ jobs:
     runs-on: ubuntu-latest  # Specifies that the job runs on an Ubuntu runner
 
     steps:
+      - name: Determine Version
+        id: determine_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            TAG_NAME=${{ github.ref_name }}
+            VERSION=${TAG_NAME#v}
+            echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          fi
+
+      - name: Use Version
+        run: echo "Using version ${{ env.VERSION }}"
+
       - name: Download Artifact
-        uses: actions/download-artifact@v3  # Uses the download-artifact action to download the previously uploaded DMG file
+        uses: actions/download-artifact@v4  # Uses the download-artifact action to download the previously uploaded DMG file
         with:
           name: ADBugger-dmg  # Name of the artifact to download
           path: ./  # Path to download the artifact to
 
       - name: Create GitHub Release
         id: create_release  # Sets an ID for the step to reference later
-        uses: actions/create-release@v1  # Uses the create-release action to create a GitHub release
+        uses: actions/create-release@v4  # Uses the create-release action to create a GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
         with:
