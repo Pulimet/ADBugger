@@ -30,4 +30,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Create DMG
-      run: ./gradlew packageDistributionForCurrentOS
+      run: ./gradlew packageDistributionForCurrentOS --info
