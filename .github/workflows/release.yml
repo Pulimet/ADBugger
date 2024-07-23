@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v3  # Uses the upload-artifact action to upload the DMG file
         with:
           name: ADBugger-dmg  # Name of the artifact
-          path: build/output/main/dmg/ADBugger-${{ github.event.inputs.version }}.dmg  # Path to the DMG file, using the version input
+          path: build/output/main/dmg/ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
 
   # A separate job to handle the release process
   release:
@@ -76,8 +76,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
         with:
-          tag_name: v${{ github.event.inputs.version }}  # Tag name for the release, using the version input
-          release_name: Release v${{ github.event.inputs.version }}  # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
+          release_name: Release v${{ env.VERSION }}  # Name of the release, using the version input
           draft: false  # Specifies that the release is not a draft
           prerelease: false  # Specifies that the release is not a prerelease
 
@@ -87,6 +87,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}  # URL to upload the release asset to, obtained from the create-release step
-          asset_path: ./ADBugger-${{ github.event.inputs.version }}.dmg  # Path to the DMG file, using the version input
-          asset_name: ADBugger-${{ github.event.inputs.version }}.dmg  # Name of the release asset, using the version input
+          asset_path: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
+          asset_name: ADBugger-${{ env.VERSION }}.dmg  # Name of the release asset, using the version input
           asset_content_type: application/x-apple-diskimage  # Specifies the content type of the release asset
