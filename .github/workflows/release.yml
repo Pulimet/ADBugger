@@ -90,7 +90,7 @@ jobs:
 
       - name: Create GitHub Release
         id: create_release  # Sets an ID for the step to reference later
-        uses: actions/create-release@v4  # Uses the create-release action to create a GitHub release
+        uses: actions/create-release@v1  # Uses the create-release action to create a GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
         with:
