@@ -44,7 +44,8 @@ jobs:
             TAG_NAME=${{ github.ref_name }}
             VERSION=${TAG_NAME#v}
             echo "VERSION=${VERSION}" >> $GITHUB_ENV
-          fi  
+          fi
+          echo "Version is $VERSION"
 
       - name: Build with Gradle
         run: ./gradlew build  # Runs the Gradle build command
