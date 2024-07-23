@@ -43,6 +43,7 @@ jobs:
         uses: actions/setup-java@v3  # Uses the setup-java action to set up JDK 18
         with:
           java-version: 18  # Specifies the version of Java to set up
+          distribution: 'temurin'  # Specifies the distribution of Java to set up (e.g., adopt, zulu, temurin)
 
       - run: echo "JAVA_18=$JAVA_HOME" >> $GITHUB_ENV  # Sets the JAVA_HOME environment variable
 
