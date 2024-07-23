@@ -54,13 +54,13 @@ jobs:
         run: ./gradlew build  # Runs the Gradle build command
 
       - name: Create DMG
-        run: ./gradlew packageDistributionForCurrentOS  # Runs the Gradle task to create a DMG file
+        run: ./gradlew packageReleaseDmg  # Runs the Gradle task to create a release version of DMG file
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4  # Uses the upload-artifact action to upload the DMG file
         with:
           name: ADBugger-dmg  # Name of the artifact
-          path: build/output/main/dmg/ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
+          path: build/output/main-release/dmg/ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
 
   # A separate job to handle the release process
   release:
