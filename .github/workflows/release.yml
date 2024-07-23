@@ -20,6 +20,11 @@ jobs:
     - name: Checkout sources
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       uses: actions/checkout@v4
+    - name: Setup Java 18
+      uses: actions/setup-java@v1
+      with:
+        java-version: 18
+    - run: echo "JAVA_18=$JAVA_HOME" >> $GITHUB_ENV
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
     - name: Build with Gradle
