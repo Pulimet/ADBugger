@@ -39,22 +39,21 @@ jobs:
       - name: Use Version
         run: echo "Using version ${{ env.VERSION }}"  # Prints the version being used
 
-      - name: Setup Java 18
-        uses: actions/setup-java@v3  # Uses the setup-java action to set up JDK 18
+      - name: Setup Java 17
+        uses: actions/setup-java@v4  # Uses the setup-java action to set up JDK 18
         with:
-          java-version: 18  # Specifies the version of Java to set up
+          java-version: 17  # Specifies the version of Java to set up
           distribution: 'temurin'  # Specifies the distribution of Java to set up (e.g., adopt, zulu, temurin)
 
       - run: echo "JAVA_18=$JAVA_HOME" >> $GITHUB_ENV  # Sets the JAVA_HOME environment variable
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3  # Uses the setup-gradle action to set up Gradle
+        with:
+          add-job-summary: on-failure
+          add-job-summary-as-pr-comment: on-failure
 
-      - name: Build with Gradle
-        run: ./gradlew build  # Runs the Gradle build command
-
-      - name: Create DMG
-        run: ./gradlew packageReleaseDmg  # Runs the Gradle task to create a release version of DMG file
+      - run: ./gradlew --stacktrace --scan packageReleaseDmg  # Runs the Gradle task to create a release version of DMG file
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4  # Uses the upload-artifact action to upload the DMG file
