@@ -31,3 +31,9 @@ jobs:
       run: ./gradlew build
     - name: Create DMG
       run: ./gradlew packageDistributionForCurrentOS --info
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ADBugger-dmg
+        path: build/output/main/dmg/ADBugger-${{ github.event.inputs.version }}.dmg
+
