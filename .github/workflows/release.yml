@@ -83,7 +83,7 @@ jobs:
         run: echo "Using version ${{ env.VERSION }}"
 
       - name: Download Artifact
-        uses: actions/download-artifact@v4  # Uses the download-artifact action to download the previously uploaded DMG file
+        uses: actions/download-artifact@v3  # Uses the download-artifact action to download the previously uploaded DMG file
         with:
           name: ADBugger-dmg  # Name of the artifact to download
           path: ./  # Path to download the artifact to
