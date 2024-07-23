@@ -17,26 +17,26 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Checkout sources
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      uses: actions/checkout@v4
-    - name: Setup Java 18
-      uses: actions/setup-java@v1
-      with:
-        java-version: 18
-    - run: echo "JAVA_18=$JAVA_HOME" >> $GITHUB_ENV
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Create DMG
-      run: ./gradlew packageDistributionForCurrentOS --info
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: ADBugger-dmg
-        path: build/output/main/dmg/ADBugger-${{ github.event.inputs.version }}.dmg
-        
+      - name: Checkout sources
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        uses: actions/checkout@v4
+      - name: Setup Java 18
+        uses: actions/setup-java@v1
+        with:
+          java-version: 18
+      - run: echo "JAVA_18=$JAVA_HOME" >> $GITHUB_ENV
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Create DMG
+        run: ./gradlew packageDistributionForCurrentOS --info
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ADBugger-dmg
+          path: build/output/main/dmg/ADBugger-${{ github.event.inputs.version }}.dmg
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -67,6 +67,6 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./ADBugger-${{ github.event.inputs.version }}.dmg
           asset_name: ADBugger-${{ github.event.inputs.version }}.dmg
-          asset_content_type: application/x-apple-diskimage        
-        
+          asset_content_type: application/x-apple-diskimage
+
 
