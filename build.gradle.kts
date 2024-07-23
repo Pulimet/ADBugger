@@ -46,7 +46,6 @@ compose.desktop {
     application {
         mainClass = "MainKt"
 
-        javaHome = "/Users/ak3140/Library/Java/JavaVirtualMachines/openjdk-18.0.1.1/Contents/Home"
         buildTypes.release.proguard {
             obfuscate.set(false)
             optimize.set(false)
