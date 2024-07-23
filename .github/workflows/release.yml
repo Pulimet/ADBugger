@@ -2,6 +2,9 @@ name: New Release
 
 # This workflow can be triggered manually with a specified version input
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
       version:
