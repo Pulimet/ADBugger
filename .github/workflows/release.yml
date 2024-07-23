@@ -100,11 +100,8 @@ jobs:
           prerelease: false  # Specifies that the release is not a prerelease
 
       - name: Upload Release Asset
-        uses: actions/upload-release-asset@v2  # Uses the upload-release-asset action to upload the DMG file to the release
+        uses: softprops/action-gh-release@v2  # Uses the softprops action to upload the release asset
+        with:
+          files: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}  # URL to upload the release asset to, obtained from the create-release step
-          asset_path: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
-          asset_name: ADBugger-${{ env.VERSION }}.dmg  # Name of the release asset, using the version input
-          asset_content_type: application/x-apple-diskimage  # Specifies the content type of the release asset
