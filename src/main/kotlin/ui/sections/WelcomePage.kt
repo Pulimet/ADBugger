@@ -56,37 +56,34 @@ fun WelcomePage(modifier: Modifier = Modifier) {
                 color = Color.LightGray,
                 modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
             )
-            Version_1_0_1()
-            Version_1_0_0()
+            Version("Version 1.0.2 (23 July 2024)", desc1_0_2)
+            Version("Version 1.0.1 (17 July 2024)", desc1_0_1)
+            Version("Version 1.0.0 (16 July 2024)", desc1_0_0)
         }
     }
 }
 
-@Composable
-private fun Version_1_0_1() {
-    Text(
-        text = "Version 1.0.1 (17 July 2024)",
-        fontSize = Dimensions.releaseNotesFontSize,
-        textAlign = TextAlign.Start,
-        fontWeight = FontWeight.Bold,
-        color = Color.LightGray,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
-    )
-    Text(
-        text = "- Support forwarding input of: Enter, Dot, Comma\n" +
-                "- New status line with selected target and package name\n" +
-                "- Adb Logger - allow copying all or specific log",
-        fontSize = Dimensions.releaseNotesFontSize,
-        textAlign = TextAlign.Start,
-        color = Color.LightGray,
-        modifier = Modifier.padding(horizontal = 16.dp),
-    )
-}
+const val desc1_0_2 = "- Support installing APK chosen with file picker\n" +
+        "- Allow to add package names to favorites and to view them in separate tab"
+
+const val desc1_0_1 = "- Support forwarding input of: Enter, Dot, Comma\n" +
+        "- New status line with selected target and package name\n" +
+        "- Adb Logger - allow copying all or specific log"
+
+const val desc1_0_0 = "- Get a list of connected devices and running emulators.\n" +
+        "- Retrieve a list of installed packages on the selected target.\n" +
+        "- Launch and terminate emulators.\n" +
+        "- Grant and remove permissions for specific packages.\n" +
+        "- Send input events using buttons in the app or via keyboard.\n" +
+        "- List and adb reverse specific ports.\n" +
+        "- Launch commands simultaneously across all connected devices and emulators.\n" +
+        "- Show which command is actually launched under the hood."
+
 
 @Composable
-private fun Version_1_0_0() {
+private fun Version(title: String, description: String) {
     Text(
-        text = "Version 1.0.0 (16 July 2024)",
+        text = title,
         fontSize = Dimensions.releaseNotesFontSize,
         textAlign = TextAlign.Start,
         fontWeight = FontWeight.Bold,
@@ -94,14 +91,7 @@ private fun Version_1_0_0() {
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
     )
     Text(
-        text = "- Get a list of connected devices and running emulators.\n" +
-                "- Retrieve a list of installed packages on the selected target.\n" +
-                "- Launch and terminate emulators.\n" +
-                "- Grant and remove permissions for specific packages.\n" +
-                "- Send input events using buttons in the app or via keyboard.\n" +
-                "- List and adb reverse specific ports.\n" +
-                "- Launch commands simultaneously across all connected devices and emulators.\n" +
-                "- Show which command is actually launched under the hood.",
+        text = description,
         fontSize = Dimensions.releaseNotesFontSize,
         textAlign = TextAlign.Start,
         color = Color.LightGray,
