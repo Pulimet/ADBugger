@@ -33,6 +33,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         private set
 
     private var favoritePackagesPref: List<String> by preference("favoritePackages", emptyList())
+    private fun convertToPackageList(list: List<String>) = list.map { Package(it) }
 
 
     // Callbacks
@@ -46,7 +47,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
         launch { getDevicesList() }
         launch { getEmulatorsListClick() }
-        setState { copy(favoritePackages = favoritePackages) }
+        setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
     // Navigation
@@ -314,12 +315,12 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun addPackageNameToFavorites(packageName: String) {
         favoritePackagesPref = favoritePackagesPref + packageName
-        setState { copy(favoritePackages = favoritePackagesPref.map { Package(it) }) }
+        setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
     fun removePackageNamFromFavorites(packageName: String) {
         favoritePackagesPref = favoritePackagesPref - packageName
-        setState { copy(favoritePackages = favoritePackagesPref.map { Package(it) }) }
+        setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
     // Logs
