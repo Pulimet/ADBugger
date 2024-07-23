@@ -100,8 +100,17 @@ jobs:
           prerelease: false  # Specifies that the release is not a prerelease
 
       - name: Upload Release Asset
-        uses: softprops/action-gh-release@v2  # Uses the softprops action to upload the release asset
+        id: upload_release
+        uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
+          name: Release v${{ env.VERSION }}  # Name of the release, using the version input
           files: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
+
+
+
+
+
+
