@@ -6,18 +6,21 @@ ADBugger is a desktop tool for debugging and QA of Android devices and emulators
 
 **Release notes:**
 
-1.0.1
-- Support forwarding input of Enter, Dot, Comma
-- New status line with selected target and package name
-- Adb Logger - allow copying all or specific log
+Version 1.0.2
+- Added support for installing APKs selected through the file picker.
+- Enabled the addition of package names to favorites, which can now be viewed in a separate tab.
 
-1.0.0
+Version 1.0.1
+- Added support for forwarding the input of Enter, Dot, and Comma keys.
+- Introduced a new status line displaying the selected target and package name.
+- Enhanced ADB Logger to allow copying all or specific logs.
 
-- Get a list of connected devices and running emulators.
-- Fetch a list of installed packages on the selected target.
-- Launch and terminate emulators.
-- Grant and remove permissions for specific packages.
-- Send input events using buttons in the app or via keyboard.
-- List and adb reverse specific ports.
-- Launch commands simultaneously across all connected devices and emulators.
-- Display which command is launched under the hood.
+Version 1.0.0
+- Implemented functionality to list connected devices and running emulators.
+- Added the ability to fetch a list of installed packages on the selected target.
+- Enabled launching and terminating emulators.
+- Added features to grant and remove permissions for specific packages.
+- Provided options to send input events using buttons in the app or via the keyboard.
+- Allowed listing and ADB reverse of specific ports.
+- Enabled simultaneous execution of commands across all connected devices and emulators.
+- Displayed detailed information about the commands being executed.
