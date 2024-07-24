@@ -17,7 +17,7 @@ jobs:
   # This workflow contains 2 jobs: build and release
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest  # Specifies that the job runs on an Ubuntu runner
+    runs-on: macos-latest  # Specifies that the job runs on a macOS runner
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
