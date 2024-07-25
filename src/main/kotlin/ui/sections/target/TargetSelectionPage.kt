@@ -34,6 +34,6 @@ private fun Content(model: AppStore = koinInject()) {
         LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
     } else {
         AllTargetsAndRefreshButton()
-        TargetList({ model.onDeviceClick(it) })
+        TargetList()
     }
 }

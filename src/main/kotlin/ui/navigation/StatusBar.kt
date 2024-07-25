@@ -19,8 +19,11 @@ fun StatusBar(model: AppStore = koinInject()) {
         modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp, bottom = 4.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
+        val selectedTarget = model.state.selectedTargetsList.ifEmpty {
+            AppStore.ALL_DEVICES
+        }
         Text(
-            "Selected target: ${model.state.selectedDevice}",
+            "Selected target: $selectedTarget",
             fontSize = Dimensions.statusBarFontSize,
             color = Color.LightGray,
         )

@@ -17,7 +17,7 @@ object Commands {
     fun getCloseCommand(packageName: String) = "am force-stop  $packageName"
     fun getClearDataCommand(packageName: String) = "pm clear $packageName"
     fun getUninstallCommand(packageName: String) = "uninstall $packageName"
-    fun getApkPathCommand(packageName: String, serial: String) = "adb -s $serial shell pm path $packageName"
+    fun getApkPathCommand(packageName: String) = "pm path $packageName"
     fun getShowHome() = "am start -a android.intent.action.MAIN -c android.intent.category.HOME"
     fun getShowSettings() = "am start com.android.settings"
     fun getPressBack() = getInputKeyEventFor(KEYCODE_BACK)
@@ -45,10 +45,10 @@ object Commands {
     fun getChangeFontSize(d: Double) = "settings put system font_scale $d"
     fun getChangeDisplayDensity(density: String) = "wm density $density"
     fun getAdbInstall(apkPath: String) = "install $apkPath"
+    fun getAdbPull(filename: String) = "pull /sdcard/$filename ~/Desktop/$filename"
 
     fun addSpecificPermission(packageName: String, permission: String) =
         "pm grant $packageName android.permission.$permission"
-
 
     fun revokeSpecificPermission(packageName: String, permission: String) =
         "pm revoke $packageName android.permission.$permission"

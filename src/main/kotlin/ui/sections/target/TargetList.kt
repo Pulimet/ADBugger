@@ -11,29 +11,28 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import model.DeviceInfo
 import org.koin.compose.koinInject
 import store.AppStore
 
 @Composable
 fun TargetList(
-    onClicked: (device: DeviceInfo) -> Unit,
     model: AppStore = koinInject()
 ) {
     val state = model.state
     Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()
         LazyColumn(state = listState) {
-            items(state.devicesList, key = { device -> device.serial }) { item ->
+            items(state.targetsList, key = { device -> device.serial }) { item ->
+                val isSelected = state.selectedTargetsList.contains(item.serial)
                 TargetItem(
                     item,
-                    state.selectedDevice == item.serial,
-                    { onClicked(it) },
+                    isSelected,
+                    { itemClicked, isSelectedNew -> model.onTargetClick(itemClicked, isSelectedNew) },
                     Modifier.fillMaxWidth(),
                 )
             }
         }
-        if (state.devicesList.size > 2) {
+        if (state.targetsList.size > 2) {
             VerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 adapter = rememberScrollbarAdapter(

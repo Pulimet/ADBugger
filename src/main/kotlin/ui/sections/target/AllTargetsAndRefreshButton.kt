@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import model.DeviceInfo
+import model.TargetInfo
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.BtnWithText
@@ -23,11 +23,11 @@ fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        val allDevices = DeviceInfo(AppStore.ALL_DEVICES, "All Devices")
+        val allDevices = TargetInfo(AppStore.ALL_DEVICES, "All Devices")
         TargetItem(
             allDevices,
-            state.selectedDevice == AppStore.ALL_DEVICES,
-            { model.onDeviceClick(allDevices) },
+            state.selectedTargetsList.isEmpty(),
+            { item, isSelected -> model.onTargetClick(item, isSelected) },
             Modifier.weight(1f),
         )
 

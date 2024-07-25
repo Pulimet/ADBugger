@@ -11,8 +11,8 @@ import androidx.compose.ui.input.key.type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import model.DeviceInfo
 import model.Package
+import model.TargetInfo
 import pref.preference
 import ui.navigation.sidebar.MenuItemId
 import utils.KeysConverter
@@ -37,13 +37,13 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
 
     // Callbacks
-    private fun updateDevicesList(list: List<DeviceInfo>) {
-        setState { copy(devicesList = list) }
+    private fun updateTargetsList(list: List<TargetInfo>) {
+        setState { copy(targetsList = list) }
     }
 
     // Public
     fun onLaunchedEffect() {
-        adb.setupCallBacks(::log, ::updateDevicesList)
+        adb.setupCallBacks(::log, ::updateTargetsList)
 
         launch { getDevicesList() }
         launch { getEmulatorsListClick() }
@@ -58,7 +58,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     // User Actions
     fun getDevicesList() {
         launch {
-            setState { copy(isDevicesLoading = true, devicesList = emptyList(), selectedDevice = ALL_DEVICES) }
+            setState { copy(isDevicesLoading = true, targetsList = emptyList(), selectedTargetsList = emptyList()) }
             adb.devicesInfo()
             delay(200)
             setState { copy(isDevicesLoading = false) }
@@ -66,15 +66,29 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
 
-    fun onDeviceClick(device: DeviceInfo) {
-        setState { copy(selectedDevice = device.serial) }
+    fun onTargetClick(device: TargetInfo, isSelected: Boolean) {
+        if (device.serial == ALL_DEVICES) {
+            setState { copy(selectedTargetsList = emptyList()) }
+            return
+        }
+        if (isSelected) {
+            setState { copy(selectedTargetsList = selectedTargetsList + device.serial) }
+        } else {
+            setState { copy(selectedTargetsList = selectedTargetsList - device.serial) }
+        }
     }
 
     fun onGetPackageListClick() {
-        if (state.selectedDevice == ALL_DEVICES) return
+        if (state.selectedTargetsList.isEmpty()) {
+            log("Can't get packages. No target selected")
+            return
+        }
+        if (state.selectedPackage.length > 1) {
+            log("Multiple target selected. Getting packages from: ${state.selectedTargetsList[0]}")
+        }
         launch {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
-            val packagesList = adb.packages(state.selectedDevice)
+            val packagesList = adb.packages(state.selectedTargetsList[0])
             delay(200)
             setState { copy(isPackagesLoading = false, packageList = packagesList) }
         }
@@ -97,47 +111,47 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun onOpenClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.openPackage(state.selectedPackage, state.selectedDevice) }
+        launch { adb.openPackage(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onApkPath() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.getApkPath(state.selectedPackage, state.selectedDevice) }
+        launch { adb.getApkPath(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onCloseClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.closePackage(state.selectedPackage, state.selectedDevice) }
+        launch { adb.closePackage(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onRestartClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
         launch {
-            adb.closePackage(state.selectedPackage, state.selectedDevice)
+            adb.closePackage(state.selectedPackage, state.selectedTargetsList)
             delay(100)
-            adb.openPackage(state.selectedPackage, state.selectedDevice)
+            adb.openPackage(state.selectedPackage, state.selectedTargetsList)
         }
     }
 
     fun onClearDataClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.clearData(state.selectedPackage, state.selectedDevice) }
+        launch { adb.clearData(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onClearAndRestartClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
         launch {
-            adb.closePackage(state.selectedPackage, state.selectedDevice)
-            adb.clearData(state.selectedPackage, state.selectedDevice)
+            adb.closePackage(state.selectedPackage, state.selectedTargetsList)
+            adb.clearData(state.selectedPackage, state.selectedTargetsList)
             delay(100)
-            adb.openPackage(state.selectedPackage, state.selectedDevice)
+            adb.openPackage(state.selectedPackage, state.selectedTargetsList)
         }
     }
 
     fun onUninstallClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
 
-        launch { adb.uninstall(state.selectedPackage, state.selectedDevice) }
+        launch { adb.uninstall(state.selectedPackage, state.selectedTargetsList) }
     }
 
 
@@ -158,81 +172,81 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
     fun onHomeClick() {
-        launch { adb.showHome(state.selectedDevice) }
+        launch { adb.showHome(state.selectedTargetsList) }
     }
 
     fun onSettingsClick() {
-        launch { adb.showSettings(state.selectedDevice) }
+        launch { adb.showSettings(state.selectedTargetsList) }
     }
 
     fun onBackClick() {
-        launch { adb.pressBack(state.selectedDevice) }
+        launch { adb.pressBack(state.selectedTargetsList) }
     }
 
     fun onTabClick() {
-        launch { adb.pressTab(state.selectedDevice) }
+        launch { adb.pressTab(state.selectedTargetsList) }
     }
 
     fun onEnterClick() {
-        launch { adb.pressEnter(state.selectedDevice) }
+        launch { adb.pressEnter(state.selectedTargetsList) }
     }
 
     fun onPowerClick() {
-        launch { adb.pressPower(state.selectedDevice) }
+        launch { adb.pressPower(state.selectedTargetsList) }
     }
 
     fun onSnapClick() {
-        if (state.selectedDevice == ALL_DEVICES) return
+        if (state.selectedTargetsList.isEmpty()) return
 
-        launch { adb.takeSnapshot(state.selectedDevice) }
+        launch { adb.takeSnapshot(state.selectedTargetsList) }
     }
 
     fun onDayClick() {
-        launch { adb.setDarkModeOff(state.selectedDevice) }
+        launch { adb.setDarkModeOff(state.selectedTargetsList) }
     }
 
     fun onNightClick() {
-        launch { adb.setDarkModeOn(state.selectedDevice) }
+        launch { adb.setDarkModeOn(state.selectedTargetsList) }
     }
 
     fun onUpClick() {
-        launch { adb.pressUp(state.selectedDevice) }
+        launch { adb.pressUp(state.selectedTargetsList) }
     }
 
     fun onDownClick() {
-        launch { adb.pressDown(state.selectedDevice) }
+        launch { adb.pressDown(state.selectedTargetsList) }
     }
 
     fun onLeftClick() {
-        launch { adb.pressLeft(state.selectedDevice) }
+        launch { adb.pressLeft(state.selectedTargetsList) }
     }
 
     fun onRightClick() {
-        launch { adb.pressRight(state.selectedDevice) }
+        launch { adb.pressRight(state.selectedTargetsList) }
     }
 
     fun onBackSpaceClick() {
-        launch { adb.pressDelete(state.selectedDevice) }
+        launch { adb.pressDelete(state.selectedTargetsList) }
     }
 
 
     fun onSendTextClick(value: String) {
-        launch { adb.sendText(state.selectedDevice, value) }
+        launch { adb.sendText(state.selectedTargetsList, value) }
     }
 
 
     fun onSendInputClick(value: Int) {
-        launch { adb.sendInput(state.selectedDevice, value) }
+        launch { adb.sendInput(state.selectedTargetsList, value) }
     }
 
     fun onNumberClick(i: Int) {
-        launch { adb.sendInputNum(state.selectedDevice, i) }
+        launch { adb.sendInputNum(state.selectedTargetsList, i) }
     }
 
     fun onLetterClick(letter: String) {
         val key = KeysConverter.convertLetterToKeyCode(letter)
 
-        launch { adb.sendInput(state.selectedDevice, key) }
+        launch { adb.sendInput(state.selectedTargetsList, key) }
     }
 
     fun onForwardUserInputToggle(value: Boolean) {
@@ -249,12 +263,12 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         val key: Int = KeysConverter.covertEventKeyToKeyCode(event)
         if (key != -1) {
-            launch { adb.sendInput(state.selectedDevice, key) }
+            launch { adb.sendInput(state.selectedTargetsList, key) }
             return true
         }
         val char = KeysConverter.convertEventKeyToChar(event)
         if (char.isNotEmpty()) {
-            launch { adb.sendText(state.selectedDevice, char) }
+            launch { adb.sendText(state.selectedTargetsList, char) }
             return true
         }
 
@@ -274,28 +288,28 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
     fun onAddPermission(permission: String) {
-        launch { adb.addPermission(state.selectedDevice, permission, state.selectedPackage) }
+        launch { adb.addPermission(state.selectedTargetsList, permission, state.selectedPackage) }
     }
 
     fun onRemovePermission(permission: String) {
-        launch { adb.removePermission(state.selectedDevice, permission, state.selectedPackage) }
+        launch { adb.removePermission(state.selectedTargetsList, permission, state.selectedPackage) }
     }
 
     fun onRemoveAllPermissions() {
-        launch { adb.removeAllPermissions(state.selectedDevice, state.selectedPackage) }
+        launch { adb.removeAllPermissions(state.selectedTargetsList, state.selectedPackage) }
     }
 
     fun onGetPermissions() {
-        if (state.selectedDevice == ALL_DEVICES || state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.getPermissions(state.selectedDevice, state.selectedPackage) }
+        if (state.selectedTargetsList.isEmpty() || state.selectedPackage == PACKAGE_NONE) return
+        launch { adb.getPermissions(state.selectedTargetsList, state.selectedPackage) }
     }
 
     fun scaleFontTo(d: Double) {
-        launch { adb.changeFontSize(d, state.selectedDevice) }
+        launch { adb.changeFontSize(d, state.selectedTargetsList) }
     }
 
     fun setDensity(density: Int) {
-        launch { adb.changeDisplayDensity(density, state.selectedDevice) }
+        launch { adb.changeDisplayDensity(density, state.selectedTargetsList) }
     }
 
     fun openFilePicker() {
@@ -310,7 +324,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         val pathApk = dir + file
         log("File picked: $pathApk")
-        launch { adb.installApk(pathApk, state.selectedDevice) }
+        launch { adb.installApk(pathApk, state.selectedTargetsList) }
     }
 
     fun addPackageNameToFavorites(packageName: String) {
@@ -343,9 +357,9 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     data class AppState(
         val menuItemSelected: MenuItemId = MenuItemId.DEVICES,
-        val devicesList: List<DeviceInfo> = emptyList(),
-        val selectedDevice: String = ALL_DEVICES,
+        val targetsList: List<TargetInfo> = emptyList(),
         val packageList: List<Package> = emptyList(),
+        val selectedTargetsList: List<String> = emptyList(),
         val favoritePackages: List<Package> = emptyList(),
         val emulatorsList: List<String> = emptyList(),
         val selectedPackage: String = PACKAGE_NONE,

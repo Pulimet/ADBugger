@@ -38,7 +38,7 @@ fun PackageNoneAndRefreshButton(
         BtnWithText(
             icon = Icons.Rounded.Refresh,
             modifier = Modifier.padding(horizontal = 8.dp),
-            visible = !state.isPackagesLoading && state.selectedDevice != AppStore.ALL_DEVICES,
+            visible = !state.isPackagesLoading && state.selectedTargetsList.isNotEmpty(),
             enabled = true,
             onClick = { model.onGetPackageListClick() },
             description = "Get Packages List",

@@ -33,7 +33,7 @@ import ui.widgets.BtnWithText
 fun TopBarIcons(model: AppStore = koinInject()) {
     val stateHorizontal = rememberScrollState(0)
 
-    val isDeviceSelected = model.state.selectedDevice != AppStore.ALL_DEVICES
+    val isDeviceSelected = model.state.selectedTargetsList.isNotEmpty()
     var forwardUserInputState: Boolean by preference("Btn_ForwardUserInput", false)
     var alwaysShowLogsEnabled: Boolean by preference("Btn_alwaysShowLogsEnabled", false)
 

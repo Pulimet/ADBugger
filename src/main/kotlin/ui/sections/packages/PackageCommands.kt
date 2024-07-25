@@ -22,7 +22,7 @@ fun PackageCommands(
 ) {
     val state = model.state
     val isPackageSelected = state.selectedPackage != AppStore.PACKAGE_NONE
-    val isDeviceSelected = state.selectedDevice != AppStore.ALL_DEVICES
+    val isDeviceSelected = state.selectedTargetsList.isNotEmpty()
 
     Column(
         modifier = modifier.fillMaxHeight().padding(horizontal = 12.dp, vertical = 6.dp),
