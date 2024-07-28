@@ -3,11 +3,8 @@ package ui.sections
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
@@ -24,13 +21,6 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
         modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
-            Text(
-                text = "Scaling page",
-                fontSize = Dimensions.titleFontSize,
-                textAlign = TextAlign.Center,
-                color = Color.LightGray,
-                modifier = Modifier.fillMaxWidth().padding(24.dp)
-            )
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()

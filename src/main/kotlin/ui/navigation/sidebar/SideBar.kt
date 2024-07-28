@@ -15,7 +15,9 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.Octicons
 import compose.icons.TablerIcons
 import compose.icons.fontawesomeicons.Regular
+import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.regular.Keyboard
+import compose.icons.fontawesomeicons.solid.Cat
 import compose.icons.octicons.Package24
 import compose.icons.tablericons.*
 import org.koin.compose.koinInject
@@ -26,7 +28,7 @@ import ui.theme.MyColors
 import ui.widgets.BtnIcon
 
 enum class MenuItemId {
-    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGS, SETTINGS;
+    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGCAT, LOGS, SETTINGS;
 
     companion object {
         fun getByOrdinal(ordinal: Int): MenuItemId {
@@ -123,6 +125,13 @@ fun SideBar(
             toggle = isSelected(MenuItemId.SCALING),
             onClick = { toggleState(MenuItemId.SCALING) },
             title = "Scaling",
+            collapsed = isBarClosedState,
+        )
+        SideBarItem(
+            icon = FontAwesomeIcons.Solid.Cat,
+            toggle = isSelected(MenuItemId.LOGCAT),
+            onClick = { toggleState(MenuItemId.LOGCAT) },
+            title = "Logcat",
             collapsed = isBarClosedState,
         )
         SideBarItem(
