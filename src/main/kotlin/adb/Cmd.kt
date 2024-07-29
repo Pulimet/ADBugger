@@ -9,18 +9,18 @@ import java.util.stream.Collectors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class Cmd {
+class Cmd(private val processCreation: ProcessCreation) {
     suspend fun execute(command: String, log: ((String) -> Unit)?, path: String) = withContext(Dispatchers.IO) {
-        executeIt(command, log, path)
+        executeAndWait(command, log, path)
     }
 
-    private suspend fun executeIt(command: String, log: ((String) -> Unit)?, path: String) =
+    private suspend fun executeAndWait(command: String, log: ((String) -> Unit)?, path: String) =
         suspendCoroutine { continuation ->
             val result = try {
                 println("Invoking command: $command")
                 log?.invoke(command)
 
-                val process = createProcess(path, command)
+                val process = processCreation.createProcessAndWaitForResult(path, command)
 
                 BufferedReader(InputStreamReader(process.inputStream)).use { reader ->
                     reader.lines().filter { !it.contains("crashdata", ignoreCase = true) }
@@ -41,23 +41,7 @@ class Cmd {
             continuation.resume(result)
         }
 
-
-    private fun createProcess(path: String, command: String): Process {
-        val isWindows = System.getProperty("os.name").startsWith("Windows")
-
-        val processBuilder: ProcessBuilder = if (isWindows) {
-            // Windows-specific configuration
-            ProcessBuilder("cmd", "/c", "${path}$command")
-        } else {
-            // Unix-like configuration
-            ProcessBuilder("/bin/zsh", "-c", "${path}$command")
-        }
-
-        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE)
-        processBuilder.redirectError(ProcessBuilder.Redirect.PIPE)
-
-        val process = processBuilder.start()
-        process.waitFor()
-        return process
+    suspend fun executeAndGetData(command: String, path: String, callback: (String) -> Unit) = withContext(Dispatchers.IO) {
+        processCreation.executeAndGetData(path + command, callback)
     }
 }

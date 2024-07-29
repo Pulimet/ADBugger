@@ -191,6 +191,10 @@ class Adb(private val cmd: Cmd) {
         launchAdb(selectedDevice, Commands.getAdbInstall(pathApk))
     }
 
+    suspend fun logcat() {
+        cmd.executeAndGetData("adb logcat", Commands.getPlatformToolsPath(), log)
+    }
+
     // Private - Launch nonAdb commands
     private suspend fun launchCommandInTerminal(
         command: String,
@@ -220,6 +224,7 @@ class Adb(private val cmd: Cmd) {
         }
     }
 
+
     private suspend fun launchAdbCommand(
         serial: String,
         command: String,
@@ -229,7 +234,6 @@ class Adb(private val cmd: Cmd) {
         log(commandToExecute)
         return cmd.execute(commandToExecute, null, path)
     }
-
 
     // Private - Launch shell commands
     private suspend fun launchAdbShell(selectedTargetsList: List<String>, command: String) {

@@ -2,6 +2,7 @@ package koin
 
 import adb.Adb
 import adb.Cmd
+import adb.ProcessCreation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -12,6 +13,7 @@ import store.AppStore
 fun appModule() = listOf(mainKoinModule)
 
 val mainKoinModule = module {
+    singleOf(::ProcessCreation)
     singleOf(::Cmd)
     singleOf(::Adb)
     singleOf(::AppStore)

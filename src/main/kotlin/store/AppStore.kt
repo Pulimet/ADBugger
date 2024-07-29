@@ -337,6 +337,10 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
+    fun logcat() {
+        launch { adb.logcat() }
+    }
+
     // Logs
     fun clearLogs() {
         setState { copy(logs = arrayListOf()) }
