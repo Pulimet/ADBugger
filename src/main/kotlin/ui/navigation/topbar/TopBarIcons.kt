@@ -27,7 +27,7 @@ import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
 import ui.theme.MyColors
-import ui.widgets.BtnWithText
+import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun TopBarIcons(model: AppStore = koinInject()) {

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.widgets.HoverButton
+import ui.widgets.buttons.HoverButton
 
 // Buffer selection, default: -b main,system,crash,kernel.
 //radio: Views the buffer that contains radio/telephony related messages.

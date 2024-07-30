@@ -14,7 +14,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.widgets.BtnWithText
+import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun EmulatorsTopMenu(model: AppStore = koinInject()) {

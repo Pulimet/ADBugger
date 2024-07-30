@@ -1,4 +1,4 @@
-package ui.widgets
+package ui.widgets.buttons
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
@@ -14,6 +14,9 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
 
+/**
+ * Regular button that changes color on hover.
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HoverButton(enabled: Boolean, onClick: () -> Unit, text: String, modifier: Modifier = Modifier) {

@@ -10,7 +10,7 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.HoverButton
+import ui.widgets.buttons.HoverButton
 
 @Composable
 fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {

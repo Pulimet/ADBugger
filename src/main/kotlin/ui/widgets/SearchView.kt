@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun SearchView(

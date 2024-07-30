@@ -17,7 +17,7 @@ import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.widgets.BtnWithText
+import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun EmulatorItem(emulatorName: String, model: AppStore = koinInject()) {

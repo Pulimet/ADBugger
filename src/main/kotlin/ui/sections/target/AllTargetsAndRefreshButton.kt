@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import model.TargetInfo
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.widgets.BtnWithText
+import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {

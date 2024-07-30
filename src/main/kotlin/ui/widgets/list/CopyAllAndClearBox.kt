@@ -8,7 +8,7 @@ import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
 import compose.icons.evaicons.fill.Copy
 import compose.icons.evaicons.fill.Trash2
-import ui.widgets.BtnWithText
+import ui.widgets.buttons.BtnWithText
 import utils.Clipboard
 import java.awt.Toolkit
 

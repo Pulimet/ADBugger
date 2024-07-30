@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
-import ui.widgets.BtnIcon
+import ui.widgets.buttons.BtnIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

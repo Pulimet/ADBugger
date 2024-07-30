@@ -15,7 +15,7 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
+import ui.widgets.buttons.BtnIcon
 
 @Composable
 fun InputArrows(

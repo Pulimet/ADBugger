@@ -1,4 +1,4 @@
-package ui.widgets
+package ui.widgets.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,6 +21,9 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
 
+/**
+ * Button represented by an icon with text arranged vertically.
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun BtnWithText(

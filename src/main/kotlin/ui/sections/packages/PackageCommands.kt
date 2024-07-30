@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
-import ui.widgets.BtnWithText
+import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun PackageCommands(

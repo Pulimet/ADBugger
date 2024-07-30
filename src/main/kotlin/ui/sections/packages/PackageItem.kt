@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import model.Package
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
+import ui.widgets.buttons.BtnIcon
 
 @Composable
 fun PackageItem(

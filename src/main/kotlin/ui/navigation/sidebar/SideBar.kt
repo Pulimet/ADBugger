@@ -25,7 +25,7 @@ import pref.preference
 import store.AppStore
 import ui.theme.Dimensions
 import ui.theme.MyColors
-import ui.widgets.BtnIcon
+import ui.widgets.buttons.BtnIcon
 
 enum class MenuItemId {
     WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGCAT, LOGS, SETTINGS;

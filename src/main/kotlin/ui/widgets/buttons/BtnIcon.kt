@@ -1,4 +1,4 @@
-package ui.widgets
+package ui.widgets.buttons
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.TooltipArea
@@ -24,6 +24,9 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
 
+/**
+ * Button represented by an icon.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BtnIcon(
