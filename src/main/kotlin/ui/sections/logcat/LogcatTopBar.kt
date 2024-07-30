@@ -7,9 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import compose.icons.TablerIcons
+import compose.icons.tablericons.PlayerPlay
+import compose.icons.tablericons.PlayerStop
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.widgets.buttons.HoverButton
+import ui.widgets.buttons.BtnIcon
 
 // Buffer selection, default: -b main,system,crash,kernel.
 //radio: Views the buffer that contains radio/telephony related messages.
@@ -47,39 +50,21 @@ import ui.widgets.buttons.HoverButton
 //time: Displays the date, invocation time, priority, tag, and PID of the process issuing the message.
 
 @Composable
-fun LogcatCommands(model: AppStore = koinInject()) {
+fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     val isLogcatRunning = model.state.isLogcatRunning
+    val selectedTargetsList = model.state.selectedTargetsList
 
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
-        HoverButton(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            onClick = { model.startStopLogcat() },
-            enabled = true,
-            text = if (isLogcatRunning) "Stop" else "Start"
-        )
 
-        HoverButton(
+        BtnIcon(
+            icon = if (isLogcatRunning) TablerIcons.PlayerStop else TablerIcons.PlayerPlay,
             modifier = Modifier.padding(horizontal = 8.dp),
-            //   adb logcat -d > [path_to_file] // Save the logcat output to a file on the local system.
-            onClick = {},
-            enabled = true,
-            text = "Save to file (-)"
-        )
-        HoverButton(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            //  adb bugreport > [path_to_file] // Will dump the whole device information like dumpstate, dumpsys and logcat output.
-            onClick = {},
-            enabled = true,
-            text = "Bugreport (-)"
-        )
-        HoverButton(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            onClick = {/* adb logcat -c */ },
-            enabled = true,
-            text = "Clear logcat (-)"
+            enabled = selectedTargetsList.size == 1,
+            onClick = { model.startStopLogcat() },
+            description = if (isLogcatRunning) "Stop" else "Start"
         )
     }
 }

@@ -3,6 +3,7 @@ package ui.widgets.list
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import compose.icons.EvaIcons
 import compose.icons.evaicons.Fill
@@ -16,7 +17,8 @@ import java.awt.Toolkit
 fun CopyAllAndClearBox(
     list: List<String>,
     modifier: Modifier = Modifier,
-    onClearClick: () -> Unit
+    buttonWidth: Dp = 60.dp,
+    onClearClick: () -> Unit,
 ) {
     if (list.isNotEmpty()) {
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
@@ -26,13 +28,13 @@ fun CopyAllAndClearBox(
                 icon = EvaIcons.Fill.Copy,
                 onClick = { Clipboard.copyAllLogsToClipboard(clipboard, list) },
                 description = "Copy All",
-                width = 60.dp,
+                width = buttonWidth,
             )
             BtnWithText(
                 icon = EvaIcons.Fill.Trash2,
                 onClick = { onClearClick() },
                 description = "Clear logs",
-                width = 60.dp,
+                width = buttonWidth,
             )
         }
     }
