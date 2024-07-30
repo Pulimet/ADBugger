@@ -1,6 +1,6 @@
 package ui.widgets.list
 
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,7 +21,7 @@ fun CopyAllAndClearBox(
     if (list.isNotEmpty()) {
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
 
-        Row(modifier = modifier) {
+        Column(modifier = modifier) {
             BtnWithText(
                 icon = EvaIcons.Fill.Copy,
                 onClick = { Clipboard.copyAllLogsToClipboard(clipboard, list) },

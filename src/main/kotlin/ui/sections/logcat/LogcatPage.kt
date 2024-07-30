@@ -31,7 +31,7 @@ fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             LogcatCommands()
 
-            Box(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 if (list.isEmpty()) {
                     Text(
                         text = "No logs yet.",

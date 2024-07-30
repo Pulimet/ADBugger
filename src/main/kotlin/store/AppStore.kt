@@ -338,17 +338,25 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
     // Logcat
-    fun startLogcat() {
+    fun startStopLogcat() {
+        if (state.isLogcatRunning) {
+            stopLogcat()
+            return
+        }
         if (state.selectedTargetsList.size != 1) {
             log("Please select only one target to start logcat")
             return
         }
-        logcatJob = launch { adb.logcat(state.selectedTargetsList[0]) { onNewLogcatLine(it) } }
+        setState { copy(isLogcatRunning = true) }
+        logcatJob = launch {
+            adb.logcat(state.selectedTargetsList[0]) { onNewLogcatLine(it) }
+        }
     }
 
-    fun stopLogcat() {
+    private fun stopLogcat() {
         log("Stopping logcat")
         logcatJob?.cancel()
+        setState { copy(isLogcatRunning = false) }
     }
 
     fun clearLocalLogcatLogs() {
@@ -356,7 +364,9 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
     private fun onNewLogcatLine(line: String) {
-        setState { copy(logcatLogs = state.logcatLogs.also { it.add(line) }) }
+        val newList = ArrayList(state.logcatLogs)
+        newList.add(line)
+        setState { copy(logcatLogs = newList) }
     }
 
     // Logs
@@ -392,6 +402,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         val isLogsAlwaysShown: Boolean = false,
         val isFilePickerShown: Boolean = false,
         val adbLogs: ArrayList<String> = arrayListOf(),
-        val logcatLogs: ArrayList<String> = arrayListOf()
+        val logcatLogs: ArrayList<String> = arrayListOf(),
+        val isLogcatRunning: Boolean = false
     )
 }
