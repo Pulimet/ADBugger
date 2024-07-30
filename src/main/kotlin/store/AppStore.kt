@@ -9,6 +9,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.Package
@@ -32,6 +33,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     var state: AppState by mutableStateOf(initialState())
         private set
 
+    private var logcatJob: Job? = null
     private var favoritePackagesPref: List<String> by preference("favoritePackages", emptyList())
     private fun convertToPackageList(list: List<String>) = list.map { Package(it) }
 
@@ -337,8 +339,22 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
-    fun logcat() {
-        launch { adb.logcat() }
+    // Logcat
+    fun startLogcat() {
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to start logcat")
+            return
+        }
+        logcatJob = launch { adb.logcat(state.selectedTargetsList[0]) { onNewLogcatLine(it) } }
+    }
+
+    fun stopLogcat() {
+        log("Stopping logcat")
+        logcatJob?.cancel()
+    }
+
+    private fun onNewLogcatLine(line: String) {
+        log("Print here for now: $line")
     }
 
     // Logs

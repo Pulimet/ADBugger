@@ -27,9 +27,15 @@ fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
             ) {
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    onClick = { model.logcat() },
+                    onClick = { model.startLogcat() },
                     enabled = true,
-                    text = "Logcat"
+                    text = "Start Logcat"
+                )
+                HoverButton(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    onClick = { model.stopLogcat() },
+                    enabled = true,
+                    text = "Stop Logcat"
                 )
                 HoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),

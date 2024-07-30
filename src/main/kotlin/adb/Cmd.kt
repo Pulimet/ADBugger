@@ -41,7 +41,13 @@ class Cmd(private val processCreation: ProcessCreation) {
             continuation.resume(result)
         }
 
-    suspend fun executeAndGetData(command: String, path: String, callback: (String) -> Unit) = withContext(Dispatchers.IO) {
-        processCreation.executeAndGetData(path + command, callback)
+    suspend fun executeAndGetData(
+        command: String, path:
+        String,
+        log: (String) -> Unit,
+        logcatCallback: (String) -> Unit
+    ) = withContext(Dispatchers.IO) {
+        log.invoke(command)
+        processCreation.executeAndGetData(path + command, logcatCallback)
     }
 }

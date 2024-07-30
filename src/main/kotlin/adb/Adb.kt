@@ -103,44 +103,44 @@ class Adb(private val cmd: Cmd) {
         }
     }
 
-    suspend fun setDarkModeOff(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getDarkModeOff())
+    suspend fun setDarkModeOff(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getDarkModeOff())
     }
 
-    suspend fun setDarkModeOn(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getDarkModeOn())
+    suspend fun setDarkModeOn(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getDarkModeOn())
     }
 
-    suspend fun pressUp(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getUp())
+    suspend fun pressUp(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getUp())
     }
 
-    suspend fun pressDown(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getDown())
+    suspend fun pressDown(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getDown())
     }
 
-    suspend fun pressLeft(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getLeft())
+    suspend fun pressLeft(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getLeft())
     }
 
-    suspend fun pressRight(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getRight())
+    suspend fun pressRight(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getRight())
     }
 
-    suspend fun pressDelete(selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getDelete())
+    suspend fun pressDelete(selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getDelete())
     }
 
-    suspend fun sendText(selectedDevice: List<String>, value: String) {
-        launchAdbShell(selectedDevice, Commands.sendTextCommand(value))
+    suspend fun sendText(selectedTarget: List<String>, value: String) {
+        launchAdbShell(selectedTarget, Commands.sendTextCommand(value))
     }
 
-    suspend fun sendInput(selectedDevice: List<String>, value: Int) {
-        launchAdbShell(selectedDevice, Commands.sendInputCommand(value))
+    suspend fun sendInput(selectedTarget: List<String>, value: Int) {
+        launchAdbShell(selectedTarget, Commands.sendInputCommand(value))
     }
 
-    suspend fun sendInputNum(selectedDevice: List<String>, num: Int) {
-        launchAdbShell(selectedDevice, Commands.sendInputCommand((num + 7)))
+    suspend fun sendInputNum(selectedTarget: List<String>, num: Int) {
+        launchAdbShell(selectedTarget, Commands.sendInputCommand((num + 7)))
     }
 
     suspend fun reversePort(port: Int) {
@@ -159,16 +159,16 @@ class Adb(private val cmd: Cmd) {
         }
     }
 
-    suspend fun removeAllPermissions(selectedDevice: List<String>, selectedPackage: String) {
-        launchAdbShell(selectedDevice, Commands.getRevokeAllPermissions(selectedPackage))
+    suspend fun removeAllPermissions(selectedTarget: List<String>, selectedPackage: String) {
+        launchAdbShell(selectedTarget, Commands.getRevokeAllPermissions(selectedPackage))
     }
 
-    suspend fun addPermission(selectedDevice: List<String>, permission: String, selectedPackage: String) {
-        launchAdbShell(selectedDevice, Commands.addSpecificPermission(selectedPackage, permission))
+    suspend fun addPermission(selectedTarget: List<String>, permission: String, selectedPackage: String) {
+        launchAdbShell(selectedTarget, Commands.addSpecificPermission(selectedPackage, permission))
     }
 
-    suspend fun removePermission(selectedDevice: List<String>, permission: String, selectedPackage: String) {
-        launchAdbShell(selectedDevice, Commands.revokeSpecificPermission(selectedPackage, permission))
+    suspend fun removePermission(selectedTarget: List<String>, permission: String, selectedPackage: String) {
+        launchAdbShell(selectedTarget, Commands.revokeSpecificPermission(selectedPackage, permission))
     }
 
     suspend fun getPermissions(selectedTargetsList: List<String>, selectedPackage: String) {
@@ -178,21 +178,22 @@ class Adb(private val cmd: Cmd) {
         }
     }
 
-    suspend fun changeFontSize(d: Double, selectedDevice: List<String>) {
-        launchAdbShell(selectedDevice, Commands.getChangeFontSize(d))
+    suspend fun changeFontSize(d: Double, selectedTarget: List<String>) {
+        launchAdbShell(selectedTarget, Commands.getChangeFontSize(d))
     }
 
-    suspend fun changeDisplayDensity(density: Int, selectedDevice: List<String>) {
+    suspend fun changeDisplayDensity(density: Int, selectedTarget: List<String>) {
         val d = if (density == 0) "reset" else "$density"
-        launchAdbShell(selectedDevice, Commands.getChangeDisplayDensity(d))
+        launchAdbShell(selectedTarget, Commands.getChangeDisplayDensity(d))
     }
 
-    suspend fun installApk(pathApk: String, selectedDevice: List<String>) {
-        launchAdb(selectedDevice, Commands.getAdbInstall(pathApk))
+    suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
+        launchAdb(selectedTarget, Commands.getAdbInstall(pathApk))
     }
 
-    suspend fun logcat() {
-        cmd.executeAndGetData("adb logcat", Commands.getPlatformToolsPath(), log)
+    suspend fun logcat(selectedTarget: String, logcatCallback: (String) -> Unit) {
+        val command = "adb -s $selectedTarget logcat"
+        cmd.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
     }
 
     // Private - Launch nonAdb commands

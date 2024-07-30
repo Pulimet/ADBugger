@@ -1,5 +1,9 @@
 package adb
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -15,7 +19,10 @@ class ProcessCreation {
         return process
     }
 
-    fun executeAndGetData(pathAndCommand: String, callback: (String) -> Unit) {
+    suspend fun executeAndGetData(
+        pathAndCommand: String,
+        callback: (String) -> Unit,
+    ) = withContext(Dispatchers.IO) {
         val processBuilder = createProcessBuilder(pathAndCommand)
         val process = processBuilder.start()
 
@@ -23,6 +30,11 @@ class ProcessCreation {
         try {
             for (line in reader.lines()) {
                 callback(line)
+                if (isActive.not()) {
+                    process.destroy()
+                    break
+                }
+                yield() // Check for cancellation and give up control
             }
         } catch (e: Exception) {
             println("Error executing command: $pathAndCommand")
