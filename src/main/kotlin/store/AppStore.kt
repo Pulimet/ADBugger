@@ -105,11 +105,9 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
     }
 
-
     fun onPackageClick(pckg: Package) {
         setState { copy(selectedPackage = pckg.name) }
     }
-
 
     fun onOpenClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
@@ -353,19 +351,23 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         logcatJob?.cancel()
     }
 
+    fun clearLocalLogcatLogs() {
+        setState { copy(logcatLogs = arrayListOf()) }
+    }
+
     private fun onNewLogcatLine(line: String) {
-        log("Print here for now: $line")
+        setState { copy(logcatLogs = state.logcatLogs.also { it.add(line) }) }
     }
 
     // Logs
-    fun clearLogs() {
-        setState { copy(logs = arrayListOf()) }
+    fun clearAdbLogs() {
+        setState { copy(adbLogs = arrayListOf()) }
     }
 
     private fun log(log: String) {
-        val newList = ArrayList(state.logs)
+        val newList = ArrayList(state.adbLogs)
         newList.add(log)
-        setState { copy(logs = newList) }
+        setState { copy(adbLogs = newList) }
     }
 
     // Private
@@ -389,6 +391,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         val isUserForwardInputEnabled: Boolean = false,
         val isLogsAlwaysShown: Boolean = false,
         val isFilePickerShown: Boolean = false,
-        val logs: ArrayList<String> = arrayListOf()
+        val adbLogs: ArrayList<String> = arrayListOf(),
+        val logcatLogs: ArrayList<String> = arrayListOf()
     )
 }

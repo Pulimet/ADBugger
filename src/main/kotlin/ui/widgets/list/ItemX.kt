@@ -1,4 +1,4 @@
-package ui.sections.adblogs
+package ui.widgets.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +14,12 @@ import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.StringSelection
 
 @Composable
-fun AdbLogItem(log: String, clipboard: Clipboard) {
+fun ItemX(title: String, clipboard: Clipboard?) {
     SelectionContainer {
         Text(
-            text = log,
+            text = title,
             modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 120.dp).clickable {
-                clipboard.setContents(StringSelection(log), null)
+                clipboard?.setContents(StringSelection(title), null)
             },
             color = Color.White,
             fontSize = 12.sp

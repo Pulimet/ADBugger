@@ -1,4 +1,4 @@
-package ui.sections.adblogs
+package ui.widgets.list
 
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.Box
@@ -11,29 +11,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.koin.compose.koinInject
-import store.AppStore
-import java.awt.datatransfer.Clipboard
+import java.awt.Toolkit
 
 @Composable
-fun AdbLogList(clipboard: Clipboard, model: AppStore = koinInject()) {
-    val logsList = model.state.logs
+fun ListX(list: List<String>) {
+    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
     val listState = rememberLazyListState()
 
-    LaunchedEffect(logsList) {
-        if (logsList.size > 2) {
-            listState.scrollToItem(logsList.size - 1)
+    LaunchedEffect(list) {
+        if (list.size > 2) {
+            listState.scrollToItem(list.size - 1)
         }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
         LazyColumn(state = listState) {
-            items(logsList) { item ->
-                AdbLogItem(item, clipboard)
+            items(list) { item ->
+                ItemX(item, clipboard)
             }
         }
-        if (logsList.size > 2) {
+        if (list.size > 2) {
             VerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 adapter = rememberScrollbarAdapter(
