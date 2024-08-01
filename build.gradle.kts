@@ -50,11 +50,12 @@ compose.desktop {
             obfuscate.set(false)
             optimize.set(false)
             configurationFiles.from(project.file("rules.pro"))
+            // joinOutputJars.set(true)
         }
 
         nativeDistributions {
             outputBaseDir.set(project.buildDir.resolve("output"))
-            targetFormats(TargetFormat.Dmg/*, TargetFormat.Msi*/)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi)
             packageName = "ADBugger"
             packageVersion = appVersion
             description = "ADBugger is a tool for Android Developers to debug their apps on real devices and emulators."
@@ -81,7 +82,39 @@ compose.desktop {
                 //Icon
                 val iconsRoot = project.file("src/main/resources")
                 iconFile.set(iconsRoot.resolve("macos.icns"))
+
+                // Extra keys for Info.plist
+                // infoPlist {
+                //    extraKeysRawXml = macExtraPlistKeysExample
+                //}
+            }
+            windows {
+                // a version for all Windows distributables
+                packageVersion = appVersion
+                // a version only for the msi package
+                msiPackageVersion = appVersion
+                // a version only for the exe package
+                exePackageVersion = appVersion
+
+                // Icon
+                // val iconsRoot = project.file("src/main/resources")
+                // iconFile.set(project.file("icon.ico"))
             }
         }
     }
 }
+
+val macExtraPlistKeysExample: String
+    get() = """
+      <key>CFBundleURLTypes</key>
+      <array>
+        <dict>
+          <key>CFBundleURLName</key>
+          <string>Example deep link</string>
+          <key>CFBundleURLSchemes</key>
+          <array>
+            <string>compose</string>
+          </array>
+        </dict>
+      </array>
+    """
