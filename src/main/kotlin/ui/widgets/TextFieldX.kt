@@ -1,6 +1,5 @@
 package ui.widgets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
@@ -20,14 +19,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ui.theme.MyColors
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TextFieldX(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
-    modifier: Modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp),
+    modifier: Modifier = Modifier,
     label: String = "",
     enabled: Boolean = true,
     singleLine: Boolean = true,

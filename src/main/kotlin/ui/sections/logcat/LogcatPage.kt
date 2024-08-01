@@ -5,6 +5,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +18,7 @@ import ui.widgets.list.ListX
 
 @Composable
 fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
+    val searchQuery = remember { mutableStateOf("") }
 
     Card(
         backgroundColor = MyColors.bg2,
@@ -27,7 +30,7 @@ fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
 
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Column(modifier = Modifier.weight(0.8f)) {
-                LogcatTopBar()
+                LogcatTopBar { searchQuery.value = it }
                 Box(modifier = Modifier.fillMaxSize()) {
                     if (list.isEmpty()) {
                         Text(
@@ -38,7 +41,7 @@ fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                         )
                     }
 
-                    ListX(list)
+                    ListX(list, searchQuery.value)
                 }
             }
             LogcatSideBar(list)

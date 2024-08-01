@@ -23,7 +23,11 @@ import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnIcon
 
 @Composable
-fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
+fun LogcatTopBar(
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject(),
+    onSearchQueryChange: (String) -> Unit
+) {
     val isLogcatRunning = model.state.isLogcatRunning
     val selectedTargetsList = model.state.selectedTargetsList
 
@@ -31,6 +35,7 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
     val selectedFormat = remember { mutableStateOf("threadtime") }
     val selectedPriorityLevel = remember { mutableStateOf("V") }
     var tagTextField by remember { mutableStateOf(TextFieldValue("")) }
+    var searchTextField by remember { mutableStateOf(TextFieldValue("")) }
 
     val command = Commands.getLogCatCommand(
         if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
@@ -63,6 +68,17 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                 value = tagTextField,
                 onValueChange = { newText -> tagTextField = newText },
                 label = "Tag",
+                modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp)
+            )
+
+            TextFieldX(
+                value = searchTextField,
+                onValueChange = { newText ->
+                    searchTextField = newText
+                    onSearchQueryChange(newText.text)
+                },
+                label = "Search",
+                modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp, start = 16.dp)
             )
 
             BtnIcon(
@@ -88,6 +104,4 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
             modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
         )
     }
-
-    //  TODO Add query filter
 }

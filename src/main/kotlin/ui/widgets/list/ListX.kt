@@ -14,24 +14,26 @@ import androidx.compose.ui.Modifier
 import java.awt.Toolkit
 
 @Composable
-fun ListX(list: List<String>) {
+fun ListX(list: List<String>, filter: String? = null) {
     val clipboard = Toolkit.getDefaultToolkit().systemClipboard
     val listState = rememberLazyListState()
 
+    val items = list.filter { filter == null || it.contains(filter, ignoreCase = true) }
+
     LaunchedEffect(list) {
-        if (list.size > 2) {
-            listState.scrollToItem(list.size - 1)
+        if (items.size > 2) {
+            listState.scrollToItem(items.size - 1)
         }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
         LazyColumn(state = listState) {
-            items(list) { item ->
+            items(items) { item ->
                 ItemX(item, clipboard)
             }
         }
-        if (list.size > 2) {
+        if (items.size > 2) {
             VerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd),
                 adapter = rememberScrollbarAdapter(
