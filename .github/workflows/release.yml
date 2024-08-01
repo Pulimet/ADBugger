@@ -56,11 +56,20 @@ jobs:
 
       - run: ./gradlew --stacktrace --scan packageReleaseDmg  # Runs the Gradle task to create a release version of DMG file
 
-      - name: Upload Artifact
+      - run: ./gradlew --stacktrace --scan packageReleaseMsi  # Runs the Gradle task to create a release version of MSI file
+
+      - name: Upload DMG Artifact
         uses: actions/upload-artifact@v4  # Uses the upload-artifact action to upload the DMG file
         with:
           name: ADBugger-dmg  # Name of the artifact
           path: build/output/main-release/dmg/ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
+
+      - name: Upload MSI Artifact
+        uses: actions/upload-artifact@v4  # Uses the upload-artifact action to upload the MSI file
+        with:
+          name: ADBugger-msi  # Name of the artifact
+          path: build/output/main-release/dmg/ADBugger-${{ env.VERSION }}.msi  # Path to the MSI file, using the version input
+
 
   # A separate job to handle the release process
   release:
@@ -82,10 +91,16 @@ jobs:
       - name: Use Version
         run: echo "Using version ${{ env.VERSION }}"  # Prints the version being used
 
-      - name: Download Artifact
+      - name: Download Artifact DMG
         uses: actions/download-artifact@v4  # Uses the download-artifact action to download the previously uploaded DMG file
         with:
           name: ADBugger-dmg  # Name of the artifact to download
+          path: ./  # Path to download the artifact to
+
+      - name: Download Artifact MSI
+        uses: actions/download-artifact@v4  # Uses the download-artifact action to download the previously uploaded MSI file
+        with:
+          name: ADBugger-msi  # Name of the artifact to download
           path: ./  # Path to download the artifact to
 
       - name: Create GitHub Release
@@ -99,13 +114,23 @@ jobs:
           draft: false  # Specifies that the release is not a draft
           prerelease: false  # Specifies that the release is not a prerelease
 
-      - name: Upload Release Asset
+      - name: Upload Release Asset DMG
         id: upload_release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
           name: Release v${{ env.VERSION }}  # Name of the release, using the version input
           files: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
+
+      - name: Upload Release Asset MSI
+        id: upload_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
+          name: Release v${{ env.VERSION }}  # Name of the release, using the version input
+          files: ./ADBugger-${{ env.VERSION }}.msi  # Path to the MSI file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
 
