@@ -8,12 +8,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import compose.icons.TablerIcons
@@ -23,6 +22,7 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.MyColors
 import ui.widgets.Dropdown
+import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnIcon
 
 @Composable
@@ -33,6 +33,7 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
     val selectedBuffer = remember { mutableStateOf("default") }
     val selectedFormat = remember { mutableStateOf("threadtime") }
     val selectedPriorityLevel = remember { mutableStateOf("V") }
+    var tagTextField by remember { mutableStateOf(TextFieldValue("")) }
 
     val command = Commands.getLogCatCommand(
         if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
@@ -44,7 +45,7 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
     Row(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth().background(MyColors.bg).padding(horizontal = 8.dp)
+        modifier = modifier.fillMaxWidth().background(MyColors.bg).padding(horizontal = 8.dp, vertical = 2.dp)
     ) {
 
         Dropdown(
@@ -64,6 +65,12 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
             optionsDetails = Logcat.priorityLevelListDetails,
             title = "Level",
             onOptionSelected = { selectedPriorityLevel.value = it }
+        )
+
+        TextFieldX(
+            value = tagTextField,
+            onValueChange = { newText -> tagTextField = newText },
+            label = "Tag",
         )
 
         BtnIcon(
@@ -88,4 +95,3 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
     //  TODO Add tag filter
     //  TODO Add query filter
 }
-
