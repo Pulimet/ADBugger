@@ -1,5 +1,6 @@
 package ui.sections.emulator
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,13 +15,14 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.theme.MyColors
 import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun EmulatorsTopMenu(model: AppStore = koinInject()) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().background(MyColors.bg).padding(vertical = 8.dp)
     ) {
         BtnWithText(
             icon = Icons.Rounded.Refresh,

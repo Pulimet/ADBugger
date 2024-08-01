@@ -1,5 +1,6 @@
 package ui.sections.target
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import model.TargetInfo
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.theme.MyColors
 import ui.widgets.buttons.BtnWithText
 
 @Composable
@@ -21,7 +23,7 @@ fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().background(MyColors.bg).padding(vertical = 8.dp)
     ) {
         val allDevices = TargetInfo(AppStore.ALL_DEVICES, "All Devices")
         TargetItem(
