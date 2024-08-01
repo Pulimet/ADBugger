@@ -115,7 +115,7 @@ jobs:
           prerelease: false  # Specifies that the release is not a prerelease
 
       - name: Upload Release Asset DMG
-        id: upload_release
+        id: upload_release_dmg
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
@@ -125,7 +125,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
 
       - name: Upload Release Asset MSI
-        id: upload_release
+        id: upload_release_msi
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
