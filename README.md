@@ -6,6 +6,10 @@ ADBugger is a desktop tool for debugging and QA of Android devices and emulators
 
 **Release notes:**
 
+Version 1.0.3
+- New Logcat section with the ability to filter logs by priority and tag.
+- Support multiple target selection for executing commands.
+
 Version 1.0.2
 - Added support for installing APKs selected through the file picker.
 - Enabled the addition of package names to favorites, which can now be viewed in a separate tab.

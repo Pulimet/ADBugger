@@ -56,12 +56,16 @@ fun WelcomePage(modifier: Modifier = Modifier) {
                 color = Color.LightGray,
                 modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
             )
+            Version("Version 1.0.3 (01 August 2024)", desc1_0_3)
             Version("Version 1.0.2 (23 July 2024)", desc1_0_2)
             Version("Version 1.0.1 (17 July 2024)", desc1_0_1)
             Version("Version 1.0.0 (16 July 2024)", desc1_0_0)
         }
     }
 }
+
+const val desc1_0_3 = "New Logcat section with the ability to filter logs by priority and tag\n" +
+        "Support multiple target selection for executing commands."
 
 const val desc1_0_2 = "- Support installing APK chosen with file picker\n" +
         "- Allow to add package names to favorites and to view them in separate tab"
