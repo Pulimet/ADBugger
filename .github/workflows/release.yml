@@ -28,13 +28,14 @@ jobs:
       - name: Determine Version
         id: determine_version
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV  # Sets the VERSION environment variable for workflow_dispatch
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            TAG_NAME=${{ github.ref_name }}
-            VERSION=${TAG_NAME#v}  # Removes the 'v' prefix from the tag name to get the version
-            echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Sets the VERSION environment variable for push
-          fi
+          if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') {
+            echo "VERSION=${{ github.event.inputs.version }}" >> $env:GITHUB_ENV  # Sets the VERSION environment variable for workflow_dispatch
+          } elseif ($env:GITHUB_EVENT_NAME -eq 'push') {
+            $TAG_NAME = "${{ github.ref_name }}"
+            $VERSION = $TAG_NAME -replace '^v', ''  # Removes the 'v' prefix from the tag name to get the version
+            echo "VERSION=${VERSION}" >> $env:GITHUB_ENV  # Sets the VERSION environment variable for push
+          }
+        shell: pwsh
 
       - name: Use Version
         run: echo "Using version ${{ env.VERSION }}"  # Prints the version being used
@@ -80,7 +81,7 @@ jobs:
             if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch') {
               Write-Host 'VERSION=' + $env:GITHUB_EVENT.inputs.version | Out-File -FilePath $env:GITHUB_ENV -Append
             } elseif ($env:GITHUB_EVENT_NAME -eq 'push') {
-              $TAG_NAME = 'master'
+              $TAG_NAME = 'master'  # You might want to replace 'master' with a more specific tag or branch
               $VERSION = $TAG_NAME.Substring(1)
               Write-Host 'VERSION=' + $VERSION | Out-File -FilePath $env:GITHUB_ENV -Append
             }
