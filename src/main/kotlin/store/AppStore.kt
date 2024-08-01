@@ -28,7 +28,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         const val EMULATOR_NONE = "Emulator not selected"
     }
 
-    val version = "1.0.2"
+    val version = "1.0.3"
 
     var state: AppState by mutableStateOf(initialState())
         private set
