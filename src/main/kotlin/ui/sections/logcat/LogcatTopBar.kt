@@ -84,5 +84,7 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         )
 
     }
+
+    //  TODO Add query filter
 }
 

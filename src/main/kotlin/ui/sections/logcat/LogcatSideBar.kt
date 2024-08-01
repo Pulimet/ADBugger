@@ -41,7 +41,7 @@ fun LogcatSideBar(
         )
         BtnWithText(
             icon = EvaIcons.Fill.PersonDelete,
-            onClick = {/* adb logcat -c */ },
+            onClick = { model.clearTargetLogcatLogs() },
             description = "Clear logcat",
             width = 120.dp,
         )

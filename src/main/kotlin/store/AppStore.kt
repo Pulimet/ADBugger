@@ -369,6 +369,14 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         setState { copy(logcatLogs = newList) }
     }
 
+    fun clearTargetLogcatLogs() {
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to clear logcat")
+            return
+        }
+        launch { adb.clearLogcat(state.selectedTargetsList[0]) }
+    }
+
     // Logs
     fun clearAdbLogs() {
         setState { copy(adbLogs = arrayListOf()) }

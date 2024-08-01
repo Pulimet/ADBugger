@@ -202,6 +202,10 @@ class Adb(private val cmd: Cmd) {
         cmd.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
     }
 
+    suspend fun clearLogcat(selectedTarget: String) {
+        launchAdbCommand(selectedTarget, "logcat -c")
+    }
+
     // Private - Launch nonAdb commands
     private suspend fun launchCommandInTerminal(
         command: String,
@@ -225,12 +229,12 @@ class Adb(private val cmd: Cmd) {
         }
     }
 
+
     private suspend fun launchAdbOnAllDevices(command: String, path: String = Commands.getPlatformToolsPath()) {
         devicesInfo().forEach {
             launchAdbCommand(it.serial, command, path)
         }
     }
-
 
     private suspend fun launchAdbCommand(
         serial: String,
