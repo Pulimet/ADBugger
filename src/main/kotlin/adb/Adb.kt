@@ -195,9 +195,10 @@ class Adb(private val cmd: Cmd) {
         selectedTarget: String,
         buffer: String,
         format: String,
+        priorityLevel: String,
         logcatCallback: (String) -> Unit
     ) {
-        val command = Commands.getLogCatCommand(selectedTarget, buffer, format)
+        val command = Commands.getLogCatCommand(selectedTarget, buffer, format, priorityLevel)
         cmd.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
     }
 

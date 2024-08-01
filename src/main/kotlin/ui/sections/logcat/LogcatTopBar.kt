@@ -25,22 +25,6 @@ import ui.theme.MyColors
 import ui.widgets.Dropdown
 import ui.widgets.buttons.BtnIcon
 
-
-// Tags selection, default: *:V
-
-// adb logcat "*:I"
-// adb logcat "tagName:I"
-// adb logcat ActivityManager:I MyApp:D *:S
-
-// The priority is one of the following character values, ordered from lowest to highest priority:
-//V: Verbose (lowest priority)
-//D: Debug
-//I: Info
-//W: Warning
-//E: Error
-//F: Fatal
-//S: Silent (highest priority, where nothing is ever printed)
-
 @Composable
 fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     val isLogcatRunning = model.state.isLogcatRunning
@@ -48,10 +32,13 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
 
     val selectedBuffer = remember { mutableStateOf("default") }
     val selectedFormat = remember { mutableStateOf("threadtime") }
+    val selectedPriorityLevel = remember { mutableStateOf("V") }
+
     val command = Commands.getLogCatCommand(
         if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
         selectedBuffer.value,
-        selectedFormat.value
+        selectedFormat.value,
+        selectedPriorityLevel.value
     )
 
     Row(
@@ -68,8 +55,15 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         )
         Dropdown(
             options = Logcat.formatLst,
+            optionsDetails = Logcat.formatLstDetails,
             title = "Format",
             onOptionSelected = { selectedFormat.value = it }
+        )
+        Dropdown(
+            options = Logcat.priorityLevelList,
+            optionsDetails = Logcat.priorityLevelListDetails,
+            title = "Level",
+            onOptionSelected = { selectedPriorityLevel.value = it }
         )
 
         BtnIcon(
@@ -77,7 +71,7 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
             modifier = Modifier.padding(horizontal = 8.dp),
             enabled = selectedTargetsList.size == 1,
             onClick = {
-                model.startStopLogcat(selectedBuffer.value, selectedFormat.value)
+                model.startStopLogcat(selectedBuffer.value, selectedFormat.value, selectedPriorityLevel.value)
             },
             description = if (isLogcatRunning) "Stop" else "Start"
         )

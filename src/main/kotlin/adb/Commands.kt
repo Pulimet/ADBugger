@@ -56,11 +56,12 @@ object Commands {
     fun getGrantedPermissions(packageName: String) =
         "dumpsys package $packageName | grep permission | grep granted=true"
 
-    fun getLogCatCommand(selectedTarget: String, buffer: String, format: String): String {
+    fun getLogCatCommand(selectedTarget: String, buffer: String, format: String, priorityLevel: String): String {
         val s = if (selectedTarget.isEmpty()) "" else " -s $selectedTarget"
         val b = if (buffer.isEmpty() || buffer == "default") "" else " -b $buffer"
         val v = if (format.isEmpty() || format == "threadtime") "" else " -v $format"
-        return "adb$s logcat$b$v"
+        val p = if (priorityLevel.isEmpty() || priorityLevel == "V") "" else " \"*:$priorityLevel\""
+        return "adb$s logcat$b$v$p"
     }
 
     // Path

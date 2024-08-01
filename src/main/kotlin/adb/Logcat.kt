@@ -35,4 +35,36 @@ object Logcat {
         "thread", // A legacy format that shows priority, PID, and TID of the thread issuing the message.
         "time" // Displays the date, invocation time, priority, tag, and PID of the process issuing the message
     )
+
+    val formatLstDetails = listOf(
+        "Displays: date, invocation time, priority, tag, PID, and TID",
+        "Displays: priority, tag, and PID",
+        "Displays all metadata fields and separate messages with blank lines.",
+        "Displays PID only.",
+        "Displays the raw log message with no other metadata fields.",
+        "Displays: priority and tag only.",
+        "A legacy format that shows priority, PID, and TID",
+        "Displays: date, invocation time, priority, tag, and PID",
+    )
+
+    // Tags selection, default: *:V // adb logcat "*:I" // adb logcat "tagName:I"
+    // adb logcat ActivityManager:I tagName:D *:S
+    // "S" - Silent (highest priority, where nothing is ever printed)
+    val priorityLevelList = listOf(
+        "V", // Verbose - default
+        "D", // Debug
+        "I", // Info
+        "W", // Warning
+        "E", // Error
+        "F", // Fatal
+    )
+
+    val priorityLevelListDetails = listOf(
+        "Verbose",
+        "Debug",
+        "Info",
+        "Warning",
+        "Error",
+        "Fatal",
+    )
 }
