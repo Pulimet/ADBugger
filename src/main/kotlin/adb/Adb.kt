@@ -191,8 +191,13 @@ class Adb(private val cmd: Cmd) {
         launchAdb(selectedTarget, Commands.getAdbInstall(pathApk))
     }
 
-    suspend fun logcat(selectedTarget: String, logcatCallback: (String) -> Unit) {
-        val command = "adb -s $selectedTarget logcat"
+    suspend fun logcat(
+        selectedTarget: String,
+        buffer: String,
+        format: String,
+        logcatCallback: (String) -> Unit
+    ) {
+        val command = Commands.getLogCatCommand(selectedTarget, buffer, format)
         cmd.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
     }
 

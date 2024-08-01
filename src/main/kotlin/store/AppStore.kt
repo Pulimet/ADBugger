@@ -338,7 +338,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     }
 
     // Logcat
-    fun startStopLogcat() {
+    fun startStopLogcat(buffer: String, format: String) {
         if (state.isLogcatRunning) {
             stopLogcat()
             return
@@ -349,7 +349,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         setState { copy(isLogcatRunning = true) }
         logcatJob = launch {
-            adb.logcat(state.selectedTargetsList[0]) { onNewLogcatLine(it) }
+            adb.logcat(state.selectedTargetsList[0], buffer, format) { onNewLogcatLine(it) }
         }
     }
 

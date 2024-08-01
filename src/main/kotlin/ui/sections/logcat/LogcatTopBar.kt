@@ -1,27 +1,30 @@
 package ui.sections.logcat
 
+import adb.Commands
+import adb.Logcat
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.PlayerPlay
 import compose.icons.tablericons.PlayerStop
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.theme.MyColors
+import ui.widgets.Dropdown
 import ui.widgets.buttons.BtnIcon
 
-// Buffer selection, default: -b main,system,crash,kernel.
-//radio: Views the buffer that contains radio/telephony related messages.
-//events: Views the interpreted binary system event buffer messages.
-//main: Views the main log buffer (default), which doesn't contain system and crash log messages.
-//system: Views the system log buffer (default).
-//crash: Views the crash log buffer (default).
-//all: Views all buffers.
-//default: Reports main, system, and crash buffers.
 
 // Tags selection, default: *:V
 
@@ -38,33 +41,54 @@ import ui.widgets.buttons.BtnIcon
 //F: Fatal
 //S: Silent (highest priority, where nothing is ever printed)
 
-// adb logcat "*:W" -v brief output
-// Only one could be selected
-//brief: Displays priority, tag, and PID of the process issuing the message.
-//long: Displays all metadata fields and separate messages with blank lines.
-//process: Displays PID only.
-//raw: Displays the raw log message with no other metadata fields.
-//tag: Displays the priority and tag only.
-//thread: A legacy format that shows priority, PID, and TID of the thread issuing the message.
-//threadtime (default): Displays the date, invocation time, priority, tag, PID, and TID of the thread issuing the message.
-//time: Displays the date, invocation time, priority, tag, and PID of the process issuing the message.
-
 @Composable
 fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     val isLogcatRunning = model.state.isLogcatRunning
     val selectedTargetsList = model.state.selectedTargetsList
 
+    val selectedBuffer = remember { mutableStateOf("default") }
+    val selectedFormat = remember { mutableStateOf("threadtime") }
+    val command = Commands.getLogCatCommand(
+        if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
+        selectedBuffer.value,
+        selectedFormat.value
+    )
+
     Row(
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = modifier.fillMaxWidth()
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.fillMaxWidth().background(MyColors.bg).padding(horizontal = 8.dp)
     ) {
+
+        Dropdown(
+            options = Logcat.bufferList,
+            optionsDetails = Logcat.bufferListDetails,
+            title = "Buffer",
+            onOptionSelected = { selectedBuffer.value = it }
+        )
+        Dropdown(
+            options = Logcat.formatLst,
+            title = "Format",
+            onOptionSelected = { selectedFormat.value = it }
+        )
 
         BtnIcon(
             icon = if (isLogcatRunning) TablerIcons.PlayerStop else TablerIcons.PlayerPlay,
             modifier = Modifier.padding(horizontal = 8.dp),
             enabled = selectedTargetsList.size == 1,
-            onClick = { model.startStopLogcat() },
+            onClick = {
+                model.startStopLogcat(selectedBuffer.value, selectedFormat.value)
+            },
             description = if (isLogcatRunning) "Stop" else "Start"
         )
+
+        Text(
+            text = command,
+            fontSize = 12.sp,
+            color = Color.LightGray,
+            modifier = Modifier.padding(start = 16.dp, bottom = 2.dp)
+        )
+
     }
 }
+
