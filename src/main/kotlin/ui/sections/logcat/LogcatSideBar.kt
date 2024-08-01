@@ -25,20 +25,21 @@ fun LogcatSideBar(
         CopyAllAndClearBox(list, buttonWidth = 120.dp) {
             model.clearLocalLogcatLogs()
         }
+
         BtnWithText(
             icon = EvaIcons.Fill.Save,
-            //   adb logcat -d > [path_to_file] // Save the logcat output to a file on the local system.
-            onClick = {},
-            description = "Save to file",
+            onClick = {model.saveLogcatLogsToDesktop()},
+            description = "Save Logs",
             width = 120.dp,
         )
+
         BtnWithText(
             icon = EvaIcons.Fill.FileAdd,
-            //  adb bugreport > [path_to_file] // Will dump the whole device information like dumpstate, dumpsys and logcat output.
-            onClick = {},
-            description = "Bugreport",
+            onClick = {model.saveBugreport()},
+            description = "Save Bugreport",
             width = 120.dp,
         )
+
         BtnWithText(
             icon = EvaIcons.Fill.PersonDelete,
             onClick = { model.clearTargetLogcatLogs() },

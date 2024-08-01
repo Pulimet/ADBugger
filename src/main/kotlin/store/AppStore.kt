@@ -377,6 +377,22 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         launch { adb.clearLogcat(state.selectedTargetsList[0]) }
     }
 
+    fun saveLogcatLogsToDesktop() {
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to save the logs")
+            return
+        }
+        launch { adb.saveLogcatToDesktop(state.selectedTargetsList[0]) }
+    }
+
+    fun saveBugreport() {
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to save bugreport")
+            return
+        }
+        launch { adb.saveBugReport(state.selectedTargetsList[0]) }
+    }
+
     // Logs
     fun clearAdbLogs() {
         setState { copy(adbLogs = arrayListOf()) }

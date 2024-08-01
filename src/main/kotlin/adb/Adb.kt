@@ -206,6 +206,16 @@ class Adb(private val cmd: Cmd) {
         launchAdbCommand(selectedTarget, "logcat -c")
     }
 
+    suspend fun saveLogcatToDesktop(selectedTarget: String) {
+        launchAdbCommand(selectedTarget, "logcat -d > ~/Desktop/logs_$selectedTarget.txt")
+    }
+
+    suspend fun saveBugReport(selectedTarget: String) {
+        val fileName = "bugreport_$selectedTarget"
+        launchAdbCommand(selectedTarget, "bugreport ~/Desktop/$fileName.zip")
+    }
+
+
     // Private - Launch nonAdb commands
     private suspend fun launchCommandInTerminal(
         command: String,
@@ -228,7 +238,6 @@ class Adb(private val cmd: Cmd) {
             }
         }
     }
-
 
     private suspend fun launchAdbOnAllDevices(command: String, path: String = Commands.getPlatformToolsPath()) {
         devicesInfo().forEach {
