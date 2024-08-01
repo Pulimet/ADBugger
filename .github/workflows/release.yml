@@ -113,7 +113,7 @@ jobs:
 
   # A separate job to handle the release process
   release:
-    needs: build  # Specifies that this job depends on the successful completion of the build job
+    needs: [ build_macos, build_win ]  # Specifies that this job depends on the successful completion of the build job
     runs-on: ubuntu-latest  # Specifies that the job runs on an Ubuntu runner
 
     steps:
