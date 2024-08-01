@@ -63,6 +63,8 @@ compose.desktop {
             vendor = "Alexey Korolev"
             // licenseFile.set(project.file("LICENSE.txt"))
 
+            val iconsRoot = project.file("src/main/resources")
+
             macOS {
                 bundleID = "net.alexandroid.adbugger"
                 // a version for all macOS distributables
@@ -80,7 +82,6 @@ compose.desktop {
                 pkgPackageBuildVersion = appVersion
 
                 //Icon
-                val iconsRoot = project.file("src/main/resources")
                 iconFile.set(iconsRoot.resolve("macos.icns"))
 
                 // Extra keys for Info.plist
@@ -96,9 +97,12 @@ compose.desktop {
                 // a version only for the exe package
                 exePackageVersion = appVersion
 
+                menuGroup = "Developer Tools"
+
+                upgradeUuid = "8bd82a41-a268-418f-ad36-6e3a16a85f74"
+
                 // Icon
-                // val iconsRoot = project.file("src/main/resources")
-                // iconFile.set(project.file("icon.ico"))
+                iconFile.set(iconsRoot.resolve("adbugger.ico"))
             }
         }
     }
