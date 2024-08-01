@@ -3,10 +3,7 @@ package ui.sections.logcat
 import adb.Commands
 import adb.Logcat
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,59 +36,58 @@ fun LogcatTopBar(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
         selectedBuffer.value,
         selectedFormat.value,
-        selectedPriorityLevel.value
+        selectedPriorityLevel.value,
+        tagTextField.text
     )
 
-    Row(
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth().background(MyColors.bg).padding(horizontal = 8.dp, vertical = 2.dp)
-    ) {
+    Column(modifier = modifier.fillMaxWidth().background(MyColors.bg).padding(horizontal = 8.dp, vertical = 4.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
 
-        Dropdown(
-            options = Logcat.bufferList,
-            optionsDetails = Logcat.bufferListDetails,
-            title = "Buffer",
-            onOptionSelected = { selectedBuffer.value = it }
-        )
-        Dropdown(
-            options = Logcat.formatLst,
-            optionsDetails = Logcat.formatLstDetails,
-            title = "Format",
-            onOptionSelected = { selectedFormat.value = it }
-        )
-        Dropdown(
-            options = Logcat.priorityLevelList,
-            optionsDetails = Logcat.priorityLevelListDetails,
-            title = "Level",
-            onOptionSelected = { selectedPriorityLevel.value = it }
-        )
+            Dropdown(options = Logcat.bufferList,
+                optionsDetails = Logcat.bufferListDetails,
+                title = "Buffer",
+                onOptionSelected = { selectedBuffer.value = it })
+            Dropdown(options = Logcat.formatLst,
+                optionsDetails = Logcat.formatLstDetails,
+                title = "Format",
+                onOptionSelected = { selectedFormat.value = it })
+            Dropdown(options = Logcat.priorityLevelList,
+                optionsDetails = Logcat.priorityLevelListDetails,
+                title = "Level",
+                onOptionSelected = { selectedPriorityLevel.value = it })
 
-        TextFieldX(
-            value = tagTextField,
-            onValueChange = { newText -> tagTextField = newText },
-            label = "Tag",
-        )
+            TextFieldX(
+                value = tagTextField,
+                onValueChange = { newText -> tagTextField = newText },
+                label = "Tag",
+            )
 
-        BtnIcon(
-            icon = if (isLogcatRunning) TablerIcons.PlayerStop else TablerIcons.PlayerPlay,
-            modifier = Modifier.padding(horizontal = 8.dp),
-            enabled = selectedTargetsList.size == 1,
-            onClick = {
-                model.startStopLogcat(selectedBuffer.value, selectedFormat.value, selectedPriorityLevel.value)
-            },
-            description = if (isLogcatRunning) "Stop" else "Start"
-        )
+            BtnIcon(
+                icon = if (isLogcatRunning) TablerIcons.PlayerStop else TablerIcons.PlayerPlay,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                enabled = selectedTargetsList.size == 1,
+                onClick = {
+                    model.startStopLogcat(
+                        selectedBuffer.value,
+                        selectedFormat.value,
+                        selectedPriorityLevel.value,
+                        tagTextField.text
+                    )
+                },
+                description = if (isLogcatRunning) "Stop" else "Start"
+            )
+        }
 
         Text(
             text = command,
             fontSize = 12.sp,
             color = Color.LightGray,
-            modifier = Modifier.padding(start = 16.dp, bottom = 2.dp)
+            modifier = Modifier.padding(start = 16.dp, bottom = 4.dp)
         )
-
     }
 
-    //  TODO Add tag filter
     //  TODO Add query filter
 }
