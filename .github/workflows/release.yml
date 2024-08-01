@@ -15,7 +15,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains 2 jobs: build and release
-  build:
+  build_macos:
     # The type of runner that the job will run on
     runs-on: macos-latest  # Specifies that the job runs on a macOS runner
 
@@ -56,7 +56,6 @@ jobs:
 
       - run: ./gradlew --stacktrace --scan packageReleaseDmg  # Runs the Gradle task to create a release version of DMG file
 
-      - run: ./gradlew --stacktrace --scan packageReleaseMsi  # Runs the Gradle task to create a release version of MSI file
 
       - name: Upload DMG Artifact
         uses: actions/upload-artifact@v4  # Uses the upload-artifact action to upload the DMG file
@@ -64,11 +63,52 @@ jobs:
           name: ADBugger-dmg  # Name of the artifact
           path: build/output/main-release/dmg/ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file, using the version input
 
+  build_win:
+    # The type of runner that the job will run on
+    runs-on: windows-latest  # Specifies that the job runs on a windows runner
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout sources
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        uses: actions/checkout@v4
+
+      - name: Determine Version
+        id: determine_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV  # Sets the VERSION environment variable for workflow_dispatch
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            TAG_NAME=${{ github.ref_name }}
+            VERSION=${TAG_NAME#v}  # Removes the 'v' prefix from the tag name to get the version
+            echo "VERSION=${VERSION}" >> $GITHUB_ENV  # Sets the VERSION environment variable for push
+          fi
+
+      - name: Use Version
+        run: echo "Using version ${{ env.VERSION }}"  # Prints the version being used
+
+      - name: Setup Java 18
+        uses: actions/setup-java@v4  # Uses the setup-java action to set up JDK 18
+        with:
+          java-version: 18  # Specifies the version of Java to set up
+          architecture: x64  # Specifies the architecture of Java to set up
+          distribution: 'temurin'  # Specifies the distribution of Java to set up (e.g., adopt, zulu, temurin)
+
+      - run: echo "JAVA_18=$JAVA_HOME" >> $GITHUB_ENV  # Sets the JAVA_HOME environment variable
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3  # Uses the setup-gradle action to set up Gradle
+        with:
+          add-job-summary: on-failure
+          add-job-summary-as-pr-comment: on-failure
+
+      - run: ./gradlew --stacktrace --scan packageReleaseMsi  # Runs the Gradle task to create a release version of MSI file
+
       - name: Upload MSI Artifact
         uses: actions/upload-artifact@v4  # Uses the upload-artifact action to upload the MSI file
         with:
           name: ADBugger-msi  # Name of the artifact
-          path: build/output/main-release/dmg/ADBugger-${{ env.VERSION }}.msi  # Path to the MSI file, using the version input
+          path: build/output/main-release/msi/ADBugger-${{ env.VERSION }}.msi  # Path to the MSI file, using the version input
 
 
   # A separate job to handle the release process
