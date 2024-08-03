@@ -1,8 +1,6 @@
 package ui.sections
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -19,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
-import ui.theme.MyColors
+import ui.widgets.CardX
 import ui.widgets.buttons.BtnIcon
 import ui.widgets.buttons.HoverButton
 
@@ -31,12 +29,7 @@ fun PortsPage(
 ) {
     val textInputCustomPortState = remember { mutableStateOf(TextFieldValue("")) }
 
-    Card(
-        backgroundColor = MyColors.bg2,
-        elevation = Dimensions.pageElevation,
-        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = modifier.padding(Dimensions.selectedPagePadding),
-    ) {
+    CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             Row(
                 horizontalArrangement = Arrangement.Start,

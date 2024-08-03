@@ -2,8 +2,6 @@ package ui.widgets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -19,7 +17,6 @@ import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
 import compose.icons.feathericons.Minimize2
 import pref.preference
-import ui.theme.MyColors
 import ui.theme.bounceClick
 
 
@@ -40,12 +37,7 @@ fun ExpandableCard(
 
     Box {
         if (expanded) {
-            Card(
-                modifier = modifier,
-                backgroundColor = MyColors.bg2,
-                elevation = 6.dp,
-                shape = RoundedCornerShape(8.dp)
-            ) {
+            CardX(modifier = modifier) {
                 Column {
                     Text(
                         modifier = Modifier.fillMaxWidth().padding(top = 4.dp)

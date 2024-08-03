@@ -1,25 +1,18 @@
 package ui.sections
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
-import ui.theme.MyColors
+import ui.widgets.CardX
 import ui.widgets.buttons.HoverButton
 
 @Composable
 fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
-    Card(
-        backgroundColor = MyColors.bg2,
-        elevation = Dimensions.pageElevation,
-        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = modifier.padding(Dimensions.selectedPagePadding),
-    ) {
+    CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,

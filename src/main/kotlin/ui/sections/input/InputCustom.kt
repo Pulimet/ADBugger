@@ -1,8 +1,6 @@
 package ui.sections.input
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -19,20 +17,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.theme.Dimensions
-import ui.theme.MyColors
+import ui.widgets.CardX
 import ui.widgets.buttons.BtnIcon
 
 @Composable
 fun InputCustom(model: AppStore = koinInject()) {
     val textInputSendTextState = remember { mutableStateOf(TextFieldValue("")) }
     val textInputSendInputState = remember { mutableStateOf(TextFieldValue("")) }
-    Card(
-        backgroundColor = MyColors.bg2,
-        elevation = Dimensions.pageElevation,
-        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
-    ) {
+
+    CardX {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(
                 horizontalArrangement = Arrangement.Start,

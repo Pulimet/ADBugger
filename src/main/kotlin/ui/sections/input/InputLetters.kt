@@ -1,8 +1,6 @@
 package ui.sections.input
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -11,18 +9,13 @@ import compose.icons.TablerIcons
 import compose.icons.tablericons.*
 import org.koin.compose.koinInject
 import store.AppStore
-import ui.theme.Dimensions
-import ui.theme.MyColors
+import ui.widgets.CardX
 import ui.widgets.buttons.BtnIcon
 
 @Composable
 fun InputLetters() {
-    Card(
-        backgroundColor = MyColors.bg2,
-        elevation = Dimensions.pageElevation,
-        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(Dimensions.selectedPagePadding),
-    ) {
+
+    CardX {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(
                 horizontalArrangement = Arrangement.Center,

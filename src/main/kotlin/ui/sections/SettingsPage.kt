@@ -4,24 +4,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import ui.theme.Dimensions
-import ui.theme.MyColors
+import ui.widgets.CardX
 
 @Composable
 fun SettingsPage(modifier: Modifier = Modifier) {
-    Card(
-        backgroundColor = MyColors.bg2,
-        elevation = Dimensions.pageElevation,
-        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = modifier.padding(Dimensions.selectedPagePadding),
-    ) {
+    CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Text(
                 text = "Settings will be added here soon!",

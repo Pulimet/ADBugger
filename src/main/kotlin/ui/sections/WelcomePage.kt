@@ -3,9 +3,7 @@ package ui.sections
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,18 +13,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ui.theme.Dimensions
-import ui.theme.MyColors
+import ui.widgets.CardX
 
 @Composable
 fun WelcomePage(modifier: Modifier = Modifier) {
     val stateVertical = rememberScrollState(0)
 
-    Card(
-        backgroundColor = MyColors.bg2,
-        elevation = Dimensions.pageElevation,
-        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = modifier.padding(Dimensions.selectedPagePadding),
-    ) {
+    CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize().verticalScroll(stateVertical)) {
             WelcomeAndDescription()
             Text(
