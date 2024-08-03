@@ -5,9 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +25,7 @@ fun PortsPage(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    val textInputCustomPortState = remember { mutableStateOf(TextFieldValue("")) }
+    var textInputCustomPortState by remember { mutableStateOf(TextFieldValue("")) }
 
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
@@ -41,16 +39,16 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
                     textStyle = TextStyle(color = Color.White),
-                    value = textInputCustomPortState.value,
+                    value = textInputCustomPortState,
                     label = { Text("Custom port") },
-                    onValueChange = { value -> textInputCustomPortState.value = value }
+                    onValueChange = { value -> textInputCustomPortState = value }
                 )
 
                 BtnIcon(
                     icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    enabled = textInputCustomPortState.value.text.isNotEmpty(),
-                    onClick = { model.onAdbReverse(textInputCustomPortState.value.text.toIntOrNull()) },
+                    enabled = textInputCustomPortState.text.isNotEmpty(),
+                    onClick = { model.onAdbReverse(textInputCustomPortState.text.toIntOrNull()) },
                     description = "Open specified port"
                 )
                 HoverButton(

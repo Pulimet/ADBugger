@@ -39,6 +39,7 @@ fun PackagesList(
     val state = model.state
 
     if (packageList.isNotEmpty() || forceShowSearchView) {
+        // TODO Check if this is the right way to do this, passing the state to the SearchView
         SearchView(state = textState, modifier = modifier.fillMaxWidth())
     }
 

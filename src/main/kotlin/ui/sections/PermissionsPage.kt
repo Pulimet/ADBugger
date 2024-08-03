@@ -8,9 +8,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +27,7 @@ fun PermissionsPage(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    val textInputPermissionState = remember { mutableStateOf(TextFieldValue("")) }
+    var textInputPermissionState by remember { mutableStateOf(TextFieldValue("")) }
 
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
@@ -43,16 +41,16 @@ fun PermissionsPage(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
                     textStyle = TextStyle(color = Color.White),
-                    value = textInputPermissionState.value,
+                    value = textInputPermissionState,
                     label = { Text("Permission") },
-                    onValueChange = { value -> textInputPermissionState.value = value }
+                    onValueChange = { value -> textInputPermissionState = value }
                 )
 
                 BtnWithText(
                     icon = Icons.Rounded.Add,
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    enabled = textInputPermissionState.value.text.isNotEmpty(),
-                    onClick = { model.onAddPermission(textInputPermissionState.value.text) },
+                    enabled = textInputPermissionState.text.isNotEmpty(),
+                    onClick = { model.onAddPermission(textInputPermissionState.text) },
                     description = "Add",
                     width = Dimensions.permissionsCommandsBtnWidthShort,
                 )
@@ -60,8 +58,8 @@ fun PermissionsPage(
                 BtnWithText(
                     icon = Icons.Rounded.Clear,
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    enabled = textInputPermissionState.value.text.isNotEmpty(),
-                    onClick = { model.onRemovePermission(textInputPermissionState.value.text) },
+                    enabled = textInputPermissionState.text.isNotEmpty(),
+                    onClick = { model.onRemovePermission(textInputPermissionState.text) },
                     description = "Remove",
                     width = Dimensions.permissionsCommandsBtnWidthShort,
                 )

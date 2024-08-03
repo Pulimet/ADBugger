@@ -34,17 +34,17 @@ fun LogcatTopBar(
     val isLogcatRunning = model.state.isLogcatRunning
     val selectedTargetsList = model.state.selectedTargetsList
 
-    val selectedBuffer = remember { mutableStateOf("default") }
-    val selectedFormat = remember { mutableStateOf("threadtime") }
-    val selectedPriorityLevel = remember { mutableStateOf("V") }
+    var selectedBuffer by remember { mutableStateOf("default") }
+    var selectedFormat by remember { mutableStateOf("threadtime") }
+    var selectedPriorityLevel by remember { mutableStateOf("V") }
     var tagTextField by remember { mutableStateOf(TextFieldValue("")) }
     var searchTextField by remember { mutableStateOf(TextFieldValue("")) }
 
     val command = Commands.getLogCatCommand(
         if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
-        selectedBuffer.value,
-        selectedFormat.value,
-        selectedPriorityLevel.value,
+        selectedBuffer,
+        selectedFormat,
+        selectedPriorityLevel,
         tagTextField.text
     )
 
@@ -60,15 +60,15 @@ fun LogcatTopBar(
             Dropdown(options = Logcat.bufferList,
                 optionsDetails = Logcat.bufferListDetails,
                 title = "Buffer",
-                onOptionSelected = { selectedBuffer.value = it })
+                onOptionSelected = { selectedBuffer = it })
             Dropdown(options = Logcat.formatLst,
                 optionsDetails = Logcat.formatLstDetails,
                 title = "Format",
-                onOptionSelected = { selectedFormat.value = it })
+                onOptionSelected = { selectedFormat = it })
             Dropdown(options = Logcat.priorityLevelList,
                 optionsDetails = Logcat.priorityLevelListDetails,
                 title = "Level",
-                onOptionSelected = { selectedPriorityLevel.value = it })
+                onOptionSelected = { selectedPriorityLevel = it })
 
             TextFieldX(
                 value = tagTextField,
@@ -93,9 +93,9 @@ fun LogcatTopBar(
                 enabled = selectedTargetsList.size == 1,
                 onClick = {
                     model.startStopLogcat(
-                        selectedBuffer.value,
-                        selectedFormat.value,
-                        selectedPriorityLevel.value,
+                        selectedBuffer,
+                        selectedFormat,
+                        selectedPriorityLevel,
                         tagTextField.text
                     )
                 },

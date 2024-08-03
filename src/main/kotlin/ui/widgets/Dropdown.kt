@@ -12,9 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,24 +46,24 @@ private fun DropdownContent(
     onOptionSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val expanded = remember { mutableStateOf(false) }
-    val selectedText = remember { mutableStateOf(options[0]) }
+    var expanded by remember { mutableStateOf(false) }
+    var selectedText by remember { mutableStateOf(options[0]) }
     val isOptionDetailsEnabled = options.size == optionsDetails.size
 
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = modifier.background(MyColors.bg).padding(16.dp).widthIn(80.dp).clip(RoundedCornerShape(4.dp))
             .border(BorderStroke(1.dp, Color.DarkGray), RoundedCornerShape(4.dp))
-            .clickable { expanded.value = !expanded.value },
+            .clickable { expanded = !expanded },
     ) {
-        DropdownSelected(selectedText.value, iconModifier = Modifier.align(Alignment.CenterEnd))
-        DropdownMenu(expanded = expanded.value,
+        DropdownSelected(selectedText, iconModifier = Modifier.align(Alignment.CenterEnd))
+        DropdownMenu(expanded = expanded,
             modifier = Modifier.background(MyColors.bg),
-            onDismissRequest = { expanded.value = false }) {
+            onDismissRequest = { expanded = false }) {
             options.forEachIndexed { index, selectionOption ->
                 DropdownMenuItem(onClick = {
-                    selectedText.value = selectionOption
-                    expanded.value = false
+                    selectedText = selectionOption
+                    expanded = false
                     onOptionSelected(selectionOption)
                 }) {
                     DropdownMenuItemContent(

@@ -2,9 +2,7 @@ package ui.sections.logcat
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,14 +14,14 @@ import ui.widgets.list.ListX
 
 @Composable
 fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
-    val searchQuery = remember { mutableStateOf("") }
+    var searchQuery by remember { mutableStateOf("") }
 
     CardX(modifier = modifier) {
         val list = model.state.logcatLogs
 
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Column(modifier = Modifier.weight(0.8f)) {
-                LogcatTopBar { searchQuery.value = it }
+                LogcatTopBar { searchQuery = it }
                 Box(modifier = Modifier.fillMaxSize()) {
                     if (list.isEmpty()) {
                         Text(
@@ -34,7 +32,7 @@ fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                         )
                     }
 
-                    ListX(list, searchQuery.value)
+                    ListX(list, searchQuery)
                 }
             }
             LogcatSideBar(list)
