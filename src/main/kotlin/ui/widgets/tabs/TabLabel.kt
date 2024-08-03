@@ -39,7 +39,7 @@ fun TabLabel(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .height(50.dp)
-            .padding(8.dp)
+            .padding(vertical = 8.dp, horizontal = 2.dp)
             .clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
             .background(color = bgColor)
             .onPointerEvent(PointerEventType.Enter) { active = true }

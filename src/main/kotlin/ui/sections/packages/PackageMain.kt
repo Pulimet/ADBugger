@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -19,7 +18,7 @@ fun PackagesMain(
 ) {
     val state = model.state
     Box(
-        modifier = modifier.padding(horizontal = 6.dp, vertical = 6.dp).background(MyColors.bg2)
+        modifier = modifier.background(MyColors.bg2)
     ) {
         if (state.isPackagesLoading) {
             LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
