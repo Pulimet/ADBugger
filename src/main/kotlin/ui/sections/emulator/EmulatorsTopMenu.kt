@@ -37,9 +37,9 @@ fun EmulatorsTopMenu(model: AppStore = koinInject()) {
         )
         BtnWithText(
             icon = FontAwesomeIcons.Solid.BookDead,
+            modifier = Modifier.padding(horizontal = 8.dp),
             onClick = { model.onKillAllEmulatorClick() },
             description = "Kill All Emulators",
-            modifier = Modifier.padding(horizontal = 8.dp),
             width = 160.dp
         )
     }

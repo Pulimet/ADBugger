@@ -10,13 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import compose.icons.LineAwesomeIcons
 import compose.icons.TablerIcons
 import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.theme.Dimensions
 import ui.widgets.buttons.BtnWithText
 
 @Composable
@@ -25,7 +25,7 @@ fun EmulatorItem(emulatorName: String, model: AppStore = koinInject()) {
         Text(
             text = emulatorName,
             color = Color.White,
-            fontSize = 12.sp,
+            fontSize = Dimensions.emulatorItemFontSize,
             modifier = Modifier.weight(1f).padding(start = 8.dp)
         )
 
@@ -35,14 +35,14 @@ fun EmulatorItem(emulatorName: String, model: AppStore = koinInject()) {
                 onClick = { model.onWipeAndLaunch(emulatorName) },
                 description = "Wipe Data",
                 modifier = Modifier.padding(end = 4.dp),
-                width = 100.dp
+                width = Dimensions.btnEmulatorWidth
             )
             BtnWithText(
                 icon = LineAwesomeIcons.Android,
                 onClick = { model.onLaunchEmulatorClick(emulatorName) },
                 description = "Launch Emulator",
                 modifier = Modifier.padding(end = 8.dp),
-                width = 100.dp
+                width = Dimensions.btnEmulatorWidth
             )
         }
     }

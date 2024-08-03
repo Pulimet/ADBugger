@@ -34,7 +34,7 @@ fun SideBarItem(
             Spacer(
                 modifier = Modifier
                     .height(Dimensions.sideBarItemHeight)
-                    .width(6.dp)
+                    .width(Dimensions.sideBarSpacerWidth)
                     .background(color = getSpacerBgColor(toggle, active))
             )
         }

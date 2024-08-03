@@ -16,5 +16,4 @@ fun DevicePackagesTab(model: AppStore = koinInject()) {
         PackageNoneAndRefreshButton()
         PackagesList(model.state.packageList, modifier = Modifier.padding(top = 8.dp))
     }
-
 }

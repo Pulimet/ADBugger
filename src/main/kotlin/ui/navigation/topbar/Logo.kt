@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import ui.theme.Dimensions
 import ui.theme.MyColors
 
@@ -17,13 +16,13 @@ fun Logo() {
     Row(modifier = Modifier.width(Dimensions.sideBarWidth), horizontalArrangement = Arrangement.Center) {
         Text(
             "ADB",
-            fontSize = 24.sp,
+            fontSize = Dimensions.logoFontSize,
             color = MyColors.accent,
             fontWeight = FontWeight.ExtraBold
         )
         Text(
             "ugger",
-            fontSize = 24.sp,
+            fontSize = Dimensions.logoFontSize,
             color = Color.LightGray,
             fontWeight = FontWeight.ExtraBold
         )
