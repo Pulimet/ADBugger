@@ -20,8 +20,8 @@ object Dimensions {
     val spinnerPadding = 4.dp
 
     // Text
-    val titleFontSize = 20.sp
-    val subtitleFontSize = 17.sp
+    val titleFontSize = 18.sp
+    val subtitleFontSize = 13.sp
     val releaseNotesFontSize = 13.sp
     val versionFontSize = 10.sp
     val emulatorItemFontSize = 12.sp

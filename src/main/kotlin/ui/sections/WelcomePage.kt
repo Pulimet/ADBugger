@@ -1,14 +1,15 @@
 package ui.sections
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,19 +21,26 @@ fun WelcomePage(modifier: Modifier = Modifier) {
     val stateVertical = rememberScrollState(0)
 
     CardX(modifier = modifier) {
-        Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize().verticalScroll(stateVertical)) {
-            WelcomeAndDescription()
-            Text(
-                text = "Release notes",
-                fontSize = Dimensions.subtitleFontSize,
-                textAlign = TextAlign.Center,
-                color = Color.LightGray,
-                modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
+        Box {
+            Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize().verticalScroll(stateVertical)) {
+                WelcomeAndDescription()
+                Text(
+                    text = "Release notes",
+                    fontSize = Dimensions.titleFontSize,
+                    textAlign = TextAlign.Center,
+                    color = Color.LightGray,
+                    modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
+                )
+                Version("Version 1.0.3 (01 August 2024)", desc1_0_3)
+                Version("Version 1.0.2 (23 July 2024)", desc1_0_2)
+                Version("Version 1.0.1 (17 July 2024)", desc1_0_1)
+                Version("Version 1.0.0 (16 July 2024)", desc1_0_0)
+            }
+            VerticalScrollbar(
+                modifier = Modifier.fillMaxHeight().align(Alignment.TopEnd), adapter = rememberScrollbarAdapter(
+                    scrollState = stateVertical
+                )
             )
-            Version("Version 1.0.3 (01 August 2024)", desc1_0_3)
-            Version("Version 1.0.2 (23 July 2024)", desc1_0_2)
-            Version("Version 1.0.1 (17 July 2024)", desc1_0_1)
-            Version("Version 1.0.0 (16 July 2024)", desc1_0_0)
         }
     }
 }
@@ -85,18 +93,11 @@ private fun WelcomeAndDescription() {
         color = Color.LightGray,
         modifier = Modifier.fillMaxWidth(),
     )
-    Row {
-        Text(
-            text = "ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.",
-            fontSize = Dimensions.subtitleFontSize,
-            textAlign = TextAlign.Start,
-            color = Color.LightGray,
-            modifier = Modifier.weight(0.85f).padding(16.dp),
-        )
-        Image(
-            painter = painterResource("icon.png"),
-            contentDescription = "ADBugger Logo",
-            modifier = Modifier.padding(16.dp).weight(0.15f),
-        )
-    }
+    Text(
+        text = "ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.",
+        fontSize = Dimensions.subtitleFontSize,
+        textAlign = TextAlign.Start,
+        color = Color.LightGray,
+        modifier = Modifier.padding(16.dp),
+    )
 }
