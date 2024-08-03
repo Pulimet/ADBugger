@@ -10,13 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import model.Package
 import org.koin.compose.koinInject
@@ -34,19 +31,19 @@ fun PackagesList(
 ) {
 
     val listState = rememberLazyListState()
-    val textState = remember { mutableStateOf(TextFieldValue("")) }
-    val query = textState.value.text
+    var textState by remember { mutableStateOf("") }
     val state = model.state
 
     if (packageList.isNotEmpty() || forceShowSearchView) {
-        // TODO Check if this is the right way to do this, passing the state to the SearchView
-        SearchView(state = textState, modifier = modifier.fillMaxWidth())
+        SearchView(modifier = modifier.fillMaxWidth()) {
+            textState = it
+        }
     }
 
     Box(
         modifier = Modifier.fillMaxWidth().border(BorderStroke(1.dp, color = Color.DarkGray))
     ) {
-        val items = packageList.filter { it.name.contains(query, ignoreCase = true) }
+        val items = packageList.filter { it.name.contains(textState, ignoreCase = true) }
         LazyColumn(state = listState) {
             items(items) { item ->
                 PackageItem(

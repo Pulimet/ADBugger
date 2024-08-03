@@ -6,8 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -20,24 +19,30 @@ import ui.widgets.buttons.BtnWithText
 @Composable
 fun SearchView(
     modifier: Modifier = Modifier,
-    state: MutableState<TextFieldValue>,
-    model: AppStore = koinInject()
+    model: AppStore = koinInject(),
+    onValueChanged: (String) -> Unit = {}
 ) {
+    var textState by remember { mutableStateOf(TextFieldValue("")) }
+
     Row(modifier = modifier) {
         TextField(singleLine = true,
             modifier = Modifier.weight(1f),
             label = { Text("Search your package") },
             textStyle = TextStyle(color = Color.White),
-            value = state.value,
-            onValueChange = { value -> state.value = value })
+            value = textState,
+            onValueChange = { value ->
+                textState = value
+                onValueChanged(value.text)
+            })
 
         BtnWithText(
             icon = Icons.Rounded.Star,
             modifier = Modifier.padding(horizontal = 8.dp),
-            enabled = state.value.text.isNotEmpty(),
+            enabled = textState.text.isNotEmpty(),
             onClick = {
-                model.addPackageNameToFavorites(state.value.text)
-                state.value = TextFieldValue("")
+                model.addPackageNameToFavorites(textState.text)
+                textState = TextFieldValue("")
+                onValueChanged("")
             },
             description = "Save",
         )
