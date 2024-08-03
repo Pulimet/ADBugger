@@ -29,9 +29,9 @@ fun InputCustom(model: AppStore = koinInject()) {
     val textInputSendInputState = remember { mutableStateOf(TextFieldValue("")) }
     Card(
         backgroundColor = MyColors.bg2,
-        elevation = 6.dp,
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
+        elevation = Dimensions.pageElevation,
+        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
+        modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(

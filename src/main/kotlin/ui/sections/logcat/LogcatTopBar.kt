@@ -4,10 +4,12 @@ import adb.Commands
 import adb.Logcat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -17,6 +19,7 @@ import compose.icons.tablericons.PlayerPlay
 import compose.icons.tablericons.PlayerStop
 import org.koin.compose.koinInject
 import store.AppStore
+import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.Dropdown
 import ui.widgets.TextFieldX
@@ -45,7 +48,10 @@ fun LogcatTopBar(
         tagTextField.text
     )
 
-    Column(modifier = modifier.fillMaxWidth().background(MyColors.bg).padding(horizontal = 8.dp, vertical = 4.dp)) {
+    Column(
+        modifier = modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
+            .background(MyColors.bg).padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,

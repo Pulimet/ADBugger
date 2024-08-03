@@ -28,27 +28,7 @@ fun WelcomePage(modifier: Modifier = Modifier) {
         modifier = modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize().verticalScroll(stateVertical)) {
-            Text(
-                text = "Welcome to ADBugger!",
-                fontSize = Dimensions.titleFontSize,
-                textAlign = TextAlign.Center,
-                color = Color.LightGray,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            Row {
-                Text(
-                    text = "ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.",
-                    fontSize = Dimensions.subtitleFontSize,
-                    textAlign = TextAlign.Start,
-                    color = Color.LightGray,
-                    modifier = Modifier.weight(0.85f).padding(16.dp),
-                )
-                Image(
-                    painter = painterResource("icon.png"),
-                    contentDescription = "ADBugger Logo",
-                    modifier = Modifier.padding(16.dp).weight(0.15f),
-                )
-            }
+            WelcomeAndDescription()
             Text(
                 text = "Release notes",
                 fontSize = Dimensions.subtitleFontSize,
@@ -101,4 +81,29 @@ private fun Version(title: String, description: String) {
         color = Color.LightGray,
         modifier = Modifier.padding(horizontal = 16.dp),
     )
+}
+
+@Composable
+private fun WelcomeAndDescription() {
+    Text(
+        text = "Welcome to ADBugger!",
+        fontSize = Dimensions.titleFontSize,
+        textAlign = TextAlign.Center,
+        color = Color.LightGray,
+        modifier = Modifier.fillMaxWidth(),
+    )
+    Row {
+        Text(
+            text = "ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.",
+            fontSize = Dimensions.subtitleFontSize,
+            textAlign = TextAlign.Start,
+            color = Color.LightGray,
+            modifier = Modifier.weight(0.85f).padding(16.dp),
+        )
+        Image(
+            painter = painterResource("icon.png"),
+            contentDescription = "ADBugger Logo",
+            modifier = Modifier.padding(16.dp).weight(0.15f),
+        )
+    }
 }

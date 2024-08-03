@@ -57,6 +57,10 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         setState { copy(menuItemSelected = menuItemId) }
     }
 
+    // State checks
+    fun isBottomLogsShown() = state.isLogsAlwaysShown && state.menuItemSelected != MenuItemId.LOGS
+
+
     // User Actions
     fun getDevicesList() {
         launch {

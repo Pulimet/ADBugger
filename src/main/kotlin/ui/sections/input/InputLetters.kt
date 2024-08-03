@@ -21,12 +21,7 @@ fun InputLetters() {
         backgroundColor = MyColors.bg2,
         elevation = Dimensions.pageElevation,
         shape = RoundedCornerShape(Dimensions.pageCornerRadius),
-        modifier = Modifier.padding(
-            start = Dimensions.selectedPagePadding,
-            end = Dimensions.selectedPagePadding,
-            top = Dimensions.selectedPagePadding,
-            bottom = 8.dp
-        ),
+        modifier = Modifier.padding(Dimensions.selectedPagePadding),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(

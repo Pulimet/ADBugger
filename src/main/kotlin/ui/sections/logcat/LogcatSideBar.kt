@@ -22,29 +22,29 @@ fun LogcatSideBar(
 ) {
 
     Column(modifier = modifier) {
-        CopyAllAndClearBox(list, buttonWidth = 120.dp) {
+        CopyAllAndClearBox(list, buttonWidth = 100.dp) {
             model.clearLocalLogcatLogs()
         }
 
         BtnWithText(
             icon = EvaIcons.Fill.Save,
-            onClick = {model.saveLogcatLogsToDesktop()},
+            onClick = { model.saveLogcatLogsToDesktop() },
             description = "Save Logs",
-            width = 120.dp,
+            width = 100.dp,
         )
 
         BtnWithText(
             icon = EvaIcons.Fill.FileAdd,
-            onClick = {model.saveBugreport()},
+            onClick = { model.saveBugreport() },
             description = "Save Bugreport",
-            width = 120.dp,
+            width = 100.dp,
         )
 
         BtnWithText(
             icon = EvaIcons.Fill.PersonDelete,
             onClick = { model.clearTargetLogcatLogs() },
             description = "Clear logcat",
-            width = 120.dp,
+            width = 100.dp,
         )
     }
 }

@@ -19,9 +19,9 @@ import ui.widgets.buttons.BtnIcon
 fun InputNumbers(modifier: Modifier = Modifier) {
     Card(
         backgroundColor = MyColors.bg2,
-        elevation = 6.dp,
-        shape = RoundedCornerShape(8.dp),
-        modifier = modifier.padding(horizontal = Dimensions.selectedPagePadding, vertical = 8.dp),
+        elevation = Dimensions.pageElevation,
+        shape = RoundedCornerShape(Dimensions.pageCornerRadius),
+        modifier = modifier.padding(start = Dimensions.selectedPagePadding, end = Dimensions.selectedPagePadding / 2),
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
             Row(
