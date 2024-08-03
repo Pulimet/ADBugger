@@ -14,6 +14,9 @@ ADBugger is a desktop tool for debugging and QA of Android devices and emulators
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/500e92a4-384d-4876-adf9-6217af81ad85">
 
 ------
+**Roadmap:**
+- https://github.com/users/Pulimet/projects/1
+------
 
 **Release notes:**
 
