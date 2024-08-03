@@ -2,12 +2,14 @@ ADBugger is a desktop tool for debugging and QA of Android devices and emulators
 
 *Core Functionality*
 
-- **Device Management**: Listing connected devices and emulators, launching and terminating emulators.
-- **Package Management**: Installing APKs, listing installed packages, granting and removing permissions.
-- **ADB Commands**: Executing ADB commands on selected targets, including simultaneous execution on multiple devices.
-- **Log Management**: Viewing and filtering Android device logs (Logcat).
-- **Input Simulation**: Sending input events (buttons, keyboard) to devices.
-- **Port Forwarding**: Listing and reversing specific ports.
+**Device Management:** List connected devices and emulators, and start and stop emulators.
+**Package Management:** Install APKs, list installed apps, and grant and revoke permissions.
+**ADB Commands:** Execute ADB commands on selected targets.
+**Log Management:** View and filter Android device logs (Logcat).
+**Input Simulation:** Send input events (buttons, keyboard) to devices.
+**Port Forwarding:** List and reverse specific ports.
+**One To All:** Execute commands simultaneously on multiple devices.
+**Educating:** Display the underlying commands used.
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/500e92a4-384d-4876-adf9-6217af81ad85">
 
