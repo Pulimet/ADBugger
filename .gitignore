@@ -41,3 +41,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 /.kotlin/sessions/
+
+### Android Studio ###
+local.properties
