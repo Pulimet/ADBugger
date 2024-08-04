@@ -24,19 +24,19 @@ class Cmd(private val processCreation: ProcessCreation) {
 
                 BufferedReader(InputStreamReader(process.inputStream)).use { reader ->
                     reader.lines().filter { !it.contains("crashdata", ignoreCase = true) }
-                        .collect(Collectors.toList()) as ArrayList<String>
+                        .collect(Collectors.toList()) as List<String>
                 }
 
             } catch (e: IOException) {
                 println("Error executing command: $command")
                 log?.invoke("Error executing command: $command")
                 e.printStackTrace()
-                ArrayList()
+                emptyList()
             } catch (e: InterruptedException) {
                 println("Command interrupted: $command")
                 log?.invoke("Command interrupted: $command")
                 e.printStackTrace()
-                ArrayList()
+                emptyList()
             }
             continuation.resume(result)
         }

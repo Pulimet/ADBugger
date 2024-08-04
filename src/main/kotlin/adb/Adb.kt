@@ -22,10 +22,10 @@ class Adb(private val cmd: Cmd) {
             TargetInfo(serialAndType[0], serialAndType[1])
         }.also { updateTargets(it) }
 
-    suspend fun packages(serial: String): ArrayList<Package> {
+    suspend fun packages(serial: String): List<Package> {
         return launchAdbShellCommand(serial, Commands.getPackageList())
             .map { Package(it.split(":").last()) }
-            .filter { it.name.isNotEmpty() } as ArrayList<Package>
+            .filter { it.name.isNotEmpty() }
     }
 
     suspend fun emulators() = launchCommandInTerminal(Commands.getEmulatorList(), Commands.getEmulatorPath())
@@ -221,7 +221,7 @@ class Adb(private val cmd: Cmd) {
     private suspend fun launchCommandInTerminal(
         command: String,
         path: String = Commands.getPlatformToolsPath()
-    ): ArrayList<String> {
+    ): List<String> {
         return cmd.execute(command, log, path)
     }
 
@@ -250,7 +250,7 @@ class Adb(private val cmd: Cmd) {
         serial: String,
         command: String,
         path: String = Commands.getPlatformToolsPath()
-    ): ArrayList<String> {
+    ): List<String> {
         val commandToExecute = "adb -s $serial $command"
         log(commandToExecute)
         return cmd.execute(commandToExecute, null, path)
@@ -273,7 +273,7 @@ class Adb(private val cmd: Cmd) {
         }
     }
 
-    private suspend fun launchAdbShellCommand(serial: String, command: String): ArrayList<String> {
+    private suspend fun launchAdbShellCommand(serial: String, command: String): List<String> {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
         return cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())

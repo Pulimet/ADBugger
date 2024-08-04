@@ -399,7 +399,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     // Logs
     fun clearAdbLogs() {
-        setState { copy(adbLogs = arrayListOf()) }
+        setState { copy(adbLogs = listOf()) }
     }
 
     private fun log(log: String) {
@@ -429,8 +429,8 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         val isUserForwardInputEnabled: Boolean = false,
         val isLogsAlwaysShown: Boolean = false,
         val isFilePickerShown: Boolean = false,
-        val adbLogs: ArrayList<String> = arrayListOf(),
-        val logcatLogs: ArrayList<String> = arrayListOf(),
+        val adbLogs: List<String> = listOf(),
+        val logcatLogs: List<String> = listOf(),
         val isLogcatRunning: Boolean = false
     )
 }
