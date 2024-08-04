@@ -7,9 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollbarAdapter
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import java.awt.Toolkit
@@ -19,8 +17,10 @@ fun ListX(list: List<String>, filter: String? = null) {
     val clipboard = Toolkit.getDefaultToolkit().systemClipboard
     val listState = rememberLazyListState()
 
-    val filteredList = remember(list, filter) {
-        list.filter { filter == null || it.contains(filter, ignoreCase = true) }
+    val filteredList by remember(list) {
+        derivedStateOf {
+            list.filter { filter == null || it.contains(filter, ignoreCase = true) }
+        }
     }
 
     LaunchedEffect(list) {

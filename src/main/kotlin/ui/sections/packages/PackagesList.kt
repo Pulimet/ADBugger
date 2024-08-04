@@ -33,8 +33,10 @@ fun PackagesList(
     val listState = rememberLazyListState()
     var textState by remember { mutableStateOf("") }
 
-    val filteredList = remember(packageList, textState) {
-        packageList.filter { it.name.contains(textState, ignoreCase = true) }
+    val filteredList by remember(packageList) {
+        derivedStateOf {
+            packageList.filter { it.name.contains(textState, ignoreCase = true) }
+        }
     }
 
     if (packageList.isNotEmpty() || forceShowSearchView) {
