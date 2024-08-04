@@ -32,7 +32,10 @@ fun PackagesList(
 
     val listState = rememberLazyListState()
     var textState by remember { mutableStateOf("") }
-    val state = model.state
+
+    val filteredList = remember(packageList, textState) {
+        packageList.filter { it.name.contains(textState, ignoreCase = true) }
+    }
 
     if (packageList.isNotEmpty() || forceShowSearchView) {
         SearchView(modifier = modifier.fillMaxWidth()) {
@@ -43,12 +46,12 @@ fun PackagesList(
     Box(
         modifier = Modifier.fillMaxWidth().border(BorderStroke(1.dp, color = Color.DarkGray))
     ) {
-        val items = packageList.filter { it.name.contains(textState, ignoreCase = true) }
         LazyColumn(state = listState) {
-            items(items) { item ->
+            items(filteredList) { item ->
+                val isSelected = model.state.selectedPackage == item.name
                 PackageItem(
                     item,
-                    state.selectedPackage == item.name,
+                    isSelected,
                     { model.onPackageClick(it) },
                     addToFavoritesEnabled,
                     removeFromFavoritesEnabled,
@@ -58,7 +61,7 @@ fun PackagesList(
                 )
             }
         }
-        if (items.size > 2) {
+        if (filteredList.size > 2) {
             VerticalScrollbar(
                 modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(), adapter = rememberScrollbarAdapter(
                     scrollState = listState
