@@ -1,6 +1,5 @@
 package ui
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,9 +16,7 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 
 @Composable
-@Preview
 fun Content(model: AppStore = koinInject()) {
-
     Column(
         modifier = Modifier.background(MyColors.bg2)
             .clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius, 0.dp, 0.dp, 0.dp))

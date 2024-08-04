@@ -1,6 +1,5 @@
 package ui
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.MaterialTheme
@@ -15,7 +14,6 @@ import ui.navigation.topbar.TopBar
 import ui.theme.MyColors
 
 @Composable
-@Preview
 fun MainContent(model: AppStore = koinInject()) {
     LaunchedEffect(Unit) {
         model.onLaunchedEffect()

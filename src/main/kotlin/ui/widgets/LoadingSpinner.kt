@@ -1,6 +1,5 @@
 package ui.widgets
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.CircularProgressIndicator
@@ -10,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-@Preview
 fun LoadingSpinner(modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         CircularProgressIndicator(
