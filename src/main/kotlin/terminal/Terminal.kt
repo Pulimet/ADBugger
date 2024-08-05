@@ -4,6 +4,7 @@ import model.Package
 import model.TargetInfo
 import terminal.commands.Commands
 import terminal.commands.Logcat
+import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
 
@@ -131,7 +132,8 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun sendText(selectedTarget: List<String>, value: String) {
-        launcher.runAdbShell(selectedTarget, Commands.sendTextCommand(value))
+        val text = Escaping.escapeForAdbShellInputText(value)
+        launcher.runAdbShell(selectedTarget, Commands.sendTextCommand("\"$text\""))
     }
 
     suspend fun sendInput(selectedTarget: List<String>, value: Int) {
