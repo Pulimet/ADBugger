@@ -1,8 +1,16 @@
 package ui.sections.logcat
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,21 +30,26 @@ fun LogcatPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
         Row(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Column(modifier = Modifier.weight(0.8f)) {
                 LogcatTopBar { searchQuery = it }
-                Box(modifier = Modifier.fillMaxSize()) {
-                    if (list.isEmpty()) {
-                        Text(
-                            text = "No logs yet.",
-                            modifier = Modifier.align(Alignment.Center),
-                            color = Color.White,
-                            fontSize = Dimensions.titleFontSize
-                        )
-                    }
-
-                    ListX(list, searchQuery)
-                }
+                BoxWithLogsList(list, searchQuery)
             }
             LogcatSideBar(list)
         }
 
+    }
+}
+
+@Composable
+private fun BoxWithLogsList(list: List<String>, searchQuery: String) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (list.isEmpty()) {
+            Text(
+                text = "No logs yet.",
+                modifier = Modifier.align(Alignment.Center),
+                color = Color.White,
+                fontSize = Dimensions.titleFontSize
+            )
+        }
+
+        ListX(list, searchQuery)
     }
 }
