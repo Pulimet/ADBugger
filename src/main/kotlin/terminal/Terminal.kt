@@ -5,7 +5,7 @@ import model.TargetInfo
 import terminal.commands.Commands
 import terminal.commands.Logcat
 
-class Terminal(private val cmd: Cmd, private val launcher: CommandLauncher) {
+class Terminal(private val launcher: CommandLauncher) {
 
     private var log: (String) -> Unit = { println(it) }
     private var updateTargets: (List<TargetInfo>) -> Unit = {}
@@ -199,7 +199,7 @@ class Terminal(private val cmd: Cmd, private val launcher: CommandLauncher) {
         logcatCallback: (String) -> Unit
     ) {
         val command = Logcat.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
-        cmd.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
+        launcher.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
     }
 
     suspend fun clearLogcat(selectedTarget: String) {

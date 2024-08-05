@@ -1,9 +1,9 @@
 package koin
 
 import terminal.Terminal
-import terminal.Cmd
+import terminal.process.Cmd
 import terminal.CommandLauncher
-import terminal.ProcessCreation
+import terminal.process.ProcessCreation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

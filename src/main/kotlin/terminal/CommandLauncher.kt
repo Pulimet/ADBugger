@@ -2,6 +2,7 @@ package terminal
 
 import model.TargetInfo
 import terminal.commands.Commands
+import terminal.process.Cmd
 
 class CommandLauncher(private val cmd: Cmd) {
     private var log: (String) -> Unit = { println(it) }
@@ -78,5 +79,14 @@ class CommandLauncher(private val cmd: Cmd) {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
         return cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())
+    }
+
+    suspend fun executeAndGetData(
+        command: String,
+        platformToolsPath: String,
+        log: (String) -> Unit,
+        commandRunCallBack: (String) -> Unit
+    ) {
+        cmd.executeAndGetData(command, platformToolsPath, log, commandRunCallBack)
     }
 }

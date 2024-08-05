@@ -1,4 +1,4 @@
-package terminal
+package terminal.process
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -45,9 +45,9 @@ class Cmd(private val processCreation: ProcessCreation) {
         command: String, path:
         String,
         log: (String) -> Unit,
-        logcatCallback: (String) -> Unit
+        commandRunCallback: (String) -> Unit
     ) = withContext(Dispatchers.IO) {
         log.invoke(command)
-        processCreation.executeAndGetData(path + command, logcatCallback)
+        processCreation.executeAndGetData(path + command, commandRunCallback)
     }
 }

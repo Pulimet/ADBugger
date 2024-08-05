@@ -1,4 +1,4 @@
-package terminal
+package terminal.process
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
