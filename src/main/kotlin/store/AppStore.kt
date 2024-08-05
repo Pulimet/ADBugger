@@ -1,6 +1,6 @@
 package store
 
-import adb.Adb
+import terminal.Terminal
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -19,7 +19,7 @@ import ui.navigation.sidebar.MenuItemId
 import utils.KeysConverter
 import kotlin.coroutines.CoroutineContext
 
-class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : CoroutineScope {
+class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) : CoroutineScope {
     override val coroutineContext: CoroutineContext = coroutineScope.coroutineContext
 
     companion object {
@@ -45,7 +45,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     // Public
     fun onLaunchedEffect() {
-        adb.setupCallBacks(::log, ::updateTargetsList)
+        terminal.setupCallBacks(::log, ::updateTargetsList)
 
         launch { getDevicesList() }
         launch { getEmulatorsListClick() }
@@ -65,7 +65,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     fun getDevicesList() {
         launch {
             setState { copy(isDevicesLoading = true, targetsList = emptyList(), selectedTargetsList = emptyList()) }
-            adb.devicesInfo()
+            terminal.devicesInfo()
             delay(200)
             setState { copy(isDevicesLoading = false) }
         }
@@ -94,7 +94,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         launch {
             setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
-            val packagesList = adb.packages(state.selectedTargetsList[0])
+            val packagesList = terminal.packages(state.selectedTargetsList[0])
             delay(200)
             setState { copy(isPackagesLoading = false, packageList = packagesList) }
         }
@@ -103,7 +103,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
     fun getEmulatorsListClick() {
         launch {
             setState { copy(isEmulatorsLoading = true, emulatorsList = emptyList()) }
-            val emulatorsList = adb.emulators()
+            val emulatorsList = terminal.emulators()
             delay(200)
             setState { copy(isEmulatorsLoading = false, emulatorsList = emulatorsList) }
         }
@@ -115,142 +115,142 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun onOpenClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.openPackage(state.selectedPackage, state.selectedTargetsList) }
+        launch { terminal.openPackage(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onApkPath() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.getApkPath(state.selectedPackage, state.selectedTargetsList) }
+        launch { terminal.getApkPath(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onCloseClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.closePackage(state.selectedPackage, state.selectedTargetsList) }
+        launch { terminal.closePackage(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onRestartClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
         launch {
-            adb.closePackage(state.selectedPackage, state.selectedTargetsList)
+            terminal.closePackage(state.selectedPackage, state.selectedTargetsList)
             delay(100)
-            adb.openPackage(state.selectedPackage, state.selectedTargetsList)
+            terminal.openPackage(state.selectedPackage, state.selectedTargetsList)
         }
     }
 
     fun onClearDataClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.clearData(state.selectedPackage, state.selectedTargetsList) }
+        launch { terminal.clearData(state.selectedPackage, state.selectedTargetsList) }
     }
 
     fun onClearAndRestartClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
         launch {
-            adb.closePackage(state.selectedPackage, state.selectedTargetsList)
-            adb.clearData(state.selectedPackage, state.selectedTargetsList)
+            terminal.closePackage(state.selectedPackage, state.selectedTargetsList)
+            terminal.clearData(state.selectedPackage, state.selectedTargetsList)
             delay(100)
-            adb.openPackage(state.selectedPackage, state.selectedTargetsList)
+            terminal.openPackage(state.selectedPackage, state.selectedTargetsList)
         }
     }
 
     fun onUninstallClick() {
         if (state.selectedPackage == PACKAGE_NONE) return
 
-        launch { adb.uninstall(state.selectedPackage, state.selectedTargetsList) }
+        launch { terminal.uninstall(state.selectedPackage, state.selectedTargetsList) }
     }
 
 
     fun onLaunchEmulatorClick(emulatorName: String) {
-        launch { adb.launchEmulator(emulatorName) }
+        launch { terminal.launchEmulator(emulatorName) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {
-        launch { adb.wipeAndLaunchEmulator(emulatorName) }
+        launch { terminal.wipeAndLaunchEmulator(emulatorName) }
     }
 
     fun onKillEmulatorClick(serial: String) {
-        launch { adb.killEmulatorBySerial(serial) }
+        launch { terminal.killEmulatorBySerial(serial) }
     }
 
     fun onKillAllEmulatorClick() {
-        launch { adb.killAllEmulators() }
+        launch { terminal.killAllEmulators() }
     }
 
     fun onHomeClick() {
-        launch { adb.showHome(state.selectedTargetsList) }
+        launch { terminal.showHome(state.selectedTargetsList) }
     }
 
     fun onSettingsClick() {
-        launch { adb.showSettings(state.selectedTargetsList) }
+        launch { terminal.showSettings(state.selectedTargetsList) }
     }
 
     fun onBackClick() {
-        launch { adb.pressBack(state.selectedTargetsList) }
+        launch { terminal.pressBack(state.selectedTargetsList) }
     }
 
     fun onTabClick() {
-        launch { adb.pressTab(state.selectedTargetsList) }
+        launch { terminal.pressTab(state.selectedTargetsList) }
     }
 
     fun onEnterClick() {
-        launch { adb.pressEnter(state.selectedTargetsList) }
+        launch { terminal.pressEnter(state.selectedTargetsList) }
     }
 
     fun onPowerClick() {
-        launch { adb.pressPower(state.selectedTargetsList) }
+        launch { terminal.pressPower(state.selectedTargetsList) }
     }
 
     fun onSnapClick() {
         if (state.selectedTargetsList.isEmpty()) return
 
-        launch { adb.takeSnapshot(state.selectedTargetsList) }
+        launch { terminal.takeSnapshot(state.selectedTargetsList) }
     }
 
     fun onDayClick() {
-        launch { adb.setDarkModeOff(state.selectedTargetsList) }
+        launch { terminal.setDarkModeOff(state.selectedTargetsList) }
     }
 
     fun onNightClick() {
-        launch { adb.setDarkModeOn(state.selectedTargetsList) }
+        launch { terminal.setDarkModeOn(state.selectedTargetsList) }
     }
 
     fun onUpClick() {
-        launch { adb.pressUp(state.selectedTargetsList) }
+        launch { terminal.pressUp(state.selectedTargetsList) }
     }
 
     fun onDownClick() {
-        launch { adb.pressDown(state.selectedTargetsList) }
+        launch { terminal.pressDown(state.selectedTargetsList) }
     }
 
     fun onLeftClick() {
-        launch { adb.pressLeft(state.selectedTargetsList) }
+        launch { terminal.pressLeft(state.selectedTargetsList) }
     }
 
     fun onRightClick() {
-        launch { adb.pressRight(state.selectedTargetsList) }
+        launch { terminal.pressRight(state.selectedTargetsList) }
     }
 
     fun onBackSpaceClick() {
-        launch { adb.pressDelete(state.selectedTargetsList) }
+        launch { terminal.pressDelete(state.selectedTargetsList) }
     }
 
 
     fun onSendTextClick(value: String) {
-        launch { adb.sendText(state.selectedTargetsList, value) }
+        launch { terminal.sendText(state.selectedTargetsList, value) }
     }
 
 
     fun onSendInputClick(value: Int) {
-        launch { adb.sendInput(state.selectedTargetsList, value) }
+        launch { terminal.sendInput(state.selectedTargetsList, value) }
     }
 
     fun onNumberClick(i: Int) {
-        launch { adb.sendInputNum(state.selectedTargetsList, i) }
+        launch { terminal.sendInputNum(state.selectedTargetsList, i) }
     }
 
     fun onLetterClick(letter: String) {
         val key = KeysConverter.convertLetterToKeyCode(letter)
 
-        launch { adb.sendInput(state.selectedTargetsList, key) }
+        launch { terminal.sendInput(state.selectedTargetsList, key) }
     }
 
     fun onForwardUserInputToggle(value: Boolean) {
@@ -267,12 +267,12 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         val key: Int = KeysConverter.covertEventKeyToKeyCode(event)
         if (key != -1) {
-            launch { adb.sendInput(state.selectedTargetsList, key) }
+            launch { terminal.sendInput(state.selectedTargetsList, key) }
             return true
         }
         val char = KeysConverter.convertEventKeyToChar(event)
         if (char.isNotEmpty()) {
-            launch { adb.sendText(state.selectedTargetsList, char) }
+            launch { terminal.sendText(state.selectedTargetsList, char) }
             return true
         }
 
@@ -283,37 +283,37 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
 
     fun onAdbReverse(port: Int?) {
         if (port != null) {
-            launch { adb.reversePort(port) }
+            launch { terminal.reversePort(port) }
         }
     }
 
     fun onAdbReverseList() {
-        launch { adb.reverseList() }
+        launch { terminal.reverseList() }
     }
 
     fun onAddPermission(permission: String) {
-        launch { adb.addPermission(state.selectedTargetsList, permission, state.selectedPackage) }
+        launch { terminal.addPermission(state.selectedTargetsList, permission, state.selectedPackage) }
     }
 
     fun onRemovePermission(permission: String) {
-        launch { adb.removePermission(state.selectedTargetsList, permission, state.selectedPackage) }
+        launch { terminal.removePermission(state.selectedTargetsList, permission, state.selectedPackage) }
     }
 
     fun onRemoveAllPermissions() {
-        launch { adb.removeAllPermissions(state.selectedTargetsList, state.selectedPackage) }
+        launch { terminal.removeAllPermissions(state.selectedTargetsList, state.selectedPackage) }
     }
 
     fun onGetPermissions() {
         if (state.selectedTargetsList.isEmpty() || state.selectedPackage == PACKAGE_NONE) return
-        launch { adb.getPermissions(state.selectedTargetsList, state.selectedPackage) }
+        launch { terminal.getPermissions(state.selectedTargetsList, state.selectedPackage) }
     }
 
     fun scaleFontTo(d: Double) {
-        launch { adb.changeFontSize(d, state.selectedTargetsList) }
+        launch { terminal.changeFontSize(d, state.selectedTargetsList) }
     }
 
     fun setDensity(density: Int) {
-        launch { adb.changeDisplayDensity(density, state.selectedTargetsList) }
+        launch { terminal.changeDisplayDensity(density, state.selectedTargetsList) }
     }
 
     fun openFilePicker() {
@@ -328,7 +328,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         val pathApk = dir + file
         log("File picked: $pathApk")
-        launch { adb.installApk(pathApk, state.selectedTargetsList) }
+        launch { terminal.installApk(pathApk, state.selectedTargetsList) }
     }
 
     fun addPackageNameToFavorites(packageName: String) {
@@ -353,7 +353,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
         }
         setState { copy(isLogcatRunning = true) }
         logcatJob = launch {
-            adb.logcat(state.selectedTargetsList[0], buffer, format, priorityLevel, tag) { onNewLogcatLine(it) }
+            terminal.logcat(state.selectedTargetsList[0], buffer, format, priorityLevel, tag) { onNewLogcatLine(it) }
         }
     }
 
@@ -378,7 +378,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
             log("Please select only one target to clear logcat")
             return
         }
-        launch { adb.clearLogcat(state.selectedTargetsList[0]) }
+        launch { terminal.clearLogcat(state.selectedTargetsList[0]) }
     }
 
     fun saveLogcatLogsToDesktop() {
@@ -386,7 +386,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
             log("Please select only one target to save the logs")
             return
         }
-        launch { adb.saveLogcatToDesktop(state.selectedTargetsList[0]) }
+        launch { terminal.saveLogcatToDesktop(state.selectedTargetsList[0]) }
     }
 
     fun saveBugreport() {
@@ -394,7 +394,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
             log("Please select only one target to save bugreport")
             return
         }
-        launch { adb.saveBugReport(state.selectedTargetsList[0]) }
+        launch { terminal.saveBugReport(state.selectedTargetsList[0]) }
     }
 
     // Logs

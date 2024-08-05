@@ -1,9 +1,9 @@
 package koin
 
-import adb.Adb
-import adb.Cmd
-import adb.CommandLauncher
-import adb.ProcessCreation
+import terminal.Terminal
+import terminal.Cmd
+import terminal.CommandLauncher
+import terminal.ProcessCreation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -17,7 +17,7 @@ val mainKoinModule = module {
     singleOf(::ProcessCreation)
     singleOf(::Cmd)
     singleOf(::CommandLauncher)
-    singleOf(::Adb)
+    singleOf(::Terminal)
     singleOf(::AppStore)
 
     single { CoroutineScope(Dispatchers.IO + SupervisorJob()) }

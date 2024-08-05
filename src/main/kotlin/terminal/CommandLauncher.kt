@@ -1,6 +1,7 @@
-package adb
+package terminal
 
 import model.TargetInfo
+import terminal.commands.Commands
 
 class CommandLauncher(private val cmd: Cmd) {
     private var log: (String) -> Unit = { println(it) }

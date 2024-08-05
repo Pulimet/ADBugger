@@ -1,4 +1,4 @@
-package adb
+package terminal.commands
 
 object Commands {
     private const val KEYCODE_BACK = 4

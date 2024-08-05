@@ -1,4 +1,4 @@
-package adb
+package terminal
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive

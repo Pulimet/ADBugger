@@ -1,6 +1,6 @@
 package ui.sections.logcat
 
-import adb.Logcat
+import terminal.commands.Logcat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

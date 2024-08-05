@@ -1,9 +1,11 @@
-package adb
+package terminal
 
 import model.Package
 import model.TargetInfo
+import terminal.commands.Commands
+import terminal.commands.Logcat
 
-class Adb(private val cmd: Cmd, private val launcher: CommandLauncher) {
+class Terminal(private val cmd: Cmd, private val launcher: CommandLauncher) {
 
     private var log: (String) -> Unit = { println(it) }
     private var updateTargets: (List<TargetInfo>) -> Unit = {}

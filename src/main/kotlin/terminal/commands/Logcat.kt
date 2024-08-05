@@ -1,4 +1,4 @@
-package adb
+package terminal.commands
 
 object Logcat {
 
