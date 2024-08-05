@@ -1,10 +1,13 @@
 package terminal
 
 import model.TargetInfo
+import pref.preference
 import terminal.commands.Commands
 import terminal.process.Cmd
 
 class CommandLauncher(private val cmd: Cmd) {
+    private var adbPath: String by preference("adbPath", Commands.getPlatformToolsDefaultPath())
+
     private var log: (String) -> Unit = { println(it) }
     private var updateTargets: (List<TargetInfo>) -> Unit = {}
 
@@ -23,7 +26,7 @@ class CommandLauncher(private val cmd: Cmd) {
 
 
     // - Launch nonAdb commands
-    suspend fun run(command: String, path: String = Commands.getPlatformToolsPath()): List<String> {
+    suspend fun run(command: String, path: String = adbPath): List<String> {
         return cmd.execute(command, log, path)
     }
 
@@ -31,7 +34,7 @@ class CommandLauncher(private val cmd: Cmd) {
     suspend fun runAdb(
         selectedTargetsList: List<String>,
         command: String,
-        path: String = Commands.getPlatformToolsPath()
+        path: String = adbPath
     ) {
         if (selectedTargetsList.isEmpty()) {
             runAdbOnAllDevices(command, path)
@@ -42,7 +45,7 @@ class CommandLauncher(private val cmd: Cmd) {
         }
     }
 
-    private suspend fun runAdbOnAllDevices(command: String, path: String = Commands.getPlatformToolsPath()) {
+    private suspend fun runAdbOnAllDevices(command: String, path: String = adbPath) {
         devicesInfo().forEach {
             runAdbCommand(it.serial, command, path)
         }
@@ -51,7 +54,7 @@ class CommandLauncher(private val cmd: Cmd) {
     suspend fun runAdbCommand(
         serial: String,
         command: String,
-        path: String = Commands.getPlatformToolsPath()
+        path: String = adbPath
     ): List<String> {
         val commandToExecute = "adb -s $serial $command"
         log(commandToExecute)
@@ -78,14 +81,14 @@ class CommandLauncher(private val cmd: Cmd) {
     suspend fun runAdbShellCommand(serial: String, command: String): List<String> {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
-        return cmd.execute(commandToExecute, null, Commands.getPlatformToolsPath())
+        return cmd.execute(commandToExecute, null, adbPath)
     }
 
     suspend fun executeAndGetData(
         command: String,
-        platformToolsPath: String,
         log: (String) -> Unit,
-        commandRunCallBack: (String) -> Unit
+        commandRunCallBack: (String) -> Unit,
+        platformToolsPath: String = adbPath
     ) {
         cmd.executeAndGetData(command, platformToolsPath, log, commandRunCallBack)
     }

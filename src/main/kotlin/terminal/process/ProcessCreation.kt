@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
+import utils.PlatformX
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -46,8 +47,7 @@ class ProcessCreation {
     }
 
     private fun createProcessBuilder(pathAndCommand: String): ProcessBuilder {
-        val isWindows = System.getProperty("os.name").startsWith("Windows")
-        val processBuilder: ProcessBuilder = if (isWindows) {
+        val processBuilder: ProcessBuilder = if (PlatformX.isWindows) {
             // Windows-specific configuration
             ProcessBuilder("cmd", "/c", pathAndCommand)
         } else {

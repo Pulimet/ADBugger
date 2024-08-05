@@ -2,11 +2,13 @@ package terminal
 
 import model.Package
 import model.TargetInfo
+import pref.preference
 import terminal.commands.Commands
 import terminal.commands.Logcat
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
+    private var emulatorPath: String by preference("emulatorPath", Commands.getEmulatorDefaultPath())
 
     private var log: (String) -> Unit = { println(it) }
     private var updateTargets: (List<TargetInfo>) -> Unit = {}
@@ -28,7 +30,7 @@ class Terminal(private val launcher: CommandLauncher) {
             .filter { it.name.isNotEmpty() }
     }
 
-    suspend fun emulators() = launcher.run(Commands.getEmulatorList(), Commands.getEmulatorPath())
+    suspend fun emulators() = launcher.run(Commands.getEmulatorList(), emulatorPath)
 
 
     suspend fun openPackage(selectedPackage: String, selectedTargetsList: List<String>) {
@@ -63,11 +65,11 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun launchEmulator(emulatorName: String) {
-        launcher.run(Commands.getLaunchEmulator(emulatorName), Commands.getEmulatorPath())
+        launcher.run(Commands.getLaunchEmulator(emulatorName), emulatorPath)
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {
-        launcher.run(Commands.getWipeDataEmulatorByName(emulatorName), Commands.getEmulatorPath())
+        launcher.run(Commands.getWipeDataEmulatorByName(emulatorName), emulatorPath)
     }
 
     suspend fun showHome(selectedTargetsList: List<String>) {
@@ -201,7 +203,7 @@ class Terminal(private val launcher: CommandLauncher) {
         logcatCallback: (String) -> Unit
     ) {
         val command = Logcat.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
-        launcher.executeAndGetData(command, Commands.getPlatformToolsPath(), log, logcatCallback)
+        launcher.executeAndGetData(command, log, logcatCallback)
     }
 
     suspend fun clearLogcat(selectedTarget: String) {
