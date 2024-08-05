@@ -89,7 +89,7 @@ class AppStore(private val adb: Adb, coroutineScope: CoroutineScope) : Coroutine
             log("Can't get packages. No target selected")
             return
         }
-        if (state.selectedPackage.length > 1) {
+        if (state.selectedTargetsList.size > 1) {
             log("Multiple target selected. Getting packages from: ${state.selectedTargetsList[0]}")
         }
         launch {

@@ -1,6 +1,22 @@
 package adb
 
 object Logcat {
+
+    fun getLogCatCommand(
+        selectedTarget: String,
+        buffer: String,
+        format: String,
+        priorityLevel: String,
+        tag: String
+    ): String {
+        val s = if (selectedTarget.isEmpty()) "" else " -s $selectedTarget"
+        val b = if (buffer.isEmpty() || buffer == "default") "" else " -b $buffer"
+        val v = if (format.isEmpty() || format == "threadtime") "" else " -v $format"
+        val t = tag.ifEmpty { "*" }
+        val p = if (priorityLevel.isEmpty()) "" else " \"$t:$priorityLevel\""
+        return "adb$s logcat$b$v$p"
+    }
+
     // Multiple -b parameters or comma separated list of buffers are allowed. Buffers are interleaved.
     // Default -b main,system,crash,kernel.
     val bufferList = listOf(
