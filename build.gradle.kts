@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
-val appVersion = "1.0.3"
+val appVersion = "1.0.4"
 
 group = "net.alexandroid.adbugger"
 version = appVersion
