@@ -8,9 +8,18 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version'  # Description of the version input
+        description: 'Version (Same as set at gradle)'  # Description of the version input
         required: true  # Makes the version input mandatory
         type: string  # Specifies the type of the input as a string
+      isPreRelease:
+        description: 'Is release?'  # Description of the release input
+        default: false  # Sets the default value of the release input to false
+        required: true  # Makes the release input mandatory
+        type: boolean
+      alphaVersion:
+        description: 'Alpha version (ex: alpha1)'  # Description of the alpha input
+        required: false  # Makes the alpha input mandatory
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -122,7 +131,9 @@ jobs:
         id: determine_version
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV  # Sets the VERSION environment variable for workflow_dispatch
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV  
+            echo "IS_PRE_RELEASE=${{ github.event.inputs.isPreRelease }}" >> $GITHUB_ENV  
+            echo "ALPHA_VERSION=${{ github.event.inputs.alphaVersion }}" >> $GITHUB_ENV  
           elif [ "${{ github.event_name }}" = "push" ]; then
             TAG_NAME=${{ github.ref_name }}
             VERSION=${TAG_NAME#v}  # Removes the 'v' prefix from the tag name to get the version
@@ -130,7 +141,11 @@ jobs:
           fi
 
       - name: Use Version
-        run: echo "Using version ${{ env.VERSION }}"  # Prints the version being used
+        run: echo "Using version ${{ env.VERSION }}"
+      - name: Is pre-release?
+        run: echo "Using version ${{ env.IS_PRE_RELEASE }}"
+      - name: Alpha version
+        run: echo "Using version ${{ env.ALPHA_VERSION }}"
 
       - name: Download Artifact DMG
         uses: actions/download-artifact@v4  # Uses the download-artifact action to download the previously uploaded DMG file
@@ -150,17 +165,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
         with:
-          tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
-          release_name: Release v${{ env.VERSION }}  # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}-${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
+          release_name: Release v${{ env.VERSION }} - ${{ env.ALPHA_VERSION }} # Name of the release, using the version input
           draft: false  # Specifies that the release is not a draft
-          prerelease: false  # Specifies that the release is not a prerelease
+          prerelease: ${{ env.IS_PRE_RELEASE }}
 
       - name: Upload Release Asset DMG
         id: upload_release_dmg
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
-          name: Release v${{ env.VERSION }}  # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}-${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
+          name: Release v${{ env.VERSION }} - ${{ env.ALPHA_VERSION }}  # Name of the release, using the version input
           files: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
@@ -169,8 +184,8 @@ jobs:
         id: upload_release_msi
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.VERSION }}  # Tag name for the release, using the version input
-          name: Release v${{ env.VERSION }}  # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}-${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
+          name: Release v${{ env.VERSION }} - ${{ env.ALPHA_VERSION }}  # Name of the release, using the version input
           files: ./ADBugger-${{ env.VERSION }}.msi  # Path to the MSI file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
