@@ -9,12 +9,8 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class ProcessCreation {
-    fun createProcessAndWaitForResult(path: String, command: String): Process {
+    fun createProcessAndWaitForResult(path: String = "", command: String = ""): Process {
         val processBuilder: ProcessBuilder = createProcessBuilder(path + command)
-
-        processBuilder.redirectOutput(ProcessBuilder.Redirect.PIPE)
-        processBuilder.redirectError(ProcessBuilder.Redirect.PIPE)
-
         val process = processBuilder.start()
         process.waitFor()
         return process
@@ -46,14 +42,17 @@ class ProcessCreation {
         }
     }
 
-    private fun createProcessBuilder(pathAndCommand: String): ProcessBuilder {
-        val processBuilder: ProcessBuilder = if (PlatformX.isWindows) {
-            // Windows-specific configuration
-            ProcessBuilder("cmd", "/c", pathAndCommand)
-        } else {
-            // Unix-like configuration
-            ProcessBuilder("/bin/zsh", "-c", pathAndCommand)
-        }
-        return processBuilder
+    fun getEnvironmentVariables(): Map<String, String> = createProcessBuilder().environment()
+
+
+    private fun createProcessBuilder(pathAndCommand: String = "") = if (PlatformX.isWindows) {
+        ProcessBuilder("cmd", "/c", pathAndCommand)
+    } else {
+        //ProcessBuilder("/bin/zsh", "-c", pathAndCommand)
+        ProcessBuilder("sh", "-c", pathAndCommand)
+    }.apply {
+        redirectOutput(ProcessBuilder.Redirect.PIPE)
+        redirectError(ProcessBuilder.Redirect.PIPE)
     }
 }
+

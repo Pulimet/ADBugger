@@ -92,4 +92,6 @@ class CommandLauncher(private val cmd: Cmd) {
     ) {
         cmd.executeAndGetData(command, platformToolsPath, log, commandRunCallBack)
     }
+
+    suspend fun getEnvironmentVariables() = cmd.getEnvironmentVariables()
 }

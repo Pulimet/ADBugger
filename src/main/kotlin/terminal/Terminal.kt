@@ -11,12 +11,10 @@ class Terminal(private val launcher: CommandLauncher) {
     private var emulatorPath: String by preference("emulatorPath", Commands.getEmulatorDefaultPath())
 
     private var log: (String) -> Unit = { println(it) }
-    private var updateTargets: (List<TargetInfo>) -> Unit = {}
 
     // Public
     fun setupCallBacks(logger: (String) -> Unit, updateTargetsList: (List<TargetInfo>) -> Unit) {
         log = logger
-        updateTargets = updateTargetsList
         launcher.setupCallBacks(logger, updateTargetsList)
     }
 
@@ -30,7 +28,8 @@ class Terminal(private val launcher: CommandLauncher) {
             .filter { it.name.isNotEmpty() }
     }
 
-    suspend fun emulators() = launcher.run(Commands.getEmulatorList(), emulatorPath)
+    suspend fun emulators() =
+        launcher.run(Commands.getEmulatorList(), emulatorPath).filter { !it.contains("crashdata", ignoreCase = true) }
 
 
     suspend fun openPackage(selectedPackage: String, selectedTargetsList: List<String>) {
@@ -218,5 +217,7 @@ class Terminal(private val launcher: CommandLauncher) {
         val fileName = "bugreport_$selectedTarget"
         launcher.runAdbCommand(selectedTarget, "bugreport ~/Desktop/$fileName.zip")
     }
+
+    suspend fun getEnvironmentVariables() = launcher.getEnvironmentVariables()
 
 }

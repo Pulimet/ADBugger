@@ -1,6 +1,5 @@
 package store
 
-import terminal.Terminal
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,6 +14,7 @@ import kotlinx.coroutines.launch
 import model.Package
 import model.TargetInfo
 import pref.preference
+import terminal.Terminal
 import ui.navigation.sidebar.MenuItemId
 import utils.KeysConverter
 import kotlin.coroutines.CoroutineContext
@@ -49,6 +49,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
         launch { getDevicesList() }
         launch { getEmulatorsListClick() }
+        launch { getEnvironmentVariables() }
         setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
@@ -397,6 +398,13 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.saveBugReport(state.selectedTargetsList[0]) }
     }
 
+    private fun getEnvironmentVariables() {
+        launch {
+            val result: Map<String, String> = terminal.getEnvironmentVariables()
+            setState { copy(environmentVariables = result) }
+        }
+    }
+
     // Logs
     fun clearAdbLogs() {
         setState { copy(adbLogs = listOf()) }
@@ -431,6 +439,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val isFilePickerShown: Boolean = false,
         val adbLogs: List<String> = listOf(),
         val logcatLogs: List<String> = listOf(),
+        val environmentVariables: Map<String, String> = mapOf(),
         val isLogcatRunning: Boolean = false
     )
 }
