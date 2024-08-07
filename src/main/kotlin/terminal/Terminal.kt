@@ -4,7 +4,11 @@ import model.Package
 import model.TargetInfo
 import pref.preference
 import terminal.commands.Commands
+import terminal.commands.EmulatorCommands
+import terminal.commands.InputCommands
 import terminal.commands.Logcat
+import terminal.commands.PackagesCommands
+import terminal.commands.PermissionsCommands
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
@@ -23,34 +27,35 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun packages(serial: String): List<Package> {
-        return launcher.runAdbShellCommand(serial, Commands.getPackageList())
+        return launcher.runAdbShellCommand(serial, PackagesCommands.getPackageList())
             .map { Package(it.split(":").last()) }
             .filter { it.name.isNotEmpty() }
     }
 
     suspend fun emulators() =
-        launcher.run(Commands.getEmulatorList(), emulatorPath).filter { !it.contains("crashdata", ignoreCase = true) }
+        launcher.run(EmulatorCommands.getEmulatorList(), emulatorPath)
+            .filter { !it.contains("crashdata", ignoreCase = true) }
 
 
     suspend fun openPackage(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getLaunchCommand(selectedPackage))
+        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getLaunchCommand(selectedPackage))
     }
 
     suspend fun getApkPath(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getApkPathCommand(selectedPackage))
+        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getApkPathCommand(selectedPackage))
     }
 
     suspend fun closePackage(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getCloseCommand(selectedPackage))
+        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getCloseCommand(selectedPackage))
     }
 
 
     suspend fun clearData(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getClearDataCommand(selectedPackage))
+        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getClearDataCommand(selectedPackage))
     }
 
     suspend fun uninstall(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdb(selectedTargetsList, Commands.getUninstallCommand(selectedPackage))
+        launcher.runAdb(selectedTargetsList, PackagesCommands.getUninstallCommand(selectedPackage))
     }
 
     suspend fun killAllEmulators() {
@@ -60,15 +65,15 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun killEmulatorBySerial(serial: String) {
-        launcher.runAdb(listOf(serial), Commands.getKillEmulatorBySerial())
+        launcher.runAdb(listOf(serial), EmulatorCommands.getKillEmulatorBySerial())
     }
 
     suspend fun launchEmulator(emulatorName: String) {
-        launcher.run(Commands.getLaunchEmulator(emulatorName), emulatorPath)
+        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName), emulatorPath)
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {
-        launcher.run(Commands.getWipeDataEmulatorByName(emulatorName), emulatorPath)
+        launcher.run(EmulatorCommands.getWipeDataEmulatorByName(emulatorName), emulatorPath)
     }
 
     suspend fun showHome(selectedTargetsList: List<String>) {
@@ -80,19 +85,19 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun pressBack(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getPressBack())
+        launcher.runAdbShell(selectedTargetsList, InputCommands.getPressBack())
     }
 
     suspend fun pressTab(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getPressTab())
+        launcher.runAdbShell(selectedTargetsList, InputCommands.getPressTab())
     }
 
     suspend fun pressEnter(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getPressEnter())
+        launcher.runAdbShell(selectedTargetsList, InputCommands.getPressEnter())
     }
 
     suspend fun pressPower(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getPressPower())
+        launcher.runAdbShell(selectedTargetsList, InputCommands.getPressPower())
     }
 
     suspend fun takeSnapshot(selectedTargetsList: List<String>) {
@@ -113,36 +118,36 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun pressUp(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getUp())
+        launcher.runAdbShell(selectedTarget, InputCommands.getUp())
     }
 
     suspend fun pressDown(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getDown())
+        launcher.runAdbShell(selectedTarget, InputCommands.getDown())
     }
 
     suspend fun pressLeft(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getLeft())
+        launcher.runAdbShell(selectedTarget, InputCommands.getLeft())
     }
 
     suspend fun pressRight(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getRight())
+        launcher.runAdbShell(selectedTarget, InputCommands.getRight())
     }
 
     suspend fun pressDelete(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getDelete())
+        launcher.runAdbShell(selectedTarget, InputCommands.getDelete())
     }
 
     suspend fun sendText(selectedTarget: List<String>, value: String) {
         val text = Escaping.escapeForAdbShellInputText(value)
-        launcher.runAdbShell(selectedTarget, Commands.sendTextCommand("\"$text\""))
+        launcher.runAdbShell(selectedTarget, InputCommands.sendTextCommand("\"$text\""))
     }
 
     suspend fun sendInput(selectedTarget: List<String>, value: Int) {
-        launcher.runAdbShell(selectedTarget, Commands.sendInputCommand(value))
+        launcher.runAdbShell(selectedTarget, InputCommands.sendInputCommand(value))
     }
 
     suspend fun sendInputNum(selectedTarget: List<String>, num: Int) {
-        launcher.runAdbShell(selectedTarget, Commands.sendInputCommand((num + 7)))
+        launcher.runAdbShell(selectedTarget, InputCommands.sendInputCommand((num + 7)))
     }
 
     suspend fun reversePort(port: Int) {
@@ -162,20 +167,20 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun removeAllPermissions(selectedTarget: List<String>, selectedPackage: String) {
-        launcher.runAdbShell(selectedTarget, Commands.getRevokeAllPermissions(selectedPackage))
+        launcher.runAdbShell(selectedTarget, PermissionsCommands.getRevokeAllPermissions(selectedPackage))
     }
 
     suspend fun addPermission(selectedTarget: List<String>, permission: String, selectedPackage: String) {
-        launcher.runAdbShell(selectedTarget, Commands.addSpecificPermission(selectedPackage, permission))
+        launcher.runAdbShell(selectedTarget, PermissionsCommands.addSpecificPermission(selectedPackage, permission))
     }
 
     suspend fun removePermission(selectedTarget: List<String>, permission: String, selectedPackage: String) {
-        launcher.runAdbShell(selectedTarget, Commands.revokeSpecificPermission(selectedPackage, permission))
+        launcher.runAdbShell(selectedTarget, PermissionsCommands.revokeSpecificPermission(selectedPackage, permission))
     }
 
     suspend fun getPermissions(selectedTargetsList: List<String>, selectedPackage: String) {
         selectedTargetsList.forEach {
-            val result = launcher.runAdbShellCommand(it, Commands.getGrantedPermissions(selectedPackage))
+            val result = launcher.runAdbShellCommand(it, PermissionsCommands.getGrantedPermissions(selectedPackage))
             log("output :$result")
         }
     }
@@ -190,7 +195,7 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
-        launcher.runAdb(selectedTarget, Commands.getAdbInstall(pathApk))
+        launcher.runAdb(selectedTarget, PackagesCommands.getAdbInstall(pathApk))
     }
 
     suspend fun logcat(
