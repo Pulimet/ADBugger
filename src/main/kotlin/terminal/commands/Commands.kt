@@ -1,7 +1,5 @@
 package terminal.commands
 
-import utils.PlatformX
-
 object Commands {
     private const val KEYCODE_BACK = 4
     private const val KEYCODE_DPAD_UP = 19
@@ -58,22 +56,6 @@ object Commands {
     fun getGrantedPermissions(packageName: String) =
         "dumpsys package $packageName | grep permission | grep granted=true"
 
-    // Path
-    fun getPlatformToolsDefaultPath(): String {
-        return if (PlatformX.isWindows) {
-            "${System.getProperty("user.home")}\\AppData\\Local\\Android\\sdk\\platform-tools"
-        } else {
-            "~/Library/Android/sdk/platform-tools/"
-        }
-    }
-
-    fun getEmulatorDefaultPath(): String {
-        return if (PlatformX.isWindows) {
-            "${System.getProperty("user.home")}\\AppData\\Local\\Android\\sdk\\emulator"
-        } else {
-            "~/Library/Android/sdk/emulator/"
-        }
-    }
 
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"

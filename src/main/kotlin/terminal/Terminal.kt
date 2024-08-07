@@ -8,7 +8,7 @@ import terminal.commands.Logcat
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
-    private var emulatorPath: String by preference("emulatorPath", Commands.getEmulatorDefaultPath())
+    private var emulatorPath: String by preference("emulatorPath", DefaultPath.getEmulatorDefaultPath())
 
     private var log: (String) -> Unit = { println(it) }
 

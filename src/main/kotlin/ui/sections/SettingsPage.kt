@@ -1,8 +1,18 @@
 package ui.sections
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
@@ -11,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
-import terminal.commands.Commands
+import terminal.DefaultPath
 import ui.theme.Dimensions
 import ui.widgets.CardX
 import ui.widgets.TextFieldX
@@ -19,8 +29,8 @@ import ui.widgets.list.ListX
 
 @Composable
 fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
-    var adbPath: String by preference("adbPath", Commands.getPlatformToolsDefaultPath())
-    var emulatorPath: String by preference("emulatorPath", Commands.getEmulatorDefaultPath())
+    var adbPath: String by preference("adbPath", DefaultPath.getPlatformToolsDefaultPath())
+    var emulatorPath: String by preference("emulatorPath", DefaultPath.getEmulatorDefaultPath())
 
     var adbPathTextField by remember { mutableStateOf(TextFieldValue(adbPath)) }
     var emulatorPathTextField by remember { mutableStateOf(TextFieldValue(emulatorPath)) }

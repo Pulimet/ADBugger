@@ -6,7 +6,7 @@ import terminal.commands.Commands
 import terminal.process.Cmd
 
 class CommandLauncher(private val cmd: Cmd) {
-    private var adbPath: String by preference("adbPath", Commands.getPlatformToolsDefaultPath())
+    private var adbPath: String by preference("adbPath", DefaultPath.getPlatformToolsDefaultPath())
 
     private var log: (String) -> Unit = { println(it) }
     private var updateTargets: (List<TargetInfo>) -> Unit = {}
