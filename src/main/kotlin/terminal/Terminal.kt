@@ -6,7 +6,7 @@ import pref.preference
 import terminal.commands.Commands
 import terminal.commands.EmulatorCommands
 import terminal.commands.InputCommands
-import terminal.commands.Logcat
+import terminal.commands.LogcatCommands
 import terminal.commands.PackagesCommands
 import terminal.commands.PermissionsCommands
 import utils.Escaping
@@ -206,7 +206,7 @@ class Terminal(private val launcher: CommandLauncher) {
         tag: String,
         logcatCallback: (String) -> Unit
     ) {
-        val command = Logcat.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
+        val command = LogcatCommands.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
         launcher.executeAndGetData(command, log, logcatCallback)
     }
 

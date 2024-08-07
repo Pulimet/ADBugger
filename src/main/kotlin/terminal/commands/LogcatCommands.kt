@@ -1,6 +1,6 @@
 package terminal.commands
 
-object Logcat {
+object LogcatCommands {
 
     fun getLogCatCommand(
         selectedTarget: String,

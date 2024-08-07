@@ -1,6 +1,6 @@
 package ui.sections.logcat
 
-import terminal.commands.Logcat
+import terminal.commands.LogcatCommands
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,7 +47,7 @@ fun LogcatTopBar(
     var tagTextField by remember { mutableStateOf(TextFieldValue("")) }
     var searchTextField by remember { mutableStateOf(TextFieldValue("")) }
 
-    val command = Logcat.getLogCatCommand(
+    val command = LogcatCommands.getLogCatCommand(
         if (selectedTargetsList.isEmpty()) "" else selectedTargetsList[0],
         selectedBuffer,
         selectedFormat,
@@ -64,16 +64,16 @@ fun LogcatTopBar(
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            Dropdown(options = Logcat.bufferList,
-                optionsDetails = Logcat.bufferListDetails,
+            Dropdown(options = LogcatCommands.bufferList,
+                optionsDetails = LogcatCommands.bufferListDetails,
                 title = "Buffer",
                 onOptionSelected = { selectedBuffer = it })
-            Dropdown(options = Logcat.formatLst,
-                optionsDetails = Logcat.formatLstDetails,
+            Dropdown(options = LogcatCommands.formatLst,
+                optionsDetails = LogcatCommands.formatLstDetails,
                 title = "Format",
                 onOptionSelected = { selectedFormat = it })
-            Dropdown(options = Logcat.priorityLevelList,
-                optionsDetails = Logcat.priorityLevelListDetails,
+            Dropdown(options = LogcatCommands.priorityLevelList,
+                optionsDetails = LogcatCommands.priorityLevelListDetails,
                 title = "Level",
                 onOptionSelected = { selectedPriorityLevel = it })
 
