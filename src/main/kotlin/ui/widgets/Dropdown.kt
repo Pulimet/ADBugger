@@ -53,7 +53,7 @@ private fun DropdownContent(
     Box(
         contentAlignment = Alignment.TopStart,
         modifier = modifier.background(MyColors.bg).padding(16.dp).widthIn(80.dp).clip(RoundedCornerShape(4.dp))
-            .border(BorderStroke(1.dp, Color.DarkGray), RoundedCornerShape(4.dp))
+            .border(BorderStroke(1.dp, Color.Gray), RoundedCornerShape(4.dp))
             .clickable { expanded = !expanded },
     ) {
         DropdownSelected(selectedText, iconModifier = Modifier.align(Alignment.CenterEnd))

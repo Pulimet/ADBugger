@@ -1,6 +1,8 @@
 package ui.widgets
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.ExperimentalMaterialApi
@@ -17,6 +19,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -26,6 +29,7 @@ fun TextFieldX(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
+    height: Dp = 34.dp,
     label: String = "",
     enabled: Boolean = true,
     singleLine: Boolean = true,
@@ -36,11 +40,11 @@ fun TextFieldX(
 ) {
     BasicTextField(
         modifier = if (label.isNotEmpty()) {
-            modifier
-                .semantics(mergeDescendants = true) {}
+            modifier.semantics(mergeDescendants = true) {}
                 .padding(top = 8.dp)
+                .height(height)
         } else {
-            modifier
+            modifier.height(height)
         },
         value = value,
         textStyle = TextStyle(color = Color.White),
@@ -54,23 +58,12 @@ fun TextFieldX(
                 innerTextField = innerTextField,
                 singleLine = singleLine,
                 enabled = enabled,
-                label = {
-                    TextFieldLabel(label)
-                },
+                label = { TextFieldLabel(label) },
                 interactionSource = interactionSource,
                 colors = TextFieldDefaults.outlinedTextFieldColors(),
-                contentPadding = TextFieldDefaults.textFieldWithoutLabelPadding(
-                    top = 2.dp,
-                    bottom = 6.dp
-                ),
+                contentPadding = PaddingValues(16.dp, 0.dp, 16.dp, 0.dp),
                 border = {
-                    TextFieldDefaults.BorderBox(
-                        enabled,
-                        isError,
-                        interactionSource,
-                        colors,
-                        shape
-                    )
+                    TextFieldDefaults.BorderBox(enabled, isError, interactionSource, colors, shape)
                 }
             )
         }
@@ -83,8 +76,8 @@ private fun TextFieldLabel(title: String) {
         Text(
             text = title,
             fontSize = 10.sp,
+            lineHeight = 10.sp,
             color = Color.LightGray,
-            modifier = Modifier.padding(bottom = 4.dp)
         )
     }
 }
