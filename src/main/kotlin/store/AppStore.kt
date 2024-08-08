@@ -161,7 +161,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
 
     fun onLaunchEmulatorClick(emulatorName: String) {
-        launch { terminal.launchEmulator(emulatorName) }
+        launch { terminal.launchEmulator(emulatorName, state.proxy) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {
@@ -405,6 +405,10 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         }
     }
 
+    fun onProxyChange(proxy: String) {
+        setState { copy(proxy = proxy) }
+    }
+
     // Logs
     fun clearAdbLogs() {
         setState { copy(adbLogs = listOf()) }
@@ -440,6 +444,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val adbLogs: List<String> = listOf(),
         val logcatLogs: List<String> = listOf(),
         val environmentVariables: Map<String, String> = mapOf(),
-        val isLogcatRunning: Boolean = false
+        val isLogcatRunning: Boolean = false,
+        val proxy: String = ""
     )
 }

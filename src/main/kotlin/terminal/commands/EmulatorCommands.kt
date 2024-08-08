@@ -3,13 +3,24 @@ package terminal.commands
 object EmulatorCommands {
     fun getEmulatorList() = "emulator -list-avds"
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
-    fun getLaunchEmulator(emulatorName: String) = "emulator -avd $emulatorName -netfast"
+    fun getLaunchEmulator(emulatorName: String, proxy: String): String {
+        val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
+        return "emulator -avd $emulatorName -netfast$p"
+    }
+
     fun getKillEmulatorBySerial() = "emu kill"
 
 
-    // Proxy - Makes all TCP connections through a specified HTTP/HTTPS proxy.
-    // http://server:port or http://username:password@server:port  (The http:// prefix can be omitted.)
-    // emulator @Pixel8_API_34 -http-proxy myserver:1981
+    // Check this:
+    // Currently I'm using these commands for enable/disable proxy:
+    //
+    //adb shell settings put global http_proxy 127.0.0.1:8889
+    //or dynamically taking my pc as host
+    //
+    //adb shell settings put global http_proxy $(ipconfig getifaddr en0):8889
+    //To disable that proxy use:
+    //
+    //adb shell settings put global http_proxy :0
 
     // Sets an Android system property in the emulator when it boots. name must be a property name
     // labeled as qemu_prop of at most 32 characters, without any spaces, and value must be a string

@@ -68,8 +68,8 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdb(listOf(serial), EmulatorCommands.getKillEmulatorBySerial())
     }
 
-    suspend fun launchEmulator(emulatorName: String) {
-        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName), emulatorPath)
+    suspend fun launchEmulator(emulatorName: String, proxy: String) {
+        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, proxy), emulatorPath)
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {
