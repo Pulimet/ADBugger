@@ -33,7 +33,7 @@ fun EmulatorsTopMenu(model: AppStore = koinInject()) {
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
             .background(MyColors.bg).padding(vertical = 8.dp)
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
             // TODO Add explanation in UI
             // Proxy - Makes all TCP connections through a specified HTTP/HTTPS proxy.
             // http://server:port or http://username:password@server:port  (The http:// prefix can be omitted.)
@@ -50,15 +50,13 @@ fun EmulatorsTopMenu(model: AppStore = koinInject()) {
                 icon = Icons.Rounded.Refresh,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 onClick = { model.getEmulatorsListClick() },
-                description = "Refresh Emulators List",
-                width = 160.dp
+                description = "Refresh",
             )
             BtnWithText(
                 icon = FontAwesomeIcons.Solid.BookDead,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 onClick = { model.onKillAllEmulatorClick() },
-                description = "Kill All Emulators",
-                width = 160.dp
+                description = "Kill All",
             )
         }
 
