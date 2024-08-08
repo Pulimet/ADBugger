@@ -10,6 +10,7 @@ import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.CardX
 import ui.widgets.LoadingSpinner
+import ui.widgets.tabs.Tabs
 
 @Composable
 fun EmulatorsPage(
@@ -21,16 +22,14 @@ fun EmulatorsPage(
             if (model.state.isEmulatorsLoading) {
                 LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
             } else {
-                Content()
+                Tabs(listOf("Run", "Add", "Create")) {
+                    when (it) {
+                        0 -> EmulatorsRunTab()
+                        1 -> EmulatorsAddTab()
+                        3 -> EmulatorsCreateTab()
+                    }
+                }
             }
         }
-    }
-}
-
-@Composable
-private fun Content() {
-    Column {
-        EmulatorsTopMenu()
-        EmulatorsList()
     }
 }
