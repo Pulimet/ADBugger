@@ -11,7 +11,7 @@ object EmulatorCommands {
     fun getKillEmulatorBySerial() = "emu kill"
 
 
-    // Check this:
+    // TODO Add an option to specify the proxy via adb shell settings put global http_proxy
     // Currently I'm using these commands for enable/disable proxy:
     //
     //adb shell settings put global http_proxy 127.0.0.1:8889
@@ -21,6 +21,9 @@ object EmulatorCommands {
     //To disable that proxy use:
     //
     //adb shell settings put global http_proxy :0
+
+    // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
+
 
     // Sets an Android system property in the emulator when it boots. name must be a property name
     // labeled as qemu_prop of at most 32 characters, without any spaces, and value must be a string
