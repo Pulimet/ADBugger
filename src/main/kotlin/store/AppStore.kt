@@ -53,6 +53,45 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
     }
 
+    // State
+    private fun initialState() = AppState()
+
+    private inline fun setState(update: AppState.() -> AppState) {
+        state = state.update()
+    }
+
+    data class AppState(
+        val menuItemSelected: MenuItemId = MenuItemId.DEVICES,
+        val targetsList: List<TargetInfo> = emptyList(),
+        val packageList: List<Package> = emptyList(),
+        val selectedTargetsList: List<String> = emptyList(),
+        val favoritePackages: List<Package> = emptyList(),
+        val emulatorsList: List<String> = emptyList(),
+        val selectedPackage: String = PACKAGE_NONE,
+        val isDevicesLoading: Boolean = false,
+        val isPackagesLoading: Boolean = false,
+        val isEmulatorsLoading: Boolean = false,
+        val isUserForwardInputEnabled: Boolean = false,
+        val isLogsAlwaysShown: Boolean = false,
+        val isFilePickerShown: Boolean = false,
+        val adbLogs: List<String> = listOf(),
+        val logcatLogs: List<String> = listOf(),
+        val environmentVariables: Map<String, String> = mapOf(),
+        val isLogcatRunning: Boolean = false,
+        val proxy: String = ""
+    )
+
+    // Logs
+    fun clearAdbLogs() {
+        setState { copy(adbLogs = listOf()) }
+    }
+
+    private fun log(log: String) {
+        val newList = ArrayList(state.adbLogs)
+        newList.add(log)
+        setState { copy(adbLogs = newList) }
+    }
+
     // Navigation
     fun showPage(menuItemId: MenuItemId) {
         setState { copy(menuItemSelected = menuItemId) }
@@ -409,42 +448,11 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         setState { copy(proxy = proxy) }
     }
 
-    // Logs
-    fun clearAdbLogs() {
-        setState { copy(adbLogs = listOf()) }
+    fun setProxy(proxyText: String) {
+        launch { terminal.setProxy(proxyText, state.selectedTargetsList) }
     }
 
-    private fun log(log: String) {
-        val newList = ArrayList(state.adbLogs)
-        newList.add(log)
-        setState { copy(adbLogs = newList) }
+    fun removeProxy() {
+        launch { terminal.removeProxy(state.selectedTargetsList) }
     }
-
-    // Private
-    private fun initialState() = AppState()
-
-    private inline fun setState(update: AppState.() -> AppState) {
-        state = state.update()
-    }
-
-    data class AppState(
-        val menuItemSelected: MenuItemId = MenuItemId.DEVICES,
-        val targetsList: List<TargetInfo> = emptyList(),
-        val packageList: List<Package> = emptyList(),
-        val selectedTargetsList: List<String> = emptyList(),
-        val favoritePackages: List<Package> = emptyList(),
-        val emulatorsList: List<String> = emptyList(),
-        val selectedPackage: String = PACKAGE_NONE,
-        val isDevicesLoading: Boolean = false,
-        val isPackagesLoading: Boolean = false,
-        val isEmulatorsLoading: Boolean = false,
-        val isUserForwardInputEnabled: Boolean = false,
-        val isLogsAlwaysShown: Boolean = false,
-        val isFilePickerShown: Boolean = false,
-        val adbLogs: List<String> = listOf(),
-        val logcatLogs: List<String> = listOf(),
-        val environmentVariables: Map<String, String> = mapOf(),
-        val isLogcatRunning: Boolean = false,
-        val proxy: String = ""
-    )
 }

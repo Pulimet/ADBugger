@@ -225,4 +225,12 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun getEnvironmentVariables() = launcher.getEnvironmentVariables()
 
+    suspend fun setProxy(proxyText: String, selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getSetProxy(proxyText))
+    }
+
+    suspend fun removeProxy(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getRemoveProxy())
+    }
+
 }

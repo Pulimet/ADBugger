@@ -8,8 +8,10 @@ object Dimensions {
     val buttonWidthMedium = 160.dp
     val btnSizeBig = 38.dp
     val btnIconSizeBig = 20.dp
-    val btnIconSizeSmall = 16.dp
     val btnSizeSmall = 24.dp
+    val btnIconSizeSmall = 16.dp
+    val btnSizeExtraSmall = 18.dp
+    val btnIconSizeExtraSmall = 12.dp
     val packageCommandsBtnWidth = 100.dp
     val permissionsCommandsBtnWidthShort = 60.dp
     val permissionsCommandsBtnWidth = 80.dp

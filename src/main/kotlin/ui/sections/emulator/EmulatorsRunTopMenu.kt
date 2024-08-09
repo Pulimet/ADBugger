@@ -1,17 +1,18 @@
 package ui.sections.emulator
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.compose.koinInject
@@ -21,9 +22,10 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.TextExample
 import ui.widgets.TextFieldX
+import ui.widgets.buttons.BtnWithText
 
 @Composable
-fun EmulatorsRunTopMenu() {
+fun EmulatorsRunTopMenu(model: AppStore = koinInject()) {
     var proxyText by remember { mutableStateOf("") }
     val command = EmulatorCommands.getLaunchEmulator("emuName", proxyText)
 
@@ -34,7 +36,10 @@ fun EmulatorsRunTopMenu() {
             .background(MyColors.bg)
             .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
-        ProxyTextField { proxyText = it }
+        Row {
+            ProxyTextField { proxyText = it }
+            ProxyButtons { model.setProxy(proxyText) }
+        }
         Text(
             text = command,
             fontSize = 12.sp,
@@ -49,6 +54,7 @@ private fun ProxyTextField(model: AppStore = koinInject(), onProxyChange: (Strin
     var proxyTextField by remember { mutableStateOf(TextFieldValue("")) }
 
     Column {
+        TextExample("ex: server:port\nusername:password@server:port")
         TextFieldX(
             value = proxyTextField,
             onValueChange = { newText ->
@@ -57,8 +63,36 @@ private fun ProxyTextField(model: AppStore = koinInject(), onProxyChange: (Strin
                 onProxyChange(newText.text)
             },
             label = "Proxy (used on launch)",
-            modifier = Modifier.background(MyColors.bg).width(250.dp),
+            modifier = Modifier.background(MyColors.bg).widthIn(min = 170.dp),
         )
-        TextExample("ex: server:port/username:password@server:port")
+    }
+}
+
+@Composable
+private fun ProxyButtons(model: AppStore = koinInject(), onClickSetProxy: () -> Unit) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        TextExample("Set/Clear proxy after\nemulator launched", TextAlign.Center, Modifier.width(140.dp))
+        Row(modifier = Modifier.padding(top = 6.dp)) {
+            BtnWithText(
+                icon = Icons.AutoMirrored.Rounded.Send,
+                onClick = { onClickSetProxy() },
+                description = "Set Proxy",
+                width = 70.dp,
+                height = 36.dp,
+                buttonSize = Dimensions.btnSizeExtraSmall,
+                iconSize = Dimensions.btnIconSizeExtraSmall,
+                textTopPadding = 14.dp
+            )
+            BtnWithText(
+                icon = Icons.Rounded.Delete,
+                onClick = { model.removeProxy() },
+                description = "Clear Proxy",
+                width = 70.dp,
+                height = 36.dp,
+                buttonSize = Dimensions.btnSizeExtraSmall,
+                iconSize = Dimensions.btnIconSizeExtraSmall,
+                textTopPadding = 14.dp
+            )
+        }
     }
 }

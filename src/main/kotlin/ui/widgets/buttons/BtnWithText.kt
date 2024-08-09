@@ -31,20 +31,24 @@ fun BtnWithText(
     description: String,
     onClick: () -> Unit,
     width: Dp = 60.dp,
+    height: Dp = 48.dp,
     enabled: Boolean = true,
     toggle: Boolean = true,
     modifier: Modifier = Modifier,
-    visible: Boolean = true
+    visible: Boolean = true,
+    buttonSize: Dp = Dimensions.btnSizeSmall,
+    iconSize: Dp = Dimensions.btnIconSizeSmall,
+    textTopPadding: Dp = 22.dp
 ) {
     var active by remember { mutableStateOf(false) }
 
-    if(!visible) return
+    if (!visible) return
 
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = modifier
             .width(width)
-            .height(48.dp)
+            .height(height)
             .background(color = if (enabled && active) MyColors.bgHover else Color.Transparent)
             .onPointerEvent(PointerEventType.Enter) { active = true }
             .onPointerEvent(PointerEventType.Exit) { active = false }
@@ -54,8 +58,8 @@ fun BtnWithText(
             icon = icon,
             modifier = Modifier.padding(top = 4.dp),
             description = description,
-            buttonSize = Dimensions.btnSizeSmall,
-            iconSize = Dimensions.btnIconSizeSmall,
+            buttonSize = buttonSize,
+            iconSize = iconSize,
             enabled = enabled,
             toggle = toggle,
             showTooltip = false,
@@ -67,7 +71,7 @@ fun BtnWithText(
             fontSize = Dimensions.btnWithTextFontSize,
             textAlign = TextAlign.Center,
             color = Color.LightGray,
-            modifier = Modifier.padding(top = 22.dp),
+            modifier = Modifier.padding(top = textTopPadding),
             maxLines = 1,
         )
     }
