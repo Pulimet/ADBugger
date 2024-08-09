@@ -43,7 +43,7 @@ fun SideBarItem(
                 .background(color = getBgColor(toggle, active))
                 .onPointerEvent(PointerEventType.Enter) { active = true }
                 .onPointerEvent(PointerEventType.Exit) { active = false }
-                .padding(start = if (collapsed) 8.dp else 18.dp)
+                .padding(start = if (collapsed) 8.dp else 12.dp)
                 .height(Dimensions.sideBarItemHeight)
                 .bounceClick(onClick, enabled, 0.85f),
             verticalAlignment = Alignment.CenterVertically

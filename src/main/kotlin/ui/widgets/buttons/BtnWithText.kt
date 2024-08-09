@@ -67,7 +67,7 @@ fun BtnWithText(
             fontSize = Dimensions.btnWithTextFontSize,
             textAlign = TextAlign.Center,
             color = Color.LightGray,
-            modifier = Modifier.padding(top = 24.dp),
+            modifier = Modifier.padding(top = 22.dp),
             maxLines = 1,
         )
     }

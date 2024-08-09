@@ -19,6 +19,7 @@ import store.AppStore
 import terminal.commands.EmulatorCommands
 import ui.theme.Dimensions
 import ui.theme.MyColors
+import ui.widgets.TextExample
 import ui.widgets.TextFieldX
 
 @Composable
@@ -58,18 +59,6 @@ private fun ProxyTextField(model: AppStore = koinInject(), onProxyChange: (Strin
             label = "Proxy (used on launch)",
             modifier = Modifier.background(MyColors.bg).width(250.dp),
         )
-        TextFieldExample("ex: server:port/username:password@server:port")
+        TextExample("ex: server:port/username:password@server:port")
     }
 }
-
-@Composable
-private fun TextFieldExample(title: String) {
-    Text(
-        text = title,
-        lineHeight = 10.sp,
-        fontSize = 10.sp,
-        color = Color.Gray,
-    )
-}
-
-

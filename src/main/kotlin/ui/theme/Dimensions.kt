@@ -9,33 +9,33 @@ object Dimensions {
     val btnSizeBig = 38.dp
     val btnIconSizeBig = 20.dp
     val btnIconSizeSmall = 16.dp
-    val btnSizeSmall = 26.dp
+    val btnSizeSmall = 24.dp
     val packageCommandsBtnWidth = 100.dp
     val permissionsCommandsBtnWidthShort = 60.dp
     val permissionsCommandsBtnWidth = 80.dp
-    val btnWithTextFontSize = 11.sp
+    val btnWithTextFontSize = 10.sp
     val btnEmulatorWidth = 100.dp
 
     // Spinner
     val spinnerPadding = 4.dp
 
     // Text
-    val titleFontSize = 18.sp
-    val subtitleFontSize = 13.sp
-    val releaseNotesFontSize = 13.sp
+    val titleFontSize = 16.sp
+    val subtitleFontSize = 12.sp
+    val releaseNotesFontSize = 12.sp
     val versionFontSize = 10.sp
     val emulatorItemFontSize = 12.sp
 
     // TopMenu
     val logoFontSize = 24.sp
-    val topBarHeight = 54.dp
+    val topBarHeight = 50.dp
 
     // SideBar
-    val sideBarWidth = 200.dp
+    val sideBarWidth = 170.dp
     val sideBarWidthCollapsed = 40.dp
     val sideBarItemHeight = 40.dp
-    val sideMenuFontSize = 13.sp
-    val sideBarSpacerWidth = 6.dp
+    val sideMenuFontSize = 12.sp
+    val sideBarSpacerWidth = 4.dp
 
     // StatusBar
     val statusBarFontSize = 12.sp
