@@ -3,12 +3,7 @@ package terminal
 import model.Package
 import model.TargetInfo
 import pref.preference
-import terminal.commands.Commands
-import terminal.commands.EmulatorCommands
-import terminal.commands.InputCommands
-import terminal.commands.LogcatCommands
-import terminal.commands.PackagesCommands
-import terminal.commands.PermissionsCommands
+import terminal.commands.*
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
@@ -231,6 +226,10 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun removeProxy(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getRemoveProxy())
+    }
+
+    suspend fun getProxy(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getFetchProxy(), true)
     }
 
 }

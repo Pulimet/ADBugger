@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,7 +23,7 @@ import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.TextExample
 import ui.widgets.TextFieldX
-import ui.widgets.buttons.BtnWithText
+import ui.widgets.buttons.BtnWithTextSmall
 
 @Composable
 fun EmulatorsRunTopMenu(model: AppStore = koinInject()) {
@@ -71,27 +72,22 @@ private fun ProxyTextField(model: AppStore = koinInject(), onProxyChange: (Strin
 @Composable
 private fun ProxyButtons(model: AppStore = koinInject(), onClickSetProxy: () -> Unit) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        TextExample("Set/Clear proxy after\nemulator launched", TextAlign.Center, Modifier.width(140.dp))
+        TextExample("Proxy control after emulator launched", TextAlign.Center, Modifier.width(150.dp))
         Row(modifier = Modifier.padding(top = 6.dp)) {
-            BtnWithText(
+            BtnWithTextSmall(
                 icon = Icons.AutoMirrored.Rounded.Send,
                 onClick = { onClickSetProxy() },
-                description = "Set Proxy",
-                width = 70.dp,
-                height = 36.dp,
-                buttonSize = Dimensions.btnSizeExtraSmall,
-                iconSize = Dimensions.btnIconSizeExtraSmall,
-                textTopPadding = 14.dp
+                description = "Set",
             )
-            BtnWithText(
+            BtnWithTextSmall(
                 icon = Icons.Rounded.Delete,
                 onClick = { model.removeProxy() },
-                description = "Clear Proxy",
-                width = 70.dp,
-                height = 36.dp,
-                buttonSize = Dimensions.btnSizeExtraSmall,
-                iconSize = Dimensions.btnIconSizeExtraSmall,
-                textTopPadding = 14.dp
+                description = "Clear",
+            )
+            BtnWithTextSmall(
+                icon = Icons.Rounded.Check,
+                onClick = { model.getProxy() },
+                description = "Get",
             )
         }
     }

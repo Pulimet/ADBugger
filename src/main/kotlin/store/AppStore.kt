@@ -455,4 +455,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     fun removeProxy() {
         launch { terminal.removeProxy(state.selectedTargetsList) }
     }
+
+    fun getProxy() {
+        launch { terminal.getProxy(state.selectedTargetsList) }
+    }
 }

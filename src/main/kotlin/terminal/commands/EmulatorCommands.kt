@@ -12,6 +12,7 @@ object EmulatorCommands {
 
     fun getSetProxy(proxy: String) = "settings put global http_proxy $proxy"
     fun getRemoveProxy() = "settings put global http_proxy :0"
+    fun getFetchProxy() = "settings get global http_proxy"
 
     // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
     // Sets an Android system property in the emulator when it boots. name must be a property name
