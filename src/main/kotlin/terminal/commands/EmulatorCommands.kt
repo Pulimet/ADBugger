@@ -11,11 +11,13 @@ object EmulatorCommands {
         ram: Int,
         latency: String,
         speed: String,
-        quickBoot: String
+        quickBoot: String,
+        bootAnim: Boolean
     ): String {
         val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
         val r = if (ram in 1536..8192) "  -memory $ram" else ""
         val q = if (quickBoot == "enabled") "" else " $quickBoot"
+        val b = if (bootAnim) " -no-boot-anim" else ""
 
         // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
         // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
@@ -24,7 +26,7 @@ object EmulatorCommands {
         val s = if (speed == "full") "" else " -netspeed $speed"
 
 
-        return "emulator -avd $emulatorName$netfast$l$s$p$r$q"
+        return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b"
     }
 
     // Proxy
@@ -103,8 +105,6 @@ object EmulatorCommands {
     )
 
     // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
-    // Boot animation - Disables the boot animation during emulator startup.
-    // emulator @Pixel8_API_34 -no-boot-anim
 
     // Disables audio support for this virtual device. Some Linux and Windows computers have faulty audio
     // drivers that cause different symptoms, such as preventing the emulator from starting.

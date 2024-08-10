@@ -74,9 +74,10 @@ class Terminal(private val launcher: CommandLauncher) {
         ram: Int,
         latency: String,
         speed: String,
-        quickBoot: String
+        quickBoot: String,
+        bootAnim: Boolean
     ) {
-        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, proxy, ram, latency, speed, quickBoot), emulatorPath)
+        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, proxy, ram, latency, speed, quickBoot, bootAnim), emulatorPath)
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {

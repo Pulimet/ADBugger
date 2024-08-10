@@ -204,9 +204,10 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         ram: Int,
         latency: String,
         speed: String,
-        quickBoot: String
+        quickBoot: String,
+        bootAnim: Boolean
     ) {
-        launch { terminal.launchEmulator(emulatorName, proxy, ram, latency, speed, quickBoot) }
+        launch { terminal.launchEmulator(emulatorName, proxy, ram, latency, speed, quickBoot, bootAnim) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {

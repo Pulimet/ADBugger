@@ -28,6 +28,7 @@ fun EmulatorsRunTopMenu(
     onSpeedChange: (String) -> Unit,
     onSetProxyClick: () -> Unit,
     onQuickBootChange: (String) -> Unit,
+    onBootAnimChange: (Boolean) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
@@ -82,6 +83,11 @@ fun EmulatorsRunTopMenu(
         }
         Row {
             EmulatorsProxyButtons { onSetProxyClick() }
+            CheckboxWithDescription(
+                title = "Is disabled?",
+                description = "Disables the boot anim-\nation on emulator startup.",
+                modifier = Modifier.padding(start = 8.dp)
+            ) { onBootAnimChange(it) }
         }
         Text(
             text = command,

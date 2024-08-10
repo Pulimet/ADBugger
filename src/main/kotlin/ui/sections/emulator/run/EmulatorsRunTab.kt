@@ -25,8 +25,9 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
     var latency by remember { mutableStateOf("none") }
     var speed by remember { mutableStateOf("full") }
     var quickBoot by remember { mutableStateOf("enabled") }
+    var bootAnim by remember { mutableStateOf(false) }
 
-    val command = EmulatorCommands.getLaunchEmulator("emuName", proxy, ram, latency, speed, quickBoot)
+    val command = EmulatorCommands.getLaunchEmulator("emuName", proxy, ram, latency, speed, quickBoot, bootAnim)
 
     Column {
         EmulatorsRunTopMenu(
@@ -37,6 +38,7 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
             onLatencyChange = { latency = it },
             onSpeedChange = { speed = it },
             onQuickBootChange = { quickBoot = it },
+            onBootAnimChange = { bootAnim = it }
         )
 
         if (model.state.isEmulatorsLoading) {
@@ -44,7 +46,7 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
         } else {
             Row(modifier = Modifier.padding(top = 4.dp)) {
                 EmulatorsList(Modifier.weight(1f)) {
-                    model.onLaunchEmulatorClick(emulatorName = it, proxy, ram, latency, speed, quickBoot)
+                    model.onLaunchEmulatorClick(emulatorName = it, proxy, ram, latency, speed, quickBoot, bootAnim)
                 }
                 EmulatorsRunSideMenu()
             }
