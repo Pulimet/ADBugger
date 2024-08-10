@@ -45,6 +45,7 @@ fun EmulatorsRunTopMenu(
     onLatencyChange: (String) -> Unit,
     onSpeedChange: (String) -> Unit,
     onSetProxyClick: () -> Unit,
+    onQuickBootChange: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
@@ -72,7 +73,7 @@ fun EmulatorsRunTopMenu(
                 optionsDetails = EmulatorCommands.networkDelayListDetails,
                 title = "Latency",
                 description = "Sets network latency emulation",
-                modifier = Modifier.width(110.dp).padding(top = 0.dp, start = 16.dp),
+                modifier = Modifier.width(115.dp).padding(top = 0.dp, start = 8.dp),
                 onOptionSelected = { onLatencyChange(it) }
             )
 
@@ -81,8 +82,18 @@ fun EmulatorsRunTopMenu(
                 optionsDetails = EmulatorCommands.networkSpeedListDetails,
                 title = "Speed",
                 description = "Sets the network speed emulation",
-                modifier = Modifier.width(110.dp).padding(top = 0.dp, start = 16.dp),
+                modifier = Modifier.width(115.dp).padding(top = 0.dp, start = 8.dp),
                 onOptionSelected = { onSpeedChange(it) }
+            )
+
+            DropDownWithDescription(
+                options = EmulatorCommands.quickBootList,
+                optionsDetails = EmulatorCommands.quickBootListDetails,
+                title = "Quick Boot",
+                description = "Allows to disable quick boot saving/loading or both",
+                modifier = Modifier.width(184.dp).padding(top = 0.dp, start = 8.dp),
+                minWidth = 184.dp,
+                onOptionSelected = { onQuickBootChange(it) }
             )
 
         }
@@ -104,6 +115,7 @@ private fun DropDownWithDescription(
     description: String,
     optionsDetails: List<String>,
     modifier: Modifier = Modifier,
+    minWidth: Dp = 80.dp,
 ) {
     Column(modifier = modifier) {
         TextExample(description, TextAlign.Center)
@@ -112,6 +124,7 @@ private fun DropDownWithDescription(
             optionsDetails = optionsDetails,
             title = title,
             onOptionSelected = onOptionSelected,
+            minWidth = minWidth,
             modifier = Modifier.padding(top = 2.dp, bottom = 10.dp)
         )
     }

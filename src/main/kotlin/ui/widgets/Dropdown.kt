@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ui.theme.MyColors
@@ -37,12 +38,13 @@ fun Dropdown(
     onOptionSelected: (String) -> Unit,
     title: String = "",
     optionsDetails: List<String> = emptyList(),
+    minWidth: Dp = 80.dp,
     modifier: Modifier = Modifier
 ) {
     if (options.isEmpty()) return
 
     Surface(modifier = modifier) {
-        DropdownContent(options, optionsDetails, onOptionSelected)
+        DropdownContent(options, optionsDetails, onOptionSelected, minWidth)
         DropdownTitle(title)
     }
 }
@@ -53,7 +55,8 @@ private fun DropdownContent(
     options: List<String>,
     optionsDetails: List<String>,
     onOptionSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    minWidth: Dp = 80.dp,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(options[0]) }
@@ -63,7 +66,7 @@ private fun DropdownContent(
         contentAlignment = Alignment.TopStart,
         modifier = modifier.background(MyColors.bg)
             .padding(6.dp)
-            .widthIn(min = 80.dp)
+            .widthIn(minWidth)
             .clip(RoundedCornerShape(4.dp))
             .border(BorderStroke(1.dp, Color.Gray), RoundedCornerShape(4.dp))
             .clickable { expanded = !expanded },

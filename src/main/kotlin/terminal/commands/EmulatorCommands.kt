@@ -5,9 +5,17 @@ object EmulatorCommands {
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
     fun getKillEmulatorBySerial() = "emu kill"
 
-    fun getLaunchEmulator(emulatorName: String, proxy: String, ram: Int, latency: String, speed: String): String {
+    fun getLaunchEmulator(
+        emulatorName: String,
+        proxy: String,
+        ram: Int,
+        latency: String,
+        speed: String,
+        quickBoot: String
+    ): String {
         val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
         val r = if (ram in 1536..8192) "  -memory $ram" else ""
+        val q = if (quickBoot == "enabled") "" else " $quickBoot"
 
         // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
         // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
@@ -15,7 +23,8 @@ object EmulatorCommands {
         val l = if (latency == "none") "" else " -netdelay $latency"
         val s = if (speed == "full") "" else " -netspeed $speed"
 
-        return "emulator -avd $emulatorName$netfast$l$s$p$r"
+
+        return "emulator -avd $emulatorName$netfast$l$s$p$r$q"
     }
 
     // Proxy
@@ -79,12 +88,29 @@ object EmulatorCommands {
         "EVDO (up: 75,000, down: 280,000)",
     )
 
+    val quickBootList = listOf(
+        "enabled",
+        "-no-snapshot-load",
+        "-no-snapshot-save",
+        "-no-snapshot",
+    )
+
+    val quickBootListDetails = listOf(
+        "By default Quick Boot feature enabled",
+        "Performs a cold boot and saves the emulator state on exit",
+        "Performs a quick boot if possible, but does not save the emulator state on exit",
+        "Disables the Quick Boot feature completely and doesn't load or save the emulator state",
+    )
 
     // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
-    // Quick Boot
-    //-no-snapshot-load	Performs a cold boot and saves the emulator state on exit.
-    //-no-snapshot-save	Performs a quick boot if possible, but does not save the emulator state on exit.
-    //-no-snapshot	Disables the Quick Boot feature completely and doesn't load or save the emulator state.
+    // Boot animation - Disables the boot animation during emulator startup.
+    // emulator @Pixel8_API_34 -no-boot-anim
+
+    // Disables audio support for this virtual device. Some Linux and Windows computers have faulty audio
+    // drivers that cause different symptoms, such as preventing the emulator from starting.
+    // In this case, use this option to overcome the issue.
+    // For example:
+    // emulator @Pixel8_API_34 -noaudio
 
 
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
@@ -110,9 +136,6 @@ object EmulatorCommands {
     // on servers that have no display. You can access the emulator through adb or the console. For example:
     // emulator @Pixel8_API_34 -no-window
 
-    // Boot animation - Disables the boot animation during emulator startup.
-    // emulator @Pixel8_API_34 -no-boot-anim
-
     //To get a list of emulator environment variables, enter the following command:
     // emulator -help-environment
 
@@ -125,12 +148,6 @@ object EmulatorCommands {
     // touch - Emulates a touch screen (default).
     // multi-touch - Emulates a multi-touch screen.
     // no-touch - Disables touch and multi-touch screen emulation.
-
-    // Disables audio support for this virtual device. Some Linux and Windows computers have faulty audio
-    // drivers that cause different symptoms, such as preventing the emulator from starting.
-    // In this case, use this option to overcome the issue.
-    // For example:
-    // emulator @Pixel8_API_34 -noaudio
 
 
     // Captures network packets and stores them in a file. For example:
