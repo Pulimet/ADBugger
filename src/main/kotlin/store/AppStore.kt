@@ -12,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.Package
+import model.RunEmulatorParams
 import model.TargetInfo
 import pref.preference
 import terminal.Terminal
@@ -198,16 +199,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
 
-    fun onLaunchEmulatorClick(
-        emulatorName: String,
-        proxy: String,
-        ram: Int,
-        latency: String,
-        speed: String,
-        quickBoot: String,
-        bootAnim: Boolean
-    ) {
-        launch { terminal.launchEmulator(emulatorName, proxy, ram, latency, speed, quickBoot, bootAnim) }
+    fun onLaunchEmulatorClick(emulatorName: String, params: RunEmulatorParams) {
+        launch { terminal.launchEmulator(emulatorName, params) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {

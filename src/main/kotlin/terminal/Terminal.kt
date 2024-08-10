@@ -1,6 +1,7 @@
 package terminal
 
 import model.Package
+import model.RunEmulatorParams
 import model.TargetInfo
 import pref.preference
 import terminal.commands.Commands
@@ -68,16 +69,8 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdb(listOf(serial), EmulatorCommands.getKillEmulatorBySerial())
     }
 
-    suspend fun launchEmulator(
-        emulatorName: String,
-        proxy: String,
-        ram: Int,
-        latency: String,
-        speed: String,
-        quickBoot: String,
-        bootAnim: Boolean
-    ) {
-        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, proxy, ram, latency, speed, quickBoot, bootAnim), emulatorPath)
+    suspend fun launchEmulator(emulatorName: String, params: RunEmulatorParams) {
+        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, params), emulatorPath)
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {

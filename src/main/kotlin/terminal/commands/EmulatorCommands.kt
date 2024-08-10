@@ -1,29 +1,23 @@
 package terminal.commands
 
+import model.RunEmulatorParams
+
 object EmulatorCommands {
     fun getEmulatorList() = "emulator -list-avds"
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
     fun getKillEmulatorBySerial() = "emu kill"
 
-    fun getLaunchEmulator(
-        emulatorName: String,
-        proxy: String,
-        ram: Int,
-        latency: String,
-        speed: String,
-        quickBoot: String,
-        bootAnim: Boolean
-    ): String {
-        val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
-        val r = if (ram in 1536..8192) "  -memory $ram" else ""
-        val q = if (quickBoot == "enabled") "" else " $quickBoot"
-        val b = if (bootAnim) " -no-boot-anim" else ""
+    fun getLaunchEmulator(emulatorName: String, params: RunEmulatorParams): String {
+        val p = if (params.proxy.isEmpty()) "" else " -http-proxy ${params.proxy}"
+        val r = if (params.ram in 1536..8192) "  -memory ${params.ram}" else ""
+        val q = if (params.quickBoot == "enabled") "" else " ${params.quickBoot}"
+        val b = if (params.bootAnimDisabled) " -no-boot-anim" else ""
 
         // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
         // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
-        val netfast = if (latency == "none" && speed == "full") " -netfast" else ""
-        val l = if (latency == "none") "" else " -netdelay $latency"
-        val s = if (speed == "full") "" else " -netspeed $speed"
+        val netfast = if (params.latency == "none" && params.speed == "full") " -netfast" else ""
+        val l = if (params.latency == "none") "" else " -netdelay ${params.latency}"
+        val s = if (params.speed == "full") "" else " -netspeed ${params.speed}"
 
 
         return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b"

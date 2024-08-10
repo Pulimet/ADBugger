@@ -13,12 +13,12 @@ import ui.widgets.TextExample
 @Composable
 fun DropDownWithDescription(
     options: List<String>,
-    onOptionSelected: (String) -> Unit,
     title: String,
     description: String,
     optionsDetails: List<String>,
     modifier: Modifier = Modifier,
     minWidth: Dp = 80.dp,
+    onOptionSelected: (String) -> Unit,
 ) {
     Column(modifier = modifier) {
         TextExample(description, TextAlign.Center)

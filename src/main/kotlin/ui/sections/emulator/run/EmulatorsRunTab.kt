@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import model.RunEmulatorParams
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.EmulatorCommands
@@ -20,25 +21,12 @@ import ui.widgets.LoadingSpinner
 
 @Composable
 fun EmulatorsRunTab(model: AppStore = koinInject()) {
-    var proxy by remember { mutableStateOf("") }
-    var ram by remember { mutableStateOf(0) }
-    var latency by remember { mutableStateOf("none") }
-    var speed by remember { mutableStateOf("full") }
-    var quickBoot by remember { mutableStateOf("enabled") }
-    var bootAnim by remember { mutableStateOf(false) }
-
-    val command = EmulatorCommands.getLaunchEmulator("emuName", proxy, ram, latency, speed, quickBoot, bootAnim)
-
+    var params by remember { mutableStateOf(RunEmulatorParams()) }
     Column {
         EmulatorsRunTopMenu(
-            command,
-            onProxyChange = { proxy = it },
-            onRamChange = { ram = it },
-            onSetProxyClick = { model.setProxy(proxy) },
-            onLatencyChange = { latency = it },
-            onSpeedChange = { speed = it },
-            onQuickBootChange = { quickBoot = it },
-            onBootAnimChange = { bootAnim = it }
+            params = params,
+            onParamsChanged = {params = it},
+            onSetProxyClick = { model.setProxy(params.proxy) },
         )
 
         if (model.state.isEmulatorsLoading) {
@@ -46,7 +34,7 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
         } else {
             Row(modifier = Modifier.padding(top = 4.dp)) {
                 EmulatorsList(Modifier.weight(1f)) {
-                    model.onLaunchEmulatorClick(emulatorName = it, proxy, ram, latency, speed, quickBoot, bootAnim)
+                    model.onLaunchEmulatorClick(emulatorName = it, params)
                 }
                 EmulatorsRunSideMenu()
             }
