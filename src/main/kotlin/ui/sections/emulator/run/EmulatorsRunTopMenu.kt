@@ -1,4 +1,4 @@
-package ui.sections.emulator
+package ui.sections.emulator.run
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,8 +48,6 @@ fun EmulatorsRunTopMenu(
     onSpeedChange: (String) -> Unit,
     onSetProxyClick: () -> Unit,
 ) {
-
-
     Column(
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
             .background(MyColors.bg).padding(bottom = 8.dp, start = 16.dp)
@@ -68,10 +66,10 @@ fun EmulatorsRunTopMenu(
 
             TextFieldWithDescription(
                 label = "RAM",
-                description = "Set RAM on launch\n1536 - 8192 (MBs)",
+                description = "Set RAM on launch\n1536(default) - 8192 (MBs)",
                 maxLength = 4,
                 keyboardType = KeyboardType.Number,
-                modifier = Modifier.width(100.dp)
+                minWidth = 120.dp,
             ) { onRamChange(it.toIntOrNull() ?: 0) }
 
             DropDownWithDescription(

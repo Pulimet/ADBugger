@@ -1,4 +1,4 @@
-package ui.sections.emulator
+package ui.sections.emulator.run
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.EmulatorCommands
+import ui.sections.emulator.run.list.EmulatorsList
 import ui.theme.Dimensions
 import ui.widgets.LoadingSpinner
 

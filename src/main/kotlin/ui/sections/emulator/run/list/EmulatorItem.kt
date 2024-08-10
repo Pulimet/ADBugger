@@ -1,4 +1,4 @@
-package ui.sections.emulator
+package ui.sections.emulator.run.list
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

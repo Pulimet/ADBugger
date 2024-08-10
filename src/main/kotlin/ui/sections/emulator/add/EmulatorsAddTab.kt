@@ -1,4 +1,4 @@
-package ui.sections.emulator
+package ui.sections.emulator.add
 
 import androidx.compose.runtime.Composable
 

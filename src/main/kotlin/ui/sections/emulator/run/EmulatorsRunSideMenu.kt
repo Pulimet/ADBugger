@@ -1,4 +1,4 @@
-package ui.sections.emulator
+package ui.sections.emulator.run
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

@@ -81,6 +81,11 @@ object EmulatorCommands {
 
 
     // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
+    // Quick Boot
+    //-no-snapshot-load	Performs a cold boot and saves the emulator state on exit.
+    //-no-snapshot-save	Performs a quick boot if possible, but does not save the emulator state on exit.
+    //-no-snapshot	Disables the Quick Boot feature completely and doesn't load or save the emulator state.
+
 
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
     // "create-avd": "rm -f ${HOME}/.android/avd/${emulatorName}.avd/*.lock && ${ANDROID_HOME}/tools/bin/avdmanager --verbose create avd --force --name 'Pixel_4_API_30' --package 'system-images;android-31;default;x86_64' -d 'pixel_xl'",
@@ -100,11 +105,6 @@ object EmulatorCommands {
 
     // Specifies the system data partition size in MBs. For example:
     // emulator @Pixel8_API_34 -partition-size 1024
-
-    // Quick Boot
-    //-no-snapshot-load	Performs a cold boot and saves the emulator state on exit.
-    //-no-snapshot-save	Performs a quick boot if possible, but does not save the emulator state on exit.
-    //-no-snapshot	Disables the Quick Boot feature completely and doesn't load or save the emulator state.
 
     // Disables graphical window display on the emulator. This option is useful when running the emulator
     // on servers that have no display. You can access the emulator through adb or the console. For example:

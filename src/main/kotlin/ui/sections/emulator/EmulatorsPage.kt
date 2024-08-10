@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ui.sections.emulator.add.EmulatorsAddTab
+import ui.sections.emulator.create.EmulatorsCreateTab
+import ui.sections.emulator.run.EmulatorsRunTab
 import ui.theme.Dimensions
 import ui.widgets.CardX
 import ui.widgets.tabs.Tabs

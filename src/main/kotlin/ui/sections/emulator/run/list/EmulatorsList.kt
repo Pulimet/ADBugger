@@ -1,4 +1,4 @@
-package ui.sections.emulator
+package ui.sections.emulator.run.list
 
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.Box

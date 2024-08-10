@@ -23,4 +23,8 @@ object Commands {
 
     // pull
     fun getAdbPull(filename: String) = "pull /sdcard/$filename ~/Desktop/$filename"
+
+    // TODO
+    // adb shell dumpsys meminfo
+
 }
