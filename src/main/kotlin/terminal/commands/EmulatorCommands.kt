@@ -3,13 +3,15 @@ package terminal.commands
 object EmulatorCommands {
     fun getEmulatorList() = "emulator -list-avds"
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
-    fun getLaunchEmulator(emulatorName: String, proxy: String): String {
-        val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
-        return "emulator -avd $emulatorName -netfast$p"
-    }
-
     fun getKillEmulatorBySerial() = "emu kill"
 
+    fun getLaunchEmulator(emulatorName: String, proxy: String, ram: Int): String {
+        val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
+        val r = if (ram in 1536..8192) "  -memory $ram" else ""
+        return "emulator -avd $emulatorName -netfast$p$r"
+    }
+
+    // Proxy
     fun getSetProxy(proxy: String) = "settings put global http_proxy $proxy"
     fun getRemoveProxy() = "settings put global http_proxy :0"
     fun getFetchProxy() = "settings get global http_proxy"
@@ -21,8 +23,8 @@ object EmulatorCommands {
     // You can specify several ‑prop options on one command line. This option can be useful for debugging. For example:
     // emulator @Pixel8_API_34 -prop qemu.name=value -prop qemu.abc=xyz
 
-    // RAM - Specifies the physical RAM size, from 1536 to 8192 MBs. For example:
-    // emulator @Pixel8_API_34 -memory 2048
+    //To get a list of emulator environment variables, enter the following command:
+    // emulator -help-environment
 
     // SC card - Specifies the filename and path to an SD card partition image file. For example:
     // emulator @Pixel8_API_34 -sdcard C:/sd/sdcard.img

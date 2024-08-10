@@ -78,7 +78,6 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val logcatLogs: List<String> = listOf(),
         val environmentVariables: Map<String, String> = mapOf(),
         val isLogcatRunning: Boolean = false,
-        val proxy: String = ""
     )
 
     // Logs
@@ -199,8 +198,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
 
-    fun onLaunchEmulatorClick(emulatorName: String) {
-        launch { terminal.launchEmulator(emulatorName, state.proxy) }
+    fun onLaunchEmulatorClick(emulatorName: String, proxy: String, ram: Int) {
+        launch { terminal.launchEmulator(emulatorName, proxy, ram) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {
@@ -442,10 +441,6 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
             val result: Map<String, String> = terminal.getEnvironmentVariables()
             setState { copy(environmentVariables = result) }
         }
-    }
-
-    fun onProxyChange(proxy: String) {
-        setState { copy(proxy = proxy) }
     }
 
     fun setProxy(proxyText: String) {

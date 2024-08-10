@@ -20,7 +20,7 @@ import ui.theme.Dimensions
 import ui.widgets.buttons.BtnWithText
 
 @Composable
-fun EmulatorItem(emulatorName: String, model: AppStore = koinInject()) {
+fun EmulatorItem(emulatorName: String, model: AppStore = koinInject(), onLaunchEmulatorClick: (String) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().height(50.dp)) {
         Text(
             text = emulatorName,
@@ -39,7 +39,7 @@ fun EmulatorItem(emulatorName: String, model: AppStore = koinInject()) {
             )
             BtnWithText(
                 icon = LineAwesomeIcons.Android,
-                onClick = { model.onLaunchEmulatorClick(emulatorName) },
+                onClick = { onLaunchEmulatorClick(emulatorName) },
                 description = "Launch Emulator",
                 modifier = Modifier.padding(end = 8.dp),
                 width = Dimensions.btnEmulatorWidth

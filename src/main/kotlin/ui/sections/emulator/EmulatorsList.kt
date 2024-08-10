@@ -17,7 +17,11 @@ import org.koin.compose.koinInject
 import store.AppStore
 
 @Composable
-fun EmulatorsList(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
+fun EmulatorsList(
+    modifier: Modifier = Modifier,
+    model: AppStore = koinInject(),
+    onLaunchEmulatorClick: (String) -> Unit
+) {
     val listState = rememberLazyListState()
     val state = model.state
     Box(modifier = modifier.fillMaxSize().padding(end = 32.dp)) {
@@ -27,7 +31,7 @@ fun EmulatorsList(modifier: Modifier = Modifier, model: AppStore = koinInject())
                 items,
                 key = { item -> item }
             ) { item ->
-                EmulatorItem(item)
+                EmulatorItem(item) { onLaunchEmulatorClick(it) }
             }
         }
         if (items.size > 2) {

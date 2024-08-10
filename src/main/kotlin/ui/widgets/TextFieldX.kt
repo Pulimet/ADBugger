@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
@@ -34,9 +35,12 @@ fun TextFieldX(
     enabled: Boolean = true,
     singleLine: Boolean = true,
     isError: Boolean = false,
+    maxLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = TextFieldDefaults.OutlinedTextFieldShape,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors()
+    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(),
+    keyboardType: KeyboardType = KeyboardType.Text,
+    maxLength: Int = -1,
 ) {
     BasicTextField(
         modifier = if (label.isNotEmpty()) {
@@ -46,10 +50,15 @@ fun TextFieldX(
         } else {
             modifier.height(height)
         },
+        maxLines = maxLines,
         value = value,
         textStyle = TextStyle(color = Color.White),
         singleLine = singleLine,
-        onValueChange = onValueChange,
+        onValueChange = {
+            if (maxLength > -1 && it.text.length > maxLength) return@BasicTextField
+            if (keyboardType == KeyboardType.Number && it.isContainsNonDigits()) return@BasicTextField
+            onValueChange(it)
+        },
         cursorBrush = SolidColor(Color.White),
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.OutlinedTextFieldDecorationBox(
@@ -69,6 +78,8 @@ fun TextFieldX(
         }
     )
 }
+
+private fun TextFieldValue.isContainsNonDigits() = this.text.contains(Regex("\\D"))
 
 @Composable
 private fun TextFieldLabel(title: String) {
