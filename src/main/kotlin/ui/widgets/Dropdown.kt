@@ -9,10 +9,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +61,10 @@ private fun DropdownContent(
 
     Box(
         contentAlignment = Alignment.TopStart,
-        modifier = modifier.background(MyColors.bg).padding(16.dp).widthIn(80.dp).clip(RoundedCornerShape(4.dp))
+        modifier = modifier.background(MyColors.bg)
+            .padding(6.dp)
+            .widthIn(min = 80.dp)
+            .clip(RoundedCornerShape(4.dp))
             .border(BorderStroke(1.dp, Color.Gray), RoundedCornerShape(4.dp))
             .clickable { expanded = !expanded },
     ) {
@@ -82,8 +94,9 @@ private fun DropdownTitle(title: String) {
         Text(
             text = title,
             fontSize = 10.sp,
+            lineHeight = 10.sp,
             color = Color.White,
-            modifier = Modifier.padding(start = 28.dp, bottom = 28.dp).background(MyColors.bg)
+            modifier = Modifier.padding(start = 16.dp, bottom = 0.dp).background(MyColors.bg)
                 .padding(horizontal = 4.dp)
         )
     }

@@ -1,6 +1,7 @@
 package ui.sections.emulator
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -32,40 +34,54 @@ import store.AppStore
 import terminal.commands.EmulatorCommands
 import ui.theme.Dimensions
 import ui.theme.MyColors
+import ui.widgets.Dropdown
 import ui.widgets.TextExample
 import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnWithTextSmall
 
 @Composable
 fun EmulatorsRunTopMenu(
-    proxyText: String,
-    ramInt: Int,
+    command: String,
     onProxyChange: (String) -> Unit,
     onRamChange: (Int) -> Unit,
-    model: AppStore = koinInject()
+    onLatencyChange: (String) -> Unit,
+    onSetProxyClick: () -> Unit,
 ) {
-    val command = EmulatorCommands.getLaunchEmulator("emuName", proxyText, ramInt)
+
 
     Column(
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
-            .background(MyColors.bg).padding(vertical = 8.dp, horizontal = 16.dp)
+            .background(MyColors.bg).padding(bottom = 8.dp, start = 16.dp)
     ) {
-        Row {
-            TextFieldWithExample(
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TextFieldWithDescription(
                 label = "Proxy (used on launch)",
-                example = "ex: server:port\nusername:password@server:port",
+                description = "ex: server:port\nusername:password@server:port",
                 minWidth = 170.dp,
             ) { onProxyChange(it) }
 
-            ProxyButtons { model.setProxy(proxyText) }
+            ProxyButtons { onSetProxyClick() }
 
-            TextFieldWithExample(
+            TextFieldWithDescription(
                 label = "RAM",
-                example = "Set RAM on launch\n1536 - 8192 (MBs)",
-                minWidth = 50.dp,
+                description = "Set RAM on launch\n1536 - 8192 (MBs)",
                 maxLength = 4,
                 keyboardType = KeyboardType.Number,
+                modifier = Modifier.width(100.dp)
             ) { onRamChange(it.toIntOrNull() ?: 0) }
+
+            DropDownWithDescription(
+                options = EmulatorCommands.networkDelayList,
+                optionsDetails = EmulatorCommands.networkDelayListDetails,
+                title = "Latency",
+                description = "Sets network latency emulation",
+                modifier = Modifier.width(110.dp).padding(top = 16.dp, start = 16.dp),
+                onOptionSelected = { onLatencyChange(it) }
+            )
+
         }
         Text(
             text = command,
@@ -77,17 +93,40 @@ fun EmulatorsRunTopMenu(
 
 
 @Composable
-private fun TextFieldWithExample(
+private fun DropDownWithDescription(
+    options: List<String>,
+    onOptionSelected: (String) -> Unit,
+    title: String,
+    description: String,
+    optionsDetails: List<String>,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        TextExample(description, TextAlign.Center)
+        Dropdown(
+            options = options,
+            optionsDetails = optionsDetails,
+            title = title,
+            onOptionSelected = onOptionSelected,
+            modifier = Modifier.padding(top = 2.dp, bottom = 10.dp)
+        )
+    }
+}
+
+
+@Composable
+private fun TextFieldWithDescription(
     label: String = "",
-    example: String = "",
+    description: String = "",
     minWidth: Dp = 100.dp,
     keyboardType: KeyboardType = KeyboardType.Text,
     maxLength: Int = -1,
-    onChange: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+    onChange: (String) -> Unit = {}
 ) {
     var textField by remember { mutableStateOf(TextFieldValue("")) }
-    Column {
-        TextExample(example, textAlign = TextAlign.Center, modifier = Modifier.widthIn(min = minWidth))
+    Column(modifier = modifier) {
+        TextExample(description, TextAlign.Center, Modifier.widthIn(min = minWidth))
         TextFieldX(
             value = textField,
             onValueChange = { newText ->

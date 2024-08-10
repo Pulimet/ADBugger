@@ -8,10 +8,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TextExample(example: String, textAlign: TextAlign? = null, modifier: Modifier = Modifier) {
+fun TextExample(description: String, textAlign: TextAlign? = null, modifier: Modifier = Modifier) {
     Text(
         modifier = modifier,
-        text = example,
+        text = description,
         textAlign = textAlign,
         lineHeight = 10.sp,
         fontSize = 10.sp,

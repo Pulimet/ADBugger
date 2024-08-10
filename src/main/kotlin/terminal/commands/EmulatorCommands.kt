@@ -5,10 +5,14 @@ object EmulatorCommands {
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
     fun getKillEmulatorBySerial() = "emu kill"
 
-    fun getLaunchEmulator(emulatorName: String, proxy: String, ram: Int): String {
+    fun getLaunchEmulator(emulatorName: String, proxy: String, ram: Int, latency: String): String {
         val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
         val r = if (ram in 1536..8192) "  -memory $ram" else ""
-        return "emulator -avd $emulatorName -netfast$p$r"
+
+        val netfast = if (latency == "none") " -netfast" else ""
+        val l = if (latency == "none") "" else " -netdelay $latency"
+
+        return "emulator -avd $emulatorName$netfast$l$p$r"
     }
 
     // Proxy
@@ -17,32 +21,33 @@ object EmulatorCommands {
     fun getFetchProxy() = "settings get global http_proxy"
 
     // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
-    // Sets an Android system property in the emulator when it boots. name must be a property name
-    // labeled as qemu_prop of at most 32 characters, without any spaces, and value must be a string
-    // of at most 92 characters. For an example, see the property_contexts file.
-    // You can specify several ‑prop options on one command line. This option can be useful for debugging. For example:
-    // emulator @Pixel8_API_34 -prop qemu.name=value -prop qemu.abc=xyz
 
-    //To get a list of emulator environment variables, enter the following command:
-    // emulator -help-environment
-
-    // SC card - Specifies the filename and path to an SD card partition image file. For example:
-    // emulator @Pixel8_API_34 -sdcard C:/sd/sdcard.img
-
-    // Network delay - Sets network latency emulation to one of the following delay values in milliseconds:
-    // gsm - GSM/CSD (min 150, max 550).
-    // hscsd - HSCSD (min 80, max 400).
-    // gprs - GPRS (min 35, max 200).
-    // edge - EDGE/EGPRS (min 80, max 400).
-    // umts - UMTS/3G (min 35, max 200).
-    // hsdpa - HSDPA (min 0, max 0).
-    // lte - LTE (min 0, max 0).
-    // evdo - EVDO (min 0, max 0).
-    // none - No latency, the default (min 0, max 0).
+    // Sets network latency emulation to one of the following delay values in milliseconds:
     // num - Specifies exact latency.
     // min:max - Specifies individual minimum and maximum latencies.
-    // For example:
-    // emulator @Pixel8_API_34 -netdelay gsm
+    val networkDelayList = listOf(
+        "none",
+        "gsm",
+        "hscsd",
+        "gprs",
+        "edge",
+        "umts",
+        "hsdpa",
+        "lte",
+        "evdo",
+    )
+
+    val networkDelayListDetails = listOf(
+        "No latency, the default (min 0, max 0)",
+        "GSM/CSD (min 150, max 550)",
+        "HSCSD (min 80, max 400)",
+        "GPRS (min 35, max 200)",
+        "EDGE/EGPRS (min 80, max 400)",
+        "UMTS/3G (min 35, max 200)",
+        "HSDPA (min 0, max 0)",
+        "LTE (min 0, max 0)",
+        "EVDO (min 0, max 0)",
+    )
 
     // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
     // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
@@ -94,6 +99,12 @@ object EmulatorCommands {
 
     // Boot animation - Disables the boot animation during emulator startup.
     // emulator @Pixel8_API_34 -no-boot-anim
+
+    //To get a list of emulator environment variables, enter the following command:
+    // emulator -help-environment
+
+    // SC card - Specifies the filename and path to an SD card partition image file. For example:
+    // emulator @Pixel8_API_34 -sdcard C:/sd/sdcard.img
 
     // Sets emulated touch screen mode. For example:
     // emulator @Pixel8_API_34 -screen no-touch
