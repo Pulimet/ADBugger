@@ -26,9 +26,10 @@ fun CheckboxWithDescription(
     description: String,
     minWidth: Dp = 100.dp,
     modifier: Modifier = Modifier,
+    defaultState: Boolean = true,
     onCheckChange: (Boolean) -> Unit
 ) {
-    var checked by remember { mutableStateOf(false) }
+    var checked by remember { mutableStateOf(defaultState) }
     Column(modifier = modifier.widthIn(min = minWidth)) {
         TextExample(description, TextAlign.Center, modifier.widthIn(min = minWidth))
         Row(verticalAlignment = Alignment.CenterVertically) {

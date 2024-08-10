@@ -59,7 +59,6 @@ fun EmulatorsRunTopMenu(
                 minWidth = 115.dp
             ) { onParamsChanged(params.copy(latency = it)) }
 
-
             DropDownWithDescription(
                 options = EmulatorCommands.networkSpeedList,
                 optionsDetails = EmulatorCommands.networkSpeedListDetails,
@@ -81,11 +80,18 @@ fun EmulatorsRunTopMenu(
         }
         Row {
             EmulatorsProxyButtons { onSetProxyClick() }
+
             CheckboxWithDescription(
-                title = "Is disabled?",
-                description = "Disables the boot anim-\nation on emulator startup.",
+                title = "Animation",
+                description = "Disables the boot anim-\nation on emulator startup",
                 modifier = Modifier.padding(start = 8.dp)
-            ) { onParamsChanged(params.copy(bootAnimDisabled = it)) }
+            ) { onParamsChanged(params.copy(bootAnimEnabled = it)) }
+
+            CheckboxWithDescription(
+                title = "Audio",
+                description = "Disables audio support\non emulator startup",
+                modifier = Modifier.padding(start = 8.dp)
+            ) { onParamsChanged(params.copy(audioEnabled = it)) }
         }
         Text(
             text = command,

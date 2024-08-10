@@ -11,7 +11,8 @@ object EmulatorCommands {
         val p = if (params.proxy.isEmpty()) "" else " -http-proxy ${params.proxy}"
         val r = if (params.ram in 1536..8192) "  -memory ${params.ram}" else ""
         val q = if (params.quickBoot == "enabled") "" else " ${params.quickBoot}"
-        val b = if (params.bootAnimDisabled) " -no-boot-anim" else ""
+        val b = if (params.bootAnimEnabled) "" else " -no-boot-anim"
+        val a = if (params.audioEnabled) "" else " -noaudio"
 
         // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
         // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
@@ -20,7 +21,7 @@ object EmulatorCommands {
         val s = if (params.speed == "full") "" else " -netspeed ${params.speed}"
 
 
-        return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b"
+        return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b$a"
     }
 
     // Proxy
@@ -99,13 +100,6 @@ object EmulatorCommands {
     )
 
     // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
-
-    // Disables audio support for this virtual device. Some Linux and Windows computers have faulty audio
-    // drivers that cause different symptoms, such as preventing the emulator from starting.
-    // In this case, use this option to overcome the issue.
-    // For example:
-    // emulator @Pixel8_API_34 -noaudio
-
 
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
     // "create-avd": "rm -f ${HOME}/.android/avd/${emulatorName}.avd/*.lock && ${ANDROID_HOME}/tools/bin/avdmanager --verbose create avd --force --name 'Pixel_4_API_30' --package 'system-images;android-31;default;x86_64' -d 'pixel_xl'",

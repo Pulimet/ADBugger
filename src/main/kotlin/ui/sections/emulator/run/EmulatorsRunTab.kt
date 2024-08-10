@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import model.RunEmulatorParams
 import org.koin.compose.koinInject
 import store.AppStore
-import terminal.commands.EmulatorCommands
 import ui.sections.emulator.run.list.EmulatorsList
 import ui.theme.Dimensions
 import ui.widgets.LoadingSpinner
@@ -22,6 +21,7 @@ import ui.widgets.LoadingSpinner
 @Composable
 fun EmulatorsRunTab(model: AppStore = koinInject()) {
     var params by remember { mutableStateOf(RunEmulatorParams()) }
+
     Column {
         EmulatorsRunTopMenu(
             params = params,
