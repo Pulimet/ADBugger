@@ -25,11 +25,13 @@ fun StatusBar(model: AppStore = koinInject()) {
         Text(
             "Selected target: $selectedTarget",
             fontSize = Dimensions.statusBarFontSize,
+            lineHeight = Dimensions.statusBarFontSize,
             color = Color.LightGray,
         )
         Text(
             "Selected package: ${model.state.selectedPackage}",
             fontSize = Dimensions.statusBarFontSize,
+            lineHeight = Dimensions.statusBarFontSize,
             color = Color.LightGray,
         )
     }

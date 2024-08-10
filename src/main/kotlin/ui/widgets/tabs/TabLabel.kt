@@ -38,8 +38,8 @@ fun TabLabel(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .height(50.dp)
-            .padding(vertical = 8.dp, horizontal = 2.dp)
+            .height(36.dp)
+            .padding(horizontal = 2.dp)
             .clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
             .background(color = bgColor)
             .onPointerEvent(PointerEventType.Enter) { active = true }

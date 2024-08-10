@@ -1,7 +1,6 @@
 package ui.sections.emulator.run
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +18,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -50,12 +48,9 @@ fun EmulatorsRunTopMenu(
 ) {
     Column(
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
-            .background(MyColors.bg).padding(bottom = 8.dp, start = 16.dp)
+            .background(MyColors.bg).padding(top = 4.dp, bottom = 6.dp, start = 16.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        Row {
             TextFieldWithDescription(
                 label = "Proxy (used on launch)",
                 description = "ex: server:port\nusername:password@server:port",
@@ -77,7 +72,7 @@ fun EmulatorsRunTopMenu(
                 optionsDetails = EmulatorCommands.networkDelayListDetails,
                 title = "Latency",
                 description = "Sets network latency emulation",
-                modifier = Modifier.width(110.dp).padding(top = 16.dp, start = 16.dp),
+                modifier = Modifier.width(110.dp).padding(top = 0.dp, start = 16.dp),
                 onOptionSelected = { onLatencyChange(it) }
             )
 
@@ -86,13 +81,14 @@ fun EmulatorsRunTopMenu(
                 optionsDetails = EmulatorCommands.networkSpeedListDetails,
                 title = "Speed",
                 description = "Sets the network speed emulation",
-                modifier = Modifier.width(110.dp).padding(top = 16.dp, start = 16.dp),
+                modifier = Modifier.width(110.dp).padding(top = 0.dp, start = 16.dp),
                 onOptionSelected = { onSpeedChange(it) }
             )
 
         }
         Text(
             text = command,
+            lineHeight = 12.sp,
             fontSize = 12.sp,
             color = Color.LightGray,
         )
