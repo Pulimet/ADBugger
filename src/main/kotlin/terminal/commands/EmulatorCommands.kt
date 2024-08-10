@@ -5,22 +5,23 @@ object EmulatorCommands {
     fun getWipeDataEmulatorByName(emulatorName: String) = "emulator -avd $emulatorName -wipe-data"
     fun getKillEmulatorBySerial() = "emu kill"
 
-    fun getLaunchEmulator(emulatorName: String, proxy: String, ram: Int, latency: String): String {
+    fun getLaunchEmulator(emulatorName: String, proxy: String, ram: Int, latency: String, speed: String): String {
         val p = if (proxy.isEmpty()) "" else " -http-proxy $proxy"
         val r = if (ram in 1536..8192) "  -memory $ram" else ""
 
-        val netfast = if (latency == "none") " -netfast" else ""
+        // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
+        // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
+        val netfast = if (latency == "none" && speed == "full") " -netfast" else ""
         val l = if (latency == "none") "" else " -netdelay $latency"
+        val s = if (speed == "full") "" else " -netspeed $speed"
 
-        return "emulator -avd $emulatorName$netfast$l$p$r"
+        return "emulator -avd $emulatorName$netfast$l$s$p$r"
     }
 
     // Proxy
     fun getSetProxy(proxy: String) = "settings put global http_proxy $proxy"
     fun getRemoveProxy() = "settings put global http_proxy :0"
     fun getFetchProxy() = "settings get global http_proxy"
-
-    // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
 
     // Sets network latency emulation to one of the following delay values in milliseconds:
     // num - Specifies exact latency.
@@ -49,25 +50,37 @@ object EmulatorCommands {
         "EVDO (min 0, max 0)",
     )
 
-    // Disables network throttling. For example: emulator @Pixel8_API_34 -netfast
-    // This option is the same as specifying -netspeed full -netdelay none. These are the default values for these options.
 
-    // Network speed - Sets the network speed emulation. Specifies the maximum network upload
+    // Sets the network speed emulation. Specifies the maximum network upload
     // and download speeds with one of the following speed values in kbps:
-    // gsm - GSM/CSD (up: 14.4, down: 14.4).
-    // hscsd - HSCSD (up: 14.4, down: 57.6).
-    // gprs - GPRS (up: 28.8, down: 57.6).
-    // edge - EDGE/EGPRS (up: 473.6, down: 473.6).
-    // umts - UMTS/3G (up: 384.0, down: 384.0).
-    // hsdpa - HSDPA (up: 5760.0, down: 13,980.0).
-    // lte - LTE (up: 58,000, down: 173,000).
-    // evdo - EVDO (up: 75,000, down: 280,000).
-    // full - No limit, the default (up: 0.0, down: 0.0).
     // num - Specifies both upload and download speed.
     // up:down - Specifies individual up and down speeds.
-    //For example:
-    //emulator @Pixel8_API_34 -netspeed edge
+    val networkSpeedList = listOf(
+        "full",
+        "gsm",
+        "hscsd",
+        "gprs",
+        "edge",
+        "umts",
+        "hsdpa",
+        "lte",
+        "evdo",
+    )
 
+    val networkSpeedListDetails = listOf(
+        "No limit, the default (up: 0.0, down: 0.0)",
+        "GSM/CSD (up: 14.4, down: 14.4)",
+        "HSCSD (up: 14.4, down: 57.6)",
+        "GPRS (up: 28.8, down: 57.6)",
+        "EDGE/EGPRS (up: 473.6, down: 473.6)",
+        "UMTS/3G (up: 384.0, down: 384.0)",
+        "HSDPA (up: 5760.0, down: 13,980.0)",
+        "LTE (up: 58,000, down: 173,000)",
+        "EVDO (up: 75,000, down: 280,000)",
+    )
+
+
+    // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
 
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
     // "create-avd": "rm -f ${HOME}/.android/avd/${emulatorName}.avd/*.lock && ${ANDROID_HOME}/tools/bin/avdmanager --verbose create avd --force --name 'Pixel_4_API_30' --package 'system-images;android-31;default;x86_64' -d 'pixel_xl'",

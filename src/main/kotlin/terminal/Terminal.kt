@@ -3,7 +3,12 @@ package terminal
 import model.Package
 import model.TargetInfo
 import pref.preference
-import terminal.commands.*
+import terminal.commands.Commands
+import terminal.commands.EmulatorCommands
+import terminal.commands.InputCommands
+import terminal.commands.LogcatCommands
+import terminal.commands.PackagesCommands
+import terminal.commands.PermissionsCommands
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
@@ -63,8 +68,8 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdb(listOf(serial), EmulatorCommands.getKillEmulatorBySerial())
     }
 
-    suspend fun launchEmulator(emulatorName: String, proxy: String, ram: Int, latency: String) {
-        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, proxy, ram, latency), emulatorPath)
+    suspend fun launchEmulator(emulatorName: String, proxy: String, ram: Int, latency: String, speed: String) {
+        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, proxy, ram, latency, speed), emulatorPath)
     }
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {

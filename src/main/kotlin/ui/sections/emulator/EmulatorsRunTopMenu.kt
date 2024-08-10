@@ -45,6 +45,7 @@ fun EmulatorsRunTopMenu(
     onProxyChange: (String) -> Unit,
     onRamChange: (Int) -> Unit,
     onLatencyChange: (String) -> Unit,
+    onSpeedChange: (String) -> Unit,
     onSetProxyClick: () -> Unit,
 ) {
 
@@ -80,6 +81,15 @@ fun EmulatorsRunTopMenu(
                 description = "Sets network latency emulation",
                 modifier = Modifier.width(110.dp).padding(top = 16.dp, start = 16.dp),
                 onOptionSelected = { onLatencyChange(it) }
+            )
+
+            DropDownWithDescription(
+                options = EmulatorCommands.networkSpeedList,
+                optionsDetails = EmulatorCommands.networkSpeedListDetails,
+                title = "Speed",
+                description = "Sets the network speed emulation",
+                modifier = Modifier.width(110.dp).padding(top = 16.dp, start = 16.dp),
+                onOptionSelected = { onSpeedChange(it) }
             )
 
         }

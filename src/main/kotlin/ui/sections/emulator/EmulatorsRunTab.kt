@@ -22,16 +22,18 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
     var proxy by remember { mutableStateOf("") }
     var ram by remember { mutableStateOf(0) }
     var latency by remember { mutableStateOf("none") }
+    var speed by remember { mutableStateOf("full") }
 
-    val command = EmulatorCommands.getLaunchEmulator("emuName", proxy, ram, latency)
+    val command = EmulatorCommands.getLaunchEmulator("emuName", proxy, ram, latency, speed)
 
     Column {
         EmulatorsRunTopMenu(
             command,
             onProxyChange = { proxy = it },
             onRamChange = { ram = it },
+            onSetProxyClick = { model.setProxy(proxy) },
             onLatencyChange = { latency = it },
-            onSetProxyClick = { model.setProxy(proxy) }
+            onSpeedChange = { speed = it },
         )
 
         if (model.state.isEmulatorsLoading) {
@@ -39,7 +41,7 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
         } else {
             Row(modifier = Modifier.padding(top = 4.dp)) {
                 EmulatorsList(Modifier.weight(1f)) {
-                    model.onLaunchEmulatorClick(emulatorName = it, proxy, ram, latency)
+                    model.onLaunchEmulatorClick(emulatorName = it, proxy, ram, latency, speed)
                 }
                 EmulatorsRunSideMenu()
             }

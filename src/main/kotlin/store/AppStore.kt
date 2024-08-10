@@ -198,8 +198,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
 
-    fun onLaunchEmulatorClick(emulatorName: String, proxy: String, ram: Int, latency: String) {
-        launch { terminal.launchEmulator(emulatorName, proxy, ram, latency) }
+    fun onLaunchEmulatorClick(emulatorName: String, proxy: String, ram: Int, latency: String, speed: String) {
+        launch { terminal.launchEmulator(emulatorName, proxy, ram, latency, speed) }
     }
 
     fun onWipeAndLaunch(emulatorName: String) {
