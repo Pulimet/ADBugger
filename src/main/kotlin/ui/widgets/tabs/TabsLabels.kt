@@ -7,7 +7,13 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun TabsLabels(tabLabels: List<String>, selectedIndex: Int, onClick: (Int) -> Unit = {}) {
+fun TabsLabels(
+    tabLabels: List<String>,
+    selectedIndex: Int,
+    showTabs: Boolean,
+    onClick: (Int) -> Unit = {}
+) {
+    if (!showTabs) return
     Row(modifier = Modifier.fillMaxWidth()) {
         tabLabels.forEachIndexed { index, label ->
             val isSelected = selectedIndex == index

@@ -3,6 +3,6 @@ package ui.sections.emulator.create
 import androidx.compose.runtime.Composable
 
 @Composable
-fun EmulatorsCreateTab() {
+fun EmulatorsInstallTab() {
 
 }

@@ -113,12 +113,11 @@ object EmulatorCommands {
     )
 
 
-    // TODO Install
+    // TODO Install tab
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
 
-    // TODO create
+    // TODO Create tab
     // "create-avd": "rm -f ${HOME}/.android/avd/${emulatorName}.avd/*.lock && ${ANDROID_HOME}/tools/bin/avdmanager --verbose create avd --force --name 'Pixel_4_API_30' --package 'system-images;android-31;default;x86_64' -d 'pixel_xl'",
-    // "start": "emulator -avd Pixel_4_API_30 -cores 2 -gpu auto -accel on -memory 1536 -noaudio  -no-boot-anim -snapshot pac -no-snapshot-save -partition-size 1536",
 
     // List used above:
     // -cores 2  - Specifies the number of CPU cores to use. The default is 2.

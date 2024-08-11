@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Tabs(
     tabLabels: List<String>,
+    showTabs: Boolean = true,
     content: @Composable (Int) -> Unit = {},
 ) {
     var selectedIndex by remember { mutableStateOf(0) }
     Column {
-        TabsLabels(tabLabels, selectedIndex) { selectedIndex = it }
+        TabsLabels(tabLabels, selectedIndex, showTabs) { selectedIndex = it }
         Box(modifier = Modifier.fillMaxSize().padding(top = 4.dp)) {
             content(selectedIndex)
         }
