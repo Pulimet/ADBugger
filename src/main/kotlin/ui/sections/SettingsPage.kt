@@ -1,8 +1,18 @@
 package ui.sections
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,7 +61,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                     fontSize = Dimensions.subtitleFontSize,
                     textAlign = TextAlign.Start,
                     color = Color.LightGray,
-                    modifier = Modifier.width(200.dp).height(40.dp)
+                    modifier = Modifier.width(200.dp)
                 )
                 TextFieldX(
                     value = adbPathTextField,
@@ -68,7 +78,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                     fontSize = Dimensions.subtitleFontSize,
                     textAlign = TextAlign.Start,
                     color = Color.LightGray,
-                    modifier = Modifier.width(200.dp).height(40.dp)
+                    modifier = Modifier.width(200.dp)
                 )
                 TextFieldX(
                     value = emulatorPathTextField,
@@ -80,12 +90,14 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                 )
             }
 
+            Divider(thickness = 1.dp)
+
             Text(
                 text = "Environment variables",
                 fontSize = Dimensions.titleFontSize,
                 textAlign = TextAlign.Center,
                 color = Color.LightGray,
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
             )
             ListX(list)
 
