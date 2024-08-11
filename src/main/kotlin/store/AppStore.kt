@@ -457,4 +457,44 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     fun getProxy() {
         launch { terminal.getProxy(state.selectedTargetsList) }
     }
+
+    fun onAirplaneOn() {
+
+    }
+
+    fun onAirplaneOff() {
+
+    }
+
+    fun onWifiOn() {
+
+    }
+
+    fun onWifiOff() {
+
+    }
+
+    fun onRotationLandscape() {
+
+    }
+
+    fun onRotationPortrait() {
+
+    }
+
+    fun onRotationPortraitUpSideDown() {
+
+    }
+
+    fun onRotationLandscapeUpSideDow() {
+
+    }
+
+    fun onMockLocation() {
+
+    }
+
+    fun onStopMockLocation() {
+
+    }
 }
