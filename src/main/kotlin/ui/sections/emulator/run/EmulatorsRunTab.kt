@@ -23,11 +23,7 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
     var params by remember { mutableStateOf(RunEmulatorParams()) }
 
     Column {
-        EmulatorsRunTopMenu(
-            params = params,
-            onParamsChanged = {params = it},
-            onSetProxyClick = { model.setProxy(params.proxy) },
-        )
+        EmulatorsRunTopMenu(params = params) { params = it }
 
         if (model.state.isEmulatorsLoading) {
             LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())

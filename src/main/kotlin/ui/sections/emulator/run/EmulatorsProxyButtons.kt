@@ -19,12 +19,15 @@ import ui.widgets.buttons.BtnWithTextSmall
 
 @Composable
 fun EmulatorsProxyButtons(
+    showDescription: Boolean,
     model: AppStore = koinInject(),
     modifier: Modifier = Modifier,
     onClickSetProxy: () -> Unit
 ) {
     Column(modifier = modifier) {
-        TextExample("Proxy control after emulator launched", TextAlign.Center, Modifier.width(150.dp))
+        if (showDescription) {
+            TextExample("Proxy control after emulator launched", TextAlign.Center, Modifier.width(150.dp))
+        }
         Row(modifier = Modifier.padding(top = 2.dp)) {
             BtnWithTextSmall(
                 icon = Icons.AutoMirrored.Rounded.Send,

@@ -24,6 +24,7 @@ import ui.widgets.TextExample
 fun CheckboxWithDescription(
     title: String,
     description: String,
+    showDescription: Boolean = true,
     minWidth: Dp = 100.dp,
     modifier: Modifier = Modifier,
     defaultState: Boolean = true,
@@ -31,7 +32,9 @@ fun CheckboxWithDescription(
 ) {
     var checked by remember { mutableStateOf(defaultState) }
     Column(modifier = modifier.widthIn(min = minWidth)) {
-        TextExample(description, TextAlign.Center, modifier.widthIn(min = minWidth))
+        if (showDescription) {
+            TextExample(description, TextAlign.Center, modifier.widthIn(min = minWidth))
+        }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = checked,

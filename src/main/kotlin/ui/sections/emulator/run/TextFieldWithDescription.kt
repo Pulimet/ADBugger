@@ -22,6 +22,7 @@ import ui.widgets.TextFieldX
 fun TextFieldWithDescription(
     label: String = "",
     description: String = "",
+    showDescription: Boolean = true,
     minWidth: Dp = 100.dp,
     keyboardType: KeyboardType = KeyboardType.Text,
     maxLength: Int = -1,
@@ -30,7 +31,9 @@ fun TextFieldWithDescription(
 ) {
     var textField by remember { mutableStateOf(TextFieldValue("")) }
     Column(modifier = modifier) {
-        TextExample(description, TextAlign.Center, Modifier.widthIn(min = minWidth))
+        if (showDescription) {
+            TextExample(description, TextAlign.Center, Modifier.widthIn(min = minWidth))
+        }
         TextFieldX(
             value = textField,
             onValueChange = { newText ->

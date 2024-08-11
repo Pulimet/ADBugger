@@ -15,13 +15,16 @@ fun DropDownWithDescription(
     options: List<String>,
     title: String,
     description: String,
+    showDescription: Boolean = true,
     optionsDetails: List<String>,
     modifier: Modifier = Modifier,
     minWidth: Dp = 80.dp,
     onOptionSelected: (String) -> Unit,
 ) {
     Column(modifier = modifier) {
-        TextExample(description, TextAlign.Center)
+        if (showDescription) {
+            TextExample(description, TextAlign.Center)
+        }
         Dropdown(
             options = options,
             optionsDetails = optionsDetails,
