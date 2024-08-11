@@ -171,7 +171,7 @@ private fun BottomRow(
             lineHeight = 12.sp,
             fontSize = 12.sp,
             color = Color.LightGray,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp).weight(1f)
         )
 
         Row {
