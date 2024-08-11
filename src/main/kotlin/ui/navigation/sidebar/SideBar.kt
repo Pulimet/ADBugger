@@ -1,11 +1,21 @@
 package ui.navigation.sidebar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +29,17 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.regular.Keyboard
 import compose.icons.fontawesomeicons.solid.Cat
 import compose.icons.octicons.Package24
-import compose.icons.tablericons.*
+import compose.icons.tablericons.ArrowNarrowLeft
+import compose.icons.tablericons.ArrowNarrowRight
+import compose.icons.tablericons.ArrowsRightLeft
+import compose.icons.tablericons.Braces
+import compose.icons.tablericons.BrandAndroid
+import compose.icons.tablericons.Home
+import compose.icons.tablericons.Notes
+import compose.icons.tablericons.Resize
+import compose.icons.tablericons.Ruler
+import compose.icons.tablericons.Settings
+import compose.icons.tablericons.SettingsAutomation
 import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
@@ -28,7 +48,7 @@ import ui.theme.MyColors
 import ui.widgets.buttons.BtnIcon
 
 enum class MenuItemId {
-    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGCAT, LOGS, SETTINGS;
+    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGCAT, LOGS, MISC, SETTINGS;
 
     companion object {
         fun getByOrdinal(ordinal: Int): MenuItemId {
@@ -139,6 +159,13 @@ fun SideBar(
             toggle = isSelected(MenuItemId.LOGS),
             onClick = { toggleState(MenuItemId.LOGS) },
             title = "ADB Logs",
+            collapsed = isBarClosedState,
+        )
+        SideBarItem(
+            icon = TablerIcons.Braces,
+            toggle = isSelected(MenuItemId.MISC),
+            onClick = { toggleState(MenuItemId.MISC) },
+            title = "Misc",
             collapsed = isBarClosedState,
         )
         SideBarItem(

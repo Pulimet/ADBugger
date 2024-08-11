@@ -10,6 +10,7 @@ import ui.sections.AdbLogsPage
 import ui.sections.emulator.EmulatorsPage
 import ui.sections.input.InputPage
 import ui.sections.logcat.LogcatPage
+import ui.sections.misc.MiscPage
 import ui.sections.packages.PackagesPage
 import ui.sections.target.TargetSelectionPage
 
@@ -28,6 +29,7 @@ fun SelectedPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         MenuItemId.SCALING -> ScalingPage(modifier)
         MenuItemId.LOGCAT -> LogcatPage(modifier)
         MenuItemId.LOGS -> AdbLogsPage(modifier)
+        MenuItemId.MISC -> MiscPage(modifier)
         MenuItemId.SETTINGS -> SettingsPage(modifier)
     }
 }
