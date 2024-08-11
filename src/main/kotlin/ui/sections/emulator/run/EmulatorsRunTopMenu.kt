@@ -144,6 +144,16 @@ private fun SecondRow(
             minWidth = 130.dp,
             showDescription = showDescription
         ) { onParamsChanged(params.copy(touchMode = it)) }
+
+        TextFieldWithDescription(
+            label = "Data partition",
+            description = "Specifies the system data\npartition size (default: 800 MBs)",
+            maxLength = 4,
+            keyboardType = KeyboardType.Number,
+            minWidth = 160.dp,
+            modifier = Modifier.padding(start = 12.dp),
+            showDescription = showDescription
+        ) { onParamsChanged(params.copy(partition = it.toIntOrNull() ?: 0)) }
     }
 }
 

@@ -8,8 +8,9 @@ object EmulatorCommands {
     fun getKillEmulatorBySerial() = "emu kill"
 
     fun getLaunchEmulator(emulatorName: String, params: RunEmulatorParams): String {
-        val p = if (params.proxy.isEmpty()) "" else " -http-proxy ${params.proxy}"
-        val r = if (params.ram in 1536..8192) "  -memory ${params.ram}" else ""
+        val pr = if (params.proxy.isEmpty()) "" else " -http-proxy ${params.proxy}"
+        val r = if (params.ram in 1536..8192) " -memory ${params.ram}" else ""
+        val p = if (params.partition in 800..8192) "  -partition ${params.partition}" else ""
         val q = if (params.quickBoot == "enabled") "" else " ${params.quickBoot}"
         val t = if (params.touchMode == "touch") "" else " -screen ${params.touchMode}"
         val b = if (params.bootAnimEnabled) "" else " -no-boot-anim"
@@ -21,7 +22,7 @@ object EmulatorCommands {
         val l = if (params.latency == "none") "" else " -netdelay ${params.latency}"
         val s = if (params.speed == "full") "" else " -netspeed ${params.speed}"
 
-        return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b$a$t"
+        return "emulator -avd $emulatorName$netfast$l$s$pr$r$p$q$b$a$t"
     }
 
     // Proxy
@@ -111,15 +112,13 @@ object EmulatorCommands {
         "Disables touch and multi-touch screen emulation",
     )
 
-    // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
-    // Specifies the system data partition size in MBs. The default is 800 MBs. For example:
-    // emulator @Pixel8_API_34 -partition-size 1024
-
 
     // TODO Install
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
+
+    // TODO create
     // "create-avd": "rm -f ${HOME}/.android/avd/${emulatorName}.avd/*.lock && ${ANDROID_HOME}/tools/bin/avdmanager --verbose create avd --force --name 'Pixel_4_API_30' --package 'system-images;android-31;default;x86_64' -d 'pixel_xl'",
-    // "start": "${ANDROID_HOME}/emulator/emulator -avd Pixel_4_API_30 -cores 2 -gpu auto -accel on -memory 1536 -noaudio  -no-boot-anim -snapshot pac -no-snapshot-save -partition-size 1536",
+    // "start": "emulator -avd Pixel_4_API_30 -cores 2 -gpu auto -accel on -memory 1536 -noaudio  -no-boot-anim -snapshot pac -no-snapshot-save -partition-size 1536",
 
     // List used above:
     // -cores 2  - Specifies the number of CPU cores to use. The default is 2.
