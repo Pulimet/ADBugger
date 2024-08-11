@@ -106,7 +106,8 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun takeSnapshot(selectedTargetsList: List<String>) {
-        selectedTargetsList.forEach {
+        val list = selectedTargetsList.ifEmpty { launcher.devicesInfo().map { it.serial } }
+        list.forEach {
             val filename = "snap_$it.png"
             launcher.runAdbShellCommand(it, "screencap -p /sdcard/$filename")
             launcher.runAdbCommand(it, Commands.getAdbPull(filename))

@@ -38,7 +38,6 @@ import ui.widgets.buttons.BtnWithText
 fun TopBarIcons(model: AppStore = koinInject()) {
     val stateHorizontal = rememberScrollState(0)
 
-    val isDeviceSelected = model.state.selectedTargetsList.isNotEmpty()
     var forwardUserInputState: Boolean by preference("Btn_ForwardUserInput", false)
     var alwaysShowLogsEnabled: Boolean by preference("Btn_alwaysShowLogsEnabled", false)
 
@@ -100,7 +99,6 @@ fun TopBarIcons(model: AppStore = koinInject()) {
             icon = LineaIcons.Basic.Photo,
             onClick = { model.onSnapClick() },
             description = "Snapshot",
-            enabled = isDeviceSelected,
         )
         BtnWithText(
             icon = TablerIcons.LetterA,

@@ -244,8 +244,6 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onSnapClick() {
-        if (state.selectedTargetsList.isEmpty()) return
-
         launch { terminal.takeSnapshot(state.selectedTargetsList) }
     }
 
