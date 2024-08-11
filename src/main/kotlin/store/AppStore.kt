@@ -223,6 +223,10 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.showSettings(state.selectedTargetsList) }
     }
 
+    fun onRecentClick() {
+        launch { terminal.showRecentApps(state.selectedTargetsList) }
+    }
+
     fun onBackClick() {
         launch { terminal.pressBack(state.selectedTargetsList) }
     }
@@ -269,6 +273,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.pressRight(state.selectedTargetsList) }
     }
 
+
     fun onBackSpaceClick() {
         launch { terminal.pressDelete(state.selectedTargetsList) }
     }
@@ -277,7 +282,6 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     fun onSendTextClick(value: String) {
         launch { terminal.sendText(state.selectedTargetsList, value) }
     }
-
 
     fun onSendInputClick(value: Int) {
         launch { terminal.sendInput(state.selectedTargetsList, value) }

@@ -20,7 +20,12 @@ import compose.icons.WeatherIcons
 import compose.icons.lineaicons.Basic
 import compose.icons.lineaicons.basic.Photo
 import compose.icons.octicons.ArrowSwitch24
-import compose.icons.tablericons.*
+import compose.icons.tablericons.ArrowBack
+import compose.icons.tablericons.LayersSubtract
+import compose.icons.tablericons.LetterA
+import compose.icons.tablericons.Notes
+import compose.icons.tablericons.Power
+import compose.icons.tablericons.SettingsAutomation
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.NightClear
 import org.koin.compose.koinInject
@@ -60,6 +65,11 @@ fun TopBarIcons(model: AppStore = koinInject()) {
             icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
             onClick = { model.onBackClick() },
             description = "Back",
+        )
+        BtnWithText(
+            icon = TablerIcons.LayersSubtract,
+            onClick = { model.onRecentClick() },
+            description = "Recent",
         )
         BtnWithText(
             icon = Octicons.ArrowSwitch24,

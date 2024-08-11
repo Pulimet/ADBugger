@@ -10,6 +10,8 @@ object InputCommands {
     private const val KEYCODE_TAB = 61
     private const val KEYCODE_ENTER = 66
     private const val KEYCODE_DEL = 67
+    private const val KEYCODE_APP_SWITCH = 187
+
 
     fun getPressTab() = getInputKeyEventFor(KEYCODE_TAB)
     fun getPressEnter() = getInputKeyEventFor(KEYCODE_ENTER)
@@ -21,9 +23,11 @@ object InputCommands {
     fun getDelete() = getInputKeyEventFor(KEYCODE_DEL)
     fun getPressBack() = getInputKeyEventFor(KEYCODE_BACK)
 
-    fun sendTextCommand(value: String) = "input text $value"
-    fun sendInputCommand(input: Int) = getInputKeyEventFor(input)
+    fun getShowRecentApps() = getInputKeyEventFor(KEYCODE_APP_SWITCH)
 
+    fun sendTextCommand(value: String) = "input text $value"
+
+    fun sendInputCommand(input: Int) = getInputKeyEventFor(input)
     // Private
     private fun getInputKeyEventFor(keycode: Int) = "input keyevent $keycode"
 }

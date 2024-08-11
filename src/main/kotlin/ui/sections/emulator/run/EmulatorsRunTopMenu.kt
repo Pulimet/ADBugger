@@ -38,7 +38,7 @@ import ui.widgets.buttons.BtnWithTextSmall
 fun EmulatorsRunTopMenu(params: RunEmulatorParams, onParamsChanged: (RunEmulatorParams) -> Unit) {
 
     var showDescriptionPref: Boolean by preference("Btn_ShowDescription", false)
-    var showDescription by remember { mutableStateOf(true) }
+    var showDescription by remember { mutableStateOf(showDescriptionPref) }
 
     Column(
         modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
@@ -158,7 +158,7 @@ private fun BottomRow(
             BtnWithTextSmall(
                 icon = Icons.Default.Info,
                 toggle = showDescription,
-                description = "Description",
+                description = "Info",
                 width = 60.dp
             ) { onShowDescriptionChanged(!showDescription) }
 

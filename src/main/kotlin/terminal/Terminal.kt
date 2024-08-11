@@ -85,6 +85,10 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdbShell(selectedTargetsList, Commands.getShowSettings())
     }
 
+    suspend fun showRecentApps(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, InputCommands.getShowRecentApps())
+    }
+
     suspend fun pressBack(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, InputCommands.getPressBack())
     }
@@ -237,5 +241,4 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun getProxy(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getFetchProxy(), true)
     }
-
 }
