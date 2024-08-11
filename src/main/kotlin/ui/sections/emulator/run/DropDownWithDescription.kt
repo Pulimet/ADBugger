@@ -2,6 +2,7 @@ package ui.sections.emulator.run
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -23,7 +24,7 @@ fun DropDownWithDescription(
 ) {
     Column(modifier = modifier) {
         if (showDescription) {
-            TextExample(description, TextAlign.Center)
+            TextExample(description, TextAlign.Center, modifier = Modifier.widthIn(min = minWidth))
         }
         Dropdown(
             options = options,

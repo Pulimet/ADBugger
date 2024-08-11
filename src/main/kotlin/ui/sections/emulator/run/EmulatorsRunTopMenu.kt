@@ -134,6 +134,16 @@ private fun SecondRow(
             modifier = Modifier.padding(start = 8.dp),
             showDescription = showDescription
         ) { onParamsChanged(params.copy(audioEnabled = it)) }
+
+        DropDownWithDescription(
+            options = EmulatorCommands.touchList,
+            optionsDetails = EmulatorCommands.touchListDetails,
+            title = "Touch mode",
+            description = "Sets emulated \n touch screen mode",
+            modifier = Modifier.width(130.dp).padding(start = 6.dp),
+            minWidth = 130.dp,
+            showDescription = showDescription
+        ) { onParamsChanged(params.copy(touchMode = it)) }
     }
 }
 

@@ -15,7 +15,7 @@ import ui.widgets.tabs.Tabs
 fun EmulatorsPage(modifier: Modifier = Modifier) {
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
-            Tabs(listOf("Run", "Add", "Create")) {
+            Tabs(listOf("Run Emulator", "Create Device", "Install Image")) {
                 when (it) {
                     0 -> EmulatorsRunTab()
                     1 -> EmulatorsAddTab()

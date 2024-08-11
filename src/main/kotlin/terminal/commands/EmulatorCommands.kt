@@ -11,6 +11,7 @@ object EmulatorCommands {
         val p = if (params.proxy.isEmpty()) "" else " -http-proxy ${params.proxy}"
         val r = if (params.ram in 1536..8192) "  -memory ${params.ram}" else ""
         val q = if (params.quickBoot == "enabled") "" else " ${params.quickBoot}"
+        val t = if (params.touchMode == "touch") "" else " -screen ${params.touchMode}"
         val b = if (params.bootAnimEnabled) "" else " -no-boot-anim"
         val a = if (params.audioEnabled) "" else " -noaudio"
 
@@ -20,8 +21,7 @@ object EmulatorCommands {
         val l = if (params.latency == "none") "" else " -netdelay ${params.latency}"
         val s = if (params.speed == "full") "" else " -netspeed ${params.speed}"
 
-
-        return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b$a"
+        return "emulator -avd $emulatorName$netfast$l$s$p$r$q$b$a$t"
     }
 
     // Proxy
@@ -99,44 +99,37 @@ object EmulatorCommands {
         "Disables the Quick Boot feature completely and doesn't load or save the emulator state",
     )
 
-    // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
+    val touchList = listOf(
+        "touch",
+        "multi-touch",
+        "no-touch",
+    )
 
+    val touchListDetails = listOf(
+        "Emulates a touch screen (default)",
+        "Emulates a multi-touch screen",
+        "Disables touch and multi-touch screen emulation",
+    )
+
+    // TODO Add more options for emulator launching at EmulatorsTopMenu.kt
+    // Specifies the system data partition size in MBs. The default is 800 MBs. For example:
+    // emulator @Pixel8_API_34 -partition-size 1024
+
+
+    // TODO Install
     // "install-package": "${ANDROID_HOME}/tools/bin/sdkmanager --install 'system-images;android-31;default;x86_64'",
     // "create-avd": "rm -f ${HOME}/.android/avd/${emulatorName}.avd/*.lock && ${ANDROID_HOME}/tools/bin/avdmanager --verbose create avd --force --name 'Pixel_4_API_30' --package 'system-images;android-31;default;x86_64' -d 'pixel_xl'",
     // "start": "${ANDROID_HOME}/emulator/emulator -avd Pixel_4_API_30 -cores 2 -gpu auto -accel on -memory 1536 -noaudio  -no-boot-anim -snapshot pac -no-snapshot-save -partition-size 1536",
 
     // List used above:
-    // -avd Pixel_4_API_30  - Specifies the AVD to launch.
     // -cores 2  - Specifies the number of CPU cores to use. The default is 2.
     // -gpu auto  - Specifies the GPU emulation mode. The default is auto.
     // -accel on  - Enables emulator acceleration. The default is on.
-    // -memory 1536 - Specifies the physical RAM size, from 1536 to 8192 MBs. The default is 1536.
-    // -noaudio  - Disables audio support for this virtual device.
-    // -no-boot-anim - Disables the boot animation during emulator startup.
     // -snapshot pac - Loads a snapshot at startup. The snapshot must be saved with the -no-snapshot-save option.
-    // -no-snapshot-save - Performs a quick boot if possible, but does not save the emulator state on exit.
-    // -partition-size 1536  - Specifies the data partition size in MBs. The default is 800 MBs.
 
-    // Specifies the system data partition size in MBs. For example:
-    // emulator @Pixel8_API_34 -partition-size 1024
 
-    // Disables graphical window display on the emulator. This option is useful when running the emulator
-    // on servers that have no display. You can access the emulator through adb or the console. For example:
-    // emulator @Pixel8_API_34 -no-window
-
-    //To get a list of emulator environment variables, enter the following command:
-    // emulator -help-environment
-
-    // SC card - Specifies the filename and path to an SD card partition image file. For example:
-    // emulator @Pixel8_API_34 -sdcard C:/sd/sdcard.img
-
-    // Sets emulated touch screen mode. For example:
-    // emulator @Pixel8_API_34 -screen no-touch
-    // The mode can be any of the following values:
-    // touch - Emulates a touch screen (default).
-    // multi-touch - Emulates a multi-touch screen.
-    // no-touch - Disables touch and multi-touch screen emulation.
-
+    // ------------
+    // Not sure if we need below properties:
 
     // Captures network packets and stores them in a file. For example:
     // emulator @Pixel8_API_34 -tcpdump /path/dumpfile.cap
@@ -152,11 +145,18 @@ object EmulatorCommands {
     // America/Los_Angeles, Europe/Paris, America/Argentina/Buenos_Aires
     // The specified time zone must be in the: https://www.iana.org/time-zones
 
+    //To get a list of emulator environment variables, enter the following command:
+    // emulator -help-environment
+
+    // Disables graphical window display on the emulator. This option is useful when running the emulator
+    // on servers that have no display. You can access the emulator through adb or the console. For example:
+    // emulator @Pixel8_API_34 -no-window
+
     // Version - Displays the emulator version number. For example:
     // emulator @Pixel8_API_34 -version
 
-    // ------------
-    // Not sure if we need below properties:
+    // SC card - Specifies the filename and path to an SD card partition image file. For example:
+    // emulator @Pixel8_API_34 -sdcard C:/sd/sdcard.img
 
     // Sets the TCP port number that's used for the console and adb. For example:
     // emulator @Pixel8_API_34 -port 5556

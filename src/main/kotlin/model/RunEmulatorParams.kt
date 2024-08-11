@@ -6,6 +6,7 @@ data class RunEmulatorParams(
     val latency: String = "none",
     val speed: String = "full",
     val quickBoot: String = "enabled",
+    val touchMode: String = "touch",
     val bootAnimEnabled: Boolean = true,
     val audioEnabled: Boolean = true,
 )
