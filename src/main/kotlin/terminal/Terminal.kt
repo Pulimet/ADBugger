@@ -242,4 +242,28 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun getProxy(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getFetchProxy(), true)
     }
+
+    fun onAirplaneOn(selectedTargetsList: List<String>) {
+        // TODO
+    }
+
+    fun onAirplaneOff(selectedTargetsList: List<String>) {
+        // TODO
+    }
+
+    fun onWifiOn(selectedTargetsList: List<String>) {
+        // TODO
+    }
+
+    fun onWifiOff(selectedTargetsList: List<String>) {
+        // TODO
+    }
+
+    fun onRotationLandscape(selectedTargetsList: List<String>) {
+        // TODO
+    }
+
+    fun onRotationPortrait(selectedTargetsList: List<String>) {
+        // TODO
+    }
 }

@@ -459,42 +459,42 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onAirplaneOn() {
-
+        launch { terminal.onAirplaneOn(state.selectedTargetsList) }
     }
 
     fun onAirplaneOff() {
-
+        launch { terminal.onAirplaneOff(state.selectedTargetsList) }
     }
 
     fun onWifiOn() {
-
+        launch { terminal.onWifiOn(state.selectedTargetsList) }
     }
 
     fun onWifiOff() {
-
+        launch { terminal.onWifiOff(state.selectedTargetsList) }
     }
 
     fun onRotationLandscape() {
-
+        launch { terminal.onRotationLandscape(state.selectedTargetsList) }
     }
 
     fun onRotationPortrait() {
-
+        launch { terminal.onRotationPortrait(state.selectedTargetsList) }
     }
 
     fun onRotationPortraitUpSideDown() {
-
+        launch { terminal.getProxy(state.selectedTargetsList) }
     }
 
     fun onRotationLandscapeUpSideDow() {
-
+        launch { terminal.getProxy(state.selectedTargetsList) }
     }
 
     fun onMockLocation() {
-
+        launch { terminal.getProxy(state.selectedTargetsList) }
     }
 
     fun onStopMockLocation() {
-
+        launch { terminal.getProxy(state.selectedTargetsList) }
     }
 }
