@@ -53,6 +53,16 @@ fun MiscTabA(model: AppStore = koinInject()) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             BtnWithText(
                 icon = LineaIcons.Basic.Home,
+                onClick = { model.onRotationAutoTurnOn() },
+                description = "Auto On",
+            )
+            BtnWithText(
+                icon = LineaIcons.Basic.Home,
+                onClick = { model.onRotationAutoTurnOff() },
+                description = "Auto Off",
+            )
+            BtnWithText(
+                icon = LineaIcons.Basic.Home,
                 onClick = { model.onRotationLandscape() },
                 description = "Landscape",
             )
@@ -72,17 +82,17 @@ fun MiscTabA(model: AppStore = koinInject()) {
                 description = "Land. 2",
             )
         }
-        SectionTitle("Mock location")
+        SectionTitle("Location mode")
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             BtnWithText(
                 icon = LineaIcons.Basic.Home,
-                onClick = { model.onMockLocation() },
-                description = "Start",
+                onClick = { model.onGpsOn() },
+                description = "On",
             )
             BtnWithText(
                 icon = LineaIcons.Basic.Home,
-                onClick = { model.onStopMockLocation() },
-                description = "Stop",
+                onClick = { model.onGpsOff() },
+                description = "Off",
             )
         }
     }

@@ -4,12 +4,7 @@ import model.Package
 import model.RunEmulatorParams
 import model.TargetInfo
 import pref.preference
-import terminal.commands.Commands
-import terminal.commands.EmulatorCommands
-import terminal.commands.InputCommands
-import terminal.commands.LogcatCommands
-import terminal.commands.PackagesCommands
-import terminal.commands.PermissionsCommands
+import terminal.commands.*
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
@@ -243,27 +238,51 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getFetchProxy(), true)
     }
 
-    fun onAirplaneOn(selectedTargetsList: List<String>) {
-        // TODO
+    suspend fun onAirplaneOn(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getAirplaneOn())
     }
 
-    fun onAirplaneOff(selectedTargetsList: List<String>) {
-        // TODO
+    suspend fun onAirplaneOff(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getAirplaneOff())
     }
 
-    fun onWifiOn(selectedTargetsList: List<String>) {
-        // TODO
+    suspend fun onWifiOn(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getWifiOn())
     }
 
-    fun onWifiOff(selectedTargetsList: List<String>) {
-        // TODO
+    suspend fun onWifiOff(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getWifiOff())
     }
 
-    fun onRotationLandscape(selectedTargetsList: List<String>) {
-        // TODO
+    suspend fun onGpsOn(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getGpdOn())
     }
 
-    fun onRotationPortrait(selectedTargetsList: List<String>) {
-        // TODO
+    suspend fun onGpsOff(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getGpsOff())
+    }
+
+    suspend fun onRotationAutoTurnOn(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getRotationAutoTurnOn())
+    }
+
+    suspend fun onRotationAutoTurnOff(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getRotationAutoTurnOff())
+    }
+
+    suspend fun onRotationLandscape(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getRotationLandscape())
+    }
+
+    suspend fun onRotationPortrait(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getRotationPortrait())
+    }
+
+    suspend fun onRotationPortraitUpSideDown(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getRotationUpSideDown())
+    }
+
+    suspend fun onRotationLandscapeUpSideDow(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getRotationLandscape2())
     }
 }

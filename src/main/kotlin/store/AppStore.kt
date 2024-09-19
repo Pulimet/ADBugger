@@ -474,6 +474,22 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.onWifiOff(state.selectedTargetsList) }
     }
 
+    fun onGpsOn() {
+        launch { terminal.onGpsOn(state.selectedTargetsList) }
+    }
+
+    fun onGpsOff() {
+        launch { terminal.onGpsOff(state.selectedTargetsList) }
+    }
+
+    fun onRotationAutoTurnOn() {
+        launch { terminal.onRotationAutoTurnOn(state.selectedTargetsList) }
+    }
+
+    fun onRotationAutoTurnOff() {
+        launch { terminal.onRotationAutoTurnOff(state.selectedTargetsList) }
+    }
+
     fun onRotationLandscape() {
         launch { terminal.onRotationLandscape(state.selectedTargetsList) }
     }
@@ -483,18 +499,10 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onRotationPortraitUpSideDown() {
-        launch { terminal.getProxy(state.selectedTargetsList) }
+        launch { terminal.onRotationPortraitUpSideDown(state.selectedTargetsList) }
     }
 
     fun onRotationLandscapeUpSideDow() {
-        launch { terminal.getProxy(state.selectedTargetsList) }
-    }
-
-    fun onMockLocation() {
-        launch { terminal.getProxy(state.selectedTargetsList) }
-    }
-
-    fun onStopMockLocation() {
-        launch { terminal.getProxy(state.selectedTargetsList) }
+        launch { terminal.onRotationLandscapeUpSideDow(state.selectedTargetsList) }
     }
 }
