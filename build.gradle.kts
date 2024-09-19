@@ -38,7 +38,7 @@ dependencies {
         "erikflowers-weather-icons",
         "css-gg"
     ).forEach {
-        implementation("br.com.devsrsouza.compose.icons:$it:1.1.0")
+        implementation("br.com.devsrsouza.compose.icons:$it:1.1.1")
     }
 }
 
