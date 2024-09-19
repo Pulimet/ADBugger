@@ -21,9 +21,9 @@ dependencies {
     implementation(compose.desktop.currentOs)
 
     // Koin
-    implementation("co.touchlab:stately-concurrent-collections:2.0.6")
-    implementation("io.insert-koin:koin-core:3.6.0-wasm-alpha2")
-    implementation("io.insert-koin:koin-compose:1.2.0-Beta4")
+    implementation("co.touchlab:stately-concurrent-collections:2.1.0")
+    implementation("io.insert-koin:koin-core:4.0.0")
+    implementation("io.insert-koin:koin-compose:4.0.0")
 
     // Icons Packs
     listOf(
