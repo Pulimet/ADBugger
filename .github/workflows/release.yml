@@ -125,7 +125,7 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV  
             echo "IS_PRE_RELEASE=${{ github.event.inputs.isPreRelease }}" >> $GITHUB_ENV  
-            echo "ALPHA_VERSION=${{ github.event.inputs.alphaVersion }}" >> $GITHUB_ENV  
+            echo "ALPHA_VERSION=-${{ github.event.inputs.alphaVersion }}" >> $GITHUB_ENV  
           elif [ "${{ github.event_name }}" = "push" ]; then
             TAG_NAME=${{ github.ref_name }}
             VERSION=${TAG_NAME#v}  # Removes the 'v' prefix from the tag name to get the version
@@ -157,8 +157,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
         with:
-          tag_name: v${{ env.VERSION }}-${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
-          release_name: Release v${{ env.VERSION }} - ${{ env.ALPHA_VERSION }} # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
+          release_name: Release v${{ env.VERSION }}${{ env.ALPHA_VERSION }} # Name of the release, using the version input
           draft: false  # Specifies that the release is not a draft
           prerelease: ${{ env.IS_PRE_RELEASE }}
 
@@ -166,8 +166,8 @@ jobs:
         id: upload_release_dmg
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.VERSION }}-${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
-          name: Release v${{ env.VERSION }} - ${{ env.ALPHA_VERSION }}  # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
+          name: Release v${{ env.VERSION }}${{ env.ALPHA_VERSION }}  # Name of the release, using the version input
           files: ./ADBugger-${{ env.VERSION }}.dmg  # Path to the DMG file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
@@ -176,8 +176,8 @@ jobs:
         id: upload_release_msi
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.VERSION }}-${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
-          name: Release v${{ env.VERSION }} - ${{ env.ALPHA_VERSION }}  # Name of the release, using the version input
+          tag_name: v${{ env.VERSION }}${{ env.ALPHA_VERSION }}  # Tag name for the release, using the version input
+          name: Release v${{ env.VERSION }}${{ env.ALPHA_VERSION }}  # Name of the release, using the version input
           files: ./ADBugger-${{ env.VERSION }}.msi  # Path to the MSI file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses the GitHub token to authenticate
