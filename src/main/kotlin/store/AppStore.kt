@@ -29,7 +29,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         const val EMULATOR_NONE = "Emulator not selected"
     }
 
-    val version = "1.0.4"
+    val version = "1.0.5"
 
     var state: AppState by mutableStateOf(initialState())
         private set
