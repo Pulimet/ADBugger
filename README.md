@@ -1,3 +1,6 @@
+[![version](https://img.shields.io/badge/version-1.0.4-blue)](https://github.com/Pulimet/ADBugger/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/Pulimet/ADBugger/blob/master/LICENSE)
+
 ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.
 
 *Core Functionality*
