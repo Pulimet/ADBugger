@@ -79,6 +79,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val logcatLogs: List<String> = listOf(),
         val environmentVariables: Map<String, String> = mapOf(),
         val isLogcatRunning: Boolean = false,
+        val isAdbAccessOk: Status = Status.UNKNOWN,
+        val isEmulatorAccessOk: Status = Status.UNKNOWN
     )
 
     // Logs
@@ -102,9 +104,21 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
 
     // User Actions
+    fun onGetEnvironmentVariables() {
+        launch {
+            getEnvironmentVariables()
+        }
+    }
+
     fun getDevicesList() {
         launch {
-            setState { copy(isDevicesLoading = true, targetsList = emptyList(), selectedTargetsList = emptyList()) }
+            setState {
+                copy(
+                    isDevicesLoading = true,
+                    targetsList = emptyList(),
+                    selectedTargetsList = emptyList()
+                )
+            }
             terminal.devicesInfo()
             delay(200)
             setState { copy(isDevicesLoading = false) }
@@ -133,7 +147,13 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
             log("Multiple target selected. Getting packages from: ${state.selectedTargetsList[0]}")
         }
         launch {
-            setState { copy(isPackagesLoading = true, packageList = emptyList(), selectedPackage = PACKAGE_NONE) }
+            setState {
+                copy(
+                    isPackagesLoading = true,
+                    packageList = emptyList(),
+                    selectedPackage = PACKAGE_NONE
+                )
+            }
             val packagesList = terminal.packages(state.selectedTargetsList[0])
             delay(200)
             setState { copy(isPackagesLoading = false, packageList = packagesList) }
@@ -334,11 +354,23 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onAddPermission(permission: String) {
-        launch { terminal.addPermission(state.selectedTargetsList, permission, state.selectedPackage) }
+        launch {
+            terminal.addPermission(
+                state.selectedTargetsList,
+                permission,
+                state.selectedPackage
+            )
+        }
     }
 
     fun onRemovePermission(permission: String) {
-        launch { terminal.removePermission(state.selectedTargetsList, permission, state.selectedPackage) }
+        launch {
+            terminal.removePermission(
+                state.selectedTargetsList,
+                permission,
+                state.selectedPackage
+            )
+        }
     }
 
     fun onRemoveAllPermissions() {
@@ -399,7 +431,13 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         }
         setState { copy(isLogcatRunning = true) }
         logcatJob = launch {
-            terminal.logcat(state.selectedTargetsList[0], buffer, format, priorityLevel, tag) { onNewLogcatLine(it) }
+            terminal.logcat(
+                state.selectedTargetsList[0],
+                buffer,
+                format,
+                priorityLevel,
+                tag
+            ) { onNewLogcatLine(it) }
         }
     }
 
@@ -443,11 +481,9 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.saveBugReport(state.selectedTargetsList[0]) }
     }
 
-    private fun getEnvironmentVariables() {
-        launch {
-            val result: Map<String, String> = terminal.getEnvironmentVariables()
-            setState { copy(environmentVariables = result) }
-        }
+    private suspend fun getEnvironmentVariables() {
+        val result: Map<String, String> = terminal.getEnvironmentVariables()
+        setState { copy(environmentVariables = result) }
     }
 
     fun setProxy(proxyText: String) {
@@ -508,5 +544,23 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
     fun onRotationLandscapeUpSideDow() {
         launch { terminal.onRotationLandscapeUpSideDow(state.selectedTargetsList) }
+    }
+
+    fun checkPlatformTools() {
+        launch {
+            val result = terminal.checkPlatformTools()
+            val isAdbAccessOk =
+                result.isNotEmpty() && result[0].contains("Android Debug Bridge version")
+            setState { copy(isAdbAccessOk = if (isAdbAccessOk) Status.OK else Status.FAIL) }
+        }
+    }
+
+    fun checkEmulators() {
+        launch {
+            val result = terminal.checkEmulators()
+            val isEmulatorAccessOk =
+                result.isNotEmpty() && result[0].contains("Android emulator version")
+            setState { copy(isEmulatorAccessOk = if (isEmulatorAccessOk) Status.OK else Status.FAIL) }
+        }
     }
 }

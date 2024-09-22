@@ -26,8 +26,10 @@ class CommandLauncher(private val cmd: Cmd) {
 
 
     // - Launch nonAdb commands
-    suspend fun run(command: String, path: String = adbPath): List<String> {
-        return cmd.execute(command, log, path)
+    suspend fun run(command: String, path: String = adbPath, printResults: Boolean = false): List<String> {
+        return cmd.execute(command, log, path).also {
+            if (printResults) log(it.joinToString("\n"))
+        }
     }
 
     // - Launch regular adb  commands

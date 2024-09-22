@@ -328,4 +328,15 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun onRotationLandscapeUpSideDow(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, Commands.getRotationLandscape2())
     }
+
+    suspend fun checkPlatformTools() =
+        launcher.run("adb version | grep \"Android Debug Bridge version\"", printResults = true)
+
+
+    suspend fun checkEmulators() = launcher.run(
+        "emulator -version | grep \"Android emulator version\"",
+        path = emulatorPath,
+        printResults = true
+    )
+
 }
