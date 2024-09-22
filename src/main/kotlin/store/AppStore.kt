@@ -358,6 +358,10 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.changeDisplayDensity(density, state.selectedTargetsList) }
     }
 
+    fun setSize(size: String) {
+        launch { terminal.changeDisplaySize(size, state.selectedTargetsList) }
+    }
+
     fun openFilePicker() {
         setState { copy(isFilePickerShown = true) }
     }

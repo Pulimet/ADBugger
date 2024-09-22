@@ -4,11 +4,19 @@ import model.Package
 import model.RunEmulatorParams
 import model.TargetInfo
 import pref.preference
-import terminal.commands.*
+import terminal.commands.Commands
+import terminal.commands.EmulatorCommands
+import terminal.commands.InputCommands
+import terminal.commands.LogcatCommands
+import terminal.commands.PackagesCommands
+import terminal.commands.PermissionsCommands
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
-    private var emulatorPath: String by preference("emulatorPath", DefaultPath.getEmulatorDefaultPath())
+    private var emulatorPath: String by preference(
+        "emulatorPath",
+        DefaultPath.getEmulatorDefaultPath()
+    )
 
     private var log: (String) -> Unit = { println(it) }
 
@@ -34,11 +42,17 @@ class Terminal(private val launcher: CommandLauncher) {
 
 
     suspend fun openPackage(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getLaunchCommand(selectedPackage))
+        launcher.runAdbShell(
+            selectedTargetsList,
+            PackagesCommands.getLaunchCommand(selectedPackage)
+        )
     }
 
     suspend fun getApkPath(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getApkPathCommand(selectedPackage))
+        launcher.runAdbShell(
+            selectedTargetsList,
+            PackagesCommands.getApkPathCommand(selectedPackage)
+        )
     }
 
     suspend fun closePackage(selectedPackage: String, selectedTargetsList: List<String>) {
@@ -47,7 +61,10 @@ class Terminal(private val launcher: CommandLauncher) {
 
 
     suspend fun clearData(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, PackagesCommands.getClearDataCommand(selectedPackage))
+        launcher.runAdbShell(
+            selectedTargetsList,
+            PackagesCommands.getClearDataCommand(selectedPackage)
+        )
     }
 
     suspend fun uninstall(selectedPackage: String, selectedTargetsList: List<String>) {
@@ -168,20 +185,40 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun removeAllPermissions(selectedTarget: List<String>, selectedPackage: String) {
-        launcher.runAdbShell(selectedTarget, PermissionsCommands.getRevokeAllPermissions(selectedPackage))
+        launcher.runAdbShell(
+            selectedTarget,
+            PermissionsCommands.getRevokeAllPermissions(selectedPackage)
+        )
     }
 
-    suspend fun addPermission(selectedTarget: List<String>, permission: String, selectedPackage: String) {
-        launcher.runAdbShell(selectedTarget, PermissionsCommands.addSpecificPermission(selectedPackage, permission))
+    suspend fun addPermission(
+        selectedTarget: List<String>,
+        permission: String,
+        selectedPackage: String
+    ) {
+        launcher.runAdbShell(
+            selectedTarget,
+            PermissionsCommands.addSpecificPermission(selectedPackage, permission)
+        )
     }
 
-    suspend fun removePermission(selectedTarget: List<String>, permission: String, selectedPackage: String) {
-        launcher.runAdbShell(selectedTarget, PermissionsCommands.revokeSpecificPermission(selectedPackage, permission))
+    suspend fun removePermission(
+        selectedTarget: List<String>,
+        permission: String,
+        selectedPackage: String
+    ) {
+        launcher.runAdbShell(
+            selectedTarget,
+            PermissionsCommands.revokeSpecificPermission(selectedPackage, permission)
+        )
     }
 
     suspend fun getPermissions(selectedTargetsList: List<String>, selectedPackage: String) {
         selectedTargetsList.forEach {
-            val result = launcher.runAdbShellCommand(it, PermissionsCommands.getGrantedPermissions(selectedPackage))
+            val result = launcher.runAdbShellCommand(
+                it,
+                PermissionsCommands.getGrantedPermissions(selectedPackage)
+            )
             log("output :$result")
         }
     }
@@ -193,6 +230,11 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun changeDisplayDensity(density: Int, selectedTarget: List<String>) {
         val d = if (density == 0) "reset" else "$density"
         launcher.runAdbShell(selectedTarget, Commands.getChangeDisplayDensity(d))
+    }
+
+    suspend fun changeDisplaySize(size: String, selectedTarget: List<String>) {
+        val d = if (size == "0") "reset" else size
+        launcher.runAdbShell(selectedTarget, Commands.getChangeDisplaySize(d))
     }
 
     suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
@@ -207,7 +249,8 @@ class Terminal(private val launcher: CommandLauncher) {
         tag: String,
         logcatCallback: (String) -> Unit
     ) {
-        val command = LogcatCommands.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
+        val command =
+            LogcatCommands.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
         launcher.executeAndGetData(command, log, logcatCallback)
     }
 

@@ -15,7 +15,6 @@ object Dimensions {
     val packageCommandsBtnWidth = 100.dp
     val permissionsCommandsBtnWidthShort = 60.dp
     val permissionsCommandsBtnWidth = 80.dp
-    val btnWithTextFontSize = 10.sp
     val btnEmulatorWidth = 100.dp
 
     // Spinner
@@ -27,6 +26,7 @@ object Dimensions {
     val releaseNotesFontSize = 12.sp
     val versionFontSize = 10.sp
     val emulatorItemFontSize = 12.sp
+    val btnWithTextFontSize = 10.sp
 
     // TopMenu
     val logoFontSize = 24.sp

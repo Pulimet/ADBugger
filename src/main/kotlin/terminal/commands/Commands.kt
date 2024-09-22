@@ -18,9 +18,7 @@ object Commands {
     fun getWifiOn() = "cmd -w wifi set-wifi-enabled enabled"
     fun getWifiOff() = "cmd -w wifi set-wifi-enabled disabled"
 
-    fun getGpdOn() = "settings put secure location_mode 3"
-    fun getGpsOff() = "settings put secure location_mode 0"
-
+    // content insert
     fun getRotationAutoTurnOff() ="content insert --uri content://settings/system --bind name:s:accelerometer_rotation --bind value:i:0"
     fun getRotationAutoTurnOn() ="content insert --uri content://settings/system --bind name:s:accelerometer_rotation --bind value:i:1"
     fun getRotationLandscape() = "content insert --uri content://settings/system --bind name:s:user_rotation --bind value:i:1"
@@ -33,15 +31,18 @@ object Commands {
     fun adbReverseList() = "adb reverse --list"
 
     // Settings
+    fun getGpdOn() = "settings put secure location_mode 3"
+    fun getGpsOff() = "settings put secure location_mode 0"
     fun getChangeFontSize(d: Double) = "settings put system font_scale $d"
 
     // wm
+    // wm density reset/300
     fun getChangeDisplayDensity(density: String) = "wm density $density"
+    // wm size reset/2048x1536
+    fun getChangeDisplaySize(size: String) = "wm size $size"
+
 
     // pull
     fun getAdbPull(filename: String) = "pull /sdcard/$filename ~/Desktop/$filename"
-
-    // TODO
-    // adb shell dumpsys meminfo
 
 }
