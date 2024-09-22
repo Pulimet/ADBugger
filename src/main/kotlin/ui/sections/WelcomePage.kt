@@ -57,8 +57,8 @@ fun WelcomePage(modifier: Modifier = Modifier) {
 
 const val desc1_0_4 = "- Allow setting a path for platform tools and emulators.\n" +
         "- Support all useful configurations for emulator launch.\n" +
-        "- Allow changing following configurations: Location mode, airplane mode, Wifi mode, Rotation.\n" +
-        "- Scaling page refactoring, support display size change, better UI, support custom values.\n" +
+        "- Allow changing the following configurations: Location mode, airplane mode, Wifi mode, Rotation.\n" +
+        "- Scaling page refactoring, supporting display size change, better UI, and supporting custom values.\n" +
         "- Windows OS support"
 
 const val desc1_0_3 = "- New Logcat section with the ability to filter logs by priority and tag.\n" +
