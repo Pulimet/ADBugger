@@ -1,7 +1,12 @@
 package ui.sections
 
 import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
@@ -22,7 +27,10 @@ fun WelcomePage(modifier: Modifier = Modifier) {
 
     CardX(modifier = modifier) {
         Box {
-            Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize().verticalScroll(stateVertical)) {
+            Column(
+                modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()
+                    .verticalScroll(stateVertical)
+            ) {
                 WelcomeAndDescription()
                 Text(
                     text = "Release notes",
@@ -31,13 +39,15 @@ fun WelcomePage(modifier: Modifier = Modifier) {
                     color = Color.LightGray,
                     modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
                 )
+                Version("Version 1.0.4 (22 September 2024)", desc1_0_4)
                 Version("Version 1.0.3 (01 August 2024)", desc1_0_3)
                 Version("Version 1.0.2 (23 July 2024)", desc1_0_2)
                 Version("Version 1.0.1 (17 July 2024)", desc1_0_1)
                 Version("Version 1.0.0 (16 July 2024)", desc1_0_0)
             }
             VerticalScrollbar(
-                modifier = Modifier.fillMaxHeight().align(Alignment.TopEnd), adapter = rememberScrollbarAdapter(
+                modifier = Modifier.fillMaxHeight().align(Alignment.TopEnd),
+                adapter = rememberScrollbarAdapter(
                     scrollState = stateVertical
                 )
             )
@@ -45,15 +55,21 @@ fun WelcomePage(modifier: Modifier = Modifier) {
     }
 }
 
-const val desc1_0_3 = "New Logcat section with the ability to filter logs by priority and tag\n" +
-        "Support multiple target selection for executing commands."
+const val desc1_0_4 = "- Allow setting a path for platform tools and emulators.\n" +
+        "- Support all useful configurations for emulator launch.\n" +
+        "- Allow changing following configurations: Location mode, airplane mode, Wifi mode, Rotation.\n" +
+        "- Scaling page refactoring, support display size change, better UI, support custom values.\n" +
+        "- Windows OS support"
 
-const val desc1_0_2 = "- Support installing APK chosen with file picker\n" +
-        "- Allow to add package names to favorites and to view them in separate tab"
+const val desc1_0_3 = "- New Logcat section with the ability to filter logs by priority and tag.\n" +
+        "- Support multiple target selection for executing commands."
 
-const val desc1_0_1 = "- Support forwarding input of: Enter, Dot, Comma\n" +
-        "- New status line with selected target and package name\n" +
-        "- Adb Logger - allow copying all or specific log"
+const val desc1_0_2 = "- Support installing APK chosen with file picker.\n" +
+        "- Allow to add package names to favorites and to view them in separate tab."
+
+const val desc1_0_1 = "- Support forwarding input of: Enter, Dot, Comma.\n" +
+        "- New status line with selected target and package name.\n" +
+        "- Adb Logger - allow copying all or specific log."
 
 const val desc1_0_0 = "- Get a list of connected devices and running emulators.\n" +
         "- Retrieve a list of installed packages on the selected target.\n" +
