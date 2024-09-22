@@ -26,9 +26,6 @@ import compose.icons.tablericons.Check
 import compose.icons.tablericons.Fall
 import compose.icons.tablericons.QuestionMark
 import store.Status
-import store.Status.FAIL
-import store.Status.OK
-import store.Status.UNKNOWN
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.theme.bounceClick
@@ -45,15 +42,15 @@ fun StatusIcon(
 ) {
     var active by remember { mutableStateOf(false) }
     val icon = when (status) {
-        UNKNOWN -> TablerIcons.QuestionMark
-        OK -> TablerIcons.Check
-        FAIL -> TablerIcons.Fall
+        Status.UNKNOWN -> TablerIcons.QuestionMark
+        Status.OK -> TablerIcons.Check
+        Status.FAIL -> TablerIcons.Fall
     }
 
     val bgColor = when (status) {
-        UNKNOWN -> if (active) MyColors.accent else colors.primary
-        OK -> MyColors.ok
-        FAIL -> MyColors.fail
+        Status.UNKNOWN -> if (active) MyColors.accent else colors.primary
+        Status.OK -> MyColors.ok
+        Status.FAIL -> MyColors.fail
     }
 
     Button(
