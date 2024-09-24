@@ -41,5 +41,9 @@ fun main() = application {
         if (model.state.isFilePickerShown) {
             FileDialog { dir, file -> model.onFilePickerResult(dir, file) }
         }
+
+        TopMenuBar(this@application)
     }
+
+
 }
