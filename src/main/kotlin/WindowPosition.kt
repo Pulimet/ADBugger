@@ -16,13 +16,13 @@ var height: Float by preference("WindowHeight", 800f)
 var x: Float by preference("WindowX", 0f)
 var y: Float by preference("WindowY", 0f)
 
-fun getInitialPosition() = if (x != 0f && y != 0f) {
+fun getPosition() = if (x != 0f && y != 0f) {
     WindowPosition(x.dp, y.dp)
 } else {
     WindowPosition(alignment = Alignment.Center)
 }
 
-fun getInitialSize() = DpSize(width.dp, height.dp)
+fun getSize() = DpSize(width.dp, height.dp)
 
 @Composable
 fun WindowPosition(windowState: WindowState) {

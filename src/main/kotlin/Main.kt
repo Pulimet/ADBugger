@@ -14,7 +14,7 @@ import ui.widgets.FileDialog
 fun main() = application {
     startKoin { modules(appModule()) }
 
-    val windowState = rememberWindowState(position = getInitialPosition(), size = getInitialSize())
+    val windowState = rememberWindowState(position = getPosition(), size = getSize())
 
     val appStore = koinInject<AppStore>()
     val model = remember { appStore }
