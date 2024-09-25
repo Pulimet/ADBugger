@@ -28,6 +28,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         onKeyEvent = { model.onKeyEvent(it) }
     ) {
+        setMinimumSize()
 
         Surface(color = MyColors.bg) {
             MainContent()
