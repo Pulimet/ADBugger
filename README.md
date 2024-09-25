@@ -3,7 +3,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.20-green.svg)](https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.compose/2.0.20)
 [![Compose](https://img.shields.io/badge/Compose-1.6.11-green.svg)](https://github.com/JetBrains/compose-multiplatform/releases/latest)
 
-[![platform - ios](https://img.shields.io/badge/platform-iOS-000.svg?logo=apple&style=for-the-badge)](https://developer.apple.com/ios)
+[![platform - macOS](https://img.shields.io/badge/platform-macOS-000.svg?logo=apple&style=for-the-badge)](https://developer.apple.com/ios)
 [![platform - windows](https://img.shields.io/badge/platform-Windows-0067b8.svg?logo=windows&style=for-the-badge)](https://www.microsoft.com/en-us/windows)
 
 ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.
