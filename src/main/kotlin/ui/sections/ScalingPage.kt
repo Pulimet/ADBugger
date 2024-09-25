@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.PlayerPlay
 import org.koin.compose.koinInject
@@ -45,27 +46,31 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(0.85) },
                     enabled = true,
-                    text = "Small - 0.85"
+                    text = "Small 0.85"
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(1.0) },
                     enabled = true,
-                    text = "Default - 1.0"
+                    text = "Default 1.0"
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(1.15) },
                     enabled = true,
-                    text = "Large - 1.15"
+                    text = "Large 1.15"
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(1.3) },
                     enabled = true,
-                    text = "Largest - 1.3"
+                    text = "Largest 1.3"
                 )
-                TextFieldWithBtn("Custom (ex: 1.0)", onClick = { model.scaleFontTo(it.toDouble()) })
+                TextFieldWithBtn(
+                    "Custom (ex: 1.0)",
+                    onClick = { model.scaleFontTo(it.toDouble()) },
+                    modifier = Modifier.weight(1f)
+                )
             }
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -103,7 +108,11 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                     enabled = true,
                     text = "600"
                 )
-                TextFieldWithBtn("Custom (ex: 300)", onClick = { model.setDensity(it.toInt()) })
+                TextFieldWithBtn(
+                    "Custom (ex: 300)",
+                    onClick = { model.setDensity(it.toInt()) },
+                    modifier = Modifier.weight(1f)
+                )
             }
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -123,7 +132,11 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                     enabled = true,
                     text = "2048x1536"
                 )
-                TextFieldWithBtn("Custom (ex: 10x10)", onClick = { model.setSize(it) })
+                TextFieldWithBtn(
+                    "Custom (ex: 10x10)",
+                    onClick = { model.setSize(it) },
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
     }
@@ -133,11 +146,11 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
 private fun Title(title: String) {
     Text(
         text = title,
-        fontSize = Dimensions.titleFontSize,
+        fontSize = 14.sp,
         color = Color.LightGray,
         textAlign = TextAlign.Start,
         modifier = Modifier
-            .width(120.dp)
+            .width(90.dp)
             .padding(bottom = 3.dp)
             .wrapContentHeight(align = Alignment.CenterVertically),
     )
@@ -152,7 +165,7 @@ private fun TextFieldWithBtn(
 ) {
     var searchTextField by remember { mutableStateOf(TextFieldValue("")) }
 
-    Row(modifier = modifier) {
+    Row(modifier = modifier, horizontalArrangement = Arrangement.End) {
         TextFieldX(
             value = searchTextField,
             onValueChange = { newText ->

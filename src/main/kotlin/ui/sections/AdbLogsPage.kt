@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -30,7 +31,7 @@ fun AdbLogsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                 )
             }
 
-            ListX(model.state.adbLogs)
+            ListX(model.state.adbLogs, modifier = Modifier.padding(end = 60.dp))
             CopyAllAndClearBox(logsList, Modifier.align(Alignment.TopEnd)) {
                 model.clearAdbLogs()
             }

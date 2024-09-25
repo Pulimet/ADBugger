@@ -1,23 +1,31 @@
 package ui.sections
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Send
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import compose.icons.LineaIcons
+import compose.icons.lineaicons.Basic
+import compose.icons.lineaicons.basic.Home
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.CardX
+import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnIcon
-import ui.widgets.buttons.HoverButton
+import ui.widgets.buttons.BtnWithText
 
 
 @Composable
@@ -35,12 +43,12 @@ fun PortsPage(
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                TextField(
+                TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
-                    textStyle = TextStyle(color = Color.White),
+                    paddingTop = 0.dp,
                     value = textInputCustomPortState,
-                    label = { Text("Custom port") },
+                    label = "Custom port",
                     onValueChange = { value -> textInputCustomPortState = value }
                 )
 
@@ -51,23 +59,20 @@ fun PortsPage(
                     onClick = { model.onAdbReverse(textInputCustomPortState.text.toIntOrNull()) },
                     description = "Open specified port"
                 )
-                HoverButton(
+                BtnWithText(
+                    icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverse(8081) },
-                    enabled = true,
-                    text = "8081",
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    description = "8081",
                 )
-                HoverButton(
+                BtnWithText(
+                    icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverse(9090) },
-                    enabled = true,
-                    text = "9090",
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    description = "9090",
                 )
-                HoverButton(
+                BtnWithText(
+                    icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverseList() },
-                    enabled = true,
-                    text = "List",
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    description = "List",
                 )
             }
         }

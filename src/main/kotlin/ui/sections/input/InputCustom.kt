@@ -1,21 +1,26 @@
 package ui.sections.input
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.Send
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.CardX
+import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnIcon
 
 @Composable
@@ -31,12 +36,12 @@ fun InputCustom(model: AppStore = koinInject()) {
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                TextField(
+                TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
-                    textStyle = TextStyle(color = Color.White),
                     value = textInputSendTextState,
-                    label = { Text("Send text to device/s") },
+                    paddingTop = 0.dp,
+                    label = "Send text to device/s",
                     onValueChange = { value -> textInputSendTextState = value }
                 )
 
@@ -57,7 +62,8 @@ fun InputCustom(model: AppStore = koinInject()) {
                         val text = textInputSendTextState.text
                         val textLength = text.length
                         if (textLength > 0) {
-                            textInputSendTextState = TextFieldValue(text.substring(0, textLength - 1))
+                            textInputSendTextState =
+                                TextFieldValue(text.substring(0, textLength - 1))
                         }
                     },
                     description = "Backspace"
@@ -69,12 +75,12 @@ fun InputCustom(model: AppStore = koinInject()) {
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                TextField(
+                TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
-                    textStyle = TextStyle(color = Color.White),
+                    paddingTop = 0.dp,
                     value = textInputSendInputState,
-                    label = { Text("Send input/key to device/s") },
+                    label = "Send input/key to device/s",
                     onValueChange = { value -> textInputSendInputState = value }
                 )
 

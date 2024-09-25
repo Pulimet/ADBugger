@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import java.awt.Toolkit
 
 @Composable
-fun ListX(list: List<String>, filter: String? = null) {
+fun ListX(list: List<String>, filter: String? = null, modifier: Modifier = Modifier) {
     val clipboard = Toolkit.getDefaultToolkit().systemClipboard
     val listState = rememberLazyListState()
 
@@ -33,8 +33,7 @@ fun ListX(list: List<String>, filter: String? = null) {
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-
+    Box(modifier = modifier.fillMaxSize()) {
         LazyColumn(state = listState) {
             items(filteredList) { item ->
                 ItemX(item, clipboard)

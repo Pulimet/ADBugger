@@ -60,23 +60,6 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         }
     }
 
-    /* val list by remember {
-         val result = mutableListOf<String>()
-
-         model.state.environmentVariables.forEach {
-             if (it.value.contains(':')) {
-                 result += "--------- START of ${it.key} ------------"
-                 it.value.split(':').forEach { value ->
-                     result += value
-                 }
-                 result += "--------END of ${it.key}---------"
-             } else {
-                 result += "${it.key} => ${it.value}"
-             }
-         }
-         mutableStateOf(result)
-     }
- */
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -134,7 +117,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                 fontSize = Dimensions.titleFontSize,
                 textAlign = TextAlign.Center,
                 color = Color.LightGray,
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)
             )
             if (list.value.isNotEmpty()) {
                 ListX(list.value)
