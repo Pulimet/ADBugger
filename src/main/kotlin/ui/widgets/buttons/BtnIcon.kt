@@ -57,6 +57,7 @@ fun BtnIcon(
                     Text(
                         text = description,
                         fontSize = 12.sp,
+                        lineHeight = 12.sp,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                     )
                 }
