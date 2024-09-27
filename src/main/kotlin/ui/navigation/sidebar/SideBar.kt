@@ -34,6 +34,7 @@ import compose.icons.tablericons.ArrowNarrowRight
 import compose.icons.tablericons.ArrowsRightLeft
 import compose.icons.tablericons.Braces
 import compose.icons.tablericons.BrandAndroid
+import compose.icons.tablericons.FileInfo
 import compose.icons.tablericons.Home
 import compose.icons.tablericons.Notes
 import compose.icons.tablericons.Resize
@@ -48,7 +49,7 @@ import ui.theme.MyColors
 import ui.widgets.buttons.BtnIcon
 
 enum class MenuItemId {
-    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGCAT, LOGS, MISC, SETTINGS;
+    WELCOME, DEVICES, EMULATORS, PACKAGES, PERMISSIONS, KEYBOARD, PORTS, SCALING, LOGCAT, LOGS, PROPS, MISC, SETTINGS;
 
     companion object {
         fun getByOrdinal(ordinal: Int): MenuItemId {
@@ -159,6 +160,13 @@ fun SideBar(
             toggle = isSelected(MenuItemId.LOGS),
             onClick = { toggleState(MenuItemId.LOGS) },
             title = "ADB Logs",
+            collapsed = isBarClosedState,
+        )
+        SideBarItem(
+            icon = TablerIcons.FileInfo,
+            toggle = isSelected(MenuItemId.PROPS),
+            onClick = { toggleState(MenuItemId.PROPS) },
+            title = "Device Properties",
             collapsed = isBarClosedState,
         )
         SideBarItem(

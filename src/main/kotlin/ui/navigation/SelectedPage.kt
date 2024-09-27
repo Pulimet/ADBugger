@@ -5,8 +5,13 @@ import androidx.compose.ui.Modifier
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.navigation.sidebar.MenuItemId
-import ui.sections.*
 import ui.sections.AdbLogsPage
+import ui.sections.DevicePropsPage
+import ui.sections.PermissionsPage
+import ui.sections.PortsPage
+import ui.sections.ScalingPage
+import ui.sections.SettingsPage
+import ui.sections.WelcomePage
 import ui.sections.emulator.EmulatorsPage
 import ui.sections.input.InputPage
 import ui.sections.logcat.LogcatPage
@@ -29,6 +34,7 @@ fun SelectedPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         MenuItemId.SCALING -> ScalingPage(modifier)
         MenuItemId.LOGCAT -> LogcatPage(modifier)
         MenuItemId.LOGS -> AdbLogsPage(modifier)
+        MenuItemId.PROPS -> DevicePropsPage(modifier)
         MenuItemId.MISC -> MiscPage(modifier)
         MenuItemId.SETTINGS -> SettingsPage(modifier)
     }

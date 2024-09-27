@@ -80,7 +80,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val environmentVariables: Map<String, String> = mapOf(),
         val isLogcatRunning: Boolean = false,
         val isAdbAccessOk: Status = Status.UNKNOWN,
-        val isEmulatorAccessOk: Status = Status.UNKNOWN
+        val isEmulatorAccessOk: Status = Status.UNKNOWN,
+        val deviceProps: List<String> = listOf(),
     )
 
     // Logs
@@ -544,6 +545,17 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
     fun onRotationLandscapeUpSideDow() {
         launch { terminal.onRotationLandscapeUpSideDow(state.selectedTargetsList) }
+    }
+
+    fun onGetDeviceProps() {
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to get device properties")
+            return
+        }
+        launch {
+            val props = terminal.getDeviceProps(state.selectedTargetsList[0])
+            setState { copy(deviceProps = props) }
+        }
     }
 
     fun checkPlatformTools() {

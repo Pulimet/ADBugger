@@ -348,4 +348,7 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationLandscape2())
     }
 
+    suspend fun getDeviceProps(selectedTarget: String) = launcher.runAdbShellCommand(selectedTarget, Commands.getDeviceProps())
+
+
 }
