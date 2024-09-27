@@ -35,16 +35,110 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.devicesInfo()
     }
 
+    suspend fun killAllEmulators() {
+        launcher.devicesInfo().forEach {
+            killEmulatorBySerial(it.serial)
+        }
+    }
+
+    suspend fun takeSnapshot(selectedTargetsList: List<String>) {
+        val list = selectedTargetsList.ifEmpty { launcher.devicesInfo().map { it.serial } }
+        list.forEach {
+            val filename = "snap_$it.png"
+            launcher.runAdbShellCommand(it, "screencap -p /sdcard/$filename")
+            launcher.runAdbCommand(it, Commands.getAdbPull(filename))
+            launcher.runAdbShellCommand(it, "rm /sdcard/$filename")
+        }
+    }
+
+    suspend fun logcat(
+        selectedTarget: String,
+        buffer: String,
+        format: String,
+        priorityLevel: String,
+        tag: String,
+        logcatCallback: (String) -> Unit
+    ) {
+        val command =
+            LogcatCommands.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
+        launcher.executeAndGetData(command, log, logcatCallback)
+    }
+
+
+    suspend fun getEnvironmentVariables() = launcher.getEnvironmentVariables()
+
+
+    // ========>>> llauncher.runAdbCommand
+    suspend fun reversePort(port: Int) {
+        launcher.devicesInfo().forEach { device ->
+            val resultList = launcher.runAdbCommand(device.serial, Commands.adbReverse(port))
+            resultList.forEach {
+                log(it)
+            }
+        }
+    }
+
+    suspend fun clearLogcat(selectedTarget: String) {
+        launcher.runAdbCommand(selectedTarget, "logcat -c")
+    }
+
+    suspend fun saveLogcatToDesktop(selectedTarget: String) {
+        launcher.runAdbCommand(selectedTarget, "logcat -d > ~/Desktop/logs_$selectedTarget.txt")
+    }
+
+    suspend fun saveBugReport(selectedTarget: String) {
+        val fileName = "bugreport_$selectedTarget"
+        launcher.runAdbCommand(selectedTarget, "bugreport ~/Desktop/$fileName.zip")
+    }
+
+    // ========>>> llauncher.run
+    suspend fun emulators() =
+        launcher.run(EmulatorCommands.getEmulatorList(), emulatorPath)
+            .filter { !it.contains("crashdata", ignoreCase = true) }
+
+    suspend fun launchEmulator(emulatorName: String, params: RunEmulatorParams) {
+        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, params), emulatorPath)
+    }
+
+    suspend fun wipeAndLaunchEmulator(emulatorName: String) {
+        launcher.run(EmulatorCommands.getWipeDataEmulatorByName(emulatorName), emulatorPath)
+    }
+
+    suspend fun reverseList() {
+        val resultList = launcher.run(Commands.adbReverseList())
+        resultList.forEach {
+            log(it)
+        }
+    }
+
+    suspend fun checkPlatformTools() =
+        launcher.run("adb version | grep \"Android Debug Bridge version\"", printResults = true)
+
+    suspend fun checkEmulators() = launcher.run(
+        "emulator -version | grep \"Android emulator version\"",
+        path = emulatorPath,
+        printResults = true
+    )
+
+    // ========>>> llauncher.runAdb
+    suspend fun uninstall(selectedPackage: String, selectedTargetsList: List<String>) {
+        launcher.runAdb(selectedTargetsList, PackagesCommands.getUninstallCommand(selectedPackage))
+    }
+
+    suspend fun killEmulatorBySerial(serial: String) {
+        launcher.runAdb(listOf(serial), EmulatorCommands.getKillEmulatorBySerial())
+    }
+
+    suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
+        launcher.runAdb(selectedTarget, PackagesCommands.getAdbInstall(pathApk))
+    }
+
+    // ========>>> launcher.runAdbShell
     suspend fun packages(serial: String): List<Package> {
         return launcher.runAdbShellCommand(serial, PackagesCommands.getPackageList())
             .map { Package(it.split(":").last()) }
             .filter { it.name.isNotEmpty() }
     }
-
-    suspend fun emulators() =
-        launcher.run(EmulatorCommands.getEmulatorList(), emulatorPath)
-            .filter { !it.contains("crashdata", ignoreCase = true) }
-
 
     suspend fun openPackage(selectedPackage: String, selectedTargetsList: List<String>) {
         launcher.runAdbShell(
@@ -70,28 +164,6 @@ class Terminal(private val launcher: CommandLauncher) {
             selectedTargetsList,
             PackagesCommands.getClearDataCommand(selectedPackage)
         )
-    }
-
-    suspend fun uninstall(selectedPackage: String, selectedTargetsList: List<String>) {
-        launcher.runAdb(selectedTargetsList, PackagesCommands.getUninstallCommand(selectedPackage))
-    }
-
-    suspend fun killAllEmulators() {
-        launcher.devicesInfo().forEach {
-            killEmulatorBySerial(it.serial)
-        }
-    }
-
-    suspend fun killEmulatorBySerial(serial: String) {
-        launcher.runAdb(listOf(serial), EmulatorCommands.getKillEmulatorBySerial())
-    }
-
-    suspend fun launchEmulator(emulatorName: String, params: RunEmulatorParams) {
-        launcher.run(EmulatorCommands.getLaunchEmulator(emulatorName, params), emulatorPath)
-    }
-
-    suspend fun wipeAndLaunchEmulator(emulatorName: String) {
-        launcher.run(EmulatorCommands.getWipeDataEmulatorByName(emulatorName), emulatorPath)
     }
 
     suspend fun showHome(selectedTargetsList: List<String>) {
@@ -120,16 +192,6 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun pressPower(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, InputCommands.getPressPower())
-    }
-
-    suspend fun takeSnapshot(selectedTargetsList: List<String>) {
-        val list = selectedTargetsList.ifEmpty { launcher.devicesInfo().map { it.serial } }
-        list.forEach {
-            val filename = "snap_$it.png"
-            launcher.runAdbShellCommand(it, "screencap -p /sdcard/$filename")
-            launcher.runAdbCommand(it, Commands.getAdbPull(filename))
-            launcher.runAdbShellCommand(it, "rm /sdcard/$filename")
-        }
     }
 
     suspend fun setDarkModeOff(selectedTarget: List<String>) {
@@ -171,22 +233,6 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun sendInputNum(selectedTarget: List<String>, num: Int) {
         launcher.runAdbShell(selectedTarget, InputCommands.sendInputCommand((num + 7)))
-    }
-
-    suspend fun reversePort(port: Int) {
-        launcher.devicesInfo().forEach { device ->
-            val resultList = launcher.runAdbCommand(device.serial, Commands.adbReverse(port))
-            resultList.forEach {
-                log(it)
-            }
-        }
-    }
-
-    suspend fun reverseList() {
-        val resultList = launcher.run(Commands.adbReverseList())
-        resultList.forEach {
-            log(it)
-        }
     }
 
     suspend fun removeAllPermissions(selectedTarget: List<String>, selectedPackage: String) {
@@ -241,38 +287,6 @@ class Terminal(private val launcher: CommandLauncher) {
         val d = if (size == "0") "reset" else size
         launcher.runAdbShell(selectedTarget, WmCommands.getChangeDisplaySize(d))
     }
-
-    suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
-        launcher.runAdb(selectedTarget, PackagesCommands.getAdbInstall(pathApk))
-    }
-
-    suspend fun logcat(
-        selectedTarget: String,
-        buffer: String,
-        format: String,
-        priorityLevel: String,
-        tag: String,
-        logcatCallback: (String) -> Unit
-    ) {
-        val command =
-            LogcatCommands.getLogCatCommand(selectedTarget, buffer, format, priorityLevel, tag)
-        launcher.executeAndGetData(command, log, logcatCallback)
-    }
-
-    suspend fun clearLogcat(selectedTarget: String) {
-        launcher.runAdbCommand(selectedTarget, "logcat -c")
-    }
-
-    suspend fun saveLogcatToDesktop(selectedTarget: String) {
-        launcher.runAdbCommand(selectedTarget, "logcat -d > ~/Desktop/logs_$selectedTarget.txt")
-    }
-
-    suspend fun saveBugReport(selectedTarget: String) {
-        val fileName = "bugreport_$selectedTarget"
-        launcher.runAdbCommand(selectedTarget, "bugreport ~/Desktop/$fileName.zip")
-    }
-
-    suspend fun getEnvironmentVariables() = launcher.getEnvironmentVariables()
 
     suspend fun setProxy(proxyText: String, selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, EmulatorCommands.getSetProxy(proxyText))
@@ -333,15 +347,5 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun onRotationLandscapeUpSideDow(selectedTargetsList: List<String>) {
         launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationLandscape2())
     }
-
-    suspend fun checkPlatformTools() =
-        launcher.run("adb version | grep \"Android Debug Bridge version\"", printResults = true)
-
-
-    suspend fun checkEmulators() = launcher.run(
-        "emulator -version | grep \"Android emulator version\"",
-        path = emulatorPath,
-        printResults = true
-    )
 
 }
