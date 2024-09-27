@@ -29,8 +29,7 @@ import ui.widgets.SearchView
 import ui.widgets.buttons.BtnIcon
 import ui.widgets.list.ListX
 
-// TODO Parse each string in a device prop list and show UI friendly
-// TODO Parse each string in a permissions list and show UI friendly
+
 
 @Composable
 fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
