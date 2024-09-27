@@ -4,12 +4,17 @@ import model.Package
 import model.RunEmulatorParams
 import model.TargetInfo
 import pref.preference
+import terminal.commands.AmCommands
+import terminal.commands.CmdCommands
 import terminal.commands.Commands
+import terminal.commands.ContentCommands
 import terminal.commands.EmulatorCommands
 import terminal.commands.InputCommands
 import terminal.commands.LogcatCommands
 import terminal.commands.PackagesCommands
 import terminal.commands.PermissionsCommands
+import terminal.commands.SettingsCommands
+import terminal.commands.WmCommands
 import utils.Escaping
 
 class Terminal(private val launcher: CommandLauncher) {
@@ -90,11 +95,11 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun showHome(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getShowHome())
+        launcher.runAdbShell(selectedTargetsList, AmCommands.getShowHome())
     }
 
     suspend fun showSettings(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getShowSettings())
+        launcher.runAdbShell(selectedTargetsList, AmCommands.getShowSettings())
     }
 
     suspend fun showRecentApps(selectedTargetsList: List<String>) {
@@ -128,11 +133,11 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun setDarkModeOff(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getDarkModeOff())
+        launcher.runAdbShell(selectedTarget, CmdCommands.getDarkModeOff())
     }
 
     suspend fun setDarkModeOn(selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getDarkModeOn())
+        launcher.runAdbShell(selectedTarget, CmdCommands.getDarkModeOn())
     }
 
     suspend fun pressUp(selectedTarget: List<String>) {
@@ -224,17 +229,17 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun changeFontSize(d: Double, selectedTarget: List<String>) {
-        launcher.runAdbShell(selectedTarget, Commands.getChangeFontSize(d))
+        launcher.runAdbShell(selectedTarget, SettingsCommands.getChangeFontSize(d))
     }
 
     suspend fun changeDisplayDensity(density: Int, selectedTarget: List<String>) {
         val d = if (density == 0) "reset" else "$density"
-        launcher.runAdbShell(selectedTarget, Commands.getChangeDisplayDensity(d))
+        launcher.runAdbShell(selectedTarget, WmCommands.getChangeDisplayDensity(d))
     }
 
     suspend fun changeDisplaySize(size: String, selectedTarget: List<String>) {
         val d = if (size == "0") "reset" else size
-        launcher.runAdbShell(selectedTarget, Commands.getChangeDisplaySize(d))
+        launcher.runAdbShell(selectedTarget, WmCommands.getChangeDisplaySize(d))
     }
 
     suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
@@ -282,51 +287,51 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     suspend fun onAirplaneOn(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getAirplaneOn())
+        launcher.runAdbShell(selectedTargetsList, CmdCommands.getAirplaneOn())
     }
 
     suspend fun onAirplaneOff(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getAirplaneOff())
+        launcher.runAdbShell(selectedTargetsList, CmdCommands.getAirplaneOff())
     }
 
     suspend fun onWifiOn(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getWifiOn())
+        launcher.runAdbShell(selectedTargetsList, CmdCommands.getWifiOn())
     }
 
     suspend fun onWifiOff(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getWifiOff())
+        launcher.runAdbShell(selectedTargetsList, CmdCommands.getWifiOff())
     }
 
     suspend fun onGpsOn(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getGpdOn())
+        launcher.runAdbShell(selectedTargetsList, SettingsCommands.getGpdOn())
     }
 
     suspend fun onGpsOff(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getGpsOff())
+        launcher.runAdbShell(selectedTargetsList, SettingsCommands.getGpsOff())
     }
 
     suspend fun onRotationAutoTurnOn(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getRotationAutoTurnOn())
+        launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationAutoTurnOn())
     }
 
     suspend fun onRotationAutoTurnOff(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getRotationAutoTurnOff())
+        launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationAutoTurnOff())
     }
 
     suspend fun onRotationLandscape(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getRotationLandscape())
+        launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationLandscape())
     }
 
     suspend fun onRotationPortrait(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getRotationPortrait())
+        launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationPortrait())
     }
 
     suspend fun onRotationPortraitUpSideDown(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getRotationUpSideDown())
+        launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationUpSideDown())
     }
 
     suspend fun onRotationLandscapeUpSideDow(selectedTargetsList: List<String>) {
-        launcher.runAdbShell(selectedTargetsList, Commands.getRotationLandscape2())
+        launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationLandscape2())
     }
 
     suspend fun checkPlatformTools() =
