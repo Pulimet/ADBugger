@@ -23,6 +23,12 @@ import ui.widgets.CardX
 import ui.widgets.buttons.BtnIcon
 import ui.widgets.list.ListX
 
+// TODO Save selected target and package if available and load on launch
+// TODO Packages save selected tab in prefs
+// TODO Allow search props
+// TODO Parse each string in a device prop list and show UI friendly
+// TODO Parse each string in a permissions list and show UI friendly
+
 @Composable
 fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     CardX(modifier = modifier) {

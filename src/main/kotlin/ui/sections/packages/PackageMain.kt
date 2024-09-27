@@ -34,7 +34,7 @@ private fun Content() {
     Column(
         modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Tabs(listOf("Device Packages", "Favorites")) {
+        Tabs(listOf("Device Packages", "Favorites"), saveSelectedTabKey = "PackagesTabs") {
             when (it) {
                 0 -> DevicePackagesTab()
                 1 -> FavoritePackagesTab()

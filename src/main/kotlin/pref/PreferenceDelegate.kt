@@ -5,7 +5,11 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
-inline fun <reified T : Any> preference(key: String, defaultValue: T, preferences: Preferences = Pref.prefs) =
+inline fun <reified T : Any> preference(
+    key: String,
+    defaultValue: T,
+    preferences: Preferences = Pref.prefs
+) =
     PreferenceDelegate(preferences, key, defaultValue, T::class)
 
 class PreferenceDelegate<T : Any>(
@@ -16,6 +20,9 @@ class PreferenceDelegate<T : Any>(
 ) : ReadWriteProperty<Any?, T> {
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        if (key.isEmpty()) {
+            return
+        }
         with(preferences) {
             when (type) {
                 Int::class -> putInt(key, value as Int)

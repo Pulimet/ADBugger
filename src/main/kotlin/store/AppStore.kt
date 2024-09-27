@@ -36,6 +36,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
     private var logcatJob: Job? = null
     private var favoritePackagesPref: List<String> by preference("favoritePackages", emptyList())
+    private var selectedTargetsPref: List<String> by preference("selectedTargets", emptyList())
+    private var selectedPackagePref: String by preference("selectedPackage", "")
     private fun convertToPackageList(list: List<String>) = list.map { Package(it) }
 
 
@@ -48,10 +50,11 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     fun onLaunchedEffect() {
         terminal.setupCallBacks(::log, ::updateTargetsList)
 
-        launch { getDevicesList() }
+        getDevicesList(true)
         launch { getEmulatorsListClick() }
         launch { getEnvironmentVariables() }
         setState { copy(favoritePackages = convertToPackageList(favoritePackagesPref)) }
+        setState { copy(selectedPackage = selectedPackagePref) }
     }
 
     // State
@@ -112,18 +115,30 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         }
     }
 
-    fun getDevicesList() {
-        launch {
-            setState {
-                copy(
-                    isDevicesLoading = true,
-                    targetsList = emptyList(),
-                    selectedTargetsList = emptyList()
-                )
+    fun getDevicesList(isLaunchedEffect: Boolean = false) = launch {
+        setState {
+            copy(
+                isDevicesLoading = true,
+                targetsList = emptyList(),
+                selectedTargetsList = emptyList()
+            )
+        }
+        terminal.devicesInfo()
+        delay(200)
+        setState { copy(isDevicesLoading = false) }
+
+        addSelectedTargetsIfConnected(isLaunchedEffect)
+    }
+
+    private fun addSelectedTargetsIfConnected(isLaunchedEffect: Boolean) {
+        if (isLaunchedEffect) {
+            val newSelectedList = arrayListOf<String>()
+            state.targetsList.forEach {
+                if (selectedTargetsPref.contains(it.serial)) {
+                    newSelectedList.add(it.serial)
+                }
             }
-            terminal.devicesInfo()
-            delay(200)
-            setState { copy(isDevicesLoading = false) }
+            setState { copy(selectedTargetsList = newSelectedList) }
         }
     }
 
@@ -131,6 +146,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     fun onTargetClick(device: TargetInfo, isSelected: Boolean) {
         if (device.serial == ALL_DEVICES) {
             setState { copy(selectedTargetsList = emptyList()) }
+            selectedTargetsPref = emptyList()
             return
         }
         if (isSelected) {
@@ -138,6 +154,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         } else {
             setState { copy(selectedTargetsList = selectedTargetsList - device.serial) }
         }
+        selectedTargetsPref = state.selectedTargetsList
     }
 
     fun onGetPackageListClick() {
@@ -173,6 +190,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
     fun onPackageClick(pckg: Package) {
         setState { copy(selectedPackage = pckg.name) }
+        selectedPackagePref = pckg.name
     }
 
     fun onOpenClick() {

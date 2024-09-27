@@ -39,7 +39,6 @@ fun WindowPosition(windowState: WindowState) {
 private fun onWindowResize(size: DpSize) {
     width = size.width.value
     height = size.height.value
-    println("width: $width")
 }
 
 private fun onWindowRelocate(it: WindowPosition) {
