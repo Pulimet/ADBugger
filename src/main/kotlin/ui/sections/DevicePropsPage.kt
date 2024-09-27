@@ -9,6 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,17 +25,23 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.CardX
+import ui.widgets.SearchView
 import ui.widgets.buttons.BtnIcon
 import ui.widgets.list.ListX
 
-// TODO Save selected target and package if available and load on launch
-// TODO Packages save selected tab in prefs
-// TODO Allow search props
 // TODO Parse each string in a device prop list and show UI friendly
 // TODO Parse each string in a permissions list and show UI friendly
 
 @Composable
 fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
+    var textState by remember { mutableStateOf("") }
+
+    val filteredList by remember(model.state.deviceProps) {
+        derivedStateOf {
+            model.state.deviceProps.filter { it.contains(textState, ignoreCase = true) }
+        }
+    }
+
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Text(
@@ -40,8 +51,12 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
                 color = Color.LightGray,
                 modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp)
             )
+
             if (model.state.deviceProps.isNotEmpty()) {
-                ListX(model.state.deviceProps)
+                SearchView {
+                    textState = it
+                }
+                ListX(filteredList)
             } else {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     BtnIcon(
