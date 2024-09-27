@@ -25,6 +25,7 @@ import ui.theme.Dimensions
 import ui.widgets.CardX
 import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnWithText
+import ui.widgets.list.ListX
 
 
 @Composable
@@ -72,7 +73,7 @@ fun PermissionsPage(
                 BtnWithText(
                     icon = Icons.Rounded.Delete,
                     onClick = { model.onRemoveAllPermissions() },
-                    enabled = model.state.selectedPackage != AppStore.PACKAGE_NONE,
+                    enabled = model.state.selectedTargetsList.size == 1,
                     description = "Remove all",
                     modifier = Modifier.padding(6.dp),
                     width = Dimensions.permissionsCommandsBtnWidth
@@ -80,11 +81,14 @@ fun PermissionsPage(
                 BtnWithText(
                     icon = Icons.Rounded.DateRange,
                     onClick = { model.onGetPermissions() },
-                    enabled = model.state.selectedPackage != AppStore.PACKAGE_NONE,
+                    enabled = model.state.selectedTargetsList.size == 1,
                     description = "Show granted",
                     modifier = Modifier.padding(6.dp),
                     width = Dimensions.permissionsCommandsBtnWidth,
                 )
+            }
+            if (model.state.permissions.isNotEmpty()) {
+                ListX(model.state.permissions)
             }
         }
     }

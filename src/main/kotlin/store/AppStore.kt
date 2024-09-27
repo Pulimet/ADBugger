@@ -82,6 +82,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val isAdbAccessOk: Status = Status.UNKNOWN,
         val isEmulatorAccessOk: Status = Status.UNKNOWN,
         val deviceProps: List<String> = listOf(),
+        val permissions: List<String> = listOf(),
     )
 
     // Logs
@@ -379,8 +380,19 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onGetPermissions() {
-        if (state.selectedTargetsList.isEmpty() || state.selectedPackage == PACKAGE_NONE) return
-        launch { terminal.getPermissions(state.selectedTargetsList, state.selectedPackage) }
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to get it permissions")
+            return
+        }
+        if (state.selectedPackage == PACKAGE_NONE) {
+            log("Please select a package to get it permissions")
+            return
+        }
+        launch {
+            val permissions =
+                terminal.getPermissions(state.selectedTargetsList, state.selectedPackage)
+            setState { copy(permissions = permissions) }
+        }
     }
 
     fun scaleFontTo(d: Double) {

@@ -264,15 +264,11 @@ class Terminal(private val launcher: CommandLauncher) {
         )
     }
 
-    suspend fun getPermissions(selectedTargetsList: List<String>, selectedPackage: String) {
-        selectedTargetsList.forEach {
-            val result = launcher.runAdbShellCommand(
-                it,
-                PermissionsCommands.getGrantedPermissions(selectedPackage)
-            )
-            log("output :$result")
-        }
-    }
+    suspend fun getPermissions(selectedTargetsList: List<String>, selectedPackage: String) =
+        launcher.runAdbShellCommand(
+            selectedTargetsList[0],
+            PermissionsCommands.getGrantedPermissions(selectedPackage)
+        )
 
     suspend fun changeFontSize(d: Double, selectedTarget: List<String>) {
         launcher.runAdbShell(selectedTarget, SettingsCommands.getChangeFontSize(d))
@@ -348,7 +344,8 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdbShell(selectedTargetsList, ContentCommands.getRotationLandscape2())
     }
 
-    suspend fun getDeviceProps(selectedTarget: String) = launcher.runAdbShellCommand(selectedTarget, Commands.getDeviceProps())
+    suspend fun getDeviceProps(selectedTarget: String) =
+        launcher.runAdbShellCommand(selectedTarget, Commands.getDeviceProps())
 
 
 }
