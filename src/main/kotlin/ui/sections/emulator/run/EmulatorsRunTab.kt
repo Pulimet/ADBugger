@@ -16,6 +16,7 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.sections.emulator.run.list.EmulatorsList
 import ui.theme.Dimensions
+import ui.widgets.ExpandableCard
 import ui.widgets.LoadingSpinner
 
 @Composable
@@ -23,7 +24,9 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
     var params by remember { mutableStateOf(RunEmulatorParams()) }
 
     Column {
-        EmulatorsRunTopMenu(params = params) { params = it }
+        ExpandableCard(title = "Launching properties") {
+            EmulatorsRunTopMenu(params = params) { params = it }
+        }
 
         if (model.state.isEmulatorsLoading) {
             LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())

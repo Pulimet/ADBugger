@@ -1,11 +1,19 @@
 package ui.widgets
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
@@ -15,9 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import compose.icons.FeatherIcons
 import compose.icons.feathericons.ChevronDown
-import compose.icons.feathericons.Minimize2
+import compose.icons.feathericons.ChevronUp
 import pref.preference
-import ui.theme.bounceClick
 
 
 @Composable
@@ -35,49 +42,31 @@ fun ExpandableCard(
         state = expanded
     }
 
-    Box {
+    Column(modifier = modifier) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).clickable { toggleState() },
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                textAlign = TextAlign.Center,
+                text = title,
+                fontSize = 14.sp,
+                lineHeight = 14.sp,
+                color = Color.White
+            )
+            Icon(
+                if (state) FeatherIcons.ChevronUp else FeatherIcons.ChevronDown,
+                contentDescription = "Expand",
+                tint = Color.White,
+                modifier = Modifier.size(16.dp).padding(top = 2.dp, start = 4.dp)
+            )
+        }
+
         if (expanded) {
-            CardX(modifier = modifier) {
-                Column {
-                    Text(
-                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
-                            .bounceClick(onClick = ::toggleState),
-                        textAlign = TextAlign.Center,
-                        text = title,
-                        fontSize = 12.sp,
-                        color = Color.LightGray
-                    )
-                    Layout(
-                        content = content,
-                        modifier = modifier,
-                        measurePolicy = measurePolicy
-                    )
-                }
-                Icon(
-                    FeatherIcons.Minimize2,
-                    contentDescription = "Collapse",
-                    tint = Color.White,
-                    modifier = Modifier.padding(4.dp).size(16.dp).align(Alignment.TopEnd)
-                        .bounceClick(onClick = ::toggleState)
-                )
-            }
-        } else {
-            Box(modifier = Modifier.clickable { toggleState() }.padding(vertical = 8.dp, horizontal = 12.dp)) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = title,
-                    fontSize = 14.sp,
-                    color = Color.White
-                )
-                Icon(
-                    FeatherIcons.ChevronDown,
-                    contentDescription = "Expand",
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp).align(Alignment.TopEnd)
-                        .bounceClick(onClick = ::toggleState)
-                )
-            }
+            Layout(
+                content = content,
+                measurePolicy = measurePolicy
+            )
         }
     }
 }

@@ -29,8 +29,6 @@ import ui.widgets.SearchView
 import ui.widgets.Table
 import ui.widgets.buttons.BtnIcon
 
-// TODO Parse each string in a permissions list and show UI friendly with Table Widget
-
 @Composable
 fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     var textState by remember { mutableStateOf("") }
