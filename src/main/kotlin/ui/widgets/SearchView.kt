@@ -20,31 +20,35 @@ import ui.widgets.buttons.BtnWithText
 fun SearchView(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject(),
-    onValueChanged: (String) -> Unit = {}
+    isButtonVisible: Boolean = true,
+    label: String = "",
+    onValueChanged: (String) -> Unit = {},
 ) {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
 
     Row(modifier = modifier) {
         TextFieldX(singleLine = true,
             modifier = Modifier.weight(1f),
-            label = "Search your package",
+            label = label,
             value = textState,
             onValueChange = { value ->
                 textState = value
                 onValueChanged(value.text)
             })
 
-        BtnWithText(
-            icon = Icons.Rounded.Star,
-            modifier = Modifier.padding(horizontal = 8.dp),
-            enabled = textState.text.isNotEmpty(),
-            onClick = {
-                model.addPackageNameToFavorites(textState.text)
-                textState = TextFieldValue("")
-                onValueChanged("")
-            },
-            description = "Save",
-        )
+        if (isButtonVisible) {
+            BtnWithText(
+                icon = Icons.Rounded.Star,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                enabled = textState.text.isNotEmpty(),
+                onClick = {
+                    model.addPackageNameToFavorites(textState.text)
+                    textState = TextFieldValue("")
+                    onValueChanged("")
+                },
+                description = "Save",
+            )
+        }
     }
 
 }

@@ -69,7 +69,7 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
             )
 
             if (model.state.deviceProps.isNotEmpty()) {
-                SearchView {
+                SearchView(isButtonVisible = false, label = "Search properties...") {
                     textState = it
                 }
                 Table(

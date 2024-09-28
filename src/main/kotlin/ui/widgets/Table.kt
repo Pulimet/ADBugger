@@ -37,6 +37,7 @@ fun Table(
     headerTitlesList: List<String>,
     tableList: List<List<String>>,
     weightList: List<Float>,
+    copyColumnsList: List<Int> = emptyList(),
     filter: String? = null,
     modifier: Modifier = Modifier
 ) {
@@ -63,7 +64,7 @@ fun Table(
                 TableHeader(headerTitlesList, weightList)
             }
             items(filteredList) { item ->
-                TableRow(item, weightList, clipboard)
+                TableRow(item, weightList, clipboard, copyColumnsList)
             }
         }
         TableScroll(filteredList, listState)
@@ -80,10 +81,26 @@ fun TableHeader(headerTitles: List<String>, weight: List<Float>) {
 }
 
 @Composable
-fun TableRow(item: List<String>, weight: List<Float>, clipboard: Clipboard?) {
+fun TableRow(
+    item: List<String>,
+    weight: List<Float>,
+    clipboard: Clipboard?,
+    copyColumnsList: List<Int>
+) {
     Row(
         Modifier.fillMaxWidth().clickable {
-            clipboard?.setContents(StringSelection(item.joinToString(" - ")), null)
+            val contentToCopy: String = if (copyColumnsList.isEmpty()) {
+                item.joinToString(" - ")
+            } else {
+                var result = ""
+                item.forEachIndexed { index, item ->
+                    if (copyColumnsList.contains(index)) {
+                        result += item
+                    }
+                }
+                result
+            }
+            clipboard?.setContents(StringSelection(contentToCopy), null)
         },
     ) {
         item.forEachIndexed { index, item ->

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,9 +24,10 @@ import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.CardX
+import ui.widgets.SearchView
+import ui.widgets.Table
 import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnWithText
-import ui.widgets.list.ListX
 
 
 @Composable
@@ -34,6 +36,22 @@ fun PermissionsPage(
     model: AppStore = koinInject()
 ) {
     var textInputPermissionState by remember { mutableStateOf(TextFieldValue("")) }
+    var textState by remember { mutableStateOf("") }
+
+    val list by remember(model.state.permissions) {
+        derivedStateOf {
+            model.state.permissions.map {
+                var splitList = it.split(":")
+                if (splitList.size > 2) {
+                    splitList = listOf(splitList[0], splitList.joinToString(" : "))
+                }
+
+                splitList.map { cell ->
+                    cell.trim()
+                }
+            }
+        }
+    }
 
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
@@ -88,7 +106,17 @@ fun PermissionsPage(
                 )
             }
             if (model.state.permissions.isNotEmpty()) {
-                ListX(model.state.permissions)
+                SearchView(isButtonVisible = false, label = "Search permissions...") {
+                    textState = it
+                }
+                Table(
+                    columns = 2,
+                    headerTitlesList = listOf("Permission", "Status"),
+                    tableList = list,
+                    weightList = listOf(0.75f, 0.25f),
+                    filter = textState,
+                    copyColumnsList = listOf(0)
+                )
             }
         }
     }

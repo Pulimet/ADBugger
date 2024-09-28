@@ -40,7 +40,7 @@ fun PackagesList(
     }
 
     if (packageList.isNotEmpty() || forceShowSearchView) {
-        SearchView(modifier = modifier.fillMaxWidth()) {
+        SearchView(modifier = modifier.fillMaxWidth(), label = "Search your package") {
             textState = it
         }
     }
