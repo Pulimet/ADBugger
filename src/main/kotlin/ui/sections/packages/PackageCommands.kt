@@ -25,7 +25,7 @@ fun PackageCommands(
     val isDeviceSelected = state.selectedTargetsList.isNotEmpty()
 
     Column(
-        modifier = modifier.fillMaxHeight().padding(horizontal = 12.dp, vertical = 6.dp),
+        modifier = modifier.fillMaxHeight().padding(vertical = 6.dp),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
