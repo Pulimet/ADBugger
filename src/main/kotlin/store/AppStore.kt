@@ -157,7 +157,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         selectedTargetsPref = state.selectedTargetsList
     }
 
-    fun onGetPackageListClick() {
+    fun onGetPackageListClick(selectedOption: String) {
         if (state.selectedTargetsList.isEmpty()) {
             log("Can't get packages. No target selected")
             return
@@ -173,7 +173,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
                     selectedPackage = PACKAGE_NONE
                 )
             }
-            val packagesList = terminal.packages(state.selectedTargetsList[0])
+            val packagesList = terminal.packages(state.selectedTargetsList[0], selectedOption)
             delay(200)
             setState { copy(isPackagesLoading = false, packageList = packagesList) }
         }

@@ -134,9 +134,14 @@ class Terminal(private val launcher: CommandLauncher) {
     }
 
     // ========>>> launcher.runAdbShell
-    suspend fun packages(serial: String): List<Package> {
-        return launcher.runAdbShellCommand(serial, PackagesCommands.getPackageList())
-            .map { Package(it.split(":").last()) }
+    suspend fun packages(serial: String, selectedOption: String): List<Package> {
+        return launcher.runAdbShellCommand(serial, PackagesCommands.getPackageList(selectedOption))
+            .map {
+                val rowList = it.split(":").toMutableList()
+                rowList.removeFirst()
+                val result = rowList.joinToString(" - ")
+                Package(result)
+            }
             .filter { it.name.isNotEmpty() }
     }
 

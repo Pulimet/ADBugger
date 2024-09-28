@@ -7,12 +7,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import model.Package
 import org.koin.compose.koinInject
 import store.AppStore
+import terminal.commands.PackagesCommands
+import ui.widgets.Dropdown
 import ui.widgets.buttons.BtnWithText
 
 @Composable
@@ -20,6 +26,8 @@ fun PackageNoneAndRefreshButton(
     model: AppStore = koinInject()
 ) {
     val state = model.state
+    var selectedOption by remember { mutableStateOf(PackagesCommands.optionsList[0]) }
+
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -35,12 +43,20 @@ fun PackageNoneAndRefreshButton(
             Modifier.weight(1f)
         )
 
+        Dropdown(
+            options = PackagesCommands.optionsList,
+            optionsDetails = PackagesCommands.optionsListDetails,
+            title = "Package type",
+            minWidth = 120.dp,
+            onOptionSelected = { selectedOption = it }
+        )
+
         BtnWithText(
             icon = Icons.Rounded.Refresh,
             modifier = Modifier.padding(horizontal = 8.dp),
             visible = !state.isPackagesLoading && state.selectedTargetsList.isNotEmpty(),
             enabled = true,
-            onClick = { model.onGetPackageListClick() },
+            onClick = { model.onGetPackageListClick(selectedOption) },
             description = "Get Packages List",
             width = 120.dp,
         )
