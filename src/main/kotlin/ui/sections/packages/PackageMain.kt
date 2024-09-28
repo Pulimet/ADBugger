@@ -16,10 +16,14 @@ fun PackagesMain(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Tabs(listOf("Device Packages", "Favorites"), saveSelectedTabKey = "PackagesTabs") {
+            Tabs(
+                listOf("Device Packages", "Favorites", "Launcher"),
+                saveSelectedTabKey = "PackagesTabs"
+            ) {
                 when (it) {
                     0 -> DevicePackagesTab()
                     1 -> FavoritePackagesTab()
+                    2 -> LauncherTab()
                 }
             }
         }
