@@ -26,18 +26,37 @@ import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.CardX
 import ui.widgets.SearchView
+import ui.widgets.Table
 import ui.widgets.buttons.BtnIcon
-import ui.widgets.list.ListX
 
-
+// TODO Parse each string in a permissions list and show UI friendly with Table Widget
 
 @Composable
 fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
     var textState by remember { mutableStateOf("") }
 
-    val filteredList by remember(model.state.deviceProps) {
+    val list by remember(model.state.deviceProps) {
         derivedStateOf {
-            model.state.deviceProps.filter { it.contains(textState, ignoreCase = true) }
+            model.state.deviceProps.map {
+                var splitList = it.split(":")
+                if (splitList.size > 2) {
+                    splitList = listOf(splitList[0], splitList.joinToString(" : "))
+                }
+
+                splitList.map { cell ->
+                    val trimmed = cell.trim()
+
+                    if (trimmed.length > 2) {
+                        try {
+                            trimmed.substring(1, trimmed.length - 1)
+                        } catch (e: Exception) {
+                            "Exception on $trimmed"
+                        }
+                    } else {
+                        trimmed
+                    }
+                }
+            }
         }
     }
 
@@ -55,7 +74,13 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
                 SearchView {
                     textState = it
                 }
-                ListX(filteredList)
+                Table(
+                    columns = 2,
+                    headerTitlesList = listOf("Property", "Value"),
+                    tableList = list,
+                    weightList = listOf(0.5f, 0.5f),
+                    filter = textState
+                )
             } else {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     BtnIcon(
