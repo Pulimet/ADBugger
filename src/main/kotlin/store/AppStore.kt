@@ -376,7 +376,19 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onAdbReverseList() {
-        launch { terminal.reverseList() }
+        launch { terminal.reverseList(state.selectedTargetsList) }
+    }
+
+    fun onAdbForwardList() {
+        launch { terminal.forwardList(state.selectedTargetsList) }
+    }
+
+    fun onAdbReverseClear() {
+        launch { terminal.forwardListClear(state.selectedTargetsList) }
+    }
+
+    fun onAdbForwardClear() {
+        launch { terminal.reverseListClear(state.selectedTargetsList) }
     }
 
     fun onAddPermission(permission: String) {

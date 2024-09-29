@@ -26,45 +26,57 @@ class CommandLauncher(private val cmd: Cmd) {
 
 
     // - Launch nonAdb commands
-    suspend fun run(command: String, path: String = adbPath, printResults: Boolean = false): List<String> {
-        return cmd.execute(command, log, path).also {
-            if (printResults) log(it.joinToString("\n"))
-        }
+    suspend fun run(
+        command: String,
+        path: String = adbPath,
+        printResults: Boolean = false
+    ): List<String> {
+        return cmd.execute(command, log, path).also { printResults(printResults, it) }
     }
 
     // - Launch regular adb  commands
     suspend fun runAdb(
         selectedTargetsList: List<String>,
         command: String,
-        path: String = adbPath
+        path: String = adbPath,
+        printResults: Boolean = false
     ) {
         if (selectedTargetsList.isEmpty()) {
-            runAdbOnAllDevices(command, path)
+            runAdbOnAllDevices(command, path, printResults)
         } else {
             selectedTargetsList.forEach {
-                runAdbCommand(it, command, path)
+                runAdbCommand(it, command, path, printResults)
             }
         }
     }
 
-    private suspend fun runAdbOnAllDevices(command: String, path: String = adbPath) {
+    private suspend fun runAdbOnAllDevices(
+        command: String,
+        path: String = adbPath,
+        printResults: Boolean = false
+    ) {
         devicesInfo().forEach {
-            runAdbCommand(it.serial, command, path)
+            runAdbCommand(it.serial, command, path, printResults)
         }
     }
 
     suspend fun runAdbCommand(
         serial: String,
         command: String,
-        path: String = adbPath
+        path: String = adbPath,
+        printResults: Boolean = false
     ): List<String> {
         val commandToExecute = "adb -s $serial $command"
         log(commandToExecute)
-        return cmd.execute(commandToExecute, null, path)
+        return cmd.execute(commandToExecute, null, path).also { printResults(printResults, it) }
     }
 
-    // - Launch shell commands
-    suspend fun runAdbShell(selectedTargetsList: List<String>, command: String, printResults: Boolean = false) {
+    // - Launch adb shell commands
+    suspend fun runAdbShell(
+        selectedTargetsList: List<String>,
+        command: String,
+        printResults: Boolean = false
+    ) {
         if (selectedTargetsList.isEmpty()) {
             runAdbShellOnAllDevices(command, printResults)
         } else {
@@ -80,12 +92,23 @@ class CommandLauncher(private val cmd: Cmd) {
         }
     }
 
-    suspend fun runAdbShellCommand(serial: String, command: String, printResults: Boolean = false): List<String> {
+    suspend fun runAdbShellCommand(
+        serial: String,
+        command: String,
+        printResults: Boolean = false
+    ): List<String> {
         val commandToExecute = "adb -s $serial shell $command"
         log(commandToExecute)
-        return cmd.execute(commandToExecute, null, adbPath).also {
-            if (printResults) log(it.joinToString("\n"))
+        return cmd.execute(commandToExecute, null, adbPath).also { printResults(printResults, it) }
+    }
+
+    private fun printResults(printResults: Boolean, resultsList: List<String>) {
+        if (resultsList.isEmpty()
+            || (resultsList.size == 1 && resultsList[0].trim().isEmpty())
+        ) {
+            return
         }
+        if (printResults) log(resultsList.joinToString(prefix = ">>> ", separator = "\n"))
     }
 
     suspend fun executeAndGetData(

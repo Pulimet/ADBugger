@@ -78,9 +78,7 @@ class Terminal(private val launcher: CommandLauncher) {
                     device.serial,
                     ForwardReverseCommands.adbReverse(portFrom, portTo)
                 )
-            resultList.forEach {
-                log(it)
-            }
+            logResults(resultList)
         }
     }
 
@@ -91,9 +89,7 @@ class Terminal(private val launcher: CommandLauncher) {
                     device.serial,
                     ForwardReverseCommands.adbForward(portFrom, portTo)
                 )
-            resultList.forEach {
-                log(it)
-            }
+            logResults(resultList)
         }
     }
 
@@ -110,6 +106,15 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdbCommand(selectedTarget, "bugreport ~/Desktop/$fileName.zip")
     }
 
+    private fun logResults(resultList: List<String>) {
+        resultList.forEach {
+            if (it.isNotEmpty()) {
+                log(it)
+            }
+        }
+    }
+
+
     // ========>>> launcher.run
     suspend fun emulators() =
         launcher.run(EmulatorCommands.getEmulatorList(), emulatorPath)
@@ -121,13 +126,6 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun wipeAndLaunchEmulator(emulatorName: String) {
         launcher.run(EmulatorCommands.getWipeDataEmulatorByName(emulatorName), emulatorPath)
-    }
-
-    suspend fun reverseList() {
-        val resultList = launcher.run(ForwardReverseCommands.adbReverseList())
-        resultList.forEach {
-            log(it)
-        }
     }
 
     suspend fun checkPlatformTools() =
@@ -150,6 +148,30 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun installApk(pathApk: String, selectedTarget: List<String>) {
         launcher.runAdb(selectedTarget, ApkCommands.getAdbInstall(pathApk))
+    }
+
+    suspend fun reverseList(selectedTarget: List<String>) {
+        launcher.runAdb(
+            selectedTarget,
+            ForwardReverseCommands.adbReverseList(),
+            printResults = true
+        )
+    }
+
+    suspend fun forwardList(selectedTarget: List<String>) {
+        launcher.runAdb(
+            selectedTarget,
+            ForwardReverseCommands.adbForwardList(),
+            printResults = true
+        )
+    }
+
+    suspend fun forwardListClear(selectedTarget: List<String>) {
+        launcher.runAdb(selectedTarget, ForwardReverseCommands.adbForwardListClear())
+    }
+
+    suspend fun reverseListClear(selectedTarget: List<String>) {
+        launcher.runAdb(selectedTarget, ForwardReverseCommands.adbReverseListClear())
     }
 
     // ========>>> launcher.runAdbShell

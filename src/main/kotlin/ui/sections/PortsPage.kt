@@ -77,18 +77,23 @@ fun PortsPage(
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
-                    onClick = { model.onAdbReverse(8081, inputReverseFrom.text.toIntOrNull()) },
+                    onClick = { model.onAdbReverse(8081, 8081) },
                     description = "8081",
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
-                    onClick = { model.onAdbReverse(9090, inputReverseFrom.text.toIntOrNull()) },
+                    onClick = { model.onAdbReverse(9090, 9090) },
                     description = "9090",
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverseList() },
                     description = "List",
+                )
+                BtnWithText(
+                    icon = LineaIcons.Basic.Home,
+                    onClick = { model.onAdbReverseClear() },
+                    description = "Clear All",
                 )
             }
             Row(
@@ -125,7 +130,18 @@ fun PortsPage(
                     },
                     description = "Forward port"
                 )
+                BtnWithText(
+                    icon = LineaIcons.Basic.Home,
+                    onClick = { model.onAdbForwardList() },
+                    description = "List",
+                )
+                BtnWithText(
+                    icon = LineaIcons.Basic.Home,
+                    onClick = { model.onAdbForwardClear() },
+                    description = "Clear All",
+                )
             }
+
         }
     }
 }
