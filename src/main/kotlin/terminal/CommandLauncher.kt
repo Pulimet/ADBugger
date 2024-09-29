@@ -108,7 +108,15 @@ class CommandLauncher(private val cmd: Cmd) {
         ) {
             return
         }
-        if (printResults) log(resultsList.joinToString(prefix = ">>> ", separator = "\n"))
+        if (printResults) {
+            resultsList.forEach { line ->
+                line.trim().let {
+                    if (it.isNotEmpty()) {
+                        log(">>> ${it.trim()}")
+                    }
+                }
+            }
+        }
     }
 
     suspend fun executeAndGetData(

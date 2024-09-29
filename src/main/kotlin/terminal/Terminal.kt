@@ -393,5 +393,24 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun getDeviceProps(selectedTarget: String) =
         launcher.runAdbShellCommand(selectedTarget, Commands.getDeviceProps())
 
+    suspend fun testLaunch(
+        selectedTargetsList: List<String>,
+        selectedActivity: String,
+        extrasMap: Map<String, Any> = emptyMap()
+    ) {
+        launcher.runAdbShell(
+            selectedTargetsList,
+            AmCommands.getOpenPackageCommand(selectedActivity, extrasMap)
+        )
+    }
+
+    suspend fun getPackageActivities(selectedTargetsList: List<String>, selectedPackage: String) {
+        launcher.runAdbShell(
+            selectedTargetsList,
+            DumpsysCommands.getPackageActivities(selectedPackage),
+            printResults = true,
+        )
+    }
+
 
 }

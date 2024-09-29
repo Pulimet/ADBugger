@@ -384,11 +384,11 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onAdbReverseClear() {
-        launch { terminal.forwardListClear(state.selectedTargetsList) }
+        launch { terminal.reverseListClear(state.selectedTargetsList) }
     }
 
     fun onAdbForwardClear() {
-        launch { terminal.reverseListClear(state.selectedTargetsList) }
+        launch { terminal.forwardListClear(state.selectedTargetsList) }
     }
 
     fun onAddPermission(permission: String) {
@@ -622,5 +622,21 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
                 result.isNotEmpty() && result[0].contains("Android emulator version")
             setState { copy(isEmulatorAccessOk = if (isEmulatorAccessOk) Status.OK else Status.FAIL) }
         }
+    }
+
+    fun testLaunch(selectedActivity: String) {
+        if (state.selectedPackage == PACKAGE_NONE) {
+            log("Please select Target and Package before")
+            return
+        }
+        launch { terminal.testLaunch(state.selectedTargetsList, selectedActivity) }
+    }
+
+    fun onGetPackageActivities() {
+        if (state.selectedPackage == PACKAGE_NONE) {
+            log("Please select Target and Package before")
+            return
+        }
+        launch { terminal.getPackageActivities(state.selectedTargetsList, state.selectedPackage) }
     }
 }
