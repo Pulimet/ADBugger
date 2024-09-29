@@ -1,15 +1,19 @@
 package terminal.commands
 
-object PackagesCommands {
-    fun getLaunchCommand(packageName: String) =
-        "monkey -p $packageName -c android.intent.category.LAUNCHER 1"
-
-    fun getAdbInstall(apkPath: String) = "install $apkPath"
-    fun getUninstallCommand(packageName: String) = "uninstall $packageName"
-    fun getCloseCommand(packageName: String) = "am force-stop  $packageName"
+object PmCommands {
     fun getClearDataCommand(packageName: String) = "pm clear $packageName"
     fun getApkPathCommand(packageName: String) = "pm path $packageName"
 
+    // Permissions
+    fun addSpecificPermission(packageName: String, permission: String) =
+        "pm grant $packageName android.permission.$permission"
+
+    fun revokeSpecificPermission(packageName: String, permission: String) =
+        "pm revoke $packageName android.permission.$permission"
+
+    fun getRevokeAllPermissions(packageName: String) = "pm reset-permissions -p $packageName"
+
+    // Device package list
     val optionsList = listOf(
         "-3",
         "",

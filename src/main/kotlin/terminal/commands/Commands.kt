@@ -3,14 +3,14 @@ package terminal.commands
 object Commands {
     fun getDeviceList() = "adb devices"
 
-    // ports
-    fun adbReverse(port: Int) = "reverse tcp:$port tcp:$port"
-    fun adbReverseList() = "adb reverse --list"
-
-    // pull
+    // Pull
     fun getAdbPull(filename: String) = "pull /sdcard/$filename ~/Desktop/$filename"
 
+    // Props
     fun getDeviceProps() = "getprop"
-    // adb shell getprop ro.build.version.release
+
+    // Monkey
+    fun getLaunchCommand(packageName: String) =
+        "monkey -p $packageName -c android.intent.category.LAUNCHER 1"
 
 }

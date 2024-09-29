@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import model.Package
 import org.koin.compose.koinInject
 import store.AppStore
-import terminal.commands.PackagesCommands
+import terminal.commands.PmCommands
 import ui.widgets.Dropdown
 import ui.widgets.buttons.BtnWithText
 
@@ -26,7 +26,7 @@ fun PackageNoneAndRefreshButton(
     model: AppStore = koinInject()
 ) {
     val state = model.state
-    var selectedOption by remember { mutableStateOf(PackagesCommands.optionsList[0]) }
+    var selectedOption by remember { mutableStateOf(PmCommands.optionsList[0]) }
 
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -44,8 +44,8 @@ fun PackageNoneAndRefreshButton(
         )
 
         Dropdown(
-            options = PackagesCommands.optionsList,
-            optionsDetails = PackagesCommands.optionsListDetails,
+            options = PmCommands.optionsList,
+            optionsDetails = PmCommands.optionsListDetails,
             title = "Package type",
             minWidth = 120.dp,
             onOptionSelected = { selectedOption = it }
