@@ -363,9 +363,15 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         return false
     }
 
-    fun onAdbReverse(port: Int?) {
-        if (port != null) {
-            launch { terminal.reversePort(port) }
+    fun onAdbReverse(portFrom: Int?, portTo: Int?) {
+        if (portFrom != null && portTo != null) {
+            launch { terminal.reversePort(portFrom, portTo) }
+        }
+    }
+
+    fun onAdbForward(portFrom: Int?, portTo: Int?) {
+        if (portFrom != null && portTo != null) {
+            launch { terminal.forwardPort(portFrom, portTo) }
         }
     }
 

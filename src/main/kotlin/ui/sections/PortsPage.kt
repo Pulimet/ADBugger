@@ -33,7 +33,10 @@ fun PortsPage(
     modifier: Modifier = Modifier,
     model: AppStore = koinInject()
 ) {
-    var textInputCustomPortState by remember { mutableStateOf(TextFieldValue("")) }
+    var inputReverseFrom by remember { mutableStateOf(TextFieldValue("")) }
+    var inputReverseTo by remember { mutableStateOf(TextFieldValue("")) }
+    var inputForwardFrom by remember { mutableStateOf(TextFieldValue("")) }
+    var inputForwardTo by remember { mutableStateOf(TextFieldValue("")) }
 
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
@@ -44,35 +47,83 @@ fun PortsPage(
             )
             {
                 TextFieldX(
-                    modifier = Modifier.padding(6.dp).weight(1f),
+                    modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     paddingTop = 0.dp,
-                    value = textInputCustomPortState,
-                    label = "Custom port",
-                    onValueChange = { value -> textInputCustomPortState = value }
+                    value = inputReverseFrom,
+                    label = "Reverse (Device port)",
+                    onValueChange = { value -> inputReverseFrom = value }
+                )
+                TextFieldX(
+                    modifier = Modifier.padding(6.dp).weight(0.5f),
+                    singleLine = true,
+                    paddingTop = 0.dp,
+                    value = inputReverseTo,
+                    label = "Reverse (Machine port)",
+                    onValueChange = { value -> inputReverseTo = value }
                 )
 
                 BtnIcon(
                     icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(horizontal = 8.dp),
-                    enabled = textInputCustomPortState.text.isNotEmpty(),
-                    onClick = { model.onAdbReverse(textInputCustomPortState.text.toIntOrNull()) },
-                    description = "Open specified port"
+                    enabled = inputReverseFrom.text.isNotEmpty() && inputReverseTo.text.isNotEmpty(),
+                    onClick = {
+                        model.onAdbReverse(
+                            inputReverseFrom.text.toIntOrNull(),
+                            inputReverseFrom.text.toIntOrNull()
+                        )
+                    },
+                    description = "Reverse port"
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
-                    onClick = { model.onAdbReverse(8081) },
+                    onClick = { model.onAdbReverse(8081, inputReverseFrom.text.toIntOrNull()) },
                     description = "8081",
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
-                    onClick = { model.onAdbReverse(9090) },
+                    onClick = { model.onAdbReverse(9090, inputReverseFrom.text.toIntOrNull()) },
                     description = "9090",
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverseList() },
                     description = "List",
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            )
+            {
+                TextFieldX(
+                    modifier = Modifier.padding(6.dp).weight(0.5f),
+                    singleLine = true,
+                    paddingTop = 0.dp,
+                    value = inputForwardFrom,
+                    label = "Forward (Machine port)",
+                    onValueChange = { value -> inputForwardFrom = value }
+                )
+                TextFieldX(
+                    modifier = Modifier.padding(6.dp).weight(0.5f),
+                    singleLine = true,
+                    paddingTop = 0.dp,
+                    value = inputForwardTo,
+                    label = "Forward (Device port)",
+                    onValueChange = { value -> inputForwardTo = value }
+                )
+                BtnIcon(
+                    icon = Icons.AutoMirrored.Rounded.Send,
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    enabled = inputForwardFrom.text.isNotEmpty() && inputForwardTo.text.isNotEmpty(),
+                    onClick = {
+                        model.onAdbForward(
+                            inputForwardFrom.text.toIntOrNull(),
+                            inputForwardTo.text.toIntOrNull()
+                        )
+                    },
+                    description = "Forward port"
                 )
             }
         }

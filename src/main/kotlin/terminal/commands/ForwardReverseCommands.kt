@@ -1,6 +1,7 @@
 package terminal.commands
 
 object ForwardReverseCommands {
-    fun adbReverse(port: Int) = "reverse tcp:$port tcp:$port"
+    fun adbReverse(portFrom: Int, portTo: Int) = "reverse tcp:$portFrom tcp:$portTo"
+    fun adbForward(portFrom: Int, portTo: Int) = "forward tcp:$portFrom tcp:$portTo"
     fun adbReverseList() = "adb reverse --list"
 }

@@ -71,9 +71,26 @@ class Terminal(private val launcher: CommandLauncher) {
 
 
     // ========>>> launcher.runAdbCommand
-    suspend fun reversePort(port: Int) {
+    suspend fun reversePort(portFrom: Int, portTo: Int) {
         launcher.devicesInfo().forEach { device ->
-            val resultList = launcher.runAdbCommand(device.serial, ForwardReverseCommands.adbReverse(port))
+            val resultList =
+                launcher.runAdbCommand(
+                    device.serial,
+                    ForwardReverseCommands.adbReverse(portFrom, portTo)
+                )
+            resultList.forEach {
+                log(it)
+            }
+        }
+    }
+
+    suspend fun forwardPort(portFrom: Int, portTo: Int) {
+        launcher.devicesInfo().forEach { device ->
+            val resultList =
+                launcher.runAdbCommand(
+                    device.serial,
+                    ForwardReverseCommands.adbForward(portFrom, portTo)
+                )
             resultList.forEach {
                 log(it)
             }
