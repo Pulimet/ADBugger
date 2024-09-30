@@ -1,6 +1,7 @@
 package ui.sections
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -76,6 +77,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                         adbPathTextField = newText
                         adbPath = newText.text
                     },
+                    padding = PaddingValues(top = 8.dp),
                     modifier = Modifier.width(400.dp).padding(vertical = 5.dp, horizontal = 4.dp)
                 )
 
@@ -100,6 +102,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                         emulatorPathTextField = newText
                         emulatorPath = newText.text
                     },
+                    padding = PaddingValues(top = 8.dp),
                     modifier = Modifier.width(400.dp).padding(vertical = 5.dp, horizontal = 4.dp)
                 )
                 StatusIcon(

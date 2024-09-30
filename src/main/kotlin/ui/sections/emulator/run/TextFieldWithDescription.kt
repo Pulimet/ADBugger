@@ -2,6 +2,7 @@ package ui.sections.emulator.run
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,8 +40,8 @@ fun TextFieldWithDescription(
             onValueChange = { newText ->
                 textField = newText
                 onChange(newText.text)
-
             },
+            padding = PaddingValues(top = 8.dp),
             label = label,
             maxLength = maxLength,
             keyboardType = keyboardType,

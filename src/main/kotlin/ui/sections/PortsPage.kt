@@ -49,7 +49,6 @@ fun PortsPage(
                 TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
-                    paddingTop = 0.dp,
                     value = inputReverseFrom,
                     label = "Reverse (Device port)",
                     onValueChange = { value -> inputReverseFrom = value }
@@ -57,7 +56,6 @@ fun PortsPage(
                 TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
-                    paddingTop = 0.dp,
                     value = inputReverseTo,
                     label = "Reverse (Machine port)",
                     onValueChange = { value -> inputReverseTo = value }
@@ -105,7 +103,6 @@ fun PortsPage(
                 TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
-                    paddingTop = 0.dp,
                     value = inputForwardFrom,
                     label = "Forward (Machine port)",
                     onValueChange = { value -> inputForwardFrom = value }
@@ -113,7 +110,6 @@ fun PortsPage(
                 TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
-                    paddingTop = 0.dp,
                     value = inputForwardTo,
                     label = "Forward (Device port)",
                     onValueChange = { value -> inputForwardTo = value }

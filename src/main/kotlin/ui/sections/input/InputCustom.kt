@@ -40,7 +40,6 @@ fun InputCustom(model: AppStore = koinInject()) {
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
                     value = textInputSendTextState,
-                    paddingTop = 0.dp,
                     label = "Send text to device/s",
                     onValueChange = { value -> textInputSendTextState = value }
                 )
@@ -78,7 +77,6 @@ fun InputCustom(model: AppStore = koinInject()) {
                 TextFieldX(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
-                    paddingTop = 0.dp,
                     value = textInputSendInputState,
                     label = "Send input/key to device/s",
                     onValueChange = { value -> textInputSendInputState = value }

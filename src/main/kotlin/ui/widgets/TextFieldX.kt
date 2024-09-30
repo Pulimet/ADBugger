@@ -31,7 +31,7 @@ fun TextFieldX(
     onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     height: Dp = 34.dp,
-    paddingTop: Dp = 8.dp,
+    padding: PaddingValues = PaddingValues(),
     label: String = "",
     enabled: Boolean = true,
     singleLine: Boolean = true,
@@ -46,7 +46,7 @@ fun TextFieldX(
     BasicTextField(
         modifier = if (label.isNotEmpty()) {
             modifier.semantics(mergeDescendants = true) {}
-                .padding(top = paddingTop)
+                .padding(padding)
                 .height(height)
         } else {
             modifier.height(height)

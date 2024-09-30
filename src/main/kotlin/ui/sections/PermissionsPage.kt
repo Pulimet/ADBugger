@@ -64,7 +64,6 @@ fun PermissionsPage(
                 TextFieldX(
                     modifier = Modifier.weight(1f),
                     singleLine = true,
-                    paddingTop = 0.dp,
                     value = textInputPermissionState,
                     label = "Permission",
                     onValueChange = { value -> textInputPermissionState = value }

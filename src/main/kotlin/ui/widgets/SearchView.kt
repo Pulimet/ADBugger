@@ -1,5 +1,6 @@
 package ui.widgets
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -31,6 +32,7 @@ fun SearchView(
             modifier = Modifier.weight(1f),
             label = label,
             value = textState,
+            padding = PaddingValues(top = 8.dp),
             onValueChange = { value ->
                 textState = value
                 onValueChanged(value.text)

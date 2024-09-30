@@ -2,6 +2,7 @@ package ui.sections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -172,7 +173,7 @@ private fun TextFieldWithBtn(
                 searchTextField = newText
                 onSearchQueryChange(newText.text)
             },
-            paddingTop = 2.dp,
+            padding = PaddingValues(top = 2.dp),
             label = label,
         )
 

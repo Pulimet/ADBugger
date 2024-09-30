@@ -4,6 +4,7 @@ import terminal.commands.LogcatCommands
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -80,6 +81,7 @@ fun LogcatTopBar(
             TextFieldX(
                 value = tagTextField,
                 onValueChange = { newText -> tagTextField = newText },
+                padding = PaddingValues(top = 8.dp),
                 label = "Tag",
                 modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp)
             )
@@ -90,6 +92,7 @@ fun LogcatTopBar(
                     searchTextField = newText
                     onSearchQueryChange(newText.text)
                 },
+                padding = PaddingValues(top = 8.dp),
                 label = "Search",
                 modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp, start = 16.dp)
             )
