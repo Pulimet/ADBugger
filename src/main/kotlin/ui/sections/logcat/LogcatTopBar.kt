@@ -1,6 +1,5 @@
 package ui.sections.logcat
 
-import terminal.commands.LogcatCommands
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,7 @@ import compose.icons.tablericons.PlayerPlay
 import compose.icons.tablericons.PlayerStop
 import org.koin.compose.koinInject
 import store.AppStore
+import terminal.commands.LogcatCommands
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.Dropdown
@@ -57,7 +57,8 @@ fun LogcatTopBar(
     )
 
     Column(
-        modifier = modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
+        modifier = modifier.fillMaxWidth()
+            .clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
             .background(MyColors.bg).padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         Row(
@@ -65,18 +66,27 @@ fun LogcatTopBar(
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-            Dropdown(options = LogcatCommands.bufferList,
+            Dropdown(
+                options = LogcatCommands.bufferList,
                 optionsDetails = LogcatCommands.bufferListDetails,
                 title = "Buffer",
-                onOptionSelected = { selectedBuffer = it })
-            Dropdown(options = LogcatCommands.formatLst,
+                onOptionSelected = { selectedBuffer = it },
+                contentModifier = Modifier.background(MyColors.bg)
+            )
+            Dropdown(
+                options = LogcatCommands.formatLst,
                 optionsDetails = LogcatCommands.formatLstDetails,
                 title = "Format",
-                onOptionSelected = { selectedFormat = it })
-            Dropdown(options = LogcatCommands.priorityLevelList,
+                onOptionSelected = { selectedFormat = it },
+                contentModifier = Modifier.background(MyColors.bg)
+            )
+            Dropdown(
+                options = LogcatCommands.priorityLevelList,
                 optionsDetails = LogcatCommands.priorityLevelListDetails,
                 title = "Level",
-                onOptionSelected = { selectedPriorityLevel = it })
+                onOptionSelected = { selectedPriorityLevel = it },
+                contentModifier = Modifier.background(MyColors.bg)
+            )
 
             TextFieldX(
                 value = tagTextField,

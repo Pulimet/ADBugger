@@ -39,13 +39,15 @@ fun Dropdown(
     title: String = "",
     optionsDetails: List<String> = emptyList(),
     minWidth: Dp = 80.dp,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
+    titleBgColor: Color = MyColors.bg,
 ) {
     if (options.isEmpty()) return
 
     Surface(modifier = modifier) {
-        DropdownContent(options, optionsDetails, onOptionSelected, minWidth)
-        DropdownTitle(title)
+        DropdownContent(options, optionsDetails, onOptionSelected, minWidth, contentModifier)
+        DropdownTitle(title, titleBgColor)
     }
 }
 
@@ -64,7 +66,7 @@ private fun DropdownContent(
 
     Box(
         contentAlignment = Alignment.TopStart,
-        modifier = modifier.background(MyColors.bg)
+        modifier = modifier
             .padding(6.dp)
             .widthIn(minWidth)
             .clip(RoundedCornerShape(4.dp))
@@ -92,14 +94,14 @@ private fun DropdownContent(
 }
 
 @Composable
-private fun DropdownTitle(title: String) {
+private fun DropdownTitle(title: String, bgColor: Color) {
     if (title.isNotEmpty()) {
         Text(
             text = title,
             fontSize = 10.sp,
             lineHeight = 10.sp,
             color = Color.White,
-            modifier = Modifier.padding(start = 16.dp, bottom = 0.dp).background(MyColors.bg)
+            modifier = Modifier.padding(start = 16.dp, bottom = 0.dp).background(bgColor)
                 .padding(horizontal = 4.dp)
         )
     }
@@ -136,7 +138,8 @@ private fun DropdownMenuItemContent(option: String, optionDescription: String) {
                 color = Color.Gray,
                 style = LocalTextStyle.current.copy(
                     fontSize = 10.sp, lineHeight = 0.sp, lineHeightStyle = LineHeightStyle(
-                        alignment = LineHeightStyle.Alignment.Center, trim = LineHeightStyle.Trim.Both
+                        alignment = LineHeightStyle.Alignment.Center,
+                        trim = LineHeightStyle.Trim.Both
                     )
                 ),
             )

@@ -1,5 +1,6 @@
 package ui.sections.packages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import model.Package
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.PmCommands
+import ui.theme.MyColors
 import ui.widgets.Dropdown
 import ui.widgets.buttons.BtnWithText
 
@@ -48,7 +50,8 @@ fun PackageNoneAndRefreshButton(
             optionsDetails = PmCommands.optionsListDetails,
             title = "Package type",
             minWidth = 120.dp,
-            onOptionSelected = { selectedOption = it }
+            onOptionSelected = { selectedOption = it },
+            contentModifier = Modifier.background(MyColors.bg2)
         )
 
         BtnWithText(

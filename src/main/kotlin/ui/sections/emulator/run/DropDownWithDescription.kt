@@ -1,5 +1,6 @@
 package ui.sections.emulator.run
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -8,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import ui.theme.MyColors
 import ui.widgets.Dropdown
 import ui.widgets.TextExample
 
@@ -32,7 +34,8 @@ fun DropDownWithDescription(
             title = title,
             onOptionSelected = onOptionSelected,
             minWidth = minWidth,
-            modifier = Modifier.padding(top = 2.dp)
+            modifier = Modifier.padding(top = 2.dp),
+            contentModifier = Modifier.background(MyColors.bg)
         )
     }
 }
