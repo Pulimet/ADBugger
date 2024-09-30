@@ -51,7 +51,8 @@ fun PackageNoneAndRefreshButton(
             title = "Package type",
             minWidth = 120.dp,
             onOptionSelected = { selectedOption = it },
-            contentModifier = Modifier.background(MyColors.bg2)
+            contentModifier = Modifier.background(MyColors.bg2),
+            titleBgColor = MyColors.bg2
         )
 
         BtnWithText(

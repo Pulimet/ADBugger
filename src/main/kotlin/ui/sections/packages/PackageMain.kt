@@ -23,7 +23,7 @@ fun PackagesMain(modifier: Modifier = Modifier) {
                 when (it) {
                     0 -> DevicePackagesTab()
                     1 -> FavoritePackagesTab()
-                    2 -> LauncherTab()
+                    2 -> LauncherPackagesTab()
                     3 -> DeepLinkTab()
                 }
             }

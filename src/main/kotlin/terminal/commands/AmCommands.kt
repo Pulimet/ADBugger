@@ -1,6 +1,6 @@
 package terminal.commands
 
-import java.net.URI
+import model.Extras
 
 object AmCommands {
     const val DEFAULT_ACTION_CATEGORY =
@@ -10,26 +10,45 @@ object AmCommands {
     fun getShowSettings() = "am start com.android.settings"
     fun getCloseCommand(packageName: String) = "am force-stop  $packageName"
 
-    inline fun <reified T : Any> getOpenPackageCommand(
+    fun getOpenPackageCommand(
         selectedActivity: String,
-        extrasMap: Map<String, T>
+        extrasMap: List<Extras>
     ): String {
         val extras = extrasMap.map {
-            when (T::class) {
-                String::class -> "--es ${keyVal<T>(it)}"
-                Int::class -> "--ei ${keyVal<T>(it)}"
-                Long::class -> "--el ${keyVal<T>(it)}"
-                Float::class -> "--ef ${keyVal<T>(it)}"
-                Boolean::class -> "--ez ${keyVal<T>(it)}"
-                URI::class -> "--eu ${keyVal<T>(it)}"
-                else -> error("Unsupported type ${T::class}")
-            }
+            parseExtra(it)
 
         }
         return "am start -n $selectedActivity $DEFAULT_ACTION_CATEGORY ${extras.joinToString(" ")}"
     }
 
+    private fun parseExtra(it: Extras) = when (it.type.toString()) {
+        "String" -> "--es ${it.key} ${it.value}"
+        "Int" -> "--ei ${it.key} ${it.value}"
+        "Long" -> "--el ${it.key} ${it.value}"
+        "Float" -> "--ef ${it.key} ${it.value}"
+        "Boolean" -> "--ez ${it.key} ${it.value}"
+        "URI" -> "--eu ${it.key} ${it.value}"
+        else -> error("Unsupported type ${it.key}")
+    }
+
     inline fun <reified T> keyVal(it: Map.Entry<String, T>) = "\"${it.key}\" \"${it.value}\""
+
+    val typesLists = listOf(
+        "String",
+        "Int",
+        "Long",
+        "Float",
+        "Boolean",
+        "URI",
+    )
+    val typesListsDetails = listOf(
+        "--es - Add String as value",
+        "--ei - Add Int as value",
+        "--el - Add Long as value",
+        "--ef - Add Float as value",
+        "--ez - Add Boolean as value",
+        "--eu - Add URI data as value",
+    )
 }
 
 /*

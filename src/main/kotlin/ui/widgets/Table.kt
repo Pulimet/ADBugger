@@ -25,8 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import compose.icons.TablerIcons
+import compose.icons.tablericons.ClearAll
 import ui.theme.Dimensions
 import ui.theme.MyColors
+import ui.widgets.buttons.BtnIcon
 import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.StringSelection
@@ -39,7 +42,8 @@ fun Table(
     weightList: List<Float>,
     copyColumnsList: List<Int> = emptyList(),
     filter: String? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    deleteAction: ((List<String>) -> Unit)?
 ) {
 
     if (tableList.isEmpty() || columns == 0 || headerTitlesList.size != columns || tableList[0].size != columns || weightList.size != columns) {
@@ -61,10 +65,10 @@ fun Table(
         LazyColumn(state = listState) {
             // Header
             item {
-                TableHeader(headerTitlesList, weightList)
+                TableHeader(headerTitlesList, weightList, deleteAction)
             }
             items(filteredList) { item ->
-                TableRow(item, weightList, clipboard, copyColumnsList)
+                TableRow(item, weightList, clipboard, copyColumnsList, deleteAction)
             }
         }
         TableScroll(filteredList, listState)
@@ -72,43 +76,59 @@ fun Table(
 }
 
 @Composable
-fun TableHeader(headerTitles: List<String>, weight: List<Float>) {
+fun TableHeader(
+    headerTitles: List<String>,
+    weight: List<Float>,
+    deleteAction: ((List<String>) -> Unit)?
+) {
     Row(Modifier.background(MyColors.bg)) {
         headerTitles.forEachIndexed { index, item ->
             TableCell(text = item, weight = weight[index])
+        }
+        deleteAction?.let {
+            TableCell(text = "Delete", 0f)
         }
     }
 }
 
 @Composable
 fun TableRow(
-    item: List<String>,
+    items: List<String>,
     weight: List<Float>,
     clipboard: Clipboard?,
-    copyColumnsList: List<Int>
+    copyColumnsList: List<Int>,
+    deleteAction: ((List<String>) -> Unit)?
 ) {
     Row(
-        Modifier.fillMaxWidth().clickable {
-            val contentToCopy: String = if (copyColumnsList.isEmpty()) {
-                item.joinToString(" - ")
-            } else {
-                var result = ""
-                item.forEachIndexed { index, item ->
-                    if (copyColumnsList.contains(index)) {
-                        result += item
-                    }
-                }
-                result
-            }
-            clipboard?.setContents(StringSelection(contentToCopy), null)
-        },
+        Modifier.fillMaxWidth().clickable { onRowClock(copyColumnsList, items, clipboard) }
     ) {
-        item.forEachIndexed { index, item ->
+        items.forEachIndexed { index, item ->
             if (index < weight.size) {
                 TableCell(text = item, weight = weight[index])
             }
         }
+        deleteAction?.let {
+            BtnIcon(
+                TablerIcons.ClearAll,
+                onClick = { deleteAction(items) }
+            )
+        }
     }
+}
+
+private fun onRowClock(copyColumnsList: List<Int>, list: List<String>, clipboard: Clipboard?) {
+    val contentToCopy: String = if (copyColumnsList.isEmpty()) {
+        list.joinToString(" - ")
+    } else {
+        var result = ""
+        list.forEachIndexed { index, item ->
+            if (copyColumnsList.contains(index)) {
+                result += item
+            }
+        }
+        result
+    }
+    clipboard?.setContents(StringSelection(contentToCopy), null)
 }
 
 @Composable

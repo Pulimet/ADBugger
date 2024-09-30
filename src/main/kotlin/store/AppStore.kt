@@ -11,6 +11,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import model.ExtraType
+import model.Extras
 import model.Package
 import model.RunEmulatorParams
 import model.TargetInfo
@@ -86,6 +88,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val isEmulatorAccessOk: Status = Status.UNKNOWN,
         val deviceProps: List<String> = listOf(),
         val permissions: List<String> = listOf(),
+        val launchExtras: List<Extras> = listOf()
     )
 
     // Logs
@@ -629,7 +632,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
             log("Please select Target and Package before")
             return
         }
-        launch { terminal.testLaunch(state.selectedTargetsList, selectedActivity) }
+        launch { terminal.testLaunch(state.selectedTargetsList, selectedActivity, state.launchExtras) }
     }
 
     fun onGetPackageActivities() {
@@ -639,4 +642,14 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         }
         launch { terminal.getPackageActivities(state.selectedTargetsList, state.selectedPackage) }
     }
+
+    fun addExtra(key: String, value: String, type: String) {
+        setState {
+            copy(
+                launchExtras = launchExtras.toMutableList()
+                    .also { it.add(Extras(key, value, ExtraType.fromName(type))) }
+            )
+        }
+    }
+
 }

@@ -1,5 +1,6 @@
 package terminal
 
+import model.Extras
 import model.Package
 import model.RunEmulatorParams
 import model.TargetInfo
@@ -396,11 +397,11 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun testLaunch(
         selectedTargetsList: List<String>,
         selectedActivity: String,
-        extrasMap: Map<String, Any> = emptyMap()
+        extrasList: List<Extras> = emptyList()
     ) {
         launcher.runAdbShell(
             selectedTargetsList,
-            AmCommands.getOpenPackageCommand(selectedActivity, extrasMap)
+            AmCommands.getOpenPackageCommand(selectedActivity, extrasList)
         )
     }
 
