@@ -43,7 +43,7 @@ fun Table(
     copyColumnsList: List<Int> = emptyList(),
     filter: String? = null,
     modifier: Modifier = Modifier,
-    deleteAction: ((List<String>) -> Unit)?
+    deleteAction: ((List<String>) -> Unit)? = null
 ) {
 
     if (tableList.isEmpty() || columns == 0 || headerTitlesList.size != columns || tableList[0].size != columns || weightList.size != columns) {

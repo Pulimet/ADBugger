@@ -31,8 +31,6 @@ object AmCommands {
         else -> error("Unsupported type ${it.key}")
     }
 
-    inline fun <reified T> keyVal(it: Map.Entry<String, T>) = "\"${it.key}\" \"${it.value}\""
-
     val typesLists = listOf(
         "String",
         "Int",
