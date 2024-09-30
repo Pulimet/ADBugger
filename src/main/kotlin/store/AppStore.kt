@@ -632,7 +632,13 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
             log("Please select Target and Package before")
             return
         }
-        launch { terminal.testLaunch(state.selectedTargetsList, selectedActivity, state.launchExtras) }
+        launch {
+            terminal.testLaunch(
+                state.selectedTargetsList,
+                selectedActivity,
+                state.launchExtras
+            )
+        }
     }
 
     fun onGetPackageActivities() {
@@ -649,6 +655,14 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
                 launchExtras = launchExtras.toMutableList()
                     .also { it.add(Extras(key, value, ExtraType.fromName(type))) }
             )
+        }
+    }
+
+    fun onExtraDeleteClick(key: String) {
+        setState {
+            copy(launchExtras = state.launchExtras.filter {
+                it.key != key
+            })
         }
     }
 

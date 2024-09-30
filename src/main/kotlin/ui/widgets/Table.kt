@@ -4,6 +4,7 @@ import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -63,7 +65,6 @@ fun Table(
 
     Box(modifier = modifier.fillMaxSize()) {
         LazyColumn(state = listState) {
-            // Header
             item {
                 TableHeader(headerTitlesList, weightList, deleteAction)
             }
@@ -107,12 +108,7 @@ fun TableRow(
                 TableCell(text = item, weight = weight[index])
             }
         }
-        deleteAction?.let {
-            BtnIcon(
-                TablerIcons.ClearAll,
-                onClick = { deleteAction(items) }
-            )
-        }
+        DeleteButton(deleteAction, items)
     }
 }
 
@@ -133,16 +129,44 @@ private fun onRowClock(copyColumnsList: List<Int>, list: List<String>, clipboard
 
 @Composable
 fun RowScope.TableCell(text: String, weight: Float) {
-    Text(
-        text = text,
+    val modifier = if (weight > 0f) {
         Modifier
             .border(0.5.dp, Color.Gray)
             .weight(weight)
-            .padding(4.dp),
+            .padding(4.dp)
+    } else {
+        Modifier
+            .border(0.5.dp, Color.Gray)
+            .width(60.dp)
+            .padding(4.dp)
+    }
+
+    Text(
+        text = text,
+        modifier = modifier,
         fontSize = Dimensions.subtitleFontSize,
         lineHeight = Dimensions.subtitleFontSize,
         color = Color.LightGray
     )
+}
+
+@Composable
+fun DeleteButton(deleteAction: ((List<String>) -> Unit)?, items: List<String>) {
+    deleteAction?.let {
+        Row(
+            modifier = Modifier.width(60.dp).border(0.5.dp, Color.Gray),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            BtnIcon(
+                TablerIcons.ClearAll,
+                onClick = { deleteAction(items) },
+                buttonSize = Dimensions.btnSizeSmaller,
+                iconSize = Dimensions.btnIconSizeSmaller,
+                description = "Delete",
+                showTooltip = false
+            )
+        }
+    }
 }
 
 @Composable

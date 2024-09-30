@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandAndroid
 import compose.icons.tablericons.Plus
+import model.Extras
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.AmCommands
@@ -106,14 +107,13 @@ fun LauncherPackagesTab(model: AppStore = koinInject()) {
             )
         }
 
-        // TODO icon to delete a row.
-
         Table(
             3,
             listOf("Key", "Value", "Type"),
             extrasListOfList,
             listOf(0.4f, 0.4f, 0.2f),
             listOf(0, 1),
+            deleteAction = {model.onExtraDeleteClick(it[0])}
         )
     }
 
