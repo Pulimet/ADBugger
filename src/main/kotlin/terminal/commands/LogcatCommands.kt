@@ -13,7 +13,7 @@ object LogcatCommands {
         val b = if (buffer.isEmpty() || buffer == "default") "" else " -b $buffer"
         val v = if (format.isEmpty() || format == "threadtime") "" else " -v $format"
         val t = tag.ifEmpty { "*" }
-        val p = if (priorityLevel.isEmpty()) "" else " \"$t:$priorityLevel\""
+        val p = if (tag.isEmpty()) " \"$t:$priorityLevel\"" else " \"$t:$priorityLevel *:S\""
         return "adb$s logcat$b$v$p"
     }
 
