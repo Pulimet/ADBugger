@@ -2,6 +2,17 @@ package terminal.commands
 
 object LogcatCommands {
 
+    /*
+    adb logcat "ActivityTaskManager:V *:S" | awk '/act=android.intent.action.MAIN/ && /cmp=/ {
+        match($0, /act=[^ ]+/);
+        act = substr($0, RSTART+4, RLENGTH-4);
+        match($0, /cmp=[^ ]+/);
+        cmp = substr($0, RSTART+4, RLENGTH-4);
+        print "adb shell am start -a '\''" act "'\'' -n '\''" cmp "'\''"
+    }'
+     */
+
+
     fun getLogCatCommand(
         selectedTarget: String,
         buffer: String,

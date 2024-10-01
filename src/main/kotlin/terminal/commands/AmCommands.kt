@@ -3,21 +3,17 @@ package terminal.commands
 import model.Extras
 
 object AmCommands {
-    const val DEFAULT_ACTION_CATEGORY =
+    private const val DEFAULT_ACTION_CATEGORY =
         "-a android.intent.action.VIEW -c android.intent.category.DEFAULT"
 
     fun getShowHome() = "am start -a android.intent.action.MAIN -c android.intent.category.HOME"
     fun getShowSettings() = "am start com.android.settings"
     fun getCloseCommand(packageName: String) = "am force-stop  $packageName"
 
-    fun getOpenPackageCommand(
-        selectedActivity: String,
-        extrasMap: List<Extras>
-    ): String {
-        val extras = extrasMap.map {
-            parseExtra(it)
+    // fun getSetClipboard(text: String) = "am broadcast -a clipper.set -e text $text"
 
-        }
+    fun getOpenPackageCommand(selectedActivity: String, extrasMap: List<Extras>): String {
+        val extras = extrasMap.map { parseExtra(it) }
         return "am start -n $selectedActivity $DEFAULT_ACTION_CATEGORY ${extras.joinToString(" ")}"
     }
 
