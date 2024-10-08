@@ -7,12 +7,23 @@ import kotlinx.coroutines.yield
 import utils.PlatformX
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.concurrent.TimeUnit
 
 class ProcessCreation {
     fun createProcessAndWaitForResult(path: String = "", command: String = ""): Process {
         val processBuilder: ProcessBuilder = createProcessBuilder(path + command)
         val process = processBuilder.start()
-        process.waitFor()
+        try {
+            // Wait for the process to finish, or until 5 seconds have passed
+            val finished = process.waitFor(5, TimeUnit.SECONDS)
+            if (!finished) {
+                // Process did not finish within 5 seconds, so destroy it
+                process.destroy()
+                throw RuntimeException("Process timed out after 5 seconds")
+            }
+        } catch (e: InterruptedException) {
+            Thread.currentThread().interrupt()
+        }
         return process
     }
 

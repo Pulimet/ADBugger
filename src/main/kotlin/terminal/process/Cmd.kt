@@ -11,9 +11,10 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class Cmd(private val processCreation: ProcessCreation) {
-    suspend fun execute(command: String, log: ((String) -> Unit)?, path: String) = withContext(Dispatchers.IO) {
-        executeAndWait(command, log, path)
-    }
+    suspend fun execute(command: String, log: ((String) -> Unit)?, path: String) =
+        withContext(Dispatchers.IO) {
+            executeAndWait(command, log, path)
+        }
 
     private suspend fun executeAndWait(command: String, log: ((String) -> Unit)?, path: String) =
         suspendCoroutine { continuation ->
@@ -32,18 +33,21 @@ class Cmd(private val processCreation: ProcessCreation) {
                     emptyList()
                 }
             } catch (e: IOException) {
-                println("Error executing command: $command")
-                log?.invoke("Error executing command: $command")
-                e.printStackTrace()
-                emptyList()
+                printAndEmptyList("Error executing command: $command", log, e)
             } catch (e: InterruptedException) {
-                println("Command interrupted: $command")
-                log?.invoke("Command interrupted: $command")
-                e.printStackTrace()
-                emptyList()
+                printAndEmptyList("Command interrupted: $command", log, e)
+            } catch (e: RuntimeException) {
+                printAndEmptyList("RuntimeException during: $command (${e.message})", log, e)
             }
             continuation.resume(result)
         }
+
+    private fun printAndEmptyList(msg: String, log: ((String) -> Unit)?, e: Exception): List<String> {
+        println(msg)
+        log?.invoke(msg)
+        e.printStackTrace()
+        return emptyList()
+    }
 
     private fun getInputStream(inputStream: InputStream) =
         BufferedReader(InputStreamReader(inputStream)).use { reader ->
