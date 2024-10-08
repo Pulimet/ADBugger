@@ -197,7 +197,8 @@ class Terminal(private val launcher: CommandLauncher) {
     suspend fun getApkPath(selectedPackage: String, selectedTargetsList: List<String>) {
         launcher.runAdbShell(
             selectedTargetsList,
-            PmCommands.getApkPathCommand(selectedPackage)
+            PmCommands.getApkPathCommand(selectedPackage),
+            true
         )
     }
 
