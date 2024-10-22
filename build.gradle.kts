@@ -19,6 +19,7 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation(compose.components.resources)
 
     // Koin
     implementation("co.touchlab:stately-concurrent-collections:2.1.0")

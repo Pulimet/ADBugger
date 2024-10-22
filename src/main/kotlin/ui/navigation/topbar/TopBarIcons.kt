@@ -25,7 +25,6 @@ import compose.icons.tablericons.LayersSubtract
 import compose.icons.tablericons.LetterA
 import compose.icons.tablericons.Notes
 import compose.icons.tablericons.Power
-import compose.icons.tablericons.SettingsAutomation
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.NightClear
 import org.koin.compose.koinInject
@@ -48,7 +47,8 @@ fun TopBarIcons(model: AppStore = koinInject()) {
 
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxWidth().background(MyColors.bg2).horizontalScroll(stateHorizontal),
+        modifier = Modifier.fillMaxWidth().background(MyColors.bg2)
+            .horizontalScroll(stateHorizontal),
     ) {
         BtnWithText(
             icon = Icons.Rounded.Home,
