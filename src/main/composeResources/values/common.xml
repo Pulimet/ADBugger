@@ -1,0 +1,23 @@
+<resources>
+    <!-- Basic Controls -->
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="back">Back</string>
+    <string name="recent">Recent</string>
+    <string name="tab">Tab</string>
+    <string name="enter">Enter</string>
+    <string name="power">Power</string>
+    <string name="day_mode">Day</string>
+    <string name="night_mode">Night</string>
+    <string name="snapshot">Snapshot</string>
+
+    <!-- Package Commands-->
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="restart">Restart</string>
+    <string name="clear_ata">Clear Data</string>
+    <string name="clear_restart">Clear&amp;Restart</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="apk_path">APK Path</string>
+    <string name="install">Install</string>
+</resources>

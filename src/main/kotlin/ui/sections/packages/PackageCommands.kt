@@ -12,6 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.SettingsAutomation
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.apk_path
+import net.alexandroid.adbugger.adbugger.generated.resources.clear_ata
+import net.alexandroid.adbugger.adbugger.generated.resources.clear_restart
+import net.alexandroid.adbugger.adbugger.generated.resources.close
+import net.alexandroid.adbugger.adbugger.generated.resources.install
+import net.alexandroid.adbugger.adbugger.generated.resources.open
+import net.alexandroid.adbugger.adbugger.generated.resources.restart
+import net.alexandroid.adbugger.adbugger.generated.resources.uninstall
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -36,55 +46,55 @@ fun PackageCommands(
             enabled = isPackageSelected,
             onClick = { model.onOpenClick() },
             icon = Icons.Rounded.CheckCircle,
-            description = "Open",
+            description = stringResource(Res.string.open),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onCloseClick() },
             icon = Icons.Rounded.CheckCircle,
-            description = "Close",
+            description = stringResource(Res.string.close),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onRestartClick() },
             icon = Icons.Rounded.CheckCircle,
-            description = "Restart",
+            description = stringResource(Res.string.restart),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onClearDataClick() },
             icon = Icons.Rounded.CheckCircle,
-            description = "Clear Data",
+            description = stringResource(Res.string.clear_ata),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onClearAndRestartClick() },
             icon = Icons.Rounded.CheckCircle,
-            description = "Clear&Restart",
+            description = stringResource(Res.string.clear_restart),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             enabled = isPackageSelected,
             onClick = { model.onUninstallClick() },
             icon = Icons.Rounded.CheckCircle,
-            description = "Uninstall",
+            description = stringResource(Res.string.uninstall),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             enabled = isPackageSelected && isDeviceSelected,
             onClick = { model.onApkPath() },
             icon = Icons.Rounded.CheckCircle,
-            description = "APK Path",
+            description = stringResource(Res.string.apk_path),
             width = Dimensions.packageCommandsBtnWidth,
         )
         BtnWithText(
             icon = TablerIcons.SettingsAutomation,
             onClick = { model.openFilePicker() },
-            description = "Install",
+            description = stringResource(Res.string.install),
             width = Dimensions.packageCommandsBtnWidth,
         )
     }

@@ -27,6 +27,20 @@ import compose.icons.tablericons.Notes
 import compose.icons.tablericons.Power
 import compose.icons.weathericons.DaySunny
 import compose.icons.weathericons.NightClear
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.back
+import net.alexandroid.adbugger.adbugger.generated.resources.day_mode
+import net.alexandroid.adbugger.adbugger.generated.resources.enter
+import net.alexandroid.adbugger.adbugger.generated.resources.home
+import net.alexandroid.adbugger.adbugger.generated.resources.input
+import net.alexandroid.adbugger.adbugger.generated.resources.logs
+import net.alexandroid.adbugger.adbugger.generated.resources.night_mode
+import net.alexandroid.adbugger.adbugger.generated.resources.power
+import net.alexandroid.adbugger.adbugger.generated.resources.recent
+import net.alexandroid.adbugger.adbugger.generated.resources.settings
+import net.alexandroid.adbugger.adbugger.generated.resources.snapshot
+import net.alexandroid.adbugger.adbugger.generated.resources.tab
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
@@ -53,52 +67,52 @@ fun TopBarIcons(model: AppStore = koinInject()) {
         BtnWithText(
             icon = Icons.Rounded.Home,
             onClick = { model.onHomeClick() },
-            description = "Home",
+            description = stringResource(Res.string.home),
         )
         BtnWithText(
             icon = Icons.Rounded.Settings,
             onClick = { model.onSettingsClick() },
-            description = "Settings",
+            description = stringResource(Res.string.settings),
         )
         BtnWithText(
             icon = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
             onClick = { model.onBackClick() },
-            description = "Back",
+            description = stringResource(Res.string.back),
         )
         BtnWithText(
             icon = TablerIcons.LayersSubtract,
             onClick = { model.onRecentClick() },
-            description = "Recent",
+            description = stringResource(Res.string.recent),
         )
         BtnWithText(
             icon = Octicons.ArrowSwitch24,
             onClick = { model.onTabClick() },
-            description = "Tab",
+            description = stringResource(Res.string.tab),
         )
         BtnWithText(
             icon = TablerIcons.ArrowBack,
             onClick = { model.onEnterClick() },
-            description = "Enter",
+            description = stringResource(Res.string.enter),
         )
         BtnWithText(
             icon = TablerIcons.Power,
             onClick = { model.onPowerClick() },
-            description = "Power",
+            description = stringResource(Res.string.power),
         )
         BtnWithText(
             icon = WeatherIcons.DaySunny,
             onClick = { model.onDayClick() },
-            description = "Day",
+            description = stringResource(Res.string.day_mode),
         )
         BtnWithText(
             icon = WeatherIcons.NightClear,
             onClick = { model.onNightClick() },
-            description = "Night",
+            description = stringResource(Res.string.night_mode),
         )
         BtnWithText(
             icon = LineaIcons.Basic.Photo,
             onClick = { model.onSnapClick() },
-            description = "Snapshot",
+            description = stringResource(Res.string.snapshot),
         )
         BtnWithText(
             icon = TablerIcons.LetterA,
@@ -106,7 +120,7 @@ fun TopBarIcons(model: AppStore = koinInject()) {
                 forwardUserInputState = !forwardUserInputState
                 model.onForwardUserInputToggle(forwardUserInputState)
             },
-            description = "Input",
+            description = stringResource(Res.string.input),
             toggle = model.state.isUserForwardInputEnabled,
         )
         BtnWithText(
@@ -115,7 +129,7 @@ fun TopBarIcons(model: AppStore = koinInject()) {
                 alwaysShowLogsEnabled = !alwaysShowLogsEnabled
                 model.onChangeAlwaysShowLog(alwaysShowLogsEnabled)
             },
-            description = "Logs",
+            description = stringResource(Res.string.logs),
             toggle = alwaysShowLogsEnabled,
         )
     }
