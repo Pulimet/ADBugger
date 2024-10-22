@@ -430,5 +430,16 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.run(Commands.getAdbTcpIp(port), printResults = true)
     }
 
+    suspend fun disconnectAll() {
+        launcher.run(Commands.getAdbDisconnectAll(), printResults = true)
+    }
+
+    suspend fun adbConnect(ip: String, port: String) {
+        launcher.run(Commands.getAdbConnect(ip, port), printResults = true)
+    }
+
+    suspend fun adbDisconnect(ip: String, port: String) {
+        launcher.run(Commands.getAdbDisconnect(ip, port), printResults = true)
+    }
 
 }

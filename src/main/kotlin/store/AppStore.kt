@@ -682,4 +682,16 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.adbTcpIp(port) }
     }
 
+    fun onDisconnectAll() {
+        launch {  terminal.disconnectAll() }
+    }
+
+    fun onAdbConnect(ip: String, port: String) {
+        launch { terminal.adbConnect(ip, port) }
+    }
+
+    fun onAdbDisconnect(ip: String, port: String) {
+        launch { terminal.adbDisconnect(ip, port) }
+    }
+
 }
