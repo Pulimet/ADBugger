@@ -26,11 +26,11 @@ class Cmd(private val processCreation: ProcessCreation) {
 
                 getInputStream(process.inputStream).ifEmpty {
                     val errorStream = getInputStream(process.errorStream)
-                    log?.invoke("No output. Checking error stream. Exist: ${errorStream.isNotEmpty()}")
                     if (errorStream.isNotEmpty()) {
-                        log?.invoke("====== START =====")
-                        errorStream.forEach { log?.invoke(it) }
-                        log?.invoke("====== END =====")
+                        log?.invoke("No output. Error stream:")
+                        errorStream.forEach { log?.invoke(">>> $it") }
+                    } else {
+                        log?.invoke("No output. Error stream is also empty")
                     }
                     emptyList()
                 }

@@ -5,7 +5,10 @@
     <string name="target_disconnect_all">Disconnect all</string>
     <string name="target_label_port">Port (1-65535)</string>
     <string name="target_label_ip">IP (ex: 192.168.0.2)</string>
+    <string name="target_label_paring_code">Paring code</string>
     <string name="target_adb_tcp_ip">Adb tcpip</string>
     <string name="target_adb_connect">Adb connect</string>
     <string name="target_adb_disconnect">Adb disconnect</string>
+    <string name="target_adb_pair">Adb pair</string>
+    <string name="target_get_device_ip">Get device IP</string>
 </resources>

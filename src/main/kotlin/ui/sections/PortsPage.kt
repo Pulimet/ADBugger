@@ -52,6 +52,7 @@ fun PortsPage(
                     singleLine = true,
                     value = inputReverseFrom,
                     keyboardType = KeyboardType.Number,
+                    maxLength = 5,
                     label = "Reverse (Device port)",
                     onValueChange = { value -> inputReverseFrom = value }
                 )
@@ -60,6 +61,7 @@ fun PortsPage(
                     singleLine = true,
                     value = inputReverseTo,
                     keyboardType = KeyboardType.Number,
+                    maxLength = 5,
                     label = "Reverse (Machine port)",
                     onValueChange = { value -> inputReverseTo = value }
                 )
@@ -107,6 +109,7 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     value = inputForwardFrom,
+                    maxLength = 5,
                     keyboardType = KeyboardType.Number,
                     label = "Forward (Machine port)",
                     onValueChange = { value -> inputForwardFrom = value }
@@ -115,6 +118,7 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     value = inputForwardTo,
+                    maxLength = 5,
                     keyboardType = KeyboardType.Number,
                     label = "Forward (Device port)",
                     onValueChange = { value -> inputForwardTo = value }

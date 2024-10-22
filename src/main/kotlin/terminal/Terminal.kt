@@ -422,12 +422,12 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.run(Commands.getAdbKillServer(), printResults = true)
     }
 
-    suspend fun adbUsb() {
-        launcher.run(Commands.getAdbUsb(), printResults = true)
+    suspend fun adbUsb(selectedTargetsList: List<String>) {
+        launcher.runAdb(selectedTargetsList, Commands.getAdbUsb(), printResults = true)
     }
 
-    suspend fun adbTcpIp(port: String) {
-        launcher.run(Commands.getAdbTcpIp(port), printResults = true)
+    suspend fun adbTcpIp(port: String, selectedTargetsList: List<String>) {
+        launcher.runAdb(selectedTargetsList, Commands.getAdbTcpIp(port), printResults = true)
     }
 
     suspend fun disconnectAll() {
@@ -440,6 +440,14 @@ class Terminal(private val launcher: CommandLauncher) {
 
     suspend fun adbDisconnect(ip: String, port: String) {
         launcher.run(Commands.getAdbDisconnect(ip, port), printResults = true)
+    }
+
+    suspend fun adbPair(ip: String, port: String, code: String) {
+        launcher.run(Commands.getAdbPair(ip, port, code), printResults = true)
+    }
+
+    suspend fun getDeviceIp(selectedTargetsList: List<String>) {
+        launcher.runAdbShell(selectedTargetsList, Commands.getDeviceIp(), printResults = true)
     }
 
 }

@@ -17,19 +17,24 @@ object Commands {
 
     fun getAdbKillServer() = "adb kill-server"
 
-    fun getAdbUsb() = "adb usb"
+    fun getAdbUsb() = "usb"
 
     // It sets the listening port for ADB on the Android device to the specified port.
-    fun getAdbTcpIp(port: String) = "adb tcpip $port"
+    fun getAdbTcpIp(port: String) = "tcpip $port"
 
     fun getAdbConnect(ip: String, port: String) = "adb connect $ip:$port"
 
-    fun getAdbDisconnect(ip: String, port: String) = "adb connect $ip:$port"
+    fun getAdbDisconnect(ip: String, port: String) = "adb disconnect $ip:$port"
 
-    fun getAdbDisconnectAll() = "adb disconnect all"
+    // The terminal will prompt you to enter the pairing code displayed on your Android device. Type in the 6-digit code and press Enter.
+    fun getAdbPair(ip: String, port: String, code: String) = "adb pair $ip:$port $code"
+
+    fun getAdbDisconnectAll() = "adb disconnect"
+
+    fun getDeviceIp() =
+        "ip addr show wlan0 | grep \"inet\\s\" | awk '{print \$2}' | cut -d/ -f1"
 
     /*
-
 
 port="5555"
 
@@ -45,14 +50,9 @@ adb tcpip ${port};sleep 0.5
 adb connect $ip:${port}; sleep 1.0
 adb devices; adb shell
 
-
 adb reboot
-
 adb reboot recovery
-
 adb reboot-bootloader
-
 adb root //restarts adb with root permissions
-
-     */
+ */
 }

@@ -675,15 +675,15 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onAdbUsb() {
-        launch { terminal.adbUsb() }
+        launch { terminal.adbUsb(state.selectedTargetsList) }
     }
 
     fun onAdbTcpIp(port: String) {
-        launch { terminal.adbTcpIp(port) }
+        launch { terminal.adbTcpIp(port, state.selectedTargetsList) }
     }
 
     fun onDisconnectAll() {
-        launch {  terminal.disconnectAll() }
+        launch { terminal.disconnectAll() }
     }
 
     fun onAdbConnect(ip: String, port: String) {
@@ -692,6 +692,14 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
 
     fun onAdbDisconnect(ip: String, port: String) {
         launch { terminal.adbDisconnect(ip, port) }
+    }
+
+    fun onAdbPair(ip: String, port: String, code: String) {
+        launch { terminal.adbPair(ip, port, code) }
+    }
+
+    fun onGetDeviceIp() {
+        launch { terminal.getDeviceIp(state.selectedTargetsList) }
     }
 
 }

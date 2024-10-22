@@ -1,5 +1,6 @@
 package ui.sections.target
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -15,7 +16,9 @@ fun TargetSelectionTab(model: AppStore = koinInject()) {
     if (state.isDevicesLoading) {
         LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
     } else {
-        AllTargetsAndRefreshButton()
-        TargetList()
+        Column {
+            AllTargetsAndRefreshButton()
+            TargetList()
+        }
     }
 }
