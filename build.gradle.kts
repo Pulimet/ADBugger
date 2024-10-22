@@ -54,7 +54,7 @@ compose.desktop {
         }
 
         nativeDistributions {
-            outputBaseDir.set(project.buildDir.resolve("output"))
+            outputBaseDir.set(getLayout().buildDirectory.dir("output"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi)
             packageName = "ADBugger"
             packageVersion = appVersion
