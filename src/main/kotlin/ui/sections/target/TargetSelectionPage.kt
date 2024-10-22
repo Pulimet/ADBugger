@@ -1,32 +1,27 @@
 package ui.sections.target
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.koin.compose.koinInject
-import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.CardX
-import ui.widgets.LoadingSpinner
+import ui.widgets.tabs.Tabs
 
 @Composable
 fun TargetSelectionPage(modifier: Modifier = Modifier) {
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
-            Content()
-        }
-    }
-}
+            Tabs(
+                listOf("Select", "Connect"),
+                saveSelectedTabKey = "TargetTabs"
+            ) {
+                when (it) {
+                    0 -> TargetSelectionTab()
+                    1 -> TargetConnectionTab()
+                }
+            }
 
-@Composable
-private fun Content(model: AppStore = koinInject()) {
-    val state = model.state
-    if (state.isDevicesLoading) {
-        LoadingSpinner(Modifier.padding(Dimensions.spinnerPadding).fillMaxSize())
-    } else {
-        AllTargetsAndRefreshButton()
-        TargetList()
+        }
     }
 }
