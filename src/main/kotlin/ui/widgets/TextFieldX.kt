@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import pref.preference
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -42,7 +44,16 @@ fun TextFieldX(
     colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(),
     keyboardType: KeyboardType = KeyboardType.Text,
     maxLength: Int = -1,
+    saveValueKey: String = "",
 ) {
+
+    var inputValuePref: String by preference(saveValueKey, "")
+    LaunchedEffect(saveValueKey) {
+        if (saveValueKey.isNotEmpty()) {
+            onValueChange(TextFieldValue(inputValuePref))
+        }
+    }
+
     BasicTextField(
         modifier = if (label.isNotEmpty()) {
             modifier.semantics(mergeDescendants = true) {}
@@ -59,6 +70,9 @@ fun TextFieldX(
             if (maxLength > -1 && it.text.length > maxLength) return@BasicTextField
             if (keyboardType == KeyboardType.Number && it.isContainsNonDigits()) return@BasicTextField
             onValueChange(it)
+            if (saveValueKey.isNotEmpty()) {
+                inputValuePref = it.text
+            }
         },
         cursorBrush = SolidColor(Color.White),
         decorationBox = @Composable { innerTextField ->

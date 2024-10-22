@@ -102,6 +102,7 @@ fun TargetConnectionTab(model: AppStore = koinInject()) {
                 padding = PaddingValues(top = 3.dp),
                 keyboardType = KeyboardType.Uri,
                 label = stringResource(Res.string.target_label_ip),
+                saveValueKey = "target_connect_ip_input",
                 onValueChange = { value -> inputIpConnect = value }
             )
             TextFieldX(
