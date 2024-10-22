@@ -25,11 +25,13 @@ class Cmd(private val processCreation: ProcessCreation) {
                 val process = processCreation.createProcessAndWaitForResult(path, command)
 
                 getInputStream(process.inputStream).ifEmpty {
-                    log?.invoke("No output. Checking error stream.")
-                    log?.invoke("====== START =====")
                     val errorStream = getInputStream(process.errorStream)
-                    errorStream.forEach { log?.invoke(it) }
-                    log?.invoke("====== END =====")
+                    log?.invoke("No output. Checking error stream. Exist: ${errorStream.isNotEmpty()}")
+                    if (errorStream.isNotEmpty()) {
+                        log?.invoke("====== START =====")
+                        errorStream.forEach { log?.invoke(it) }
+                        log?.invoke("====== END =====")
+                    }
                     emptyList()
                 }
             } catch (e: IOException) {
@@ -42,7 +44,11 @@ class Cmd(private val processCreation: ProcessCreation) {
             continuation.resume(result)
         }
 
-    private fun printAndEmptyList(msg: String, log: ((String) -> Unit)?, e: Exception): List<String> {
+    private fun printAndEmptyList(
+        msg: String,
+        log: ((String) -> Unit)?,
+        e: Exception
+    ): List<String> {
         println(msg)
         log?.invoke(msg)
         e.printStackTrace()

@@ -414,5 +414,17 @@ class Terminal(private val launcher: CommandLauncher) {
         )
     }
 
+    suspend fun startAdbServer() {
+        launcher.run(Commands.getAdbStartServer(), printResults = true)
+    }
+
+    suspend fun killAdbServer() {
+        launcher.run(Commands.getAdbKillServer(), printResults = true)
+    }
+
+    suspend fun adbUsb() {
+        launcher.run(Commands.getAdbUsb(), printResults = true)
+    }
+
 
 }

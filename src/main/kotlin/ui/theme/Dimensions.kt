@@ -15,6 +15,7 @@ object Dimensions {
     val btnSizeExtraSmall = 18.dp
     val btnIconSizeExtraSmall = 14.dp
     val packageCommandsBtnWidth = 100.dp
+    val targetCommandsBtnWidth = 80.dp
     val permissionsCommandsBtnWidthShort = 60.dp
     val permissionsCommandsBtnWidth = 80.dp
     val btnEmulatorWidth = 100.dp

@@ -666,4 +666,16 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         }
     }
 
+    fun onStartServer() {
+        launch { terminal.startAdbServer() }
+    }
+
+    fun onKillServer() {
+        launch { terminal.killAdbServer() }
+    }
+
+    fun onAdbUsb() {
+        launch { terminal.adbUsb() }
+    }
+
 }
