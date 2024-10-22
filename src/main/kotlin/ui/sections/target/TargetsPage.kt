@@ -9,7 +9,7 @@ import ui.widgets.CardX
 import ui.widgets.tabs.Tabs
 
 @Composable
-fun TargetSelectionPage(modifier: Modifier = Modifier) {
+fun TargetsPage(modifier: Modifier = Modifier) {
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding)) {
             Tabs(

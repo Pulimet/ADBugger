@@ -17,7 +17,7 @@ import ui.sections.input.InputPage
 import ui.sections.logcat.LogcatPage
 import ui.sections.misc.MiscPage
 import ui.sections.packages.PackagesPage
-import ui.sections.target.TargetSelectionPage
+import ui.sections.target.TargetsPage
 
 @Composable
 fun SelectedPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
@@ -25,7 +25,7 @@ fun SelectedPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
 
     when (state.menuItemSelected) {
         MenuItemId.WELCOME -> WelcomePage(modifier)
-        MenuItemId.DEVICES -> TargetSelectionPage(modifier)
+        MenuItemId.DEVICES -> TargetsPage(modifier)
         MenuItemId.EMULATORS -> EmulatorsPage(modifier)
         MenuItemId.PACKAGES -> PackagesPage(modifier)
         MenuItemId.PERMISSIONS -> PermissionsPage(modifier)
