@@ -1,6 +1,6 @@
 [![Stable version](https://img.shields.io/badge/Stable_Version-1.0.4-blue)](https://github.com/Pulimet/ADBugger/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/Pulimet/ADBugger/blob/master/LICENSE)
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.0-Beta2-green.svg)](https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.compose/2.1.0-Beta2)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.0-green.svg)](https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.compose/2.1.0-Beta2)
 [![Compose](https://img.shields.io/badge/Compose-1.7.0-green.svg)](https://github.com/JetBrains/compose-multiplatform/releases/latest)
 
 [![platform - macOS](https://img.shields.io/badge/platform-macOS-000.svg?logo=apple&style=for-the-badge)](https://developer.apple.com/ios)
