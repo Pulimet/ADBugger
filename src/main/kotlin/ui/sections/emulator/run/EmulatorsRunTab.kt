@@ -24,7 +24,7 @@ fun EmulatorsRunTab(model: AppStore = koinInject()) {
     var params by remember { mutableStateOf(RunEmulatorParams()) }
 
     Column {
-        ExpandableCard(title = "Launching properties") {
+        ExpandableCard(title = "Launch Properties (Expandable)") {
             EmulatorsRunTopMenu(params = params) { params = it }
         }
 

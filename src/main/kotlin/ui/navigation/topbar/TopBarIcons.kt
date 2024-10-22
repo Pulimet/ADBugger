@@ -118,12 +118,5 @@ fun TopBarIcons(model: AppStore = koinInject()) {
             description = "Logs",
             toggle = alwaysShowLogsEnabled,
         )
-        BtnWithText(
-            icon = TablerIcons.SettingsAutomation,
-            onClick = {
-                model.openFilePicker()
-            },
-            description = "Install",
-        )
     }
 }

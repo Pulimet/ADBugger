@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import compose.icons.TablerIcons
+import compose.icons.tablericons.SettingsAutomation
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -77,6 +79,12 @@ fun PackageCommands(
             onClick = { model.onApkPath() },
             icon = Icons.Rounded.CheckCircle,
             description = "APK Path",
+            width = Dimensions.packageCommandsBtnWidth,
+        )
+        BtnWithText(
+            icon = TablerIcons.SettingsAutomation,
+            onClick = { model.openFilePicker() },
+            description = "Install",
             width = Dimensions.packageCommandsBtnWidth,
         )
     }
