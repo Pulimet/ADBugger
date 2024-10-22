@@ -19,12 +19,16 @@ object Commands {
 
     fun getAdbUsb() = "adb usb"
 
+    // It sets the listening port for ADB on the Android device to the specified port.
+    fun getAdbTcpIp(port: String) = "adb tcpip $port"
+
+    fun getAdbConnect(ip: String, port: String) = "adb connect $ip:$port"
+
+    fun getAdbDisconnect(ip: String, port: String) = "adb connect $ip:$port"
+
+    fun getAdbDisconnectAll() = "adb disconnect all"
+
     /*
-
-    adb connect <ip:port>
-    adb disconnect <ip:port>
-    adb disconnect all
-
 
 
 port="5555"
@@ -50,6 +54,5 @@ adb reboot-bootloader
 
 adb root //restarts adb with root permissions
 
-adb connect ip_address_of_device
      */
 }
