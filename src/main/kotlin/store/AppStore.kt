@@ -650,6 +650,10 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun addExtra(key: String, value: String, type: String) {
+        if (key.trim().isEmpty() || value.trim().isEmpty()) {
+            log("Key and value could not be empty")
+            return
+        }
         setState {
             copy(
                 launchExtras = launchExtras.toMutableList()
