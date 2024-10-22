@@ -48,7 +48,7 @@ private fun onWindowRelocate(it: WindowPosition) {
 
 @Composable
 fun FrameWindowScope.setMinimumSize() {
-    val minWidth = 480.dp
+    val minWidth = 456.dp
     val minHeight = 340.dp
 
     val density = LocalDensity.current

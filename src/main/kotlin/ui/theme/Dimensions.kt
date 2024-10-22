@@ -35,7 +35,7 @@ object Dimensions {
     val topBarHeight = 50.dp
 
     // SideBar
-    val sideBarWidth = 170.dp
+    val sideBarWidth = 134.dp
     val sideBarWidthCollapsed = 40.dp
     val sideBarItemHeight = 40.dp
     val sideMenuFontSize = 12.sp

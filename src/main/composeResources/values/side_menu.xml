@@ -1,3 +1,16 @@
 <resources>
-
+        <string name="side_welcome">Welcome</string>
+        <string name="side_targets">Targets</string>
+        <string name="side_emulators">Emulators</string>
+        <string name="side_packages">Packages</string>
+        <string name="side_permissions">Permissions</string>
+        <string name="side_keyboard">Keyboard</string>
+        <string name="side_ports">Ports</string>
+        <string name="side_scaling">Scaling</string>
+        <string name="side_logcat">Logcat</string>
+        <string name="side_adb_ogs">ADB Logs</string>
+        <string name="side_device">Device</string>
+        <string name="side_misc">Misc</string>
+        <string name="side_settings">Settings</string>
+        <string name="side_version">Version: %1$s</string>
 </resources>
