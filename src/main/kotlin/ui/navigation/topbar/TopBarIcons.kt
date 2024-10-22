@@ -107,7 +107,7 @@ fun TopBarIcons(model: AppStore = koinInject()) {
                 model.onForwardUserInputToggle(forwardUserInputState)
             },
             description = "Input",
-            toggle = forwardUserInputState,
+            toggle = model.state.isUserForwardInputEnabled,
         )
         BtnWithText(
             icon = TablerIcons.Notes,
