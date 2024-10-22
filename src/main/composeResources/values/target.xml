@@ -2,4 +2,6 @@
     <string name="target_adb_start">Start Server</string>
     <string name="target_adb_kill">Kill Server</string>
     <string name="target_adb_usb">USB mode</string>
+    <string name="target_label_port">Port (1-65535)</string>
+    <string name="target_adb_tcp_ip">Adb tcpip</string>
 </resources>

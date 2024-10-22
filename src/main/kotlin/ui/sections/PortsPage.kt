@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import compose.icons.LineaIcons
@@ -50,6 +51,7 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     value = inputReverseFrom,
+                    keyboardType = KeyboardType.Number,
                     label = "Reverse (Device port)",
                     onValueChange = { value -> inputReverseFrom = value }
                 )
@@ -57,6 +59,7 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     value = inputReverseTo,
+                    keyboardType = KeyboardType.Number,
                     label = "Reverse (Machine port)",
                     onValueChange = { value -> inputReverseTo = value }
                 )
@@ -104,6 +107,7 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     value = inputForwardFrom,
+                    keyboardType = KeyboardType.Number,
                     label = "Forward (Machine port)",
                     onValueChange = { value -> inputForwardFrom = value }
                 )
@@ -111,6 +115,7 @@ fun PortsPage(
                     modifier = Modifier.padding(6.dp).weight(0.5f),
                     singleLine = true,
                     value = inputForwardTo,
+                    keyboardType = KeyboardType.Number,
                     label = "Forward (Device port)",
                     onValueChange = { value -> inputForwardTo = value }
                 )

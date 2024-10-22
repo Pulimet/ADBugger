@@ -678,4 +678,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.adbUsb() }
     }
 
+    fun onAdbTcpIp(port: String) {
+        launch { terminal.adbTcpIp(port) }
+    }
+
 }

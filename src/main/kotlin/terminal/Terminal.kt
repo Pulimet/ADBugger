@@ -426,5 +426,9 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.run(Commands.getAdbUsb(), printResults = true)
     }
 
+    suspend fun adbTcpIp(port: String) {
+        launcher.run(Commands.getAdbTcpIp(port), printResults = true)
+    }
+
 
 }
