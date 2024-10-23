@@ -8,19 +8,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.welcome_description
+import net.alexandroid.adbugger.adbugger.generated.resources.welcome_title
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.Dimensions
 
 @Composable
 fun WelcomeAndDescription() {
     Text(
-        text = "Welcome to ADBugger!",
+        text = stringResource(Res.string.welcome_title),
         fontSize = Dimensions.titleFontSize,
         textAlign = TextAlign.Center,
         color = Color.LightGray,
         modifier = Modifier.fillMaxWidth(),
     )
     Text(
-        text = "ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.",
+        text = stringResource(Res.string.welcome_description),
         fontSize = Dimensions.subtitleFontSize,
         textAlign = TextAlign.Start,
         color = Color.LightGray,

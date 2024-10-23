@@ -1,0 +1,37 @@
+<resources>
+    <string name="welcome_title">Welcome to ADBugger!</string>
+    <string name="welcome_description">ADBugger is a desktop tool for debugging and QA of Android devices and emulators. It simplifies testing, debugging, and performance analysis, offering device management, automated testing, log analysis, and remote control capabilities to ensure smooth app performance across different setups.</string>
+    <string name="welcome_release_notes">Release notes</string>
+
+    <string name="welcome_v1_0_4">Version 1.0.4 (22 September 2024)</string>
+    <string name="welcome_v1_0_3">Version 1.0.3 (01 August 2024)</string>
+    <string name="welcome_v1_0_2">Version 1.0.2 (23 July 2024)</string>
+    <string name="welcome_v1_0_1">Version 1.0.1 (17 July 2024)</string>
+    <string name="welcome_v1_0_0">Version 1.0.0 (16 July 2024)</string>
+
+    <string name="welcome_v1_0_4_desc">    - Allow setting a path for platform tools and emulators.
+    - Support all useful configurations for emulator launch.
+    - Allow changing the following configurations: Location mode, airplane mode, Wifi mode, Rotation.
+    - Scaling page refactoring, supporting display size change, better UI, and supporting custom values.
+    - Windows OS support</string>
+
+    <string name="welcome_v1_0_3_desc">    - New Logcat section with the ability to filter logs by priority and tag.
+    - Support multiple target selection for executing commands.</string>
+
+    <string name="welcome_v1_0_2_desc">    - Support installing APK chosen with file picker.
+    - Allow to add package names to favorites and to view them in separate tab.</string>
+
+    <string name="welcome_v1_0_1_desc">    - Support forwarding input of: Enter, Dot, Comma.
+    - New status line with selected target and package name.
+    - Adb Logger - allow copying all or specific log.</string>
+
+    <string name="welcome_v1_0_0_desc">    - Get a list of connected devices and running emulators.
+    - Retrieve a list of installed packages on the selected target.
+    - Launch and terminate emulators.
+    - Grant and remove permissions for specific packages.
+    - Send input events using buttons in the app or via keyboard.
+    - List and adb reverse specific ports.
+    - Launch commands simultaneously across all connected devices and emulators.
+    - Show which command is actually launched under the hood.</string>
+
+</resources>
