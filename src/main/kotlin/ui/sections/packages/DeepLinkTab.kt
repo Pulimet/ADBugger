@@ -23,5 +23,4 @@ fun DeepLinkTab(model: AppStore = koinInject()) {
             width = 120.dp,
         )
     }
-
 }

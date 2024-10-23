@@ -11,7 +11,7 @@ import ui.sections.PermissionsPage
 import ui.sections.PortsPage
 import ui.sections.ScalingPage
 import ui.sections.SettingsPage
-import ui.sections.WelcomePage
+import ui.sections.welcome.WelcomePage
 import ui.sections.emulator.EmulatorsPage
 import ui.sections.input.InputPage
 import ui.sections.logcat.LogcatPage
