@@ -1,4 +1,18 @@
 <resources>
+    <!-- Tabs -->
+    <string name="target_save_selected_tab_key">TargetTabs</string>
+    <string-array name="target_tabs">
+        <item>Select</item>
+        <item>Connect</item>
+    </string-array>
+
+    <!-- Select Tab-->
+    <string name="target_type_all_devices">All Devices</string>
+    <string name="target_btn_refresh_list">Refresh List</string>
+    <string name="target_desc_radio_btn">Radio Button</string>
+    <string name="target_btn_kill_emulator">Kill Emulator</string>
+
+    <!-- Connect Tab-->
     <string name="target_adb_start">Start Server</string>
     <string name="target_adb_kill">Kill Server</string>
     <string name="target_adb_usb">USB mode</string>
@@ -11,4 +25,5 @@
     <string name="target_adb_disconnect">Adb disconnect</string>
     <string name="target_adb_pair">Adb pair</string>
     <string name="target_get_device_ip">Get device IP</string>
+    <string name="target_save_ip_value_key">target_connect_ip_input</string>
 </resources>

@@ -21,6 +21,10 @@ import compose.icons.evaicons.outline.RadioButtonOn
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
 import model.TargetInfo
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.target_btn_kill_emulator
+import net.alexandroid.adbugger.adbugger.generated.resources.target_desc_radio_btn
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.MyColors
@@ -51,7 +55,7 @@ fun TargetItem(
             val imageVector = if (isSelected) selectedVector else EvaIcons.Outline.RadioButtonOff
             Icon(
                 imageVector = imageVector,
-                contentDescription = "Radio Button",
+                contentDescription = stringResource(Res.string.target_desc_radio_btn),
                 tint = if (isSelected) MyColors.radioButtonSelected else MyColors.radioButtonUnselected
             )
         }
@@ -67,7 +71,7 @@ fun TargetItem(
             BtnWithText(
                 icon = FontAwesomeIcons.Solid.BookDead,
                 onClick = { model.onKillEmulatorClick(item.serial) },
-                description = "Kill Emulator",
+                description = stringResource(Res.string.target_btn_kill_emulator),
                 modifier = Modifier.padding(horizontal = 8.dp),
                 width = 120.dp,
             )

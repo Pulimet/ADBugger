@@ -28,6 +28,7 @@ import net.alexandroid.adbugger.adbugger.generated.resources.target_get_device_i
 import net.alexandroid.adbugger.adbugger.generated.resources.target_label_ip
 import net.alexandroid.adbugger.adbugger.generated.resources.target_label_paring_code
 import net.alexandroid.adbugger.adbugger.generated.resources.target_label_port
+import net.alexandroid.adbugger.adbugger.generated.resources.target_save_ip_value_key
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
@@ -37,8 +38,9 @@ import ui.widgets.buttons.BtnWithText
 
 @Composable
 fun TargetConnectionTab(model: AppStore = koinInject()) {
-    var inputPortTcpIp by remember { mutableStateOf(TextFieldValue("5555")) }
-    var inputPortConnect by remember { mutableStateOf(TextFieldValue("5555")) }
+    val defaultPort = "5555"
+    var inputPortTcpIp by remember { mutableStateOf(TextFieldValue(defaultPort)) }
+    var inputPortConnect by remember { mutableStateOf(TextFieldValue(defaultPort)) }
     var inputIpConnect by remember { mutableStateOf(TextFieldValue("")) }
     var inputParingCode by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -102,7 +104,7 @@ fun TargetConnectionTab(model: AppStore = koinInject()) {
                 padding = PaddingValues(top = 3.dp),
                 keyboardType = KeyboardType.Uri,
                 label = stringResource(Res.string.target_label_ip),
-                saveValueKey = "target_connect_ip_input",
+                saveValueKey = stringResource(Res.string.target_save_ip_value_key),
                 onValueChange = { value -> inputIpConnect = value }
             )
             TextFieldX(

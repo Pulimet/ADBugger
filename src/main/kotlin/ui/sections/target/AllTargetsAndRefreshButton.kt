@@ -14,6 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import model.TargetInfo
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.target_btn_refresh_list
+import net.alexandroid.adbugger.adbugger.generated.resources.target_type_all_devices
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -26,10 +30,12 @@ fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
+        modifier = Modifier.fillMaxWidth()
+            .clip(shape = RoundedCornerShape(Dimensions.pageCornerRadius))
             .background(MyColors.bg).padding(vertical = 8.dp)
     ) {
-        val allDevices = TargetInfo(AppStore.ALL_DEVICES, "All Devices")
+        val allDevices =
+            TargetInfo(AppStore.ALL_DEVICES, stringResource(Res.string.target_type_all_devices))
         TargetItem(
             allDevices,
             state.selectedTargetsList.isEmpty(),
@@ -42,7 +48,7 @@ fun AllTargetsAndRefreshButton(model: AppStore = koinInject()) {
             modifier = Modifier.padding(horizontal = 8.dp),
             enabled = true,
             onClick = { model.getDevicesList() },
-            description = "Refresh List",
+            description = stringResource(Res.string.target_btn_refresh_list),
             width = 120.dp,
         )
     }
