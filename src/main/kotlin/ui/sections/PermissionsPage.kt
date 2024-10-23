@@ -20,6 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_list
+import org.jetbrains.compose.resources.stringArrayResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -66,6 +69,7 @@ fun PermissionsPage(
                     value = textInputPermissionState,
                     label = "Permission",
                     onValueChange = { value -> textInputPermissionState = value },
+                    suggestionsList = stringArrayResource(Res.array.permissions_list),
                     onSuggestionSelected = { value -> textInputPermissionState = value }
                 )
 
