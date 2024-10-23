@@ -32,7 +32,7 @@ object Dimensions {
     val btnWithTextFontSize = 10.sp
 
     // TopMenu
-    val logoFontSize = 24.sp
+    val logoFontSize = 22.sp
     val topBarHeight = 50.dp
 
     // SideBar

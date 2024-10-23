@@ -26,7 +26,7 @@ import ui.theme.Dimensions
 import ui.widgets.CardX
 import ui.widgets.SearchView
 import ui.widgets.Table
-import ui.widgets.TextFieldX
+import ui.widgets.TextFieldAuto
 import ui.widgets.buttons.BtnWithText
 
 
@@ -61,12 +61,12 @@ fun PermissionsPage(
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                TextFieldX(
+                TextFieldAuto(
                     modifier = Modifier.weight(1f),
-                    singleLine = true,
                     value = textInputPermissionState,
                     label = "Permission",
-                    onValueChange = { value -> textInputPermissionState = value }
+                    onValueChange = { value -> textInputPermissionState = value },
+                    onSuggestionSelected = { value -> textInputPermissionState = value }
                 )
 
                 BtnWithText(
