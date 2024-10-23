@@ -17,9 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.keycodes_int
+import net.alexandroid.adbugger.adbugger.generated.resources.keycodes_string
+import org.jetbrains.compose.resources.stringArrayResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.CardX
+import ui.widgets.TextFieldAuto
 import ui.widgets.TextFieldX
 import ui.widgets.buttons.BtnIcon
 
@@ -74,14 +79,16 @@ fun InputCustom(model: AppStore = koinInject()) {
                 modifier = Modifier.fillMaxWidth()
             )
             {
-                TextFieldX(
+                TextFieldAuto(
                     modifier = Modifier.padding(6.dp).weight(1f),
-                    singleLine = true,
                     value = textInputSendInputState,
                     label = "Send input/key to device/s",
-                    onValueChange = { value -> textInputSendInputState = value }
+                    width = 500.dp,
+                    onValueChange = { value -> textInputSendInputState = value },
+                    suggestionsList = stringArrayResource(Res.array.keycodes_int),
+                    suggestionsDescriptionList = stringArrayResource(Res.array.keycodes_string),
+                    onSuggestionSelected = { value -> textInputSendInputState = value }
                 )
-
                 BtnIcon(
                     icon = Icons.AutoMirrored.Rounded.Send,
                     modifier = Modifier.padding(start = 8.dp, end = 16.dp),

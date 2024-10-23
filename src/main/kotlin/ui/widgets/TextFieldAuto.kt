@@ -28,6 +28,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.Dp
@@ -45,22 +46,43 @@ fun TextFieldAuto(
     label: String,
     onValueChange: (TextFieldValue) -> Unit,
     suggestionsList: List<String> = listOf(),
+    suggestionsDescriptionList: List<String> = listOf(),
     onSuggestionSelected: (TextFieldValue) -> Unit = {},
-    width: Dp = 360.dp
+    width: Dp = 360.dp,
+    requestInitialFocus: Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Text,
 ) {
     val focusRequester = remember { FocusRequester() }
     var expanded by remember { mutableStateOf(false) }
 
     val filteredSuggestions = remember(value.text) { // Recalculate when value changes
-        suggestionsList.filter { suggestion ->
-            suggestion.contains(value.text, ignoreCase = true)
+        suggestionsList.filterIndexed { index, suggestion ->
+            if (suggestionsDescriptionList.isEmpty()) {
+                suggestion.contains(value.text, ignoreCase = true)
+            } else {
+                suggestion.contains(value.text, ignoreCase = true)
+                        || suggestionsDescriptionList[index].contains(value.text, ignoreCase = true)
+            }
+        }
+    }
+
+    val filteredSuggestionsDescription = remember(value.text) { // Recalculate when value changes
+        suggestionsDescriptionList.filterIndexed { index, suggestionDescription ->
+            if (suggestionsDescriptionList.isEmpty()) {
+                suggestionDescription.contains(value.text, ignoreCase = true)
+            } else {
+                suggestionDescription.contains(value.text, ignoreCase = true)
+                        || suggestionsList[index].contains(value.text, ignoreCase = true)
+            }
         }
     }
 
     val stateVertical = rememberScrollState(0)
 
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+        if (requestInitialFocus) {
+            focusRequester.requestFocus()
+        }
     }
 
     Box(modifier = modifier, contentAlignment = Alignment.TopStart) {
@@ -69,6 +91,7 @@ fun TextFieldAuto(
                 modifier = Modifier.width(width).focusRequester(focusRequester),
                 value = value,
                 label = label,
+                keyboardType = keyboardType,
                 onValueChange = {
                     if (!expanded && it != value) {
                         expanded = true
@@ -84,7 +107,7 @@ fun TextFieldAuto(
                     properties = PopupProperties(focusable = false),
                     onDismissRequest = { expanded = false })
                 {
-                    DropdownMenuContent(filteredSuggestions) {
+                    DropdownMenuContent(filteredSuggestions, filteredSuggestionsDescription) {
                         expanded = false
                         onSuggestionSelected(it)
                     }
@@ -98,9 +121,10 @@ fun TextFieldAuto(
 @Composable
 fun DropdownMenuContent(
     filteredSuggestions: List<String>,
+    filteredSuggestionsDescription: List<String>,
     onSuggestionSelected: (TextFieldValue) -> Unit = {},
 ) {
-    filteredSuggestions.forEach { selectionOption ->
+    filteredSuggestions.forEachIndexed { index, selectionOption ->
         DropdownMenuItem(onClick = {
             onSuggestionSelected(
                 TextFieldValue(
@@ -109,15 +133,24 @@ fun DropdownMenuContent(
                 )
             )
         }) {
-            SuggestionItemContent(selectionOption)
+            if (filteredSuggestionsDescription.isNotEmpty()) {
+                SuggestionItemContent(selectionOption, filteredSuggestionsDescription[index])
+            } else {
+                SuggestionItemContent(selectionOption, null)
+            }
         }
     }
 }
 
 @Composable
-private fun SuggestionItemContent(option: String) {
+private fun SuggestionItemContent(option: String, description: String?) {
+    val text = if (description == null) {
+        option
+    } else {
+        "$option - $description"
+    }
     Text(
-        text = option,
+        text = text,
         color = Color.LightGray,
         style = LocalTextStyle.current.copy(
             fontSize = 13.sp, lineHeight = 0.sp, lineHeightStyle = LineHeightStyle(

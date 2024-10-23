@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun InputPage(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
+        InputCustom()
         InputLetters()
         Row {
             InputNumbers(Modifier.weight(0.5f).height(180.dp))
             InputArrows(Modifier.weight(0.5f).height(180.dp))
         }
-        InputCustom()
     }
 }
 
