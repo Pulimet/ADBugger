@@ -39,6 +39,13 @@ fun TextFieldAuto(
     val focusRequester = remember { FocusRequester() }
     var expanded by remember { mutableStateOf(false) }
 
+    val filteredSuggestions = remember(value.text) { // Recalculate when value changes
+        suggestionsList.filter { suggestion ->
+            suggestion.contains(value.text, ignoreCase = true)
+        }
+    }
+
+
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
@@ -60,7 +67,7 @@ fun TextFieldAuto(
             modifier = Modifier.background(MyColors.bg).width(width),
             properties = PopupProperties(focusable = false),
             onDismissRequest = { expanded = false }) {
-            suggestionsList.forEachIndexed { index, selectionOption ->
+            filteredSuggestions.forEachIndexed { index, selectionOption ->
                 DropdownMenuItem(onClick = {
                     expanded = false
                     onSuggestionSelected(
