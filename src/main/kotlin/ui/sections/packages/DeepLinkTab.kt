@@ -18,8 +18,8 @@ fun DeepLinkTab(model: AppStore = koinInject()) {
         BtnWithText(
             icon = TablerIcons.BrandAndroid,
             modifier = Modifier.padding(horizontal = 8.dp),
-            onClick = { },
-            description = "Test",
+            onClick = { model.onOpenDeepLink("url")},
+            description = "Open",
             width = 120.dp,
         )
     }

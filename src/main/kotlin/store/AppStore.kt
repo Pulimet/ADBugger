@@ -706,4 +706,8 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         launch { terminal.getDeviceIp(state.selectedTargetsList) }
     }
 
+    fun onOpenDeepLink(url: String) {
+        launch { terminal.openDeepLink(state.selectedTargetsList, url) }
+    }
+
 }

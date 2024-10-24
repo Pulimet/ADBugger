@@ -450,4 +450,10 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.runAdbShell(selectedTargetsList, Commands.getDeviceIp(), printResults = true)
     }
 
+    suspend fun openDeepLink(selectedTargetsList: List<String>, url: String) {
+        selectedTargetsList.forEach {
+            launcher.runAdbShellCommand(it, AmCommands.getOpenDeepLink(url, it))
+        }
+    }
+
 }

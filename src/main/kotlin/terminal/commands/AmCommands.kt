@@ -3,6 +3,7 @@ package terminal.commands
 import model.Extras
 
 object AmCommands {
+    private const val DEFAULT_ACTION_VIEW = "-a android.intent.action.VIEW"
     private const val DEFAULT_ACTION_CATEGORY =
         "-a android.intent.action.VIEW -c android.intent.category.DEFAULT"
 
@@ -11,6 +12,8 @@ object AmCommands {
     fun getCloseCommand(packageName: String) = "am force-stop  $packageName"
 
     // fun getSetClipboard(text: String) = "am broadcast -a clipper.set -e text $text"
+
+    fun getOpenDeepLink(url: String, packageName: String) = "am start -W $DEFAULT_ACTION_VIEW -d \"$url\" $packageName"
 
     fun getOpenPackageCommand(selectedActivity: String, extrasMap: List<Extras>): String {
         val extras = extrasMap.map { parseExtra(it) }
