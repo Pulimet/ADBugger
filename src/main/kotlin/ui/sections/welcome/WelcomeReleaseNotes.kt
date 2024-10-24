@@ -20,6 +20,8 @@ import net.alexandroid.adbugger.adbugger.generated.resources.welcome_v1_0_3
 import net.alexandroid.adbugger.adbugger.generated.resources.welcome_v1_0_3_desc
 import net.alexandroid.adbugger.adbugger.generated.resources.welcome_v1_0_4
 import net.alexandroid.adbugger.adbugger.generated.resources.welcome_v1_0_4_desc
+import net.alexandroid.adbugger.adbugger.generated.resources.welcome_v1_0_5
+import net.alexandroid.adbugger.adbugger.generated.resources.welcome_v1_0_5_desc
 import org.jetbrains.compose.resources.stringResource
 import ui.theme.Dimensions
 
@@ -32,6 +34,7 @@ fun WelcomeReleaseNotes() {
         color = Color.LightGray,
         modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp)
     )
+    WelcomeVersion(Res.string.welcome_v1_0_5, Res.string.welcome_v1_0_5_desc)
     WelcomeVersion(Res.string.welcome_v1_0_4, Res.string.welcome_v1_0_4_desc)
     WelcomeVersion(Res.string.welcome_v1_0_3, Res.string.welcome_v1_0_3_desc)
     WelcomeVersion(Res.string.welcome_v1_0_2, Res.string.welcome_v1_0_2_desc)
