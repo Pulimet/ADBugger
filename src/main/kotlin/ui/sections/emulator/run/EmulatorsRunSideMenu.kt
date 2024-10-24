@@ -14,6 +14,10 @@ import androidx.compose.ui.unit.dp
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.BookDead
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.emulators_btn_kill_all
+import net.alexandroid.adbugger.adbugger.generated.resources.emulators_btn_refresh_list
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -32,13 +36,13 @@ fun EmulatorsRunSideMenu(modifier: Modifier = Modifier, model: AppStore = koinIn
         BtnWithText(
             icon = Icons.Rounded.Refresh,
             onClick = { model.getEmulatorsListClick() },
-            description = "Refresh List",
+            description = stringResource(Res.string.emulators_btn_refresh_list),
             width = 70.dp
         )
         BtnWithText(
             icon = FontAwesomeIcons.Solid.BookDead,
             onClick = { model.onKillAllEmulatorClick() },
-            description = "Kill All",
+            description = stringResource(Res.string.emulators_btn_kill_all),
             width = 70.dp
         )
     }

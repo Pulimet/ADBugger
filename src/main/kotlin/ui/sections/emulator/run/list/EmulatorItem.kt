@@ -14,14 +14,25 @@ import compose.icons.LineAwesomeIcons
 import compose.icons.TablerIcons
 import compose.icons.lineawesomeicons.Android
 import compose.icons.tablericons.Wiper
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.emulators_btn_launch_emulator
+import net.alexandroid.adbugger.adbugger.generated.resources.emulators_btn_wipe_data
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
 import ui.widgets.buttons.BtnWithText
 
 @Composable
-fun EmulatorItem(emulatorName: String, model: AppStore = koinInject(), onLaunchEmulatorClick: (String) -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().height(50.dp)) {
+fun EmulatorItem(
+    emulatorName: String,
+    model: AppStore = koinInject(),
+    onLaunchEmulatorClick: (String) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth().height(50.dp)
+    ) {
         Text(
             text = emulatorName,
             color = Color.White,
@@ -33,14 +44,14 @@ fun EmulatorItem(emulatorName: String, model: AppStore = koinInject(), onLaunchE
             BtnWithText(
                 icon = TablerIcons.Wiper,
                 onClick = { model.onWipeAndLaunch(emulatorName) },
-                description = "Wipe Data",
+                description = stringResource(Res.string.emulators_btn_wipe_data),
                 modifier = Modifier.padding(end = 4.dp),
                 width = Dimensions.btnEmulatorWidth
             )
             BtnWithText(
                 icon = LineAwesomeIcons.Android,
                 onClick = { onLaunchEmulatorClick(emulatorName) },
-                description = "Launch Emulator",
+                description = stringResource(Res.string.emulators_btn_launch_emulator),
                 modifier = Modifier.padding(end = 8.dp),
                 width = Dimensions.btnEmulatorWidth
             )

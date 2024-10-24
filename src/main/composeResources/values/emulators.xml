@@ -1,0 +1,16 @@
+<resources>
+    <!-- Tabs -->
+    <string name="emulators_save_selected_tab_key">EmulatorsTabs</string>
+    <string-array name="emulators_tabs">
+        <item>Run Emulator</item>
+        <item>Create Device</item>
+        <item>Install Image</item>
+    </string-array>
+
+    <!-- Run Emulator Tab -->
+    <string name="emulators_launch_props">Launch Properties (Expandable)</string>
+    <string name="emulators_btn_refresh_list">Refresh List</string>
+    <string name="emulators_btn_kill_all">Kill All</string>
+    <string name="emulators_btn_wipe_data">Wipe Data</string>
+    <string name="emulators_btn_launch_emulator">Launch Emulator</string>
+</resources>
