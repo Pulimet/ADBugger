@@ -16,6 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import model.Package
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_get_packages_list
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_drop_down_package_type
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.PmCommands
@@ -48,7 +52,7 @@ fun PackageNoneAndRefreshButton(
         Dropdown(
             options = PmCommands.optionsList,
             optionsDetails = PmCommands.optionsListDetails,
-            title = "Package type",
+            title = stringResource(Res.string.packages_drop_down_package_type),
             minWidth = 120.dp,
             onOptionSelected = { selectedOption = it },
             contentModifier = Modifier.background(MyColors.bg2),
@@ -61,7 +65,7 @@ fun PackageNoneAndRefreshButton(
             visible = !state.isPackagesLoading && state.selectedTargetsList.isNotEmpty(),
             enabled = true,
             onClick = { model.onGetPackageListClick(selectedOption) },
-            description = "Get Packages List",
+            description = stringResource(Res.string.packages_btn_get_packages_list),
             width = 120.dp,
         )
     }

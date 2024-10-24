@@ -7,6 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_save_selected_tab_key
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_tabs
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.MyColors
 import ui.widgets.tabs.Tabs
 
@@ -17,8 +22,8 @@ fun PackagesMain(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Tabs(
-                listOf("Device Packages", "Favorites", "Launcher", "Deep Links"),
-                saveSelectedTabKey = "PackagesTabs"
+                stringArrayResource(Res.array.packages_tabs),
+                saveSelectedTabKey = stringResource(Res.string.packages_save_selected_tab_key)
             ) {
                 when (it) {
                     0 -> DevicePackagesTab()

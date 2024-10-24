@@ -14,6 +14,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandAndroid
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_open
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_input_deep_link
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_save_value_key_input_deep_link
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.TextFieldX
@@ -29,16 +34,16 @@ fun DeepLinkTab(model: AppStore = koinInject()) {
             onValueChange = { newText ->
                 selectedUrl = newText
             },
-            label = "Deep Link (example://site_url)",
+            label = stringResource(Res.string.packages_input_deep_link),
             modifier = Modifier.weight(1f),
-            saveValueKey = "deep_link_url",
+            saveValueKey = stringResource(Res.string.packages_save_value_key_input_deep_link),
             padding = PaddingValues(top = 6.dp)
         )
         BtnWithText(
             icon = TablerIcons.BrandAndroid,
             modifier = Modifier.padding(horizontal = 8.dp),
             onClick = { model.onOpenDeepLink(selectedUrl.text) },
-            description = "Open",
+            description = stringResource(Res.string.packages_btn_open),
         )
     }
 }

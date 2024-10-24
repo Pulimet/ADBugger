@@ -1,0 +1,39 @@
+<resources>
+    <!-- Tabs -->
+    <string name="packages_save_selected_tab_key">PackagesTabs</string>
+    <string-array name="packages_tabs">
+        <item>Device Packages</item>
+        <item>Favorites</item>
+        <item>Launcher</item>
+        <item>Deep Links</item>
+    </string-array>
+
+    <!-- Tab Deep Links-->
+    <string name="packages_input_deep_link">Deep Link (example://site_url)</string>
+    <string name="packages_save_value_key_input_deep_link">deep_link_url</string>
+    <string name="packages_btn_open">Open</string>
+
+    <!-- Tab Packages Launcher-->
+    <string name="packages_btn_get_activities">Get Activities</string>
+    <string name="packages_label_selected_activity">Component (ex: com.your.app/com.your.app.MainActivity)</string>
+    <string name="packages_btn_launch">Launch</string>
+    <string name="packages_label_key">Key</string>
+    <string name="packages_label_value">Value</string>
+    <string name="packages_title_type">Type</string>
+    <string name="packages_btn_add">Add</string>
+
+    <string-array name="packages_table_columns">
+        <item>Key</item>
+        <item>Value</item>
+        <item>Type</item>
+    </string-array>
+
+    <!-- Tab Packages Favorite-->
+    <string name="packages_search_view_package">Search your package</string>
+    <string name="packages_btn_add_to_favorites">Add to favorites</string>
+    <string name="packages_btn_remove_from_favorites">Remove from favorites</string>
+
+    <!-- Tab Device Packages-->
+    <string name="packages_drop_down_package_type">Package type</string>
+    <string name="packages_btn_get_packages_list">Get Packages List</string>
+</resources>

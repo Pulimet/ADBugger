@@ -16,6 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.Package
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_add_to_favorites
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_remove_from_favorites
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.Dimensions
 import ui.theme.MyColors
 import ui.widgets.buttons.BtnIcon
@@ -36,7 +40,9 @@ fun PackageItem(
         modifier = modifier.clickable(onClick = { onClicked(item) })
     ) {
         RadioButton(
-            selected = isSelected, onClick = { onClicked(item) }, colors = RadioButtonDefaults.colors(
+            selected = isSelected,
+            onClick = { onClicked(item) },
+            colors = RadioButtonDefaults.colors(
                 selectedColor = MyColors.radioButtonSelected,
                 unselectedColor = MyColors.radioButtonUnselected
             )
@@ -52,7 +58,7 @@ fun PackageItem(
             BtnIcon(
                 icon = Icons.Rounded.Star,
                 modifier = Modifier.padding(horizontal = 16.dp),
-                description = "Add to favorites",
+                description = stringResource(Res.string.packages_btn_add_to_favorites),
                 buttonSize = Dimensions.btnSizeSmall,
                 iconSize = Dimensions.btnIconSizeSmall,
                 showTooltip = false,
@@ -66,7 +72,7 @@ fun PackageItem(
             BtnIcon(
                 icon = Icons.Rounded.Delete,
                 modifier = Modifier.padding(horizontal = 16.dp),
-                description = "Remove from favorites",
+                description = stringResource(Res.string.packages_btn_remove_from_favorites),
                 buttonSize = Dimensions.btnSizeSmall,
                 iconSize = Dimensions.btnIconSizeSmall,
                 showTooltip = false,

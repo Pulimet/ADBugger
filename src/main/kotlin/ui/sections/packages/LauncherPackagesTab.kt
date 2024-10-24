@@ -18,6 +18,17 @@ import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.BrandAndroid
 import compose.icons.tablericons.Plus
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_add
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_get_activities
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_btn_launch
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_label_key
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_label_selected_activity
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_label_value
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_table_columns
+import net.alexandroid.adbugger.adbugger.generated.resources.packages_title_type
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.AmCommands
@@ -47,7 +58,7 @@ fun LauncherPackagesTab(model: AppStore = koinInject()) {
             BtnWithText(
                 icon = TablerIcons.BrandAndroid,
                 onClick = { model.onGetPackageActivities() },
-                description = "Get Activities",
+                description = stringResource(Res.string.packages_btn_get_activities),
                 width = 80.dp,
                 modifier = Modifier.padding(end = 8.dp)
             )
@@ -56,14 +67,14 @@ fun LauncherPackagesTab(model: AppStore = koinInject()) {
                 onValueChange = { newText ->
                     selectedActivity = newText
                 },
-                label = "Component (ex: com.your.app/com.your.app.MainActivity)",
+                label = stringResource(Res.string.packages_label_selected_activity),
                 modifier = Modifier.weight(1f),
                 padding = PaddingValues(top = 6.dp)
             )
             BtnWithText(
                 icon = TablerIcons.BrandAndroid,
                 onClick = { model.testLaunch(selectedActivity.text) },
-                description = "Launch",
+                description = stringResource(Res.string.packages_btn_launch),
                 width = 70.dp,
             )
         }
@@ -75,7 +86,7 @@ fun LauncherPackagesTab(model: AppStore = koinInject()) {
                     key = newText
                 },
                 padding = PaddingValues(top = 7.dp),
-                label = "Key",
+                label = stringResource(Res.string.packages_label_key),
                 modifier = Modifier.weight(0.3f),
             )
             TextFieldX(
@@ -84,14 +95,14 @@ fun LauncherPackagesTab(model: AppStore = koinInject()) {
                     value = newText
                 },
                 padding = PaddingValues(top = 7.dp, start = 6.dp, end = 6.dp),
-                label = "Value",
+                label = stringResource(Res.string.packages_label_value),
                 modifier = Modifier.weight(0.3f),
             )
 
             Dropdown(
                 options = AmCommands.typesLists,
                 optionsDetails = AmCommands.typesListsDetails,
-                title = "Type",
+                title = stringResource(Res.string.packages_title_type),
                 onOptionSelected = { selectedType = it },
                 modifier = Modifier.padding(top = 1.dp),
                 contentModifier = Modifier.background(MyColors.bg2),
@@ -101,14 +112,14 @@ fun LauncherPackagesTab(model: AppStore = koinInject()) {
             BtnWithText(
                 icon = TablerIcons.Plus,
                 onClick = { model.addExtra(key.text, value.text, selectedType) },
-                description = "Add",
+                description = stringResource(Res.string.packages_btn_add),
                 width = 70.dp,
             )
         }
 
         Table(
             3,
-            listOf("Key", "Value", "Type"),
+            stringArrayResource(Res.array.packages_table_columns),
             extrasListOfList,
             listOf(0.4f, 0.4f, 0.2f),
             listOf(0, 1),
