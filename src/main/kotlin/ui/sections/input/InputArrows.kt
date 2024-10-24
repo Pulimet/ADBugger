@@ -1,6 +1,10 @@
 package ui.sections.input
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -9,6 +13,12 @@ import compose.icons.octicons.ArrowDown24
 import compose.icons.octicons.ArrowLeft24
 import compose.icons.octicons.ArrowRight24
 import compose.icons.octicons.ArrowUp24
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_down
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_left
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_right
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_up
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.CardX
@@ -32,7 +42,7 @@ fun InputArrows(
                     icon = Octicons.ArrowUp24,
                     modifier = Modifier.padding(horizontal = 4.dp),
                     onClick = { model.onUpClick() },
-                    description = "Up"
+                    description = stringResource(Res.string.input_btn_up)
                 )
             }
             Row(
@@ -43,19 +53,19 @@ fun InputArrows(
                     icon = Octicons.ArrowLeft24,
                     modifier = Modifier.padding(horizontal = 4.dp),
                     onClick = { model.onLeftClick() },
-                    description = "Left"
+                    description = stringResource(Res.string.input_btn_left)
                 )
                 BtnIcon(
                     icon = Octicons.ArrowDown24,
                     modifier = Modifier.padding(horizontal = 4.dp),
                     onClick = { model.onDownClick() },
-                    description = "Down"
+                    description = stringResource(Res.string.input_btn_down)
                 )
                 BtnIcon(
                     icon = Octicons.ArrowRight24,
                     modifier = Modifier.padding(horizontal = 4.dp),
                     onClick = { model.onRightClick() },
-                    description = "Right"
+                    description = stringResource(Res.string.input_btn_right)
                 )
             }
         }

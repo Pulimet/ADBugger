@@ -1,4 +1,14 @@
 <resources>
+    <string name="input_label_send_text">Send text to device/s</string>
+    <string name="input_btn_send_text">Send text to device</string>
+    <string name="input_btn_backspace">Backspace</string>
+    <string name="input_label_send_key">Send input/key to device/s</string>
+    <string name="input_btn_send_key">Send input/key to device</string>
+    <string name="input_btn_up">Up</string>
+    <string name="input_btn_down">Down</string>
+    <string name="input_btn_left">Left</string>
+    <string name="input_btn_right">Right</string>
+
     <string-array name="keycodes_string">
         <item>UNKNOWN</item>
         <item>SOFT_LEFT</item>

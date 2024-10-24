@@ -18,9 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_backspace
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_send_key
+import net.alexandroid.adbugger.adbugger.generated.resources.input_btn_send_text
+import net.alexandroid.adbugger.adbugger.generated.resources.input_label_send_key
+import net.alexandroid.adbugger.adbugger.generated.resources.input_label_send_text
 import net.alexandroid.adbugger.adbugger.generated.resources.keycodes_int
 import net.alexandroid.adbugger.adbugger.generated.resources.keycodes_string
 import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.widgets.CardX
@@ -45,7 +51,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                     modifier = Modifier.padding(6.dp).weight(1f),
                     singleLine = true,
                     value = textInputSendTextState,
-                    label = "Send text to device/s",
+                    label = stringResource(Res.string.input_label_send_text),
                     onValueChange = { value -> textInputSendTextState = value }
                 )
 
@@ -54,7 +60,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputSendTextState.text.isNotEmpty(),
                     onClick = { model.onSendTextClick(textInputSendTextState.text) },
-                    description = "Send text to device"
+                    description = stringResource(Res.string.input_btn_send_text)
                 )
 
                 BtnIcon(
@@ -70,7 +76,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                                 TextFieldValue(text.substring(0, textLength - 1))
                         }
                     },
-                    description = "Backspace"
+                    description = stringResource(Res.string.input_btn_backspace)
                 )
             }
             Row(
@@ -82,7 +88,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                 TextFieldAuto(
                     modifier = Modifier.padding(6.dp).weight(1f),
                     value = textInputSendInputState,
-                    label = "Send input/key to device/s",
+                    label = stringResource(Res.string.input_label_send_key),
                     width = 500.dp,
                     onValueChange = { value -> textInputSendInputState = value },
                     suggestionsList = stringArrayResource(Res.array.keycodes_int),
@@ -94,7 +100,7 @@ fun InputCustom(model: AppStore = koinInject()) {
                     modifier = Modifier.padding(start = 8.dp, end = 16.dp),
                     enabled = textInputSendInputState.text.isNotEmpty(),
                     onClick = { model.onSendInputClick(textInputSendInputState.text.toInt()) },
-                    description = "Send input/key to device"
+                    description = stringResource(Res.string.input_btn_send_key)
                 )
             }
         }
