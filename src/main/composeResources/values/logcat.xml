@@ -1,0 +1,15 @@
+<resources>
+    <string name="logcat_dropdown_buffer">Buffer</string>
+    <string name="logcat_dropdown_format">Format</string>
+    <string name="logcat_dropdown_level">Level</string>
+    <string name="logcat_label_tag_">Tag</string>
+    <string name="logcat_label_search">Search</string>
+    <string name="logcat_btn_start">Start</string>
+    <string name="logcat_btn_stop">Stop</string>
+    <string name="logcat_text_no_logs_yet">No logs yet.</string>
+    <string name="logcat_btn_save_logs">Save Logs</string>
+    <string name="logcat_btn_save_bugreport">Save Bugreport</string>
+    <string name="logcat_btn_clear_logcat">Clear logcat</string>
+    <string name="logcat_btn_copy_all">Copy All</string>
+    <string name="logcat_btn_clear_logs">Clear logs</string>
+</resources>

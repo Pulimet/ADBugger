@@ -7,6 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_text_no_logs_yet
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.Dimensions
 import ui.widgets.list.ListX
 
@@ -15,7 +18,7 @@ fun BoxWithLogsList(list: List<String>, searchQuery: String) {
     Box(modifier = Modifier.fillMaxSize()) {
         if (list.isEmpty()) {
             Text(
-                text = "No logs yet.",
+                text = stringResource(Res.string.logcat_text_no_logs_yet),
                 modifier = Modifier.align(Alignment.Center),
                 color = Color.White,
                 fontSize = Dimensions.titleFontSize

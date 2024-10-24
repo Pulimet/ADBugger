@@ -24,6 +24,15 @@ import androidx.compose.ui.unit.sp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.PlayerPlay
 import compose.icons.tablericons.PlayerStop
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_start
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_stop
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_dropdown_buffer
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_dropdown_format
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_dropdown_level
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_label_search
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_label_tag_
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import terminal.commands.LogcatCommands
@@ -69,21 +78,21 @@ fun LogcatTopBar(
             Dropdown(
                 options = LogcatCommands.bufferList,
                 optionsDetails = LogcatCommands.bufferListDetails,
-                title = "Buffer",
+                title = stringResource(Res.string.logcat_dropdown_buffer),
                 onOptionSelected = { selectedBuffer = it },
                 contentModifier = Modifier.background(MyColors.bg)
             )
             Dropdown(
                 options = LogcatCommands.formatLst,
                 optionsDetails = LogcatCommands.formatLstDetails,
-                title = "Format",
+                title = stringResource(Res.string.logcat_dropdown_format),
                 onOptionSelected = { selectedFormat = it },
                 contentModifier = Modifier.background(MyColors.bg)
             )
             Dropdown(
                 options = LogcatCommands.priorityLevelList,
                 optionsDetails = LogcatCommands.priorityLevelListDetails,
-                title = "Level",
+                title = stringResource(Res.string.logcat_dropdown_level),
                 onOptionSelected = { selectedPriorityLevel = it },
                 contentModifier = Modifier.background(MyColors.bg)
             )
@@ -92,7 +101,7 @@ fun LogcatTopBar(
                 value = tagTextField,
                 onValueChange = { newText -> tagTextField = newText },
                 padding = PaddingValues(top = 8.dp),
-                label = "Tag",
+                label = stringResource(Res.string.logcat_label_tag_),
                 modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp)
             )
 
@@ -103,7 +112,7 @@ fun LogcatTopBar(
                     onSearchQueryChange(newText.text)
                 },
                 padding = PaddingValues(top = 8.dp),
-                label = "Search",
+                label = stringResource(Res.string.logcat_label_search),
                 modifier = Modifier.background(MyColors.bg).padding(bottom = 8.dp, start = 16.dp)
             )
 
@@ -119,7 +128,7 @@ fun LogcatTopBar(
                         tagTextField.text
                     )
                 },
-                description = if (isLogcatRunning) "Stop" else "Start"
+                description = stringResource(if (isLogcatRunning) Res.string.logcat_btn_stop else Res.string.logcat_btn_start)
             )
         }
 
