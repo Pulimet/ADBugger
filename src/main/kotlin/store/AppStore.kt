@@ -707,7 +707,14 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onOpenDeepLink(url: String) {
-        launch { terminal.openDeepLink(state.selectedTargetsList, url) }
+        if(url.trim().isEmpty()) {
+            log("Please enter deep link url")
+        }
+        if (state.selectedPackage == PACKAGE_NONE) {
+            log("Please select package before")
+            return
+        }
+        launch { terminal.openDeepLink(state.selectedTargetsList, url, state.selectedPackage) }
     }
 
 }
