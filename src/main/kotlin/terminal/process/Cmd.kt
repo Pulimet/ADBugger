@@ -65,8 +65,8 @@ class Cmd(private val processCreation: ProcessCreation) {
     }
 
     suspend fun executeAndGetData(
-        command: String, path:
-        String,
+        command: String,
+        path: String,
         log: (String) -> Unit,
         commandRunCallback: (String) -> Unit
     ) = withContext(Dispatchers.IO) {

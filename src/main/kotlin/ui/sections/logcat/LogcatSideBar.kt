@@ -11,8 +11,10 @@ import compose.icons.evaicons.fill.PersonDelete
 import compose.icons.evaicons.fill.Save
 import net.alexandroid.adbugger.adbugger.generated.resources.Res
 import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_clear_logcat
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_listen_activities
 import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_save_bugreport
 import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_save_logs
+import net.alexandroid.adbugger.adbugger.generated.resources.logcat_btn_stop_activities
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
@@ -49,6 +51,20 @@ fun LogcatSideBar(
             icon = EvaIcons.Fill.PersonDelete,
             onClick = { model.clearTargetLogcatLogs() },
             description = stringResource(Res.string.logcat_btn_clear_logcat),
+            width = 100.dp,
+        )
+
+        BtnWithText(
+            icon = EvaIcons.Fill.PersonDelete,
+            onClick = { model.onListenForActivities() },
+            description = stringResource(Res.string.logcat_btn_listen_activities),
+            width = 100.dp,
+        )
+
+        BtnWithText(
+            icon = EvaIcons.Fill.PersonDelete,
+            onClick = { model.stopLogcatActivities() },
+            description = stringResource(Res.string.logcat_btn_stop_activities),
             width = 100.dp,
         )
     }

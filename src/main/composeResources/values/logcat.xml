@@ -12,4 +12,6 @@
     <string name="logcat_btn_clear_logcat">Clear logcat</string>
     <string name="logcat_btn_copy_all">Copy All</string>
     <string name="logcat_btn_clear_logs">Clear logs</string>
+    <string name="logcat_btn_listen_activities">Listen Activities</string>
+    <string name="logcat_btn_stop_activities">Stop Activities</string>
 </resources>

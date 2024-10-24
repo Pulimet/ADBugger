@@ -123,9 +123,9 @@ class CommandLauncher(private val cmd: Cmd) {
         command: String,
         log: (String) -> Unit,
         commandRunCallBack: (String) -> Unit,
-        platformToolsPath: String = adbPath
+        path: String = adbPath
     ) {
-        cmd.executeAndGetData(command, platformToolsPath, log, commandRunCallBack)
+        cmd.executeAndGetData(command, path, log, commandRunCallBack)
     }
 
     suspend fun getEnvironmentVariables() = cmd.getEnvironmentVariables()

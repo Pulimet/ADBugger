@@ -67,6 +67,12 @@ class Terminal(private val launcher: CommandLauncher) {
         launcher.executeAndGetData(command, log, logcatCallback)
     }
 
+    suspend fun listenForActivities(selectedTarget: String, logcatCallback: (String) -> Unit) {
+        val command = LogcatCommands.getListenForActivities(selectedTarget)
+        // Set path to "", with path command with pipe doesn't work
+        launcher.executeAndGetData(command, log, logcatCallback, "")
+    }
+
 
     suspend fun getEnvironmentVariables() = launcher.getEnvironmentVariables()
 

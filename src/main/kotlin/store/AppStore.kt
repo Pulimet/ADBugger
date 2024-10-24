@@ -37,6 +37,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         private set
 
     private var logcatJob: Job? = null
+    private var logcatActivitiesJob: Job? = null
     private var favoritePackagesPref: List<String> by preference("favoritePackages", emptyList())
     private var selectedTargetsPref: List<String> by preference("selectedTargets", emptyList())
     private var selectedPackagePref: String by preference("selectedPackage", "")
@@ -84,6 +85,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         val logcatLogs: List<String> = listOf(),
         val environmentVariables: Map<String, String> = mapOf(),
         val isLogcatRunning: Boolean = false,
+        val isLogcatActivitiesRunning: Boolean = false,
         val isAdbAccessOk: Status = Status.UNKNOWN,
         val isEmulatorAccessOk: Status = Status.UNKNOWN,
         val deviceProps: List<String> = listOf(),
@@ -499,6 +501,44 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         setState { copy(isLogcatRunning = false) }
     }
 
+    fun onListenForActivities() {
+        if (state.isLogcatActivitiesRunning) {
+            log("Logcat activities already running")
+            return
+        }
+        if (state.selectedTargetsList.size != 1) {
+            log("Please select only one target to listen for activities")
+            return
+        }
+        setState { copy(isLogcatActivitiesRunning = true) }
+        logcatActivitiesJob =
+            launch {
+                terminal.listenForActivities(state.selectedTargetsList[0]) {
+                    convertLogcatLineToStartActivityCommand(it)?.let { result ->
+                        onNewLogcatLine(result)
+                    }
+                }
+            }
+    }
+
+    private fun convertLogcatLineToStartActivityCommand(line: String): String? {
+        val regex = Regex("act=([^ ]+) .* cmp=([^ ]+)")
+        val matchResult = regex.find(line)
+        return if (matchResult != null) {
+            val act = matchResult.groupValues[1]
+            val cmp = matchResult.groupValues[2]
+            "adb shell am start -a '$act' -n '$cmp'"
+        } else {
+            null
+        }
+    }
+
+    fun stopLogcatActivities() {
+        log("Stopping logcat activities")
+        logcatActivitiesJob?.cancel()
+        setState { copy(isLogcatActivitiesRunning = false) }
+    }
+
     fun clearLocalLogcatLogs() {
         setState { copy(logcatLogs = arrayListOf()) }
     }
@@ -707,7 +747,7 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
     }
 
     fun onOpenDeepLink(url: String) {
-        if(url.trim().isEmpty()) {
+        if (url.trim().isEmpty()) {
             log("Please enter deep link url")
         }
         if (state.selectedPackage == PACKAGE_NONE) {
@@ -716,5 +756,4 @@ class AppStore(private val terminal: Terminal, coroutineScope: CoroutineScope) :
         }
         launch { terminal.openDeepLink(state.selectedTargetsList, url, state.selectedPackage) }
     }
-
 }

@@ -10,8 +10,10 @@ object LogcatCommands {
         cmp = substr($0, RSTART+4, RLENGTH-4);
         print "adb shell am start -a '\''" act "'\'' -n '\''" cmp "'\''"
     }'
-     */
-
+    */
+    fun getListenForActivities(selectedTarget: String): String {
+        return "adb -s $selectedTarget logcat \"ActivityTaskManager:V *:S\""
+    }
 
     fun getLogCatCommand(
         selectedTarget: String,
