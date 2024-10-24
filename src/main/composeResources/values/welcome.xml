@@ -10,15 +10,15 @@
     <string name="welcome_v1_0_1">Version 1.0.1 (17 July 2024)</string>
     <string name="welcome_v1_0_0">Version 1.0.0 (16 July 2024)</string>
 
-    <string name="welcome_v1_0_5_desc">    - Added health status check for devices and emulators in Settings.
-    - New section "Device" with device properties.
-    - New tab in "Packages": Launcher - Allows to launch activities with extras.
-    - New tab in "Packages": Deep Link - Allows to launch apps with deep links.
-    - New tab in "Target:: Connect - allows to start/kill adb, connect/disconnect devices, get device IP.
-    - Status bar icon now includes basic and package commands.
-    - Autosuggestions for Permission and Keycodes are now provided.
-    - Logcat now allows to listen for activities launch and print the commands to use for launch.
-    - App window now remember it size a position</string>
+    <string name="welcome_v1_0_5_desc">    - Added a health status check for devices and emulators path in the Settings menu.
+    - Introduced a new section called "Device" that displays device properties.
+    - Created a new tab in "Packages" labeled "Launcher," which allows users to launch activities with extras.
+    - Added another tab in "Packages" called "Deep Link," enabling the launch of apps using deep links.
+    - Implemented a new tab in "Target" titled "Connect," which allows users to start or stop ADB, connect or disconnect devices, and retrieve device IP addresses.
+    - The status bar icon now features basic and package commands.
+    - Autosuggestions for permissions and keycodes are now available.
+    - Logcat has been updated to listen for activity launches and print the corresponding commands for launching.
+    - The app window now remembers its size and position.</string>
 
     <string name="welcome_v1_0_4_desc">    - Allow setting a path for platform tools and emulators.
     - Support all useful configurations for emulator launch.
