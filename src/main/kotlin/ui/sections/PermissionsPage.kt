@@ -21,8 +21,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_btn_add
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_btn_remove
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_btn_remove_all
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_btn_show_granted
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_column_titles
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_label_permission
 import net.alexandroid.adbugger.adbugger.generated.resources.permissions_list
+import net.alexandroid.adbugger.adbugger.generated.resources.permissions_search_permissions
 import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -67,7 +75,7 @@ fun PermissionsPage(
                 TextFieldAuto(
                     modifier = Modifier.weight(1f),
                     value = textInputPermissionState,
-                    label = "Permission",
+                    label = stringResource(Res.string.permissions_label_permission),
                     onValueChange = { value -> textInputPermissionState = value },
                     suggestionsList = stringArrayResource(Res.array.permissions_list),
                     onSuggestionSelected = { value -> textInputPermissionState = value }
@@ -78,7 +86,7 @@ fun PermissionsPage(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputPermissionState.text.isNotEmpty(),
                     onClick = { model.onAddPermission(textInputPermissionState.text) },
-                    description = "Add",
+                    description = stringResource(Res.string.permissions_btn_add),
                     width = Dimensions.permissionsCommandsBtnWidthShort,
                 )
 
@@ -87,7 +95,7 @@ fun PermissionsPage(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     enabled = textInputPermissionState.text.isNotEmpty(),
                     onClick = { model.onRemovePermission(textInputPermissionState.text) },
-                    description = "Remove",
+                    description = stringResource(Res.string.permissions_btn_remove),
                     width = Dimensions.permissionsCommandsBtnWidthShort,
                 )
 
@@ -95,7 +103,7 @@ fun PermissionsPage(
                     icon = Icons.Rounded.Delete,
                     onClick = { model.onRemoveAllPermissions() },
                     enabled = model.state.selectedTargetsList.size == 1,
-                    description = "Remove all",
+                    description = stringResource(Res.string.permissions_btn_remove_all),
                     modifier = Modifier.padding(6.dp),
                     width = Dimensions.permissionsCommandsBtnWidth
                 )
@@ -103,18 +111,21 @@ fun PermissionsPage(
                     icon = Icons.Rounded.DateRange,
                     onClick = { model.onGetPermissions() },
                     enabled = model.state.selectedTargetsList.size == 1,
-                    description = "Show granted",
+                    description = stringResource(Res.string.permissions_btn_show_granted),
                     modifier = Modifier.padding(6.dp),
                     width = Dimensions.permissionsCommandsBtnWidth,
                 )
             }
             if (model.state.permissions.isNotEmpty()) {
-                SearchView(isButtonVisible = false, label = "Search permissions...") {
+                SearchView(
+                    isButtonVisible = false,
+                    label = stringResource(Res.string.permissions_search_permissions)
+                ) {
                     textState = it
                 }
                 Table(
                     columns = 2,
-                    headerTitlesList = listOf("Permission", "Status"),
+                    headerTitlesList = stringArrayResource(Res.array.permissions_column_titles),
                     tableList = list,
                     weightList = listOf(0.75f, 0.25f),
                     filter = textState,

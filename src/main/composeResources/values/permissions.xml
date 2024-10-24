@@ -1,4 +1,15 @@
 <resources>
+    <string name="permissions_label_permission">Permission</string>
+    <string name="permissions_btn_add">Add</string>
+    <string name="permissions_btn_remove">Remove</string>
+    <string name="permissions_btn_remove_all">Remove all</string>
+    <string name="permissions_btn_show_granted">Show granted</string>
+    <string name="permissions_search_permissions">Search permissions...</string>
+    <string-array name="permissions_column_titles">
+        <item>Permission</item>
+        <item>Status</item>
+    </string-array>
+
     <string-array name="permissions_list">
         <!-- ... normal permissions ... -->
         <item>android.permission.ACCESS_LOCATION_EXTRA_COMMANDS</item>
