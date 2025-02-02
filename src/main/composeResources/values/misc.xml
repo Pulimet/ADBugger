@@ -1,0 +1,15 @@
+<resources>
+    <string name="misc_tab_1">Tab 1</string>
+    <string name="misc_airplane">Airplane mode</string>
+    <string name="misc_on">On</string>
+    <string name="misc_off">Off</string>
+    <string name="misc_wifi_mode">Wifi mode</string>
+    <string name="misc_rotation">Rotation</string>
+    <string name="misc_auto_on">Auto On</string>
+    <string name="misc_auto_off">Auto Off</string>
+    <string name="misc_landscape">Landscape</string>
+    <string name="misc_portrait">Portrait</string>
+    <string name="misc_portrait_2">Portrait 2</string>
+    <string name="misc_land_2">Land. 2</string>
+    <string name="misc_location_mode">Location mode</string>
+</resources>
