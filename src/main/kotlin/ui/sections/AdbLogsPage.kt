@@ -9,6 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.adb_logs_no_logs_yet
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -24,7 +27,7 @@ fun AdbLogsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
         Box(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             if (logsList.isEmpty()) {
                 Text(
-                    text = "No logs yet. Start by running a command.",
+                    text = stringResource(Res.string.adb_logs_no_logs_yet),
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White,
                     fontSize = Dimensions.titleFontSize

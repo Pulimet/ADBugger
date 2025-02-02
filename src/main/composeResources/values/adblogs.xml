@@ -1,0 +1,4 @@
+<resources>
+    <string name="adb_logs_no_logs_yet">No logs yet. Start by running a command.</string>
+    <string name="adb_logs_">xxx</string>
+</resources>
