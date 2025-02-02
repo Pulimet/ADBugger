@@ -1,0 +1,7 @@
+<resources>
+    <string name="device_props">Device properties</string>
+    <string name="device_search">Search properties...</string>
+    <string name="device_property">Property</string>
+    <string name="device_value">Value</string>
+    <string name="device_get_props">Get Props</string>
+</resources>

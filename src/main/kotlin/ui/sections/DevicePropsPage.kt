@@ -21,6 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Refresh
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.device_get_props
+import net.alexandroid.adbugger.adbugger.generated.resources.device_property
+import net.alexandroid.adbugger.adbugger.generated.resources.device_props
+import net.alexandroid.adbugger.adbugger.generated.resources.device_search
+import net.alexandroid.adbugger.adbugger.generated.resources.device_value
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -47,7 +54,7 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
                     if (trimmed.length > 2) {
                         try {
                             trimmed.substring(1, trimmed.length - 1)
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             "Exception on $trimmed"
                         }
                     } else {
@@ -61,7 +68,7 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
     CardX(modifier = modifier) {
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Text(
-                text = "Device properties",
+                text = stringResource(Res.string.device_props),
                 fontSize = Dimensions.titleFontSize,
                 textAlign = TextAlign.Center,
                 color = Color.LightGray,
@@ -69,12 +76,18 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
             )
 
             if (model.state.deviceProps.isNotEmpty()) {
-                SearchView(isButtonVisible = false, label = "Search properties...") {
+                SearchView(
+                    isButtonVisible = false,
+                    label = stringResource(Res.string.device_search)
+                ) {
                     textState = it
                 }
                 Table(
                     columns = 2,
-                    headerTitlesList = listOf("Property", "Value"),
+                    headerTitlesList = listOf(
+                        stringResource(Res.string.device_property),
+                        stringResource(Res.string.device_value)
+                    ),
                     tableList = list,
                     weightList = listOf(0.5f, 0.5f),
                     filter = textState
@@ -83,7 +96,7 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     BtnIcon(
                         icon = TablerIcons.Refresh,
-                        description = "Get Props",
+                        description = stringResource(Res.string.device_get_props),
                         onClick = { model.onGetDeviceProps() }
                     )
                 }
@@ -93,7 +106,7 @@ fun DevicePropsPage(modifier: Modifier = Modifier, model: AppStore = koinInject(
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 BtnIcon(
                     icon = TablerIcons.Refresh,
-                    description = "Get Props",
+                    description = stringResource(Res.string.device_get_props),
                     buttonSize = Dimensions.btnSizeSmall,
                     iconSize = Dimensions.btnIconSizeSmall,
                     modifier = Modifier.padding(16.dp),
