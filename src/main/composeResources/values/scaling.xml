@@ -1,0 +1,19 @@
+<resources>
+    <string name="scaling_font_scale">Font Scale:</string>
+    <string name="scaling_small">Small 0.85</string>
+    <string name="scaling_default">Default 1.0</string>
+    <string name="scaling_large">Large 1.15</string>
+    <string name="scaling_largest">Largest 1.3</string>
+    <string name="scaling_custom_font">Custom (ex: 1.0)</string>
+    <string name="scaling_density">Density:</string>
+    <string name="scaling_reset">Reset</string>
+    <string name="scaling_300">300</string>
+    <string name="scaling_400">400</string>
+    <string name="scaling_500">500</string>
+    <string name="scaling_600">600</string>
+    <string name="scaling_custom_density">Custom (ex: 300)</string>
+    <string name="scaling_display_size">Display size:</string>
+    <string name="scaling_default_density">2048x1536</string>
+    <string name="scaling_custom_display_size">Custom (ex: 10x10)</string>
+    <string name="scaling_run">Run</string>
+</resources>

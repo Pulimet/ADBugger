@@ -25,6 +25,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.PlayerPlay
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_300
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_400
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_500
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_600
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_custom_density
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_custom_display_size
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_custom_font
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_default
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_default_density
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_density
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_display_size
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_font_scale
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_large
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_largest
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_reset
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_run
+import net.alexandroid.adbugger.adbugger.generated.resources.scaling_small
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -42,33 +61,33 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                 modifier = Modifier.fillMaxWidth().height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Title("Font Scale:")
+                Title(stringResource(Res.string.scaling_font_scale))
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(0.85) },
                     enabled = true,
-                    text = "Small 0.85"
+                    text = stringResource(Res.string.scaling_small)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(1.0) },
                     enabled = true,
-                    text = "Default 1.0"
+                    text = stringResource(Res.string.scaling_default)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(1.15) },
                     enabled = true,
-                    text = "Large 1.15"
+                    text = stringResource(Res.string.scaling_large)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.scaleFontTo(1.3) },
                     enabled = true,
-                    text = "Largest 1.3"
+                    text = stringResource(Res.string.scaling_largest)
                 )
                 TextFieldWithBtn(
-                    "Custom (ex: 1.0)",
+                    stringResource(Res.string.scaling_custom_font),
                     onClick = { model.scaleFontTo(it.toDouble()) },
                     modifier = Modifier.weight(1f)
                 )
@@ -78,39 +97,39 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                 modifier = Modifier.fillMaxWidth().height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Title("Density:")
+                Title(stringResource(Res.string.scaling_density))
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setDensity(0) },
                     enabled = true,
-                    text = "Reset"
+                    text = stringResource(Res.string.scaling_reset)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setDensity(300) },
                     enabled = true,
-                    text = "300"
+                    text = stringResource(Res.string.scaling_300)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setDensity(400) },
                     enabled = true,
-                    text = "400"
+                    text = stringResource(Res.string.scaling_400)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setDensity(500) },
                     enabled = true,
-                    text = "500"
+                    text = stringResource(Res.string.scaling_500)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setDensity(600) },
                     enabled = true,
-                    text = "600"
+                    text = stringResource(Res.string.scaling_600)
                 )
                 TextFieldWithBtn(
-                    "Custom (ex: 300)",
+                    stringResource(Res.string.scaling_custom_density),
                     onClick = { model.setDensity(it.toInt()) },
                     modifier = Modifier.weight(1f)
                 )
@@ -120,21 +139,21 @@ fun ScalingPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) {
                 modifier = Modifier.fillMaxWidth().height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Title("Display size:")
+                Title(stringResource(Res.string.scaling_display_size))
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setSize("0") },
                     enabled = true,
-                    text = "Reset"
+                    text = stringResource(Res.string.scaling_reset)
                 )
                 SmallHoverButton(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.setSize("2048x1536") },
                     enabled = true,
-                    text = "2048x1536"
+                    text = stringResource(Res.string.scaling_default_density)
                 )
                 TextFieldWithBtn(
-                    "Custom (ex: 10x10)",
+                    stringResource(Res.string.scaling_custom_display_size),
                     onClick = { model.setSize(it) },
                     modifier = Modifier.weight(1f)
                 )
@@ -181,7 +200,7 @@ private fun TextFieldWithBtn(
             icon = TablerIcons.PlayerPlay,
             modifier = Modifier.padding(horizontal = 8.dp),
             onClick = { onClick(searchTextField.text) },
-            description = "Run"
+            description = stringResource(Res.string.scaling_run)
         )
     }
 }
