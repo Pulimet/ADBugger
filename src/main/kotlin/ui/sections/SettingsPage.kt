@@ -23,6 +23,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import compose.icons.TablerIcons
 import compose.icons.tablericons.Refresh
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.settings_desc_check
+import net.alexandroid.adbugger.adbugger.generated.resources.settings_desc_refresh
+import net.alexandroid.adbugger.adbugger.generated.resources.settings_emulators_path
+import net.alexandroid.adbugger.adbugger.generated.resources.settings_env_vars
+import net.alexandroid.adbugger.adbugger.generated.resources.settings_platform_tools
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import pref.preference
 import store.AppStore
@@ -65,7 +72,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
         Column(modifier = Modifier.padding(Dimensions.cardPadding).fillMaxSize()) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Platform tools path (ADB):",
+                    text = stringResource(Res.string.settings_platform_tools),
                     fontSize = Dimensions.subtitleFontSize,
                     textAlign = TextAlign.Start,
                     color = Color.LightGray,
@@ -85,12 +92,12 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                     status = model.state.isAdbAccessOk,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.checkPlatformTools() },
-                    description = "Check"
+                    description = stringResource(Res.string.settings_desc_check)
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Emulators path:",
+                    text = stringResource(Res.string.settings_emulators_path),
                     fontSize = Dimensions.subtitleFontSize,
                     textAlign = TextAlign.Start,
                     color = Color.LightGray,
@@ -109,14 +116,14 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
                     status = model.state.isEmulatorAccessOk,
                     modifier = Modifier.padding(horizontal = 8.dp),
                     onClick = { model.checkEmulators() },
-                    description = "Check"
+                    description = stringResource(Res.string.settings_desc_check)
                 )
             }
 
             Divider(thickness = 1.dp)
 
             Text(
-                text = "Environment variables",
+                text = stringResource(Res.string.settings_env_vars),
                 fontSize = Dimensions.titleFontSize,
                 textAlign = TextAlign.Center,
                 color = Color.LightGray,
@@ -127,7 +134,7 @@ fun SettingsPage(modifier: Modifier = Modifier, model: AppStore = koinInject()) 
             } else {
                 BtnIcon(
                     icon = TablerIcons.Refresh,
-                    description = "Refresh",
+                    description = stringResource(Res.string.settings_desc_refresh),
                     onClick = { model.onGetEnvironmentVariables() }
                 )
             }

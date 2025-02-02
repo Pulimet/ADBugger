@@ -1,0 +1,7 @@
+<resources>
+    <string name="settings_platform_tools">Platform tools path (ADB):</string>
+    <string name="settings_desc_check">Check</string>
+    <string name="settings_desc_refresh">Refresh</string>
+    <string name="settings_emulators_path">Emulators path:</string>
+    <string name="settings_env_vars">Environment variables</string>
+</resources>
