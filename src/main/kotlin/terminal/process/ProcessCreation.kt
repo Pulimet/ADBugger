@@ -10,7 +10,7 @@ import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
 class ProcessCreation {
-    fun createProcessAndWaitForResult(path: String = "", command: String = ""): Process {
+    fun createProcessAndWaitForResult(path: String = "", command: String = "", log: ((String) -> Unit)?): Process {
         val processBuilder: ProcessBuilder = createProcessBuilder(path + command)
         val process = processBuilder.start()
         try {
@@ -19,6 +19,7 @@ class ProcessCreation {
             if (!finished) {
                 // Process did not finish within 5 seconds, so destroy it
                 process.destroy()
+                log?.invoke("Process timed out after 5 seconds")
                 throw RuntimeException("Process timed out after 5 seconds")
             }
         } catch (e: InterruptedException) {

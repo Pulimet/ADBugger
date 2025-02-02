@@ -22,7 +22,7 @@ class Cmd(private val processCreation: ProcessCreation) {
                 println("Invoking command: $command")
                 log?.invoke(command)
 
-                val process = processCreation.createProcessAndWaitForResult(path, command)
+                val process = processCreation.createProcessAndWaitForResult(path, command, log)
 
                 getInputStream(process.inputStream).ifEmpty {
                     val errorStream = getInputStream(process.errorStream)
