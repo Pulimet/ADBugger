@@ -20,6 +20,18 @@ import androidx.compose.ui.unit.dp
 import compose.icons.LineaIcons
 import compose.icons.lineaicons.Basic
 import compose.icons.lineaicons.basic.Home
+import net.alexandroid.adbugger.adbugger.generated.resources.Res
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_8081
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_9090
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_clear_all
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_forward_device
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_forward_machine
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_forward_port
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_list
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_revers_port
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_reverse_device
+import net.alexandroid.adbugger.adbugger.generated.resources.ports_reverse_machine
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import store.AppStore
 import ui.theme.Dimensions
@@ -53,7 +65,7 @@ fun PortsPage(
                     value = inputReverseFrom,
                     keyboardType = KeyboardType.Number,
                     maxLength = 5,
-                    label = "Reverse (Device port)",
+                    label = stringResource(Res.string.ports_reverse_device),
                     onValueChange = { value -> inputReverseFrom = value }
                 )
                 TextFieldX(
@@ -62,7 +74,7 @@ fun PortsPage(
                     value = inputReverseTo,
                     keyboardType = KeyboardType.Number,
                     maxLength = 5,
-                    label = "Reverse (Machine port)",
+                    label = stringResource(Res.string.ports_reverse_machine),
                     onValueChange = { value -> inputReverseTo = value }
                 )
 
@@ -76,27 +88,27 @@ fun PortsPage(
                             inputReverseFrom.text.toIntOrNull()
                         )
                     },
-                    description = "Reverse port"
+                    description = stringResource(Res.string.ports_revers_port)
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverse(8081, 8081) },
-                    description = "8081",
+                    description = stringResource(Res.string.ports_8081),
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverse(9090, 9090) },
-                    description = "9090",
+                    description = stringResource(Res.string.ports_9090),
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverseList() },
-                    description = "List",
+                    description = stringResource(Res.string.ports_list),
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbReverseClear() },
-                    description = "Clear All",
+                    description = stringResource(Res.string.ports_clear_all),
                 )
             }
             Row(
@@ -111,7 +123,7 @@ fun PortsPage(
                     value = inputForwardFrom,
                     maxLength = 5,
                     keyboardType = KeyboardType.Number,
-                    label = "Forward (Machine port)",
+                    label = stringResource(Res.string.ports_forward_machine),
                     onValueChange = { value -> inputForwardFrom = value }
                 )
                 TextFieldX(
@@ -120,7 +132,7 @@ fun PortsPage(
                     value = inputForwardTo,
                     maxLength = 5,
                     keyboardType = KeyboardType.Number,
-                    label = "Forward (Device port)",
+                    label = stringResource(Res.string.ports_forward_device),
                     onValueChange = { value -> inputForwardTo = value }
                 )
                 BtnIcon(
@@ -133,17 +145,17 @@ fun PortsPage(
                             inputForwardTo.text.toIntOrNull()
                         )
                     },
-                    description = "Forward port"
+                    description = stringResource(Res.string.ports_forward_port)
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbForwardList() },
-                    description = "List",
+                    description = stringResource(Res.string.ports_list),
                 )
                 BtnWithText(
                     icon = LineaIcons.Basic.Home,
                     onClick = { model.onAdbForwardClear() },
-                    description = "Clear All",
+                    description = stringResource(Res.string.ports_clear_all),
                 )
             }
 

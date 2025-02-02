@@ -1,0 +1,12 @@
+<resources>
+    <string name="ports_reverse_device">Reverse (Device port)</string>
+    <string name="ports_reverse_machine">Reverse (Machine port)</string>
+    <string name="ports_revers_port">Reverse port</string>
+    <string name="ports_8081">8081</string>
+    <string name="ports_9090">9090</string>
+    <string name="ports_list">List</string>
+    <string name="ports_clear_all">Clear All</string>
+    <string name="ports_forward_machine">Forward (Machine port)</string>
+    <string name="ports_forward_device">Forward (Device port)</string>
+    <string name="ports_forward_port">Forward port</string>
+</resources>
